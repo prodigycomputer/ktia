@@ -353,6 +353,18 @@ include 'koneksi.php';
 
         </form>
     </main>
+       <!-- Overlay Popup Pilih Barang -->
+    <div id="popupFilter" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
+    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:90%; max-width:500px; background:#fff; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.3); padding:16px 16px 10px; max-height:70vh; overflow-y:auto;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 style="font-size:14px; margin:0;">Pilih Data</h3>
+            <span onclick="closeFilterPopup()" style="cursor:pointer; font-weight:bold; font-size:16px; color:#666;">&times;</span>
+        </div>
+
+        <ul id="popupList" style="list-style:none; padding:0; margin:0;"></ul>
+    </div>
+    </div>
 
     <div id="toast" style="
         display: none;
@@ -403,88 +415,126 @@ include 'koneksi.php';
             }
         }
 
+        function showFilterPopup(dataList) {
+            const popup = document.getElementById('popupFilter');
+            const list = document.getElementById('popupList');
+            list.innerHTML = '';
 
-            function triggerSearch() {
-                if (!inputSearch) {
-                    showToast('Isi KODE atau NAMA terlebih dahulu!', '#ffc107');
-                    return;
-                }
+            dataList.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.kodebrg} - ${item.namabrg}`;
+                li.style.padding = '10px 14px';
+                li.style.cursor = 'pointer';
+                li.style.borderBottom = '1px solid #eee';
+                li.style.transition = 'background 0.2s';
 
-                const keyword = inputSearch.value.trim().toUpperCase();
-                if (!keyword) {
-                    showToast('Kolom pencarian tidak boleh kosong!', '#ffc107');
-                    return;
-                }
+                li.addEventListener('mouseover', () => {
+                    li.style.backgroundColor = '#f5f5f5';
+                });
+                li.addEventListener('mouseout', () => {
+                    li.style.backgroundColor = '#fff';
+                });
+                li.addEventListener('click', () => {
+                    closeFilterPopup(); 
+                    pilihBarang(item);     // isi form
+                      // tutup popup
+                });
+                 
+                list.appendChild(li);
+            });
 
-                fetch(`filter_barang.php?keyword=${encodeURIComponent(keyword)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.length === 0) {
-                            showToast('Data tidak ada!', '#dc3545');
-                            return;
-                        }
+            popup.style.display = 'block';
+        }
 
-                        pilihBarang(data[0]); // langsung pilih baris pertama
-                    })
-                    .catch(() => {
-                    });
+        function closeFilterPopup() {
+            document.getElementById('popupFilter').style.display = 'none';
+        }
+
+
+        function triggerSearch() {
+            if (!inputSearch) {
+                showToast('Isi KODE atau NAMA terlebih dahulu!', '#ffc107');
+                return;
             }
 
+            const keyword = inputSearch.value.trim().toUpperCase();
+            if (!keyword) {
+                showToast('Kolom pencarian tidak boleh kosong!', '#ffc107');
+                return;
+            }
 
-            function pilihBarang(data) {
-                document.getElementById('kodebrg').value = data.kodebrg;
-                document.getElementById('namabrg').value = data.namabrg;
-                document.getElementById('harga1').value = data.harga1;
-                document.getElementById('harga2').value = data.harga2;
-                document.getElementById('harga3').value = data.harga3;
-                document.getElementById('harga4').value = data.harga4;
-                document.getElementById('harga5').value = data.harga5;
-                document.getElementById('harga6').value = data.harga6;
-                document.getElementById('harga7').value = data.harga7;
-                document.getElementById('harga8').value = data.harga8;
-                document.getElementById('harga9').value = data.harga9;
-                document.getElementById('harga10').value = data.harga10;
-                document.getElementById('harga11').value = data.harga11;
-                document.getElementById('harga12').value = data.harga12;
-
-                document.getElementById('satuan1').value = data.satuan1;
-                document.getElementById('isi1').value = data.isi1;
-
-                // Logika enable/disable berdasarkan isi1 dan isi2
-                if (parseFloat(data.isi1) > 1) {
-                    document.getElementById('satuan2').disabled = false;
-                    document.getElementById('isi2').disabled = false;
-                    document.getElementById('satuan2').value = data.satuan2;
-                    document.getElementById('isi2').value = data.isi2;
-
-                    if (parseFloat(data.isi2) > 1) {
-                        document.getElementById('satuan3').disabled = false;
-                        document.getElementById('satuan3').value = data.satuan3;
-                    } else {
-                        document.getElementById('satuan3').disabled = true;
-                        document.getElementById('satuan3').value = '';
+            fetch(`filter_barang.php?keyword=${encodeURIComponent(keyword)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        showToast('Data tidak ada!', '#dc3545');
+                        return;
                     }
-                } else {
-                    // disable semua turunan
-                    document.getElementById('satuan2').disabled = true;
-                    document.getElementById('isi2').disabled = true;
-                    document.getElementById('satuan3').disabled = true;
 
-                    document.getElementById('satuan2').value = '';
-                    document.getElementById('isi2').value = '';
+                    if (data.length === 1) {
+                        pilihBarang(data[0]);
+                    } else {
+                        showFilterPopup(data); // tampilkan pilihan
+                    }
+                })
+
+        }
+
+
+        function pilihBarang(data) {
+            document.getElementById('kodebrg').value = data.kodebrg;
+            document.getElementById('namabrg').value = data.namabrg;
+            document.getElementById('harga1').value = data.harga1;
+            document.getElementById('harga2').value = data.harga2;
+            document.getElementById('harga3').value = data.harga3;
+            document.getElementById('harga4').value = data.harga4;
+            document.getElementById('harga5').value = data.harga5;
+            document.getElementById('harga6').value = data.harga6;
+            document.getElementById('harga7').value = data.harga7;
+            document.getElementById('harga8').value = data.harga8;
+            document.getElementById('harga9').value = data.harga9;
+            document.getElementById('harga10').value = data.harga10;
+            document.getElementById('harga11').value = data.harga11;
+            document.getElementById('harga12').value = data.harga12;
+
+            document.getElementById('satuan1').value = data.satuan1;
+            document.getElementById('isi1').value = data.isi1;
+
+            // Logika enable/disable berdasarkan isi1 dan isi2
+            if (parseFloat(data.isi1) > 1) {
+                document.getElementById('satuan2').disabled = false;
+                document.getElementById('isi2').disabled = false;
+                document.getElementById('satuan2').value = data.satuan2;
+                document.getElementById('isi2').value = data.isi2;
+
+                if (parseFloat(data.isi2) > 1) {
+                    document.getElementById('satuan3').disabled = false;
+                    document.getElementById('satuan3').value = data.satuan3;
+                } else {
+                    document.getElementById('satuan3').disabled = true;
                     document.getElementById('satuan3').value = '';
                 }
-                document.getElementById('btnTambah').disabled = true;
-                document.getElementById('btnEdit').disabled = false;
-                document.getElementById('btnHapus').disabled = false;
+            } else {
+                // disable semua turunan
+                document.getElementById('satuan2').disabled = true;
+                document.getElementById('isi2').disabled = true;
+                document.getElementById('satuan3').disabled = true;
 
-                inputSearch.value = '';
-                inputSearch.disabled = true;
-                document.getElementById('searchbtn').disabled = true;
-                dropdown.style.display = 'none';
-
-                closeFilterPopup();
+                document.getElementById('satuan2').value = '';
+                document.getElementById('isi2').value = '';
+                document.getElementById('satuan3').value = '';
             }
+            document.getElementById('btnTambah').disabled = true;
+            document.getElementById('btnEdit').disabled = false;
+            document.getElementById('btnHapus').disabled = false;
+
+            inputSearch.value = '';
+            inputSearch.disabled = true;
+            document.getElementById('searchbtn').disabled = true;
+            dropdown.style.display = 'none';
+
+            closeFilterPopup();
+        }
 
         function checkIsi1() {
             const isi1 = parseFloat(document.getElementById('isi1').value);
