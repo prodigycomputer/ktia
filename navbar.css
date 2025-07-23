@@ -62,8 +62,44 @@
 }
 .nav-link:hover,
 .nav-link.active {
-    background: #66ccff;
     color: white;
+}
+
+.dropdown-toggle {
+    background: none;
+    border: none;
+    color: #ecf0f1;
+    padding: 8px 12px;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.dropdown-toggle:hover {
+    background: #34495e;
+}
+
+.dropdown-content {
+    display: none;
+    flex-direction: column;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.dropdown-content a {
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+.dropdown-content.show {
+    display: flex;
+}
+.active-link {
+    background-color: #42a5d6a4;
+    color: white !important;
+    font-weight: bold;
 }
 
 /* Tambahan untuk responsif dan hamburger */

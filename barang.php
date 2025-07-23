@@ -333,7 +333,7 @@ include 'koneksi.php';
                     <div style="display: flex; gap: 5px; align-items: center;">
                         <input type="text" name="gambar" id="gambar" class="lesslong-input" readonly>
                         <input type="file" id="uploadInput" accept=".png" style="display: none;" onchange="handleFileUpload(this)">
-                        <button type="button" onclick="document.getElementById('uploadInput').click();">Upload</button>
+                        <button type="button" style="background: #218838;" onclick="document.getElementById('uploadInput').click();">Upload</button>
                     </div>
 
                 </div>
@@ -394,7 +394,7 @@ include 'koneksi.php';
             position:absolute; 
             top:50%; left:50%; transform:translate(-50%, -50%); 
             width:90%; 
-            max-width:900px; 
+            max-width:1300px; 
             background:#fff; 
             border-radius:8px; 
             box-shadow:0 4px 15px rgba(0,0,0,0.3); 
