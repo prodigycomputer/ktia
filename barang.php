@@ -42,16 +42,50 @@ include 'koneksi.php';
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
     }
 
+    /* Umumkan dulu gaya dasar semua tombol dalam form */
     form button {
-        background-color: #007bff; /* Warna biru default */
         color: white;
         border: none;
         cursor: pointer;
         transition: 0.3s ease;
-        padding: 6px;
+        padding: 6px 12px;
         font-size: 13px;
-        border-radius: 4px; /* opsional agar terlihat lebih modern */
+        border-radius: 4px;
     }
+
+    /* Tambah - Biru */
+    #btnTambah {
+        background-color: #007bff;
+    }
+    #btnTambah:hover {
+        background-color: #0069d9;
+    }
+
+    /* Edit - Kuning */
+    #btnEdit {
+        background-color: #ffc107;
+        color: #333;
+    }
+    #btnEdit:hover {
+        background-color: #e0a800;
+    }
+
+    /* Hapus - Merah */
+    #btnHapus {
+        background-color: #dc3545;
+    }
+    #btnHapus:hover {
+        background-color: #c82333;
+    }
+
+    /* Cancel - Abu gelap */
+    #btnCancel {
+        background-color: #6c757d;
+    }
+    #btnCancel:hover {
+        background-color: #5a6268;
+    }
+
 
     button:disabled {
         background-color: #ccc !important;
@@ -350,21 +384,67 @@ include 'koneksi.php';
             <button id="btnTambah" type="submit" onclick="document.getElementById('aksi').value='tambah'">Tambah</button>
             <button id="btnEdit" type="submit" onclick="document.getElementById('aksi').value='update'">Edit</button>
             <button id="btnHapus" type="submit" onclick="document.getElementById('aksi').value='hapus'">Hapus</button>
+            <button id="btnCancel" type="button" onclick="cancelEdit()">Cancel</button>
 
         </form>
     </main>
-       <!-- Overlay Popup Pilih Barang -->
+        <!-- Popup Pilih Data -->
     <div id="popupFilter" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
-    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:90%; max-width:500px; background:#fff; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.3); padding:16px 16px 10px; max-height:70vh; overflow-y:auto;">
-        
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <h3 style="font-size:14px; margin:0;">Pilih Data</h3>
-            <span onclick="closeFilterPopup()" style="cursor:pointer; font-weight:bold; font-size:16px; color:#666;">&times;</span>
-        </div>
+        <div id="popupContent" style="
+            position:absolute; 
+            top:50%; left:50%; transform:translate(-50%, -50%); 
+            width:90%; 
+            max-width:900px; 
+            background:#fff; 
+            border-radius:8px; 
+            box-shadow:0 4px 15px rgba(0,0,0,0.3); 
+            padding:16px 16px 10px; 
+            max-height:80vh; 
+            overflow:auto;
+        ">
 
-        <ul id="popupList" style="list-style:none; padding:0; margin:0;"></ul>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 style="font-size:14px; margin:0;">Hasil Pencarian</h3>
+            <span onclick="closeFilterPopup()" style="cursor:pointer; font-weight:bold; font-size:16px; color:#666;">&times;</span>
+            </div>
+
+            <div style="
+                max-height: 60vh;
+                overflow-y: auto;
+                overflow-x: auto;
+                border: 1px solid #ccc;
+            ">
+                <table style="min-width: 1200px; border-collapse: collapse; font-size: 12px;">
+                <thead style="background:#f2f2f2;">
+                <tr>
+                    <th style="padding:6px; border:1px solid #ccc;">Kode</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Nama</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Satuan1</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Isi1</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Satuan2</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Isi2</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Satuan3</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga1</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga2</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga3</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga4</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga5</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga6</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga7</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga8</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga9</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga10</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga11</th>
+                    <th style="padding:6px; border:1px solid #ccc;">Harga12</th>
+
+                </tr>
+                </thead>
+                <tbody id="popupList"></tbody>
+            </table>
+            </div>
+        </div>
     </div>
-    </div>
+
 
     <div id="toast" style="
         display: none;
@@ -386,6 +466,7 @@ include 'koneksi.php';
             document.getElementById('btnTambah').disabled = false;
             document.getElementById('btnEdit').disabled = true;
             document.getElementById('btnHapus').disabled = true;
+            document.getElementById('btnCancel').disabled = true;
         }
         initializeFormButtons(); 
         // panggil saat halaman dimuat
@@ -416,35 +497,45 @@ include 'koneksi.php';
         }
 
         function showFilterPopup(dataList) {
-            const popup = document.getElementById('popupFilter');
-            const list = document.getElementById('popupList');
-            list.innerHTML = '';
+                    const list = document.getElementById('popupList');
+                    list.innerHTML = '';
 
-            dataList.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item.kodebrg} - ${item.namabrg}`;
-                li.style.padding = '10px 14px';
-                li.style.cursor = 'pointer';
-                li.style.borderBottom = '1px solid #eee';
-                li.style.transition = 'background 0.2s';
+                    dataList.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.style.cursor = 'pointer';
+                        tr.style.transition = 'background 0.2s';
 
-                li.addEventListener('mouseover', () => {
-                    li.style.backgroundColor = '#f5f5f5';
-                });
-                li.addEventListener('mouseout', () => {
-                    li.style.backgroundColor = '#fff';
-                });
-                li.addEventListener('click', () => {
-                    closeFilterPopup(); 
-                    pilihBarang(item);     // isi form
-                      // tutup popup
-                });
-                 
-                list.appendChild(li);
-            });
+                        tr.addEventListener('mouseover', () => {
+                            tr.style.backgroundColor = '#f0f0f0';
+                        });
+                        tr.addEventListener('mouseout', () => {
+                            tr.style.backgroundColor = '#fff';
+                        });
+                        tr.addEventListener('click', () => {
+                            closeFilterPopup();
+                            pilihBarang(item);
+                        });
 
-            popup.style.display = 'block';
-        }
+                        const fields = [
+                            'kodebrg', 'namabrg', 'satuan1', 'isi1',
+                            'satuan2', 'isi2', 'satuan3', 'harga1', 'harga2',
+                            'harga3', 'harga4', 'harga5', 'harga6'
+                        ];
+
+                        fields.forEach(field => {
+                            const td = document.createElement('td');
+                            td.textContent = item[field] || '';
+                            td.style.padding = '6px';
+                            td.style.border = '1px solid #ccc';
+                            tr.appendChild(td);
+                        });
+
+                        list.appendChild(tr);
+                    });
+
+                    document.getElementById('popupFilter').style.display = 'block';
+                }
+
 
         function closeFilterPopup() {
             document.getElementById('popupFilter').style.display = 'none';
@@ -472,7 +563,7 @@ include 'koneksi.php';
                     }
 
                     if (data.length === 1) {
-                        pilihBarang(data[0]);
+                        showFilterPopup(data);
                     } else {
                         showFilterPopup(data); // tampilkan pilihan
                     }
@@ -527,6 +618,7 @@ include 'koneksi.php';
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = false;
             document.getElementById('btnHapus').disabled = false;
+            document.getElementById('btnCancel').disabled = false;
 
             inputSearch.value = '';
             inputSearch.disabled = true;
@@ -573,6 +665,31 @@ include 'koneksi.php';
             }
             return true;
         }
+
+        function cancelEdit() {
+            document.getElementById('barangForm').reset();
+
+            // Reset tombol
+            initializeFormButtons();
+
+            // Reset search input
+            const kodeInput = document.getElementById('searchKode');
+            const namaInput = document.getElementById('searchNama');
+            kodeInput.disabled = false;
+            namaInput.disabled = false;
+            kodeInput.value = '';
+            namaInput.value = '';
+            document.getElementById('searchbtn').disabled = false;
+
+            // Reset input yang di-disable manual
+            document.getElementById('satuan2').disabled = true;
+            document.getElementById('isi2').disabled = true;
+            document.getElementById('satuan3').disabled = true;
+            document.getElementById('gambar').value = '';
+
+            inputSearch = null;
+        }
+
 
         function handleFileUpload(input) {
             const file = input.files[0];

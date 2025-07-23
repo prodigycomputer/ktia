@@ -174,6 +174,50 @@ include 'koneksi.php';
     .popup.error {
       background: #e74c3c;
     }
+
+    form button {
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease;
+        padding: 6px 12px;
+        font-size: 13px;
+        border-radius: 4px;
+    }
+
+    /* Tambah - Biru */
+    #btnTambah {
+        background-color: #007bff;
+    }
+    #btnTambah:hover {
+        background-color: #0069d9;
+    }
+
+    /* Edit - Kuning */
+    #btnEdit {
+        background-color: #ffc107;
+        color: #333;
+    }
+    #btnEdit:hover {
+        background-color: #e0a800;
+    }
+
+    /* Hapus - Merah */
+    #btnHapus {
+        background-color: #dc3545;
+    }
+    #btnHapus:hover {
+        background-color: #c82333;
+    }
+
+    /* Cancel - Abu gelap */
+    #btnCancel {
+        background-color: #6c757d;
+    }
+    #btnCancel:hover {
+        background-color: #5a6268;
+    }
+
     @keyframes fadeOut {
       0%   { opacity: 1; }
       80%  { opacity: 1; }
@@ -214,6 +258,7 @@ include 'koneksi.php';
       <button id="btnTambah" type="submit" onclick="document.getElementById('aksi').value='tambah'">Tambah</button>
       <button id="btnEdit" type="submit" onclick="document.getElementById('aksi').value='update'">Edit</button>
       <button id="btnHapus" type="submit" onclick="document.getElementById('aksi').value='hapus'">Hapus</button>
+      <button id="btnCancel" type="button" onclick="cancelForm()">Cancel</button>
     </div>
   </form>
 </main>
@@ -230,6 +275,7 @@ include 'koneksi.php';
     document.getElementById('btnTambah').disabled = false;
     document.getElementById('btnEdit').disabled = true;
     document.getElementById('btnHapus').disabled = true;
+    document.getElementById('btnCancel').disabled = true;
 
     document.getElementById('searchKode').disabled = false;
     document.getElementById('searchNama').disabled = false;
@@ -244,7 +290,7 @@ include 'koneksi.php';
     document.getElementById('btnTambah').disabled = true;
     document.getElementById('btnEdit').disabled = false;
     document.getElementById('btnHapus').disabled = false;
-
+    document.getElementById('btnCancel').disabled = false;
     document.getElementById('searchKode').disabled = true;
     document.getElementById('searchNama').disabled = true;
     document.getElementById('searchbtnkode').disabled = true;
@@ -255,6 +301,14 @@ include 'koneksi.php';
   }
 
   initializeFormButtons();
+
+    function cancelForm() {
+    document.getElementById('grupForm').reset();             // Reset semua input
+    document.getElementById('aksi').value = '';              // Kosongkan aksi
+    document.getElementById('searchGrup').value = '';        // Kosongkan input search
+    initializeFormButtons();                                 // Kembali ke mode default
+  }
+
 
   function triggerSearch() {
     const input = document.getElementById('searchGrup');
