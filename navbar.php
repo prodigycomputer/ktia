@@ -28,8 +28,8 @@ $isLaporan = in_array($current, [
     <button class="dropdown-toggle <?= $isFile ? 'active-dropdown' : '' ?>" onclick="toggleDropdown('fileDropdown', this)">File ▾</button>
     <div class="dropdown-content <?= $isFile ? 'show' : '' ?>" id="fileDropdown">
         <a href="barang.php" class="<?= $current == 'barang.php' ? 'active-link' : '' ?>">Stok</a>
+        <a href="pelanggan.php" class="<?= $current == 'pelanggan.php' ? 'active-link' : '' ?>">Kustomer</a>
         <a href="supplier.php" class="<?= $current == 'supplier.php' ? 'active-link' : '' ?>">Supplier</a>
-        <a href="pelanggan.php" class="<?= $current == 'pelanggan.php' ? 'active-link' : '' ?>">Pelanggan</a>
         <a href="group.php" class="<?= $current == 'group.php' ? 'active-link' : '' ?>">Grup</a>
     </div>
     </div>

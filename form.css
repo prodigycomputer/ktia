@@ -39,11 +39,19 @@
     }
 
     /* Tambah - Biru */
+    #btnSave {
+        background-color: #0099ff;
+    }
+    #btnSave:hover {
+        background-color: #0089d9;
+    }
+
+
     #btnTambah {
-        background-color: #007bff;
+        background-color: #30b850;
     }
     #btnTambah:hover {
-        background-color: #0069d9;
+        background-color: #17b42c;
     }
 
     /* Edit - Kuning */
@@ -64,10 +72,10 @@
     }
 
     /* Cancel - Abu gelap */
-    #btnCancel {
+    #btnBatal {
         background-color: #6c757d;
     }
-    #btnCancel:hover {
+    #btnBatal:hover {
         background-color: #5a6268;
     }
 
@@ -171,6 +179,12 @@
         border-radius: 4px;
     }
 
+    .search-input {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
     .search-kode {
         width: 150px;
     }
@@ -238,31 +252,56 @@
     }
 
     .dropdown-result {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: white;
-        border: 1px solid #ccc;
-        z-index: 100;
-        max-height: 200px;
-        overflow-y: auto;
-        width: 100%;
-        font-size: 13px;
-        display: none;
-        border-radius: 0 0 6px 6px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 999;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    font-size: 12px;
+    display: none;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
 
-        .dropdown-result div {
-        padding: 8px 10px;
-        cursor: pointer;
-        transition: background 0.2s;
-        }
+    .dropdown-result div {
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    }
 
-        .dropdown-result div:hover {
-        background-color: #f5f5f5;
-        }
+    .dropdown-result div:hover {
+    background-color: #f5f5f5;
+    }
 
+    .dropdown-barang {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 999;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 300px;
+    font-size: 12px;
+    display: none;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .dropdown-barang div {
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    }
+
+    .dropdown-barang     div:hover {
+    background-color: #f5f5f5;
+    }
 
     @media (max-width: 768px) {
         .hamburger {

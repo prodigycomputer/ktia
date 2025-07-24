@@ -6,6 +6,13 @@ $query = $conn->query("SELECT jmlharga FROM zconfig LIMIT 1");
 $row = $query ? $query->fetch_assoc() : null;
 $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
+$grupResult = $conn->query("SELECT kodegrup FROM zgrup ORDER BY LENGTH(kodegrup) DESC");
+$kodegrupList = [];
+while ($g = $grupResult->fetch_assoc()) {
+    $kodegrupList[] = $g['kodegrup'];
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +42,14 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 <input type="hidden" name="aksi" id="aksi" value="">    
 
                 <div class="form-atas">
+                    <label for="kodebrg">Grup</label>
+                    <div class="search-input">
+                        <div class="search-group">
+                            <input type="text" name="searchGrup" id="searchGrup" class="medium-input" oninput="filterDropdown()" style="text-transform: uppercase;">
+                            <div id="dropdownGrup" class="dropdown-barang"></div>
+                        </div>
+                    </div>
+
                     <label for="kodebrg">Kode Barang</label>
                     <div style="display: flex; gap: 5px; align-items: center;">
                         <input type="text" name="kodebrg" id="kodebrg" class="long-input" required style="text-transform: uppercase;">
@@ -73,11 +88,11 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                     <div id="hiddenHargaFields"></div>
                 </div>
 
-    
+            <button id="btnSave" type="submit" onclick="document.getElementById('aksi').value='simpan'">Simpan<button>                
             <button id="btnTambah" type="submit" onclick="document.getElementById('aksi').value='tambah'">Tambah</button>
-            <button id="btnEdit" type="submit" onclick="document.getElementById('aksi').value='update'">Edit</button>
+            <button id="btnEdit" type="submit" onclick="document.getElementById('aksi').value='update'">Ubah</button>
             <button id="btnHapus" type="submit" onclick="document.getElementById('aksi').value='hapus'">Hapus</button>
-            <button id="btnCancel" type="button" onclick="cancelEdit()">Cancel</button>
+            <button id="btnCancel" type="button" onclick="cancelEdit()">Batal</button>
 
         </form>
     </main>
@@ -101,39 +116,12 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             <span onclick="closeFilterPopup()" style="cursor:pointer; font-weight:bold; font-size:16px; color:#666;">&times;</span>
             </div>
 
-            <div style="
-                max-height: 60vh;
-                overflow-y: auto;
-                overflow-x: auto;
-                border: 1px solid #ccc;
-            ">
-                <table style="min-width: 1200px; border-collapse: collapse; font-size: 12px;">
-                <thead style="background:#f2f2f2;">
-                <tr>
-                    <th style="padding:6px; border:1px solid #ccc;">Kode</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Nama</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Satuan1</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Isi1</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Satuan2</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Isi2</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Satuan3</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga1</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga2</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga3</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga4</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga5</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga6</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga7</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga8</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga9</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga10</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga11</th>
-                    <th style="padding:6px; border:1px solid #ccc;">Harga12</th>
-
-                </tr>
-                </thead>
-                <tbody id="popupList"></tbody>
-            </table>
+            <div style="max-height: 60vh; overflow: auto; border: 1px solid #ccc;">
+                <table style="min-width: 800px; border-collapse: collapse; font-size: 12px;">
+                    <thead style="background:#f2f2f2;">
+                    </thead>
+                    <tbody id="popupList"></tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -162,12 +150,11 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             </div>
 
             <!-- Scrollable container -->
-            <div style="flex:1; overflow-x:auto; overflow-y:auto; padding-bottom:10px;">
+            <div style="flex:1; overflow-x:auto; overflow-y:auto;">
                 <div id="hargaInputsContainer" style="
                     display: flex;
-                    gap: 40px;
+                    gap: 20px;
                     min-width: max-content;
-                    padding-bottom: 10px;
                 "></div>
             </div>
 
@@ -240,42 +227,29 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
             if (!dataList || dataList.length === 0) return;
 
-            // Ambil jumlah harga tertinggi dari data pertama
-            const hargaFields = [];
-            for (let i = 1; i <= 50; i++) {
-                if (`harga${i}` in dataList[0]) {
-                    hargaFields.push(`harga${i}`);
-                } else {
-                    break;
-                }
-            }
+            // Deteksi semua kolom harga yang ada dalam data
+            const hargaFields = Object.keys(dataList[0])
+                .filter(key => key.toLowerCase().startsWith('harga') && dataList[0][key] !== undefined);
 
             const fixedFields = ['kodebrg', 'namabrg', 'satuan1', 'isi1', 'satuan2', 'isi2', 'satuan3'];
 
-            // Buat header baru
+            // Header
             const headerRow = document.createElement('tr');
             [...fixedFields, ...hargaFields].forEach(field => {
                 const th = document.createElement('th');
                 th.textContent = field.toUpperCase();
-                th.style.padding = '6px';
+                th.style.padding = '4px';
                 th.style.border = '1px solid #ccc';
-                th.style.background = '#f2f2f2';
+                th.style.background = '#f9f9f9';
+                th.style.fontSize = '11px';
                 headerRow.appendChild(th);
             });
             thead.appendChild(headerRow);
 
-            // Isi data row
+            // Data
             dataList.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.style.cursor = 'pointer';
-                tr.style.transition = 'background 0.2s';
-
-                tr.addEventListener('mouseover', () => {
-                    tr.style.backgroundColor = '#f0f0f0';
-                });
-                tr.addEventListener('mouseout', () => {
-                    tr.style.backgroundColor = '#fff';
-                });
                 tr.addEventListener('click', () => {
                     closeFilterPopup();
                     pilihBarang(item);
@@ -284,8 +258,9 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 [...fixedFields, ...hargaFields].forEach(field => {
                     const td = document.createElement('td');
                     td.textContent = item[field] || '';
-                    td.style.padding = '6px';
+                    td.style.padding = '4px';
                     td.style.border = '1px solid #ccc';
+                    td.style.fontSize = '11px';
                     tr.appendChild(td);
                 });
 
@@ -295,6 +270,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('popupFilter').style.display = 'block';
         }
 
+
         function closeFilterPopup() {
             document.getElementById('popupFilter').style.display = 'none';
         }
@@ -302,13 +278,13 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
         function triggerSearch() {
             if (!inputSearch) {
-                showToast('Isi KODE atau NAMA terlebih dahulu!', '#ffc107');
+                showToast('Isi kode atau nama terlebih dahulu!', '#dc3545');
                 return;
             }
 
             const keyword = inputSearch.value.trim().toUpperCase();
             if (!keyword) {
-                showToast('Kolom pencarian tidak boleh kosong!', '#ffc107');
+                showToast('Kolom pencarian tidak boleh kosong!', '#dc3545');
                 return;
             }
 
@@ -333,13 +309,14 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         function pilihBarang(data) {
             document.getElementById('kodebrg').value = data.kodebrg;
             document.getElementById('namabrg').value = data.namabrg;
-            for (let i = 1; i <= 50; i++) {
-                if (data[`harga${i}`] !== undefined) {
-                    hargaData.push(data[`harga${i}`]);
-                } else {
-                    break;
+
+            hargaData = {};
+            Object.keys(data).forEach(key => {
+                if (key.startsWith('harga')) {
+                    hargaData[key] = data[key];
                 }
-            }
+            });
+
 
             document.getElementById('satuan1').value = data.satuan1;
             document.getElementById('isi1').value = data.isi1;
@@ -373,12 +350,21 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnHapus').disabled = false;
             document.getElementById('btnCancel').disabled = false;
 
+            const kodebrg = data.kodebrg;
+            const kodegrupList = <?= json_encode($kodegrupList) ?>;
+
+            const matchedGrup = kodegrupList.find(grup => kodebrg.startsWith(grup));
+            document.getElementById('searchGrup').value = matchedGrup || '';
+
+
             inputSearch.value = '';
             inputSearch.disabled = true;
             document.getElementById('searchbtn').disabled = true;
             dropdown.style.display = 'none';
-
+            generateHargaInputs(<?= $jmlharga ?>);
             closeFilterPopup();
+
+
         }
 
         function checkIsi1() {
@@ -413,7 +399,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         function validateForm() {
             const satuan1 = document.getElementById('satuan1').value.trim();
             if (!satuan1) {
-                alert('Satuan 1 wajib diisi.');
+                showToast('Satuan 1 wajib diisi!.', '#dc3545');
                 return false;
             }
             return true;
@@ -443,7 +429,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             inputSearch = null;
 
             // ✅ Reset hargaData dan jumlahHarga ke default
-            hargaData = Array(<?= $jmlharga ?>).fill("");
+            hargaData = {};
             generateHargaInputs(<?= $jmlharga ?>);
 
 
@@ -455,7 +441,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             const file = input.files[0];
             if (file) {
                 if (!file.name.toLowerCase().endsWith('.png')) {
-                    alert("Hanya file JPG yang diperbolehkan!");
+                    showToast('Hanya file JPG yang diperbolehkan!','#dc3545');
                     input.value = '';
                     return;
                 }
@@ -471,7 +457,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                     .then(response => response.json())
                     .then(data => {
                         if (data.exists) {
-                            alert('Kode Barang sudah terdaftar!');
+                            showToast('Kode Barang sudah terdaftar!', '#dc3545');
                             this.value = '';
                             this.focus();
                         }
@@ -518,74 +504,133 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
         function generateHargaInputs(jumlah) {
             const container = document.getElementById('hargaInputsContainer');
-            const perKolom = 6;
-
-            // Paksa kelipatan 6
-            if (jumlah % perKolom !== 0) {
-                jumlah = Math.ceil(jumlah / perKolom) * perKolom;
-            }
-
-            const totalKolom = Math.ceil(jumlah / perKolom);
-            const existing = hargaData.slice(0, jumlah);
-            while (existing.length < jumlah) existing.push("");
-
             container.innerHTML = '';
-            const kolomArr = [];
 
-            for (let i = 0; i < totalKolom; i++) {
-                const col = document.createElement('div');
-                col.style.display = 'flex';
-                col.style.flexDirection = 'column';
-                col.style.gap = '10px';
-                kolomArr.push(col);
-                container.appendChild(col);
-            }
+            container.style.display = 'grid';
+            container.style.gridTemplateColumns = 'repeat(3, auto)';
+            container.style.gap = '4px';
 
-            for (let i = 0; i < jumlah; i++) {
-                const colIndex = Math.floor(i / perKolom);
-                const wrapper = document.createElement('div');
-                wrapper.style.display = 'flex';
-                wrapper.style.alignItems = 'center';
-                wrapper.style.gap = '8px';
+            for (let i = 1; i <= jumlah; i++) {
+                ['' + i, '' + i + i, '' + i + i + i].forEach(suffix => {
+                    const key = 'harga' + suffix;
+                    if (!(key in hargaData)) hargaData[key] = '';
 
-                const label = document.createElement('label');
-                label.textContent = `Harga ${i + 1}`;
-                label.style.fontSize = '12px';
-                label.style.width = '60px';
+                    const wrapper = document.createElement('div');
+                    wrapper.style.display = 'flex';
+                    wrapper.style.alignItems = 'center';
+                    wrapper.style.gap = '10px';
 
-                const input = document.createElement('input');
-                input.type = 'number';
-                input.step = '0.01';
-                input.id = `hargaInput${i}`;
-                input.value = existing[i];
-                input.style.padding = '6px 8px';
-                input.style.fontSize = '12px';
-                input.style.border = '1px solid #ccc';
-                input.style.borderRadius = '4px';
-                input.style.width = '120px';
+                    const label = document.createElement('label');
+                    label.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+                    label.style.fontSize = '12px';
+                    label.style.width = '60px';
 
-                wrapper.appendChild(label);
-                wrapper.appendChild(input);
-                kolomArr[colIndex].appendChild(wrapper);
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.step = '0.01';
+                    input.id = key;
+                    input.name = key;
+                    input.value = hargaData[key] !== undefined ? hargaData[key] : '';
+                    input.style.padding = '4px 4px';
+                    input.style.fontSize = '12px';
+                    input.style.border = '1px solid #ccc';
+                    input.style.borderRadius = '4px';
+                    input.style.width = '120px';
+
+                    wrapper.appendChild(label);
+                    wrapper.appendChild(input);
+                    container.appendChild(wrapper);
+                });
             }
         }
 
         function simpanHarga() {
             const jumlah = parseInt("<?= $jmlharga ?>");
-            let kosong = false;
+            hargaData = {};
+            let adaIsi = false;
 
-            for (let i = 0; i < jumlah; i++) {
-                const val = document.getElementById(`hargaInput${i}`).value.trim();
-                if (val === '') kosong = true;
-                hargaData.push(val);
+            for (let base = 1; base <= jumlah; base++) {
+                for (let level = 1; level <= 3; level++) {
+                    const key = 'harga' + String(base).repeat(level);
+                    const input = document.getElementById(key);
+                    if (input) {
+                        const val = input.value.trim();
+                        if (val !== '') adaIsi = true;
+                        hargaData[key] = val || 0; // Nilai kosong = 0
+                    }
+                }
             }
 
-            if (kosong) {
-                alert("Semua harga harus diisi!");
+            if (!adaIsi) {
+                showToast('Minimal satu harga harus diisi!', '#dc3545');
                 return;
             }
+
             closeHargaPopup();
         }
+
+        function filterDropdown() {
+            const keyword = document.getElementById('searchGrup').value.toUpperCase().trim();
+            const dropdown = document.getElementById('dropdownGrup');
+
+            if (keyword === '') {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            fetch(`filter_grup.php?keyword=${encodeURIComponent(keyword)}`)
+                .then(res => res.json())
+                .then(data => {
+                    dropdown.innerHTML = '';
+                    if (data.length === 0) {
+                    dropdown.style.display = 'none';
+                    return;
+                    }
+
+                    data.forEach(grup => {
+                    const div = document.createElement('div');
+                    div.textContent = `${grup.kodegrup} - ${grup.namagrup}`;
+                    div.onclick = () => {
+                        // Isi form input
+                        document.getElementById('searchGrup').value = grup.kodegrup;
+                        dropdown.style.display = 'none';
+
+                        // Reset tombol mode Edit
+                        setEditModeButtons();
+                    };
+                    dropdown.appendChild(div);
+                    });
+
+                    dropdown.style.display = 'block';
+                });
+            }
+
+            document.getElementById('barangForm').addEventListener('submit', function () {
+                const hiddenDiv = document.getElementById('hiddenHargaFields');
+                hiddenDiv.innerHTML = '';
+                Object.keys(hargaData).forEach(key => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = hargaData[key];
+                    hiddenDiv.appendChild(input);
+                });
+                
+                setTimeout(() => {
+                    initializeFormButtons();
+                    document.getElementById('barangForm').reset();
+                    document.getElementById('searchKode').disabled = false;
+                    document.getElementById('searchNama').disabled = false;
+                    document.getElementById('searchKode').value = '';
+                    document.getElementById('searchNama').value = '';
+                    document.getElementById('searchbtn').disabled = false;
+                }, 100);
+            });
+
+            const popup = document.getElementById('popupNotif');
+            if (popup) {
+                popup.addEventListener('click', () => popup.style.display = 'none');
+            }
     </script>
     <script src="notif.js"></script>
 </body>
