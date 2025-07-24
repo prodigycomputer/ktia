@@ -2,6 +2,9 @@
 session_start();
 
 include 'koneksi.php';
+$query = $conn->query("SELECT jmlharga FROM zconfig LIMIT 1");
+$row = $query ? $query->fetch_assoc() : null;
+$jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
 ?>
 
@@ -12,292 +15,7 @@ include 'koneksi.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Barang</title>
     <link rel="stylesheet" href="navbar.css">
-    <style>
-    * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    }
-    body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        display: flex;
-        height: 100vh;
-        background: #f6f8fb;
-        color: #333;
-    }
-    main {
-        padding: 1rem;
-        flex: 1;
-        overflow-y: auto;
-    }
-    h2 {
-        margin-bottom: 10px;
-        font-size: 20px;
-    }
-
-    form {
-        background: #fff;
-        padding: 12px;
-        border-radius: 6px;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-    }
-
-    /* Umumkan dulu gaya dasar semua tombol dalam form */
-    form button {
-        color: white;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s ease;
-        padding: 6px 12px;
-        font-size: 13px;
-        border-radius: 4px;
-    }
-
-    /* Tambah - Biru */
-    #btnTambah {
-        background-color: #007bff;
-    }
-    #btnTambah:hover {
-        background-color: #0069d9;
-    }
-
-    /* Edit - Kuning */
-    #btnEdit {
-        background-color: #ffc107;
-        color: #333;
-    }
-    #btnEdit:hover {
-        background-color: #e0a800;
-    }
-
-    /* Hapus - Merah */
-    #btnHapus {
-        background-color: #dc3545;
-    }
-    #btnHapus:hover {
-        background-color: #c82333;
-    }
-
-    /* Cancel - Abu gelap */
-    #btnCancel {
-        background-color: #6c757d;
-    }
-    #btnCancel:hover {
-        background-color: #5a6268;
-    }
-
-
-    button:disabled {
-        background-color: #ccc !important;
-        color: #666 !important;
-        cursor: not-allowed !important;
-    }
-
-    .form-atas {
-        display: grid;
-        grid-template-columns: 0.3fr 3fr;
-        gap: 4px 10px;
-        background: #fff;
-        padding: 12px;
-    }
-
-    .form-atas label {
-        display: flex;
-        align-items: center;
-        font-size: 12px;
-        font-weight: 600;
-    }
-    .form-atas input {
-        padding: 4px;
-        font-size: 12px;
-        width: 100%;
-    }
-    .form-atas input.short-input { width: 80px; }
-    .form-atas input.medium-input { width: 120px; }
-    .form-atas input.long-input { width: 220px; }
-    .form-atas input.lesslong-input { width: 250px; }
-    .form-atas input.verylong-input { width: 300px; }
-    .form-atas button {
-        grid-column: span 2;
-        background-color: #0acf45ff;
-        color: white;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s ease;
-        padding: 5px;
-        font-size: 12px;
-    }
-
-    .form-bawah {
-        display: flex;
-        gap: 4px 60px;
-        background: #fff;
-        padding: 12px;
-        margin-top: -20px;
-    }
-
-    .harga-container {
-        display: grid;
-        grid-template-columns: 2.35fr 3fr;
-        gap: 4px 10px;
-        background: #fff;
-    }
-
-    .harga-container label {
-        display: flex;
-        align-items: center;
-        font-size: 12px;
-        font-weight: 600;
-    }
-    .harga-container input {
-        padding: 4px;
-        font-size: 12px;
-        width: 100%;
-    }
-    .harga-container input.short-input { width: 80px; }
-    .harga-container input.medium-input { width: 120px; }
-    .harga-container input.long-input { width: 220px; }
-    .harga-container input.lesslong-input { width: 250px; }
-    .harga-container input.verylong-input { width: 300px; }
-    a {
-        text-decoration: none;
-        color: #007bff;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    .no-data {
-        text-align: center;
-        padding: 20px;
-        color: #888;
-    }
-
-    .search-bar-horizontal {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        margin-bottom: 15px;
-    }
-
-    .search-bar-horizontal input {
-        padding: 4px 8px;
-        font-size: 12px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .search-kode {
-        width: 150px;
-    }
-
-    .search-nama {
-        width: 250px;
-    }
-
-    #searchbtn {
-        padding: 4px 12px;
-        font-size: 12px;
-        border-radius: 4px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-
-    #searchbtn:hover {
-        background-color: #218838;
-    }
-
-
-    .hamburger {
-        display: none;
-        font-size: 20px;
-        background-color: #ffffff;
-        color: #333;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        padding: 4px 10px;
-        margin-bottom: 10px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        cursor: pointer;
-    }
-
-    .overlay {
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        height: 100%;
-        width: 100%;
-        background: rgba(0,0,0,0.3);
-        z-index: 1000;
-    }
-
-    .sidebar {
-        transition: left 0.3s ease;
-    }
-
-    .sidebar.active {
-        left: 0 !important;
-    }
-
-    .overlay.active {
-        display: block;
-    }
-
-    @media (max-width: 768px) {
-        .hamburger {
-            display: inline-block;
-            margin-left: 0px;
-        }
-
-        .sidebar {
-            position: fixed;
-            left: -250px;
-            top: 0;
-            height: 100%;
-            width: 220px;
-            background: #2c3e50;
-            z-index: 1100;
-            padding-top: 60px;
-        }
-
-        main {
-            padding-top: 20px;
-        }
-
-        .form-atas,
-        .form-bawah,
-        .harga-container,
-        .search-bar-horizontal {
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
-        .form-atas input,
-        .harga-container input {
-            width: 100% !important;
-        }
-
-        #btnTambah, #btnEdit, #btnHapus {
-            width: 100%;
-            margin-bottom: 5px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        #hargaInputsContainer {
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        #hargaInputsContainer > div {
-            width: 48%;
-        }
-    }
-
-
-
-    </style>
+    <link rel="stylesheet" href="form.css">
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -307,7 +25,7 @@ include 'koneksi.php';
     <main>
         <h2>Data Barang</h2>
 
-            <div class="search-bar-horizontal">
+            <div class="search-bar">
                 <input type="text" id="searchKode" class="search-kode" placeholder="Kode barang" oninput="handleInput('kode')" style="text-transform: uppercase;">
                 <input type="text" id="searchNama" class="search-nama" placeholder="Nama barang" oninput="handleInput('nama')" style="text-transform: uppercase;">
                 <button type="button" id="searchbtn" onclick="triggerSearch()">🔍 Cari</button>
@@ -352,7 +70,6 @@ include 'koneksi.php';
                 </div>
                 <div class="form-bawah">
                     <button type="button" onclick="openHargaPopup()" style="margin-top: 10px; background-color:#17a2b8; color:white; padding:6px 14px; border:none; border-radius:4px;">💰 Harga</button>
-                    <input type="hidden" name="jumlahHarga" id="jumlahHarga" value="12">
                     <div id="hiddenHargaFields"></div>
                 </div>
 
@@ -444,13 +161,6 @@ include 'koneksi.php';
                 <span onclick="closeHargaPopup()" style="cursor:pointer; font-size:18px; font-weight:bold;">&times;</span>
             </div>
 
-            <!-- Jumlah Harga Input -->
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
-                <label for="jumlahHargaInput" style="font-size:13px; font-weight:600;">Jumlah Harga:</label>
-                <input type="number" id="jumlahHargaInput" value="12" min="2" max="50" step="1" onchange="generateHargaInputs()"
-                    style="padding:6px 8px; font-size:12px; border:1px solid #ccc; border-radius:4px; width:80px;" />
-            </div>
-
             <!-- Scrollable container -->
             <div style="flex:1; overflow-x:auto; overflow-y:auto; padding-bottom:10px;">
                 <div id="hargaInputsContainer" style="
@@ -495,6 +205,7 @@ include 'koneksi.php';
         // panggil saat halaman dimuat
         let inputSearch = null;
         let searchBtn = document.getElementById('searchbtn')
+        let hargaData = []
 
         function handleInput(type) {
             const kodeInput = document.getElementById('searchKode');
@@ -622,7 +333,6 @@ include 'koneksi.php';
         function pilihBarang(data) {
             document.getElementById('kodebrg').value = data.kodebrg;
             document.getElementById('namabrg').value = data.namabrg;
-            hargaData = [];
             for (let i = 1; i <= 50; i++) {
                 if (data[`harga${i}`] !== undefined) {
                     hargaData.push(data[`harga${i}`]);
@@ -630,8 +340,6 @@ include 'koneksi.php';
                     break;
                 }
             }
-            document.getElementById('jumlahHarga').value = hargaData.length || 12;
-
 
             document.getElementById('satuan1').value = data.satuan1;
             document.getElementById('isi1').value = data.isi1;
@@ -735,9 +443,9 @@ include 'koneksi.php';
             inputSearch = null;
 
             // ✅ Reset hargaData dan jumlahHarga ke default
-            hargaData = Array(12).fill("");
-            document.getElementById('jumlahHarga').value = 12;
-            document.getElementById('jumlahHargaInput').value = 12;
+            hargaData = Array(<?= $jmlharga ?>).fill("");
+            generateHargaInputs(<?= $jmlharga ?>);
+
 
             // Jika popup harga sedang terbuka, juga perbarui tampilannya
             generateHargaInputs();
@@ -795,40 +503,26 @@ include 'koneksi.php';
             }, 100);
         });
         
-        function showToast(message, bgColor = '#28a745') {
-            const toast = document.getElementById('toast');
-            toast.innerText = message;
-            toast.style.backgroundColor = bgColor;
-            toast.style.display = 'block';
-
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 3000);
-        }
-
-        // ✅ LOGIKA HARGA DINAMIS
-        let hargaData = Array(12).fill("");
 
         function openHargaPopup() {
-            const jumlah = parseInt(document.getElementById('jumlahHarga').value);
-            document.getElementById('jumlahHargaInput').value = jumlah;
-            generateHargaInputs();
+            const jumlah = parseInt("<?= $jmlharga ?>");
+            generateHargaInputs(jumlah);
             document.getElementById('popupHarga').style.display = 'block';
         }
+
+        
 
         function closeHargaPopup() {
             document.getElementById('popupHarga').style.display = 'none';
         }
 
-        function generateHargaInputs() {
+        function generateHargaInputs(jumlah) {
             const container = document.getElementById('hargaInputsContainer');
-            let jumlah = parseInt(document.getElementById('jumlahHargaInput').value);
             const perKolom = 6;
 
             // Paksa kelipatan 6
             if (jumlah % perKolom !== 0) {
                 jumlah = Math.ceil(jumlah / perKolom) * perKolom;
-                document.getElementById('jumlahHargaInput').value = jumlah;
             }
 
             const totalKolom = Math.ceil(jumlah / perKolom);
@@ -877,8 +571,7 @@ include 'koneksi.php';
         }
 
         function simpanHarga() {
-            const jumlah = parseInt(document.getElementById('jumlahHargaInput').value);
-            hargaData = [];
+            const jumlah = parseInt("<?= $jmlharga ?>");
             let kosong = false;
 
             for (let i = 0; i < jumlah; i++) {
@@ -891,48 +584,9 @@ include 'koneksi.php';
                 alert("Semua harga harus diisi!");
                 return;
             }
-
-            document.getElementById('jumlahHarga').value = jumlah;
             closeHargaPopup();
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const status = params.get('status');
-
-            if (status) {
-                let message = '';
-                let color = '#28a745';
-
-                switch (status) {
-                    case 'tambah':
-                        message = 'Data berhasil ditambahkan!';
-                        break;
-                    case 'update':
-                        message = 'Data berhasil diperbarui!';
-                        break;
-                    case 'hapus':
-                        message = 'Data berhasil dihapus!';
-                        break;
-                    case 'error':
-                        message = 'Terjadi kesalahan saat memproses data.';
-                        color = '#dc3545';
-                        break;
-                    case 'duplikat':
-                        message = 'Kode Barang sudah terdaftar!';
-                        color = '#ffc107';
-                        break;
-                    default:
-                        return;
-                }
-
-                showToast(message, color);
-
-                // Hapus parameter dari URL
-                history.replaceState(null, '', window.location.pathname);
-            }
-        });
     </script>
-
+    <script src="notif.js"></script>
 </body>
 </html>

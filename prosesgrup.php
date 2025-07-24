@@ -7,37 +7,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kodegrup = trim($_POST['kodegrup'] ?? '');
     $namagrup = trim($_POST['namagrup'] ?? '');
 
-    try {
-        if ($aksi === 'tambah') {
-            // Cek apakah kodegrup sudah ada
-            $cek = mysqli_query($conn, "SELECT * FROM zgrup WHERE kodegrup = '$kodegrup'");
-            if (mysqli_num_rows($cek) > 0) {
-                throw new Exception("Kode grup '$kodegrup' sudah digunakan.");
-            }
-
-            $query = "INSERT INTO zgrup (kodegrup, namagrup) VALUES ('$kodegrup', '$namagrup')";
-            mysqli_query($conn, $query);
-            $_SESSION['notif'] = ['type' => 'success', 'message' => 'Data berhasil ditambahkan.'];
-
-        } elseif ($aksi === 'update') {
-            $query = "UPDATE zgrup SET namagrup='$namagrup' WHERE kodegrup='$kodegrup'";
-            mysqli_query($conn, $query);
-            $_SESSION['notif'] = ['type' => 'success', 'message' => 'Data berhasil diperbarui.'];
-
-        } elseif ($aksi === 'hapus') {
-            $query = "DELETE FROM zgrup WHERE kodegrup='$kodegrup'";
-            mysqli_query($conn, $query);
-            $_SESSION['notif'] = ['type' => 'success', 'message' => 'Data berhasil dihapus.'];
-
-        } else {
-            throw new Exception("Aksi tidak valid!");
-        }
-
-    } catch (Exception $e) {
-        $_SESSION['notif'] = ['type' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()];
+    if (!$kodegrup || !$namagrup) {
+        header("Location: group.php?status=error");
+        exit;
     }
 
-    header("Location: group.php");
+    switch ($aksi) {
+        case 'tambah':
+            $cek = mysqli_query($conn, "SELECT 1 FROM zgrup WHERE kodegrup = '$kodegrup'");
+            if (mysqli_num_rows($cek) > 0) {
+                header("Location: group.php?status=duplikat");
+                exit;
+            }
+            $query = "INSERT INTO zgrup (kodegrup, namagrup) VALUES ('$kodegrup', '$namagrup')";
+            break;
+
+        case 'update':
+            $query = "UPDATE zgrup SET namagrup = '$namagrup' WHERE kodegrup = '$kodegrup'";
+            break;
+
+        case 'hapus':
+            $query = "DELETE FROM zgrup WHERE kodegrup = '$kodegrup'";
+            break;
+
+        default:
+            header("Location: group.php?status=error");
+            exit;
+    }
+
+    if (mysqli_query($conn, $query)) {
+        header("Location: group.php?status=$aksi");
+    } else {
+        header("Location: group.php?status=error");
+    }
     exit;
 }
 ?>

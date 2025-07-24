@@ -10,225 +10,7 @@ include 'koneksi.php';
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Data Group</title>
   <link rel="stylesheet" href="navbar.css" />
-  <style>
-    /* CSS yang sudah kamu buat (tidak berubah) */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      height: 100vh;
-      background: #f6f8fb;
-      color: #333;
-    }
-    main {
-      padding: 1rem;
-      flex: 1;
-      overflow-y: auto;
-    }
-    h2 {
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
-    form {
-      background: #fff;
-      padding: 12px;
-      border-radius: 6px;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-    }
-    form button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s ease;
-      padding: 6px;
-      font-size: 13px;
-      border-radius: 4px;
-    }
-    button:disabled {
-      background-color: #ccc !important;
-      color: #666 !important;
-      cursor: not-allowed !important;
-    }
-    .form-atas {
-      display: grid;
-      grid-template-columns: 0.3fr 3fr;
-      gap: 4px 10px;
-      background: #fff;
-      padding: 12px;
-    }
-    .form-atas label {
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .form-atas input {
-      padding: 4px;
-      font-size: 12px;
-      width: 100%;
-    }
-    .form-atas input.short-input { width: 80px; }
-    .form-atas input.medium-input { width: 120px; }
-    .form-atas input.long-input { width: 220px; }
-    .form-atas input.verylong-input { width: 300px; }
-    .form-atas button {
-      background-color: #0acf45ff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      padding: 5px;
-      font-size: 12px;
-    }
-    .search-bar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
-      position: relative;
-      flex-wrap: wrap;
-    }
-    .search-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      position: relative;
-    }
-    .search-group input {
-      padding: 5px;
-      font-size: 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .input-group {
-      display: flex;
-      position: relative;
-      width: 250px;
-      background: white;
-      border-radius: 6px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      overflow: hidden;
-      border: 1px solid #ccc;
-    }
-    .input-group input {
-      border: none;
-      padding: 4px 6px;
-      font-size: 12px;
-      flex: 1;
-      outline: none;
-    }
-    .input-group button {
-      background-color: #007bff;
-      border: none;
-      color: white;
-      padding: 0 12px;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.2s ease-in-out;
-    }
-    .input-group button:hover {
-      background-color: #0056b3;
-    }
-    .dropdown-result {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: white;
-      border: 1px solid #ccc;
-      z-index: 100;
-      max-height: 200px;
-      overflow-y: auto;
-      width: 100%;
-      font-size: 13px;
-      display: none;
-      border-radius: 0 0 6px 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .dropdown-result div {
-      padding: 8px 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .dropdown-result div:hover {
-      background-color: #f5f5f5;
-    }
-    .popup {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: #4caf50;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      z-index: 1000;
-      animation: fadeOut 3s forwards;
-      font-size: 13px;
-    }
-    .popup.error {
-      background: #e74c3c;
-    }
-
-    form button {
-        color: white;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s ease;
-        padding: 6px 12px;
-        font-size: 13px;
-        border-radius: 4px;
-    }
-
-    /* Tambah - Biru */
-    #btnTambah {
-        background-color: #007bff;
-    }
-    #btnTambah:hover {
-        background-color: #0069d9;
-    }
-
-    /* Edit - Kuning */
-    #btnEdit {
-        background-color: #ffc107;
-        color: #333;
-    }
-    #btnEdit:hover {
-        background-color: #e0a800;
-    }
-
-    /* Hapus - Merah */
-    #btnHapus {
-        background-color: #dc3545;
-    }
-    #btnHapus:hover {
-        background-color: #c82333;
-    }
-
-    /* Cancel - Abu gelap */
-    #btnCancel {
-        background-color: #6c757d;
-    }
-    #btnCancel:hover {
-        background-color: #5a6268;
-    }
-
-    @keyframes fadeOut {
-      0%   { opacity: 1; }
-      80%  { opacity: 1; }
-      100% { opacity: 0; display: none; }
-    }
-    @media (max-width: 768px) {
-      .form-atas {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="form.css" />
 </head>
 <body>
 <?php include 'navbar.php'; ?>
@@ -237,10 +19,7 @@ include 'koneksi.php';
 
   <div class="search-bar">
     <div class="search-group">
-      <div class="input-group">
-        <input type="text" id="searchGrup" placeholder="Cari kode/nama grup..." oninput="filterDropdown()" style="text-transform: uppercase;">
-        <button type="button" id="searchbtn" onclick="triggerSearch()">🔍</button>
-      </div>
+      <input type="text" id="searchGrup" placeholder="Cari kode/nama grup..." class="input-group" oninput="filterDropdown()" style="text-transform: uppercase;">
       <div id="dropdownGrup" class="dropdown-result"></div>
     </div>
   </div>
@@ -263,12 +42,18 @@ include 'koneksi.php';
   </form>
 </main>
 
-<?php if (isset($_SESSION['notif'])): ?>
-  <div id="popupNotif" class="popup <?= $_SESSION['notif']['type'] ?>">
-    <?= $_SESSION['notif']['message'] ?>
-  </div>
-  <?php unset($_SESSION['notif']); ?>
-<?php endif; ?>
+<div id="toast" style="
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  color: white;
+  font-size: 13px;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+"></div>
 
 <script>
   function initializeFormButtons() {
@@ -307,13 +92,6 @@ include 'koneksi.php';
     document.getElementById('aksi').value = '';              // Kosongkan aksi
     document.getElementById('searchGrup').value = '';        // Kosongkan input search
     initializeFormButtons();                                 // Kembali ke mode default
-  }
-
-
-  function triggerSearch() {
-    const input = document.getElementById('searchGrup');
-    input.focus();
-    filterDropdown();
   }
 
   function forceUppercase(id) {
@@ -380,5 +158,6 @@ include 'koneksi.php';
     popup.addEventListener('click', () => popup.style.display = 'none');
   }
 </script>
+<script src="notif.js"></script>
 </body>
 </html>
