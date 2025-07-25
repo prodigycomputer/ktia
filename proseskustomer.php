@@ -7,73 +7,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $aksi = $_POST['aksi'] ?? '';
 
-    // --- Ambil semua field kolom harga (harga1, harga11, dst.) ---
-    // ---$hargaData = [];
-    //$resField = $conn->query("SHOW COLUMNS FROM zkustomer WHERE Field LIKE 'harga%'");
-    //while ($row = $resField->fetch_assoc()) {
-    //    $field = $row['Field'];
-    //    if (isset($_POST[$field]) && is_numeric($_POST[$field])) {
-    //        $hargaData[$field] = floatval($_POST[$field]);
-    //    } else {
-    //        $hargaData[$field] = 0;
-    //    }
-    //}
-
     // --- Ambil data utama dari form ---
-    $kodebrg       = mysqli_real_escape_string($conn, trim($_POST['kodebrg'] ?? ''));
-    $kodebrg_lama  = mysqli_real_escape_string($conn, trim($_POST['kodebrg_lama'] ?? $kodebrg));
-    $kodegrup      = mysqli_real_escape_string($conn, trim($_POST['searchGrup'] ?? ''));
-    $namabrg       = mysqli_real_escape_string($conn, trim($_POST['namabrg'] ?? ''));
-    $satuan1       = mysqli_real_escape_string($conn, trim($_POST['satuan1'] ?? '-'));
-    $satuan2       = mysqli_real_escape_string($conn, trim($_POST['satuan2'] ?? '-'));
-    $satuan3       = mysqli_real_escape_string($conn, trim($_POST['satuan3'] ?? '-'));
-    $isi1          = is_numeric($_POST['isi1']) ? floatval($_POST['isi1']) : 1;
-    $isi2          = is_numeric($_POST['isi2']) ? floatval($_POST['isi2']) : 1;
+    $kodekust       = mysqli_real_escape_string($conn, trim($_POST['kodekust'] ?? ''));
+    $kodekust_lama  = mysqli_real_escape_string($conn, trim($_POST['kodekust_lama'] ?? $kodekust));
+    $namakust       = mysqli_real_escape_string($conn, trim($_POST['namakust'] ?? ''));
+    $alamat       = mysqli_real_escape_string($conn, trim($_POST['alamat'] ?? '-'));
+    $kota       = mysqli_real_escape_string($conn, trim($_POST['kota'] ?? '-'));
+    $kodehrg       = mysqli_real_escape_string($conn, trim($_POST['kodehrg'] ?? '-'));
+    $ktp       = mysqli_real_escape_string($conn, trim($_POST['ktp'] ?? '-'));
+    $npwp       = mysqli_real_escape_string($conn, trim($_POST['npwp'] ?? '-'));
 
-    $fieldHarga = '';
-    $valueHarga = '';
-    $updateHarga = '';
-    foreach ($hargaData as $field => $val) {
-        $fieldHarga  .= ", `$field`";
-        $valueHarga  .= ", $val";
-        $updateHarga .= ", `$field` = $val";
-    }
 
     // --- Proses sesuai aksi ---
     if ($aksi === 'tambah') {
-        $cek = $conn->query("SELECT * FROM zstok WHERE kodebrg='$kodebrg'");
+        $cek = $conn->query("SELECT * FROM zkustomer WHERE kodekust='$kodekust'");
         if ($cek && $cek->num_rows > 0) {
-            header("Location: barang.php?status=duplikat");
+            header("Location: kustomer.php?status=duplikat");
             exit;
         }
 
-        $query = "INSERT INTO zstok 
-        (kodebrg, kodegrup, namabrg, satuan1, satuan2, satuan3, isi1, isi2$fieldHarga)
+        $query = "INSERT INTO zkustomer 
+        (kodekust, namakust, alamat, kota, kodehrg, ktp, npwp)
         VALUES 
-        ('$kodebrg', '$kodegrup', '$namabrg', '$satuan1', '$satuan2', '$satuan3', $isi1, $isi2$valueHarga)";
+        ('$kodekust', '$namakust', '$alamat', '$kota', '$kodehrg', '$ktp', '$npwp')";
 
     } elseif ($aksi === 'update') {
-        $query = "UPDATE zstok SET 
-            kodebrg = '$kodebrg',
-            kodegrup = '$kodegrup',
-            namabrg = '$namabrg',
-            satuan1 = '$satuan1',
-            satuan2 = '$satuan2',
-            satuan3 = '$satuan3',
-            isi1 = $isi1,
-            isi2 = $isi2
-            $updateHarga
-            WHERE kodebrg = '$kodebrg_lama'";
+        $query = "UPDATE zkustomer SET 
+            kodekust = '$kodekust',
+            namakust = '$namakust',
+            alamat = '$alamat',
+            kota = '$kota',
+            kodehrg = '$kodehrg',
+            ktp = '$ktp',
+            npwp = '$npwp'
+            WHERE kodekust = '$kodekust_lama'";
 
     } elseif ($aksi === 'hapus') {
-        $query = "DELETE FROM zstok WHERE kodebrg='$kodebrg'";
+        $query = "DELETE FROM zkustomer WHERE kodekust='$kodekust'";
     } else {
-        header("Location: barang.php?status=error");
+        header("Location: kustomer.php?status=error");
         exit;
     }
 
     if (mysqli_query($conn, $query)) {
-        header("Location: barang.php?status=$aksi");
+        header("Location: kustomer.php?status=$aksi");
     } else {
         echo "<h3>Query Gagal:</h3>";
         echo "<pre>$query</pre>";

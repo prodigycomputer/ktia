@@ -1,7 +1,7 @@
 <!-- navbar.php -->
 <?php
 $current = basename($_SERVER['PHP_SELF']);
-$isFile = in_array($current, ['barang.php', 'supplier.php', 'pelanggan.php', 'group.php']);
+$isFile = in_array($current, ['barang.php', 'supplier.php', 'kustomer.php', 'group.php']);
 $isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php']);
 $isLaporan = in_array($current, [
   'LaporanStok.php', 'LaporanPelanggan.php', 'LaporanSupplier.php',
@@ -28,7 +28,7 @@ $isLaporan = in_array($current, [
     <button class="dropdown-toggle <?= $isFile ? 'active-dropdown' : '' ?>" onclick="toggleDropdown('fileDropdown', this)">File ▾</button>
     <div class="dropdown-content <?= $isFile ? 'show' : '' ?>" id="fileDropdown">
         <a href="barang.php" class="<?= $current == 'barang.php' ? 'active-link' : '' ?>">Stok</a>
-        <a href="pelanggan.php" class="<?= $current == 'pelanggan.php' ? 'active-link' : '' ?>">Kustomer</a>
+        <a href="kustomer.php" class="<?= $current == 'kustomer.php' ? 'active-link' : '' ?>">Kustomer</a>
         <a href="supplier.php" class="<?= $current == 'supplier.php' ? 'active-link' : '' ?>">Supplier</a>
         <a href="group.php" class="<?= $current == 'group.php' ? 'active-link' : '' ?>">Grup</a>
     </div>
