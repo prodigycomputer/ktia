@@ -8,16 +8,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $aksi = $_POST['aksi'] ?? '';
 
     // --- Ambil semua field kolom harga (harga1, harga11, dst.) ---
-    $hargaData = [];
-    $resField = $conn->query("SHOW COLUMNS FROM zstok WHERE Field LIKE 'harga%'");
-    while ($row = $resField->fetch_assoc()) {
-        $field = $row['Field'];
-        if (isset($_POST[$field]) && is_numeric($_POST[$field])) {
-            $hargaData[$field] = floatval($_POST[$field]);
-        } else {
-            $hargaData[$field] = 0;
-        }
-    }
+    // ---$hargaData = [];
+    //$resField = $conn->query("SHOW COLUMNS FROM zkustomer WHERE Field LIKE 'harga%'");
+    //while ($row = $resField->fetch_assoc()) {
+    //    $field = $row['Field'];
+    //    if (isset($_POST[$field]) && is_numeric($_POST[$field])) {
+    //        $hargaData[$field] = floatval($_POST[$field]);
+    //    } else {
+    //        $hargaData[$field] = 0;
+    //    }
+    //}
 
     // --- Ambil data utama dari form ---
     $kodebrg       = mysqli_real_escape_string($conn, trim($_POST['kodebrg'] ?? ''));

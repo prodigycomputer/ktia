@@ -72,13 +72,23 @@
     }
 
     /* Cancel - Abu gelap */
-    #btnBatal {
+    #btnCancel {
         background-color: #6c757d;
     }
-    #btnBatal:hover {
+    #btnCancel:hover {
         background-color: #5a6268;
     }
 
+    .form-atas textarea.verylong-textarea {
+        width: 300px;           /* sama dengan input.verylong-input */
+        height: 50px;
+        font-size: 12px;
+        padding: 5px;
+        box-sizing: border-box;
+        resize: none;
+        text-align: left;           /* teks mulai dari kiri */
+        vertical-align: top;    /* teks mulai dari atas */
+    }
 
     button:disabled {
         background-color: #ccc !important;

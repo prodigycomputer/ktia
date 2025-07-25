@@ -39,10 +39,11 @@ while ($g = $grupResult->fetch_assoc()) {
             </div>
 
             <form id="barangForm" action="prosesbarang.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-                <input type="hidden" name="aksi" id="aksi" value="">    
+                <input type="hidden" name="aksi" id="aksi" value="">
+                <input type="hidden" name="kodebrg_lama" id="kodebrg_lama" value=""> 
 
                 <div class="form-atas">
-                    <label for="kodebrg">Grup</label>
+                    <label for="kodegrup">Grup</label>
                     <div class="search-input">
                         <div class="search-group">
                             <input type="text" name="searchGrup" id="searchGrup" class="medium-input" oninput="filterDropdown()" style="text-transform: uppercase;">
@@ -51,14 +52,10 @@ while ($g = $grupResult->fetch_assoc()) {
                     </div>
 
                     <label for="kodebrg">Kode Barang</label>
-                    <div style="display: flex; gap: 5px; align-items: center;">
-                        <input type="text" name="kodebrg" id="kodebrg" class="long-input" required style="text-transform: uppercase;">
-                    </div>
+                    <input type="text" name="kodebrg" id="kodebrg" class="long-input" required style="text-transform: uppercase;">
 
                     <label for="namabrg">Nama Barang</label>
-                    <div style="display: flex; gap: 5px; align-items: center;">
-                        <input type="text" name="namabrg" id="namabrg" class="verylong-input" required style="text-transform: uppercase;">
-                    </div>
+                    <input type="text" name="namabrg" id="namabrg" class="verylong-input" required style="text-transform: uppercase;">
 
                     <label for="satuan1">Satuan 1</label>
                     <input type="text" name="satuan1" id="satuan1" class="lesslong-input" required style="text-transform: uppercase;">
@@ -79,18 +76,18 @@ while ($g = $grupResult->fetch_assoc()) {
                     <div style="display: flex; gap: 5px; align-items: center;">
                         <input type="text" name="gambar" id="gambar" class="lesslong-input" readonly>
                         <input type="file" id="uploadInput" accept=".png" style="display: none;" onchange="handleFileUpload(this)">
-                        <button type="button" style="background: #218838;" onclick="document.getElementById('uploadInput').click();">Upload</button>
+                        <button type="button" id="upload" style="background: #218838;" onclick="document.getElementById('uploadInput').click();">Upload</button>
                     </div>
 
                 </div>
                 <div class="form-bawah">
-                    <button type="button" onclick="openHargaPopup()" style="margin-top: 10px; background-color:#17a2b8; color:white; padding:6px 14px; border:none; border-radius:4px;">💰 Harga</button>
+                    <button type="button" id= "btnHarga" onclick="openHargaPopup()" style="margin-top: 10px; background-color:#17a2b8; color:white; padding:6px 14px; border:none; border-radius:4px;">💰 Harga</button>
                     <div id="hiddenHargaFields"></div>
                 </div>
 
-            <button id="btnSave" type="submit" onclick="document.getElementById('aksi').value='simpan'">Simpan<button>                
-            <button id="btnTambah" type="submit" onclick="document.getElementById('aksi').value='tambah'">Tambah</button>
-            <button id="btnEdit" type="submit" onclick="document.getElementById('aksi').value='update'">Ubah</button>
+            <button id="btnSave" type="submit" onclick="prepareSave()">Simpan</button>
+            <button id="btnTambah" type="submit" onclick="initializeTambah() ">Tambah</button>
+            <button id="btnEdit" type="submit" onclick="initializeUbah()">Ubah</button>
             <button id="btnHapus" type="submit" onclick="document.getElementById('aksi').value='hapus'">Hapus</button>
             <button id="btnCancel" type="button" onclick="cancelEdit()">Batal</button>
 
@@ -187,8 +184,110 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('btnEdit').disabled = true;
             document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = true;
+            document.getElementById('btnSave').disabled = true;
+            document.getElementById('btnHarga').disabled = true;            
+
+            document.getElementById('searchGrup').disabled = true;
+            document.getElementById('kodebrg').disabled = true;
+            document.getElementById('namabrg').disabled = true;
+            document.getElementById('satuan1').disabled = true;
+            document.getElementById('isi1').disabled = true;
+            document.getElementById('gambar').disabled = true;
+            document.getElementById('upload').disabled = true;
         }
-        initializeFormButtons(); 
+        initializeFormButtons();
+
+        let currentstat = null;
+
+        function initializeTambah() {
+            currentstat = 'tambah';
+            showToast('Kamu sedang menambah data...', '#ffc107');
+
+            document.getElementById('btnTambah').disabled = true;
+            document.getElementById('btnEdit').disabled = true;
+            document.getElementById('btnHapus').disabled = true;
+            document.getElementById('btnCancel').disabled = false;
+            document.getElementById('btnSave').disabled = false;
+            document.getElementById('btnHarga').disabled = false; 
+
+            document.getElementById('searchGrup').disabled = false;
+            document.getElementById('kodebrg').disabled = false;
+            document.getElementById('namabrg').disabled = false;
+            document.getElementById('satuan1').disabled = false;
+            document.getElementById('isi1').disabled = false;
+            document.getElementById('gambar').disabled = false;
+            document.getElementById('upload').disabled = false;
+
+            document.getElementById('searchKode').disabled = true;
+            document.getElementById('searchNama').disabled = true;
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchbtn').disabled = true;
+
+            resetButtonStyles();
+            setActiveButtonStyle(document.getElementById('btnTambah'));
+        }
+
+
+        function initializeUbah() {
+            currentstat = 'update';
+            showToast('Kamu sedang mengubah data...', '#ffc107');
+
+            document.getElementById('btnTambah').disabled = true;
+            document.getElementById('btnEdit').disabled = true;
+            document.getElementById('btnHapus').disabled = false;
+            document.getElementById('btnCancel').disabled = false;
+            document.getElementById('btnSave').disabled = false;
+
+            document.getElementById('searchGrup').disabled = false;
+            document.getElementById('kodebrg').disabled = false;
+            document.getElementById('namabrg').disabled = false;
+            document.getElementById('satuan1').disabled = false;
+            document.getElementById('isi1').disabled = false;
+            document.getElementById('gambar').disabled = false;
+            document.getElementById('upload').disabled = false;
+
+            document.getElementById('searchKode').disabled = true;
+            document.getElementById('searchNama').disabled = true;
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchbtn').disabled = true;
+            const isi1 = parseFloat(document.getElementById('isi1').value);
+            const isi2 = parseFloat(document.getElementById('isi2').value);
+
+            if (isi1 > 1) {
+                document.getElementById('satuan2').disabled = false;
+                document.getElementById('isi2').disabled = false;
+
+                if (isi2 > 1) {
+                    document.getElementById('satuan3').disabled = false;
+                } else {
+                    document.getElementById('satuan3').disabled = true;
+                    document.getElementById('satuan3').value = '';
+                }
+            } else {
+                document.getElementById('satuan2').disabled = true;
+                document.getElementById('isi2').disabled = true;
+                document.getElementById('satuan3').disabled = true;
+            }
+
+
+            setHargaInputsDisabled(false);
+
+
+            resetButtonStyles();
+            setActiveButtonStyle(document.getElementById('btnEdit'));
+        }
+
+        function prepareSave() {
+            if (!currentstat) {
+                showToast('Tidak ada data yang sedang diubah atau ditambah.', '#dc3545');
+                return false;
+            }
+            document.getElementById('aksi').value = currentstat;
+        }
+
+
         // panggil saat halaman dimuat
         let inputSearch = null;
         let searchBtn = document.getElementById('searchbtn')
@@ -308,6 +407,7 @@ while ($g = $grupResult->fetch_assoc()) {
 
         function pilihBarang(data) {
             document.getElementById('kodebrg').value = data.kodebrg;
+            document.getElementById('kodebrg_lama').value = data.kodebrg; 
             document.getElementById('namabrg').value = data.namabrg;
 
             hargaData = {};
@@ -317,38 +417,20 @@ while ($g = $grupResult->fetch_assoc()) {
                 }
             });
 
+            document.getElementById('satuan2').value = data.satuan2;
+            document.getElementById('isi2').value = data.isi2;
+            document.getElementById('satuan3').value = data.satuan3;
+
 
             document.getElementById('satuan1').value = data.satuan1;
             document.getElementById('isi1').value = data.isi1;
 
             // Logika enable/disable berdasarkan isi1 dan isi2
-            if (parseFloat(data.isi1) > 1) {
-                document.getElementById('satuan2').disabled = false;
-                document.getElementById('isi2').disabled = false;
-                document.getElementById('satuan2').value = data.satuan2;
-                document.getElementById('isi2').value = data.isi2;
-
-                if (parseFloat(data.isi2) > 1) {
-                    document.getElementById('satuan3').disabled = false;
-                    document.getElementById('satuan3').value = data.satuan3;
-                } else {
-                    document.getElementById('satuan3').disabled = true;
-                    document.getElementById('satuan3').value = '';
-                }
-            } else {
-                // disable semua turunan
-                document.getElementById('satuan2').disabled = true;
-                document.getElementById('isi2').disabled = true;
-                document.getElementById('satuan3').disabled = true;
-
-                document.getElementById('satuan2').value = '';
-                document.getElementById('isi2').value = '';
-                document.getElementById('satuan3').value = '';
-            }
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = false;
-            document.getElementById('btnHapus').disabled = false;
+            document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = false;
+            document.getElementById('btnHarga').disabled = false; 
 
             const kodebrg = data.kodebrg;
             const kodegrupList = <?= json_encode($kodegrupList) ?>;
@@ -362,6 +444,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('searchbtn').disabled = true;
             dropdown.style.display = 'none';
             generateHargaInputs(<?= $jmlharga ?>);
+            setHargaInputsDisabled(true);
             closeFilterPopup();
 
 
@@ -407,8 +490,6 @@ while ($g = $grupResult->fetch_assoc()) {
 
         function cancelEdit() {
             document.getElementById('barangForm').reset();
-
-            // Reset tombol
             initializeFormButtons();
 
             // Reset search input
@@ -418,24 +499,20 @@ while ($g = $grupResult->fetch_assoc()) {
             namaInput.disabled = false;
             kodeInput.value = '';
             namaInput.value = '';
+            document.getElementById('kodebrg').readOnly = true;
             document.getElementById('searchbtn').disabled = false;
 
-            // Reset input yang di-disable manual
             document.getElementById('satuan2').disabled = true;
             document.getElementById('isi2').disabled = true;
             document.getElementById('satuan3').disabled = true;
             document.getElementById('gambar').value = '';
 
-            inputSearch = null;
-
-            // ✅ Reset hargaData dan jumlahHarga ke default
             hargaData = {};
             generateHargaInputs(<?= $jmlharga ?>);
-
-
-            // Jika popup harga sedang terbuka, juga perbarui tampilannya
-            generateHargaInputs();
+            currentstat = null;
+            resetButtonStyles();
         }
+
 
         function handleFileUpload(input) {
             const file = input.files[0];
@@ -480,19 +557,24 @@ while ($g = $grupResult->fetch_assoc()) {
                 initializeFormButtons();
                 document.getElementById('barangForm').reset();
 
-                // Aktifkan kembali search bar dan tombol
                 document.getElementById('searchKode').disabled = false;
                 document.getElementById('searchNama').disabled = false;
                 document.getElementById('searchKode').value = '';
                 document.getElementById('searchNama').value = '';
                 document.getElementById('searchbtn').disabled = false;
+
+                currentstat = null;
+                resetButtonStyles();
             }, 100);
+
         });
         
 
         function openHargaPopup() {
             const jumlah = parseInt("<?= $jmlharga ?>");
-            generateHargaInputs(jumlah);
+            generateHargaInputs(jumlah);    
+            const isEditable = currentstat === 'tambah' || currentstat === 'update'; // hanya mode edit yang bisa ubah harga
+            setHargaInputsDisabled(!isEditable);
             document.getElementById('popupHarga').style.display = 'block';
         }
 
@@ -541,6 +623,41 @@ while ($g = $grupResult->fetch_assoc()) {
                     wrapper.appendChild(input);
                     container.appendChild(wrapper);
                 });
+            }
+        }
+
+        function setHargaInputsDisabled(disabled) {
+            const jumlah = parseInt("<?= $jmlharga ?>");
+
+            const isi1 = parseInt(document.getElementById('isi1').value) || 0;
+            const isi2 = parseInt(document.getElementById('isi2').value) || 0;
+
+            for (let base = 1; base <= jumlah; base++) {
+                for (let level = 1; level <= 3; level++) {
+                    const key = 'harga' + String(base).repeat(level);
+                    const input = document.getElementById(key);
+                    if (!input) continue;
+
+                    // Tentukan status disable berdasarkan isi1 dan isi2
+                    let isDisabled = false;
+                    if (level === 1) {
+                        isDisabled = disabled;
+                    } else if (level === 2) {
+                        isDisabled = disabled || isi1 < 2;
+                    } else if (level === 3) {
+                        isDisabled = disabled || isi1 < 2 || isi2 < 2;
+                    }
+
+                    // Set status disable
+                    input.disabled = isDisabled;
+
+                    // Terapkan styling berdasarkan status
+                    if (isDisabled) {
+                        input.style.backgroundColor = '#999';
+                    } else {
+                        input.style.backgroundColor = '';
+                    }
+                }
             }
         }
 
@@ -631,6 +748,21 @@ while ($g = $grupResult->fetch_assoc()) {
             if (popup) {
                 popup.addEventListener('click', () => popup.style.display = 'none');
             }
+
+        
+
+        function resetButtonStyles() {
+            const buttons = ['btnTambah', 'btnEdit'];
+            buttons.forEach(id => {
+                const btn = document.getElementById(id);
+                btn.style.backgroundColor = '';
+                btn.style.color = '';
+                btn.style.border = '';
+            });
+        }
+
+
+
     </script>
     <script src="notif.js"></script>
 </body>

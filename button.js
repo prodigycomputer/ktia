@@ -1,123 +1,104 @@
+// button.js
+
+let currentMode = ""; // untuk membedakan antara 'tambah' dan 'update'
+
 function setInitialState() {
-    const form = document.forms['barangForm'];
-    ['searchGrup', 'kodebrg', 'namabrg', 'satuan1', 'satuan2', 'satuan3', 'isi1', 'isi2'].forEach(id => {
-        if (form[id]) {
-            form[id].disabled = true;
-            form[id].readOnly = false;
-            form[id].value = '';
-        }
-    });
-
-    toggleButtons({ simpan: false, ubah: false, hapus: false, batal: false, tambah: true });
-
-    document.getElementById('searchKode').disabled = false;
-    document.getElementById('searchNama').disabled = false;
-    document.getElementById('searchbtn').disabled = false;
-
-    const hargaBtn = document.querySelector('button[onclick="openHargaPopup()"]');
-    if (hargaBtn) hargaBtn.disabled = true;
+    disableFields(true);
+    toggleButtons({ tambah: false, simpan: true, ubah: true, hapus: true, batal: true });
+    setHargaButtonState(false);
+    setReadonlyAll(true);
 }
 
 function onTambahClick() {
-    const form = document.forms['barangForm'];
-    ['searchGrup', 'kodebrg', 'namabrg', 'satuan1', 'satuan2', 'satuan3', 'isi1', 'isi2'].forEach(id => {
-        if (form[id]) {
-            form[id].disabled = false;
-            form[id].readOnly = false;
-            form[id].value = '';
-        }
-    });
-
-    document.getElementById('searchKode').disabled = true;
-    document.getElementById('searchNama').disabled = true;
-    document.getElementById('searchbtn').disabled = true;
-
-    toggleButtons({ simpan: true, batal: true, tambah: false, ubah: false, hapus: false });
-
-    const hargaBtn = document.querySelector('button[onclick="openHargaPopup()"]');
-    if (hargaBtn) hargaBtn.disabled = false;
-}
-
-function onSearchSelectState() {
-    const form = document.forms['barangForm'];
-    [...form.elements].forEach(el => {
-        if (el.tagName === "INPUT") {
-            el.readOnly = true;
-            el.disabled = false;
-        }
-    });
-
-    toggleButtons({ simpan: false, tambah: false, ubah: true, hapus: true, batal: true });
-
-    const hargaBtn = document.querySelector('button[onclick="openHargaPopup()"]');
-    if (hargaBtn) hargaBtn.disabled = false;
+    currentMode = "tambah";
+    disableFields(false);
+    clearFields();
+    disableSearch(true);
+    toggleButtons({ tambah: true, simpan: false, ubah: true, hapus: true, batal: false });
+    setHargaButtonState(true);
+    setReadonlyAll(false);
 }
 
 function onEditClick() {
-    const form = document.forms['barangForm'];
-    [...form.elements].forEach(el => {
-        if (el.tagName === "INPUT" && el.id !== 'kodebrg') {
-            el.readOnly = false;
-            el.disabled = false;
+    currentMode = "update";
+    disableFields(false);
+    disableSearch(true);
+    toggleButtons({ tambah: true, simpan: false, ubah: true, hapus: true, batal: false });
+    setHargaButtonState(true);
+    setReadonlyAll(false);
+}
+
+function onSimpanClick() {
+    disableFields(true);
+    disableSearch(false);
+    toggleButtons({ tambah: false, simpan: true, ubah: true, hapus: true, batal: true });
+    setHargaButtonState(false);
+    setReadonlyAll(true);
+}
+
+function onCancelClick() {
+    currentMode = "";
+    disableFields(true);
+    clearFields();
+    disableSearch(false);
+    toggleButtons({ tambah: false, simpan: true, ubah: true, hapus: true, batal: true });
+    setHargaButtonState(false);
+    setReadonlyAll(true);
+}
+
+function onItemSearchClick() {
+    disableFields(true);
+    disableSearch(true);
+    toggleButtons({ tambah: true, simpan: true, ubah: false, hapus: false, batal: false });
+    setHargaButtonState(true);
+    setReadonlyAll(true);
+}
+
+function disableFields(disabled) {
+    const ids = ['searchGrup', 'kodebrg', 'namabrg', 'satuan1', 'isi1'];
+    ids.forEach(id => document.getElementById(id).disabled = disabled);
+}
+
+function disableSearch(disabled) {
+    document.getElementById('searchKode').disabled = disabled;
+    document.getElementById('searchNama').disabled = disabled;
+    document.getElementById('searchbtn').disabled = disabled;
+}
+
+function toggleButtons({ tambah, simpan, ubah, hapus, batal }) {
+    document.getElementById('btnTambah').disabled = tambah;
+    document.getElementById('btnSave').disabled = simpan;
+    document.getElementById('btnEdit').disabled = ubah;
+    document.getElementById('btnHapus').disabled = hapus;
+    document.getElementById('btnCancel').disabled = batal;
+}
+
+function setHargaButtonState(enable) {
+    const hargaBtn = document.querySelector('button[onclick="openHargaPopup()"]');
+    if (hargaBtn) hargaBtn.disabled = !enable;
+}
+
+function setReadonlyAll(readonly) {
+    const fields = ['searchGrup', 'kodebrg', 'namabrg', 'satuan1', 'isi1', 'satuan2', 'isi2', 'satuan3'];
+    fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            if (readonly) {
+                el.setAttribute('readonly', true);
+            } else {
+                el.removeAttribute('readonly');
+            }
         }
     });
-
-    document.getElementById('searchKode').disabled = true;
-    document.getElementById('searchNama').disabled = true;
-    document.getElementById('searchbtn').disabled = true;
-
-    toggleButtons({ simpan: true, ubah: false, hapus: false, batal: true });
-
-    const hargaBtn = document.querySelector('button[onclick="openHargaPopup()"]');
-    if (hargaBtn) hargaBtn.disabled = false;
 }
 
-function onSimpanSuccess() {
-    const form = document.forms['barangForm'];
-    form.reset();
-    ['searchGrup', 'kodebrg', 'namabrg', 'satuan1', 'satuan2', 'satuan3', 'isi1', 'isi2'].forEach(id => {
-        if (form[id]) {
-            form[id].disabled = true;
-            form[id].readOnly = false;
-        }
-    });
-
-    document.getElementById('searchKode').disabled = false;
-    document.getElementById('searchNama').disabled = false;
-    document.getElementById('searchbtn').disabled = false;
-
-    toggleButtons({ simpan: false, batal: false, ubah: false, hapus: false, tambah: true });
-
-    const hargaBtn = document.querySelector('button[onclick="openHargaPopup()"]');
-    if (hargaBtn) hargaBtn.disabled = true;
+function clearFields() {
+    document.getElementById('barangForm').reset();
+    document.getElementById('gambar').value = '';
+    hargaData = {};
+    generateHargaInputs();
 }
 
-function onBatalClick() {
-    const form = document.forms['barangForm'];
-    form.reset();
-    ['searchGrup', 'kodebrg', 'namabrg', 'satuan1', 'satuan2', 'satuan3', 'isi1', 'isi2'].forEach(id => {
-        if (form[id]) {
-            form[id].disabled = true;
-            form[id].readOnly = false;
-        }
-    });
-
-    document.getElementById('searchKode').disabled = false;
-    document.getElementById('searchNama').disabled = false;
-    document.getElementById('searchbtn').disabled = false;
-
-    toggleButtons({ simpan: false, batal: false, ubah: false, hapus: false, tambah: true });
-
-    const hargaBtn = document.querySelector('button[onclick="openHargaPopup()"]');
-    if (hargaBtn) hargaBtn.disabled = true;
+function getCurrentMode() {
+    return currentMode;
 }
-
-function toggleButtons(state) {
-    document.getElementById('btnSave').style.display = state.simpan ? 'inline-block' : 'none';
-    document.getElementById('btnEdit').style.display = state.ubah ? 'inline-block' : 'none';
-    document.getElementById('btnHapus').style.display = state.hapus ? 'inline-block' : 'none';
-    document.getElementById('btnBatal').style.display = state.batal ? 'inline-block' : 'none';
-    document.getElementById('btnTambah').style.display = state.tambah ? 'inline-block' : 'none';
-}
-
-window.addEventListener('DOMContentLoaded', setInitialState);

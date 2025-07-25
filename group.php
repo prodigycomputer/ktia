@@ -24,8 +24,10 @@ include 'koneksi.php';
     </div>
   </div>
 
-  <form id="grupForm" action="prosesgrup.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+  <form id="grupForm" action="prosesgrup.php" method="POST" enctype="multipart/form-data" onsubmit="return prepareSave()">
     <input type="hidden" name="aksi" id="aksi" value="">
+    <input type="hidden" name="kodegrup_lama" id="kodegrup_lama" value="">
+
     <div class="form-atas">
       <label for="kodegrup">Kode</label>
       <input type="text" name="kodegrup" id="kodegrup" class="long-input" required style="text-transform: uppercase;">
@@ -34,10 +36,11 @@ include 'koneksi.php';
       <input type="text" name="namagrup" id="namagrup" class="verylong-input" required style="text-transform: uppercase;">
     </div>
     <div style="margin-top:10px; display:flex; gap:8px;">
-      <button id="btnTambah" type="submit" onclick="document.getElementById('aksi').value='tambah'">Tambah</button>
-      <button id="btnEdit" type="submit" onclick="document.getElementById('aksi').value='update'">Edit</button>
+      <button id="btnSave" type="submit">Simpan</button>
+      <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>
+      <button id="btnEdit" type="button" onclick="initializeUbah()">Ubah</button>
       <button id="btnHapus" type="submit" onclick="document.getElementById('aksi').value='hapus'">Hapus</button>
-      <button id="btnCancel" type="button" onclick="cancelForm()">Cancel</button>
+      <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
     </div>
   </form>
 </main>
@@ -56,56 +59,94 @@ include 'koneksi.php';
 "></div>
 
 <script>
-  function initializeFormButtons() {
-    document.getElementById('btnTambah').disabled = false;
-    document.getElementById('btnEdit').disabled = true;
-    document.getElementById('btnHapus').disabled = true;
-    document.getElementById('btnCancel').disabled = true;
+let currentstat = null;
 
-    document.getElementById('searchKode').disabled = false;
-    document.getElementById('searchNama').disabled = false;
-    document.getElementById('searchbtnkode').disabled = false;
-    document.getElementById('searchbtnnama').disabled = false;
+function showToast(message, color = '#28a745') {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.backgroundColor = color;
+  toast.style.display = 'block';
+  setTimeout(() => toast.style.display = 'none', 2000);
+}
 
-    document.getElementById('dropdownKode').style.display = 'none';
-    document.getElementById('dropdownNama').style.display = 'none';
-  }
+function initializeFormButtons() {
+  currentstat = null;
 
-  function setEditModeButtons() {
-    document.getElementById('btnTambah').disabled = true;
-    document.getElementById('btnEdit').disabled = false;
-    document.getElementById('btnHapus').disabled = false;
-    document.getElementById('btnCancel').disabled = false;
-    document.getElementById('searchKode').disabled = true;
-    document.getElementById('searchNama').disabled = true;
-    document.getElementById('searchbtnkode').disabled = true;
-    document.getElementById('searchbtnnama').disabled = true;
+  document.getElementById('btnTambah').disabled = false;
+  document.getElementById('btnEdit').disabled = true;
+  document.getElementById('btnHapus').disabled = true;
+  document.getElementById('btnCancel').disabled = true;
+  document.getElementById('btnSave').disabled = true;
 
-    document.getElementById('dropdownKode').style.display = 'none';
-    document.getElementById('dropdownNama').style.display = 'none';
-  }
+  document.getElementById('searchGrup').disabled = false;
+  document.getElementById('kodegrup').disabled = true;
+  document.getElementById('namagrup').disabled = true;
+}
+initializeFormButtons();
 
+function initializeTambah() {
+  currentstat = 'tambah';
+  showToast('Kamu sedang menambah data...', '#ffc107');
+
+  document.getElementById('btnTambah').disabled = true;
+  document.getElementById('btnEdit').disabled = true;
+  document.getElementById('btnHapus').disabled = true;
+  document.getElementById('btnCancel').disabled = false;
+  document.getElementById('btnSave').disabled = false;
+
+  document.getElementById('searchGrup').disabled = true;
+  document.getElementById('kodegrup').disabled = false;
+  document.getElementById('namagrup').disabled = false;
+
+  document.getElementById('grupForm').reset();
+  document.getElementById('searchGrup').value = '';
+
+  setActiveButtonStyle(document.getElementById('btnTambah'));
+}
+
+function initializeUbah() {
+  currentstat = 'update';
+  showToast('Kamu sedang mengubah data...', '#ffc107');
+
+  document.getElementById('btnTambah').disabled = true;
+  document.getElementById('btnEdit').disabled = true;
+  document.getElementById('btnHapus').disabled = false;
+  document.getElementById('btnCancel').disabled = false;
+  document.getElementById('btnSave').disabled = false;
+
+  document.getElementById('searchGrup').disabled = true;
+  document.getElementById('kodegrup').disabled = false;
+  document.getElementById('namagrup').disabled = false;
+  setActiveButtonStyle(document.getElementById('btnEdit'))
+}
+
+function cancelForm() {
+  document.getElementById('grupForm').reset();
+  document.getElementById('aksi').value = '';
+  document.getElementById('searchGrup').value = '';
+  resetButtonStyles();
   initializeFormButtons();
+}
 
-    function cancelForm() {
-    document.getElementById('grupForm').reset();             // Reset semua input
-    document.getElementById('aksi').value = '';              // Kosongkan aksi
-    document.getElementById('searchGrup').value = '';        // Kosongkan input search
-    initializeFormButtons();                                 // Kembali ke mode default
+function prepareSave() {
+  if (!currentstat) {
+    showToast('Tidak ada data yang sedang diubah atau ditambah.', '#dc3545');
+    return false;
   }
+  document.getElementById('aksi').value = currentstat;
+  return true;
+}
 
-  function forceUppercase(id) {
-    const input = document.getElementById(id);
-    input.addEventListener('input', () => {
-      input.value = input.value.toUpperCase();
-    });
-  }
+function forceUppercase(id) {
+  const input = document.getElementById(id);
+  input.addEventListener('input', () => {
+    input.value = input.value.toUpperCase();
+  });
+}
+forceUppercase('kodegrup');
+forceUppercase('namagrup');
 
-  // Terapkan ke field kodegrup dan namagrup
-  forceUppercase('kodegrup');
-  forceUppercase('namagrup');
-
-  function filterDropdown() {
+function filterDropdown() {
   const keyword = document.getElementById('searchGrup').value.toUpperCase().trim();
   const dropdown = document.getElementById('dropdownGrup');
 
@@ -115,48 +156,64 @@ include 'koneksi.php';
   }
 
   fetch(`filter_grup.php?keyword=${encodeURIComponent(keyword)}`)
-      .then(res => res.json())
-      .then(data => {
-        dropdown.innerHTML = '';
-        if (data.length === 0) {
-          dropdown.style.display = 'none';
-          return;
-        }
+    .then(res => res.json())
+    .then(data => {
+      dropdown.innerHTML = '';
+      if (data.length === 0) {
+        dropdown.style.display = 'none';
+        return;
+      }
 
-        data.forEach(grup => {
-          const div = document.createElement('div');
-          div.textContent = `${grup.kodegrup} - ${grup.namagrup}`;
-          div.onclick = () => {
-            // Isi form input
-            document.getElementById('kodegrup').value = grup.kodegrup;
-            document.getElementById('namagrup').value = grup.namagrup;
-            document.getElementById('dropdownGrup').style.display = 'none';
-            document.getElementById('searchGrup').value = '';
+      data.forEach(grup => {
+        const div = document.createElement('div');
+        div.textContent = `${grup.kodegrup} - ${grup.namagrup}`;
+        div.onclick = () => {
+          document.getElementById('kodegrup').value = grup.kodegrup;
+           document.getElementById('kodegrup_lama').value = grup.kodegrup;
+          document.getElementById('namagrup').value = grup.namagrup;
+          document.getElementById('dropdownGrup').style.display = 'none';
+          document.getElementById('searchGrup').value = '';
 
-            // Reset tombol mode Edit
-            setEditModeButtons();
+          // Aktifkan tombol edit
+          document.getElementById('btnTambah').disabled = true;
+          document.getElementById('btnEdit').disabled = false;
+          document.getElementById('btnHapus').disabled = true;
+          document.getElementById('btnCancel').disabled = false;
+          document.getElementById('btnSave').disabled = true;
 
-            // Sembunyikan dropdown dan kosongkan input search
-
-          };
-          dropdown.appendChild(div);
-        });
-
-        dropdown.style.display = 'block';
+          document.getElementById('searchGrup').disabled = true;
+          document.getElementById('kodegrup').disabled = true;
+          document.getElementById('namagrup').disabled = true;
+        };
+        dropdown.appendChild(div);
       });
-  }
 
-  document.getElementById('grupForm').addEventListener('submit', function () {
-    setTimeout(() => {
-      initializeFormButtons();
-      document.getElementById('grupForm').reset();
-    }, 100);
-  });
+      dropdown.style.display = 'block';
+    });
+}
 
-  const popup = document.getElementById('popupNotif');
-  if (popup) {
-    popup.addEventListener('click', () => popup.style.display = 'none');
-  }
+document.getElementById('grupForm').addEventListener('submit', function () {
+  setTimeout(() => {
+    initializeFormButtons();
+    document.getElementById('grupForm').reset();
+  }, 100);
+});
+
+function setActiveButtonStyle(button) {
+    button.style.backgroundColor = 'white';
+    button.style.color = 'black';
+    button.style.border = '1px solid #999';
+}
+
+function resetButtonStyles() {
+    const buttons = ['btnTambah', 'btnEdit'];
+    buttons.forEach(id => {
+        const btn = document.getElementById(id);
+        btn.style.backgroundColor = '';
+        btn.style.color = '';
+        btn.style.border = '';
+    });
+}
 </script>
 <script src="notif.js"></script>
 </body>

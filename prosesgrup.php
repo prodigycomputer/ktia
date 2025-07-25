@@ -5,6 +5,7 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $aksi = $_POST['aksi'] ?? '';
     $kodegrup = trim($_POST['kodegrup'] ?? '');
+    $kodegrup_lama = trim($_POST['kodegrup_lama'] ?? $kodegrup);
     $namagrup = trim($_POST['namagrup'] ?? '');
 
     if (!$kodegrup || !$namagrup) {
@@ -14,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     switch ($aksi) {
         case 'tambah':
-            $cek = mysqli_query($conn, "SELECT 1 FROM zgrup WHERE kodegrup = '$kodegrup'");
+            $cek = mysqli_query($conn, "SELECT * FROM zgrup WHERE kodegrup = '$kodegrup'");
             if (mysqli_num_rows($cek) > 0) {
                 header("Location: group.php?status=duplikat");
                 exit;
@@ -23,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'update':
-            $query = "UPDATE zgrup SET namagrup = '$namagrup' WHERE kodegrup = '$kodegrup'";
+            $query = "UPDATE zgrup SET kodegrup = '$kodegrup', namagrup = '$namagrup' WHERE kodegrup = '$kodegrup_lama'";
             break;
 
         case 'hapus':
