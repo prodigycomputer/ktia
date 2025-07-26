@@ -475,8 +475,6 @@ while ($g = $grupResult->fetch_assoc()) {
             generateHargaInputs(<?= $jmlharga ?>);
             setHargaInputsDisabled(true);
             closeFilterPopup();
-
-
         }
 
         function checkIsi1() {
