@@ -128,7 +128,6 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnSave').disabled = true;      
 
             document.getElementById('kodesup').disabled = true;
-            document.getElementById('kodesup').readOnly = false;
             document.getElementById('namasup').disabled = true;
             document.getElementById('alamat').disabled = true;
             document.getElementById('kota').disabled = true;
@@ -290,6 +289,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         }
 
         function triggerSearch() {
+               console.log("Search button clicked");
             if (!inputSearch) {
                 showToast('Isi kode atau nama terlebih dahulu!', '#dc3545');
                 return;
@@ -301,7 +301,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 return;
             }
 
-            fetch(`filter_supplier.php?keyword=${encodeURIComponent(keyword)}`)
+            fetch(`filter_suplier.php?keyword=${encodeURIComponent(keyword)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.length === 0) {
