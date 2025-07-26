@@ -49,10 +49,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                     <input type="text" name="kota" id="kota" class="lesslong-input" required style="text-transform: uppercase;">
 
                     <label for="kodehrg">Kode Harga</label>
-                    <div style="display: flex; gap: 5px; align-items: center;">
-                        <input type="text" name="kodehrg" id="kodehrg" class="medium-input" readonly required style="text-transform: uppercase;">
-                        <button type="button" id="btnPHarga" onclick="showHargaPopup()" style="background-color: #0ca170ff; color: white; border: none; padding: 5px 8px; cursor: pointer;">Pilih Harga</button>
-                    </div>
+                    <input type="text" name="kodehrg" id="kodehrg" class="medium-input" required style="text-transform: uppercase;">
 
                     <label for="ktp">KTP</label>
                     <input type="text" name="ktp" id="ktp" class="lesslong-input" required style="text-transform: uppercase;">
@@ -110,17 +107,6 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         </div>
     </div>
 
-    <!-- Modal Popup Harga -->
-    <div id="popupHarga" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-    background:white; border:1px solid #ccc; padding:20px; z-index:999; width:300px; max-height:400px; overflow:auto; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.2);">
-        <h3>Pilih Kode Harga</h3>
-        <div id="hargaOptions"></div>
-        <div style="text-align:right; margin-top:10px;">
-            <button onclick="closeHargaPopup()" style="padding:5px 10px;">Tutup</button>
-        </div>
-    </div>
-
-
     <div id="toast" style="
         display: none;
         position: fixed;
@@ -142,8 +128,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnEdit').disabled = true;
             document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = true;
-            document.getElementById('btnSave').disabled = true;
-            document.getElementById('btnPHarga').disabled = true;          
+            document.getElementById('btnSave').disabled = true;      
 
             document.getElementById('kodekust').disabled = true;
             document.getElementById('kodekust').readOnly = false;
@@ -169,7 +154,6 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
-            document.getElementById('btnPHarga').disabled = false; 
 
             document.getElementById('kodekust').disabled = false;
             document.getElementById('namakust').disabled = false;
@@ -201,7 +185,6 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnHapus').disabled = false;
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
-            document.getElementById('btnPHarga').disabled = false;
 
             document.getElementById('kodekust').disabled = false;
             document.getElementById('namakust').disabled = false;
@@ -312,65 +295,6 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('popupFilter').style.display = 'none';
         }
 
-        function showHargaPopup() {
-            const jumlah = <?= $jmlharga ?>; // Ambil dari zconfig
-            const hargaContainer = document.getElementById('hargaOptions');
-            hargaContainer.innerHTML = '';
-
-            const huruf = ['A', 'B', 'C', 'D', 'E', 'F']; // Sesuaikan jika harga lebih dari 6 grup
-
-            // Gaya grid untuk tombol-tombol harga
-            hargaContainer.style.display = 'grid';
-            hargaContainer.style.gridTemplateColumns = 'repeat(3, 1fr)';
-            hargaContainer.style.gap = '10px';
-            hargaContainer.style.padding = '10px';
-
-            for (let i = 1; i <= jumlah; i++) {
-                const kode1 = `harga${i}`;
-                const kode2 = `harga${i}${i}`;
-                const kode3 = `harga${i}${i}${i}`;
-
-                const label1 = `${huruf[0]}${i}`; // A1, A2, ...
-                const label2 = `${huruf[1]}${i}`; // B1, B2, ...
-                const label3 = `${huruf[2]}${i}`; // C1, C2, ...
-
-                // Tombol harga1, harga11, harga111
-                const data = [
-                    { kode: kode1, label: label1 },
-                    { kode: kode2, label: label2 },
-                    { kode: kode3, label: label3 }
-                ];
-
-                data.forEach(item => {
-                    const btn = document.createElement('button');
-                    btn.textContent = `${item.kode}`; // Tampilkan label seperti A1
-
-                    // Styling tombol yang konsisten
-                    btn.style.padding = '4px 0';
-                    btn.style.backgroundColor = '#9fe981ff';
-                    btn.style.border = 'none';
-                    btn.style.borderRadius = '5px';
-                    btn.style.cursor = 'pointer';
-                    btn.style.fontSize = '12px';
-                    btn.style.textAlign = 'center';
-                    btn.style.width = '100%';
-
-                    btn.addEventListener('click', () => {
-                        document.getElementById('kodehrg').value = item.label;
-                        closeHargaPopup();
-                    });
-
-                    hargaContainer.appendChild(btn);
-                });
-            }
-
-            document.getElementById('popupHarga').style.display = 'block';
-}
-
-        function closeHargaPopup() {
-            document.getElementById('popupHarga').style.display = 'none';
-        }
-
         function triggerSearch() {
             if (!inputSearch) {
                 showToast('Isi kode atau nama terlebih dahulu!', '#dc3545');
@@ -408,6 +332,13 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             const kodehrg = document.getElementById('kodehrg').value.trim();
             const ktp = document.getElementById('ktp').value.trim();
             const npwp = document.getElementById('npwp').value.trim();
+            const maxHarga = <?= $jmlharga ?>;
+            const kodehrgNum = parseInt(kodehrg);
+
+            if (isNaN(kodehrgNum) || kodehrgNum < 1 || kodehrgNum > maxHarga) {
+                showToast(`Kode Harga harus antara 1 sampai ${maxHarga}`, '#dc3545');
+                return false;
+            }
             if (!kodekust) {
                 showToast('Kode Kustomer wajib diisi!.', '#dc3545');
                 return false;
