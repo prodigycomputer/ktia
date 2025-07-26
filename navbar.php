@@ -5,7 +5,7 @@ $isFile = in_array($current, ['barang.php', 'supplier.php', 'kustomer.php', 'gro
 $isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php']);
 $isLaporan = in_array($current, [
   'LaporanStok.php', 'LaporanPelanggan.php', 'LaporanSupplier.php',
-  'LaporanPembelian.php', 'LaporanPenjualan.php'
+  'LaporanPembelian.php', 'LaporanKustomer.php'
 ]);
 ?>
 
@@ -20,7 +20,7 @@ $isLaporan = in_array($current, [
     <input type="search" placeholder="Search...">
 
     <div class="nav-section">
-        <a href="dashboard.php" class="nav-link active">Dashboard</a>
+        <a href="dashboard.php" class="nav-link-dasboard">Dashboard</a>
     </div>
 
     <!-- File Section -->
@@ -67,4 +67,5 @@ function toggleDropdown(id) {
     const content = document.getElementById(id);
     content.classList.toggle('show');
 }
+
 </script>

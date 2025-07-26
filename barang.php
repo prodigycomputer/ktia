@@ -196,6 +196,35 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('upload').disabled = true;
         }
         initializeFormButtons();
+        window.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('barangFormData');
+        if (saved) {
+            const formObj = JSON.parse(saved);
+
+            Object.keys(formObj).forEach(key => {
+                if (key === 'hargaData') {
+                    hargaData = formObj[key];
+                    generateHargaInputs(<?= $jmlharga ?>);
+                    setHargaInputsDisabled(true);
+                } else {
+                    const input = document.querySelector(`[name="${key}"]`);
+                    if (input) input.value = formObj[key];
+                }
+            });
+
+            // Restore grup dropdown
+            const kodebrg = formObj['kodebrg'] || '';
+            if (kodebrg) {
+                const kodegrupList = <?= json_encode($kodegrupList) ?>;
+                const matchedGrup = kodegrupList.find(grup => kodebrg.startsWith(grup));
+                document.getElementById('searchGrup').value = matchedGrup || '';
+            }
+
+            // Jika isi1/isi2 bernilai, aktifkan satuan2 dan satuan3
+            checkIsi1();
+            checkIsi2();
+        }
+    });
 
         let currentstat = null;
 
@@ -480,11 +509,42 @@ while ($g = $grupResult->fetch_assoc()) {
         }
 
         function validateForm() {
+            const kodegrup = document.getElementById('searchGrup').value.trim();
+            const kodebrg = document.getElementById('kodebrg').value.trim();
+            const namabrg = document.getElementById('namabrg').value.trim();
             const satuan1 = document.getElementById('satuan1').value.trim();
-            if (!satuan1) {
-                showToast('Satuan 1 wajib diisi!.', '#dc3545');
+            const satuan2 = document.getElementById('satuan2');
+            const satuan3 = document.getElementById('satuan3');
+
+            if (!kodegrup) {
+                showToast('Kode Grup wajib diisi!', '#dc3545');
                 return false;
             }
+            if (!kodebrg) {
+                showToast('Kode Barang wajib diisi!', '#dc3545');
+                return false;
+            }
+            if (!namabrg) {
+                showToast('Nama Barang wajib diisi!', '#dc3545');
+                return false;
+            }
+            if (!satuan1) {
+                showToast('Satuan 1 wajib diisi!', '#dc3545');
+                return false;
+            }
+
+            // Validasi tambahan untuk satuan2 jika aktif
+            if (!satuan2.disabled && satuan2.value.trim() === '') {
+                showToast('Satuan 2 wajib diisi jika aktif!', '#dc3545');
+                return false;
+            }
+
+            // Validasi tambahan untuk satuan3 jika aktif
+            if (!satuan3.disabled && satuan3.value.trim() === '') {
+                showToast('Satuan 3 wajib diisi jika aktif!', '#dc3545');
+                return false;
+            }
+
             return true;
         }
 
@@ -552,7 +612,7 @@ while ($g = $grupResult->fetch_assoc()) {
                 input.value = val;
                 hiddenDiv.appendChild(input);
             });
-
+            localStorage.removeItem('barangFormData');
             setTimeout(() => {
                 initializeFormButtons();
                 document.getElementById('barangForm').reset();
@@ -761,7 +821,23 @@ while ($g = $grupResult->fetch_assoc()) {
             });
         }
 
+        window.addEventListener('beforeunload', () => {
+            const formData = new FormData(document.getElementById('barangForm'));
+            const formObj = {};
+            formData.forEach((value, key) => {
+                formObj[key] = value;
+            });
 
+            // Simpan data harga juga
+            formObj.hargaData = hargaData;
+            formObj.currentstat = currentstat;
+            if (formObj.currentstat) {
+                currentstat = formObj.currentstat;
+                if (currentstat === 'tambah') initializeTambah();
+                if (currentstat === 'update') initializeUbah();
+            }
+            localStorage.setItem('barangFormData', JSON.stringify(formObj));
+        });
 
     </script>
     <script src="notif.js"></script>

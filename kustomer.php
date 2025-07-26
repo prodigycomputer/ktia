@@ -49,7 +49,10 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                     <input type="text" name="kota" id="kota" class="lesslong-input" required style="text-transform: uppercase;">
 
                     <label for="kodehrg">Kode Harga</label>
-                    <input type="text" name="kodehrg" id="kodehrg" class="lesslong-input" required style="text-transform: uppercase;">
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                        <input type="text" name="kodehrg" id="kodehrg" class="medium-input" readonly required style="text-transform: uppercase;">
+                        <button type="button" id="btnPHarga" onclick="showHargaPopup()" style="background-color: #0ca170ff; color: white; border: none; padding: 6px 10px; cursor: pointer;">Pilih Harga</button>
+                    </div>
 
                     <label for="ktp">KTP</label>
                     <input type="text" name="ktp" id="ktp" class="lesslong-input" required style="text-transform: uppercase;">
@@ -73,6 +76,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             <button id="btnEdit" type="submit" onclick="initializeUbah()">Ubah</button>
             <button id="btnHapus" type="submit" onclick="document.getElementById('aksi').value='hapus'">Hapus</button>
             <button id="btnCancel" type="button" onclick="cancelEdit()">Batal</button>
+
 
         </form>
     </main>
@@ -106,6 +110,17 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         </div>
     </div>
 
+    <!-- Modal Popup Harga -->
+    <div id="popupHarga" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:white; border:1px solid #ccc; padding:20px; z-index:999; width:300px; max-height:400px; overflow:auto; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.2);">
+        <h3>Pilih Kode Harga</h3>
+        <div id="hargaOptions"></div>
+        <div style="text-align:right; margin-top:10px;">
+            <button onclick="closeHargaPopup()" style="padding:5px 10px;">Tutup</button>
+        </div>
+    </div>
+
+
     <div id="toast" style="
         display: none;
         position: fixed;
@@ -127,7 +142,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnEdit').disabled = true;
             document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = true;
-            document.getElementById('btnSave').disabled = true;          
+            document.getElementById('btnSave').disabled = true;
+            document.getElementById('btnPHarga').disabled = true;          
 
             document.getElementById('kodekust').disabled = true;
             document.getElementById('kodekust').readOnly = false;
@@ -153,6 +169,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
+            document.getElementById('btnPHarga').disabled = false; 
 
             document.getElementById('kodekust').disabled = false;
             document.getElementById('namakust').disabled = false;
@@ -184,6 +201,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnHapus').disabled = false;
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
+            document.getElementById('btnPHarga').disabled = false;
 
             document.getElementById('kodekust').disabled = false;
             document.getElementById('namakust').disabled = false;
@@ -212,7 +230,6 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             }
             document.getElementById('aksi').value = currentstat;
         }
-
 
         // panggil saat halaman dimuat
         let inputSearch = null;
@@ -272,7 +289,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 tr.style.cursor = 'pointer';
                 tr.addEventListener('click', () => {
                     closeFilterPopup();
-                    pilihBarang(item);
+                    pilihKustomer(item);
                 });
 
                 [...fixedFields].forEach(field => {
@@ -295,6 +312,53 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('popupFilter').style.display = 'none';
         }
 
+        function showHargaPopup() {
+            const jumlah = <?= $jmlharga ?>; // Ambil dari zconfig
+            const hargaContainer = document.getElementById('hargaOptions');
+            hargaContainer.innerHTML = '';
+
+            const daftarHarga = [];
+            for (let i = 1; i <= jumlah; i++) {
+                daftarHarga.push(`harga${i}`);
+                daftarHarga.push(`harga${i}${i}`);
+                daftarHarga.push(`harga${i}${i}${i}`);
+            }
+
+            // Gaya grid untuk tombol-tombol harga
+            hargaContainer.style.display = 'grid';
+            hargaContainer.style.gridTemplateColumns = 'repeat(3, 1fr)';
+            hargaContainer.style.gap = '10px';
+            hargaContainer.style.padding = '10px';
+
+            daftarHarga.forEach(kolom => {
+                const btn = document.createElement('button');
+                btn.textContent = kolom;
+
+                // Styling tombol yang konsisten
+                btn.style.padding = '4px 0';
+                btn.style.backgroundColor = '#9fe981ff';
+                btn.style.border = 'none';
+                btn.style.borderRadius = '5px';
+                btn.style.cursor = 'pointer';
+                btn.style.fontSize = '12px';
+                btn.style.textAlign = 'center'  ;
+                btn.style.width = '100%';
+
+                btn.addEventListener('click', () => {
+                    document.getElementById('kodehrg').value = kolom;
+                    closeHargaPopup();
+                });
+
+                hargaContainer.appendChild(btn);
+            });
+
+            document.getElementById('popupHarga').style.display = 'block';
+        }
+
+
+        function closeHargaPopup() {
+            document.getElementById('popupHarga').style.display = 'none';
+        }
 
         function triggerSearch() {
             if (!inputSearch) {
@@ -325,8 +389,46 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
         }
 
+        function validateForm() {
+            const kodekust = document.getElementById('kodekust').value.trim();
+            const namakust = document.getElementById('namakust').value.trim();
+            const alamat = document.getElementById('alamat').value.trim();
+            const kota = document.getElementById('kota').value.trim();
+            const kodehrg = document.getElementById('kodehrg').value.trim();
+            const ktp = document.getElementById('ktp').value.trim();
+            const npwp = document.getElementById('npwp').value.trim();
+            if (!kodekust) {
+                showToast('Kode Kustomer wajib diisi!.', '#dc3545');
+                return false;
+            }
+            if (!namakust) {
+                showToast('Nama Kustomer wajib diisi!.', '#dc3545');
+                return false;
+            }
+            if (!alamat) {
+                showToast('Alamat wajib diisi!.', '#dc3545');
+                return false;
+            }
+            if (!kota) {
+                showToast('Kota wajib diisi!.', '#dc3545');
+                return false;
+            }
+            if (!kodehrg) {
+                showToast('Kode Harga wajib diisi!.', '#dc3545');
+                return false;
+            }
+            if (!ktp) {
+                showToast('Ktp wajib diisi!.', '#dc3545');
+                return false;
+            }
+            if (!npwp) {
+                showToast('Npwp wajib diisi!.', '#dc3545');
+                return false;
+            }            
+            return true;
+        }
 
-        function pilihBarang(data) {
+        function pilihKustomer(data) {
             document.getElementById('kodekust').value = data.kodekust;
             document.getElementById('kodekust_lama').value = data.kodekust; 
             document.getElementById('namakust').value = data.namakust;
@@ -342,8 +444,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = false;
             document.getElementById('btnHapus').disabled = true;
-            document.getElementById('btnCancel').disabled = false;
-            document.getElementById('btnHarga').disabled = false; 
+            document.getElementById('btnCancel').disabled = false; 
 
             inputSearch.value = '';
             inputSearch.disabled = true;
