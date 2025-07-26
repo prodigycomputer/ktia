@@ -51,7 +51,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                     <label for="kodehrg">Kode Harga</label>
                     <div style="display: flex; gap: 5px; align-items: center;">
                         <input type="text" name="kodehrg" id="kodehrg" class="medium-input" readonly required style="text-transform: uppercase;">
-                        <button type="button" id="btnPHarga" onclick="showHargaPopup()" style="background-color: #0ca170ff; color: white; border: none; padding: 6px 10px; cursor: pointer;">Pilih Harga</button>
+                        <button type="button" id="btnPHarga" onclick="showHargaPopup()" style="background-color: #0ca170ff; color: white; border: none; padding: 5px 8px; cursor: pointer;">Pilih Harga</button>
                     </div>
 
                     <label for="ktp">KTP</label>
@@ -317,12 +317,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             const hargaContainer = document.getElementById('hargaOptions');
             hargaContainer.innerHTML = '';
 
-            const daftarHarga = [];
-            for (let i = 1; i <= jumlah; i++) {
-                daftarHarga.push(`harga${i}`);
-                daftarHarga.push(`harga${i}${i}`);
-                daftarHarga.push(`harga${i}${i}${i}`);
-            }
+            const huruf = ['A', 'B', 'C', 'D', 'E', 'F']; // Sesuaikan jika harga lebih dari 6 grup
 
             // Gaya grid untuk tombol-tombol harga
             hargaContainer.style.display = 'grid';
@@ -330,31 +325,47 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             hargaContainer.style.gap = '10px';
             hargaContainer.style.padding = '10px';
 
-            daftarHarga.forEach(kolom => {
-                const btn = document.createElement('button');
-                btn.textContent = kolom;
+            for (let i = 1; i <= jumlah; i++) {
+                const kode1 = `harga${i}`;
+                const kode2 = `harga${i}${i}`;
+                const kode3 = `harga${i}${i}${i}`;
 
-                // Styling tombol yang konsisten
-                btn.style.padding = '4px 0';
-                btn.style.backgroundColor = '#9fe981ff';
-                btn.style.border = 'none';
-                btn.style.borderRadius = '5px';
-                btn.style.cursor = 'pointer';
-                btn.style.fontSize = '12px';
-                btn.style.textAlign = 'center'  ;
-                btn.style.width = '100%';
+                const label1 = `${huruf[0]}${i}`; // A1, A2, ...
+                const label2 = `${huruf[1]}${i}`; // B1, B2, ...
+                const label3 = `${huruf[2]}${i}`; // C1, C2, ...
 
-                btn.addEventListener('click', () => {
-                    document.getElementById('kodehrg').value = kolom;
-                    closeHargaPopup();
+                // Tombol harga1, harga11, harga111
+                const data = [
+                    { kode: kode1, label: label1 },
+                    { kode: kode2, label: label2 },
+                    { kode: kode3, label: label3 }
+                ];
+
+                data.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.textContent = `${item.kode}`; // Tampilkan label seperti A1
+
+                    // Styling tombol yang konsisten
+                    btn.style.padding = '4px 0';
+                    btn.style.backgroundColor = '#9fe981ff';
+                    btn.style.border = 'none';
+                    btn.style.borderRadius = '5px';
+                    btn.style.cursor = 'pointer';
+                    btn.style.fontSize = '12px';
+                    btn.style.textAlign = 'center';
+                    btn.style.width = '100%';
+
+                    btn.addEventListener('click', () => {
+                        document.getElementById('kodehrg').value = item.label;
+                        closeHargaPopup();
+                    });
+
+                    hargaContainer.appendChild(btn);
                 });
-
-                hargaContainer.appendChild(btn);
-            });
+            }
 
             document.getElementById('popupHarga').style.display = 'block';
-        }
-
+}
 
         function closeHargaPopup() {
             document.getElementById('popupHarga').style.display = 'none';
