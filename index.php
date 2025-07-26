@@ -9,6 +9,7 @@ unset($_SESSION['error']);
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 
     <!-- (Opsional) Jika ingin pakai Font Awesome untuk ikon -->
