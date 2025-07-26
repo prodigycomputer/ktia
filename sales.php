@@ -370,9 +370,12 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = false; 
 
-            inputSearch.value = '';
-            inputSearch.disabled = true;
-            document.getElementById('searchbtn').disabled = true;
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchKode').disabled = false;
+            document.getElementById('searchNama').disabled = false;
+            document.getElementById('searchbtn').disabled = false;
+            inputSearch = null;
             dropdown.style.display = 'none';
             closeFilterPopup();
 

@@ -3,7 +3,9 @@ include 'koneksi.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $aksi = $_POST['aksi'] ?? '';
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    $aksi = $_POST['aksi'];
     $kodegrup = trim($_POST['kodegrup'] ?? '');
     $kodegrup_lama = trim($_POST['kodegrup_lama'] ?? $kodegrup);
     $namagrup = trim($_POST['namagrup'] ?? '');

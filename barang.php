@@ -467,10 +467,13 @@ while ($g = $grupResult->fetch_assoc()) {
             const matchedGrup = kodegrupList.find(grup => kodebrg.startsWith(grup));
             document.getElementById('searchGrup').value = matchedGrup || '';
 
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchKode').disabled = false;
+            document.getElementById('searchNama').disabled = false;
+            document.getElementById('searchbtn').disabled = false;
+            inputSearch = null;
 
-            inputSearch.value = '';
-            inputSearch.disabled = true;
-            document.getElementById('searchbtn').disabled = true;
             dropdown.style.display = 'none';
             generateHargaInputs(<?= $jmlharga ?>);
             setHargaInputsDisabled(true);

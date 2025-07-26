@@ -181,7 +181,7 @@ function filterDropdown() {
           document.getElementById('btnCancel').disabled = false;
           document.getElementById('btnSave').disabled = true;
 
-          document.getElementById('searchGrup').disabled = true;
+          document.getElementById('searchGrup').disabled = false;
           document.getElementById('kodegrup').disabled = true;
           document.getElementById('namagrup').disabled = true;
         };
