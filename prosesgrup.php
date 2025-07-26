@@ -6,9 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     $aksi = $_POST['aksi'];
-    $kodegrup = trim($_POST['kodegrup'] ?? '');
-    $kodegrup_lama = trim($_POST['kodegrup_lama'] ?? $kodegrup);
-    $namagrup = trim($_POST['namagrup'] ?? '');
+    $kodegrup = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodegrup'] ?? '')));
+    $kodegrup_lama = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodegrup_lama'] ?? $kodegrup)));
+    $namagrup = strtoupper(mysqli_real_escape_string($conn, trim($_POST['namagrup'] ?? '')));
 
     if (!$kodegrup || !$namagrup) {
         header("Location: group.php?status=error");

@@ -39,7 +39,7 @@ include 'koneksi.php';
       <button id="btnSave" type="submit">Simpan</button>
       <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>
       <button id="btnEdit" type="button" onclick="initializeUbah()">Ubah</button>
-      <button id="btnHapus" type="submit" onclick="document.getElementById('aksi').value='hapus'">Hapus</button>
+      <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()">Hapus</button>
       <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
     </div>
   </form>
@@ -57,7 +57,31 @@ include 'koneksi.php';
   z-index: 1000;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 "></div>
-
+<div id="popupConfirmHapus" style="
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 1001;
+">
+    <div style="
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        width: 320px;
+        max-width: 90%;
+        text-align: center;
+    ">
+        <p style="font-size: 14px; margin-bottom: 20px;">Apakah Anda yakin ingin menghapus data ini?</p>
+        <button onclick="konfirmasiHapus(true)" style="margin-right: 10px; padding: 6px 12px; background: #dc3545; color: white; border: none; border-radius: 4px;">Ya</button>
+        <button onclick="konfirmasiHapus(false)" style="padding: 6px 12px; background: #6c757d; color: white; border: none; border-radius: 4px;">Tidak</button>
+    </div>
+</div>
 <script>
 let currentstat = null;
 
@@ -203,6 +227,22 @@ function setActiveButtonStyle(button) {
     button.style.backgroundColor = 'white';
     button.style.color = 'black';
     button.style.border = '1px solid #999';
+}
+
+function tampilkanKonfirmasiHapus() {
+    document.getElementById('popupConfirmHapus').style.display = 'block';
+}
+
+function konfirmasiHapus(setuju) {
+    const popup = document.getElementById('popupConfirmHapus');
+    popup.style.display = 'none';
+
+    if (setuju) {
+        document.getElementById('aksi').value = 'hapus';
+        document.getElementById('grupForm').submit();
+    } else {
+        showToast('Penghapusan dibatalkan.', '#6c757d');
+    }
 }
 
 function resetButtonStyles() {

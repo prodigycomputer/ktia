@@ -8,13 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $aksi = $_POST['aksi'] ?? '';
 
     // --- Ambil data utama dari form ---
-    $kodesup       = mysqli_real_escape_string($conn, trim($_POST['kodesup'] ?? ''));
-    $kodesup_lama  = mysqli_real_escape_string($conn, trim($_POST['kodesup_lama'] ?? $kodesup));
-    $namasup       = mysqli_real_escape_string($conn, trim($_POST['namasup'] ?? ''));
-    $alamat       = mysqli_real_escape_string($conn, trim($_POST['alamat'] ?? '-'));
-    $kota       = mysqli_real_escape_string($conn, trim($_POST['kota'] ?? '-'));
-    $ktp       = mysqli_real_escape_string($conn, trim($_POST['ktp'] ?? '-'));
-    $npwp       = mysqli_real_escape_string($conn, trim($_POST['npwp'] ?? '-'));
+    $kodesup       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodesup'] ?? '')));
+    $kodesup_lama  = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodesup_lama'] ?? $kodesup)));
+    $namasup       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['namasup'] ?? '')));
+    $alamat       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['alamat'] ?? '-')));
+    $kota       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kota'] ?? '-')));
+    $ktp       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['ktp'] ?? '-')));
+    $npwp       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['npwp'] ?? '-')));
 
 
     // --- Proses sesuai aksi ---

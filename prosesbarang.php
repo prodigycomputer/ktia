@@ -20,13 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // --- Ambil data utama dari form ---
-    $kodebrg       = mysqli_real_escape_string($conn, trim($_POST['kodebrg'] ?? ''));
-    $kodebrg_lama  = mysqli_real_escape_string($conn, trim($_POST['kodebrg_lama'] ?? $kodebrg));
-    $kodegrup      = mysqli_real_escape_string($conn, trim($_POST['searchGrup'] ?? ''));
-    $namabrg       = mysqli_real_escape_string($conn, trim($_POST['namabrg'] ?? ''));
-    $satuan1       = mysqli_real_escape_string($conn, trim($_POST['satuan1'] ?? '-'));
-    $satuan2       = mysqli_real_escape_string($conn, trim($_POST['satuan2'] ?? '-'));
-    $satuan3       = mysqli_real_escape_string($conn, trim($_POST['satuan3'] ?? '-'));
+    $kodebrg       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodebrg'] ?? '')));
+    $kodebrg_lama  = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodebrg_lama'] ?? $kodebrg)));
+    $kodegrup      = strtoupper(mysqli_real_escape_string($conn, trim($_POST['searchGrup'] ?? '')));
+    $namabrg       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['namabrg'] ?? '')));
+    $satuan1       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan1'] ?? '-')));
+    $satuan2       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan2'] ?? '-')));
+    $satuan3       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan3'] ?? '-')));
     $isi1          = is_numeric($_POST['isi1']) ? floatval($_POST['isi1']) : 1;
     $isi2          = is_numeric($_POST['isi2']) ? floatval($_POST['isi2']) : 1;
 
