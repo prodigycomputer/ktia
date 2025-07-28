@@ -4,7 +4,7 @@ $current = basename($_SERVER['PHP_SELF']);
 $isFile = in_array($current, ['barang.php', 'supplier.php', 'kustomer.php', 'sales.php', 'group.php']);
 $isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php']);
 $isLaporan = in_array($current, [
-  'LaporanStok.php', 'LaporanPelanggan.php', 'LaporanSupplier.php',
+  'LaporanStok.php', 'LaporanPenjualan.php', 'LaporanSupplier.php',
   'LaporanPembelian.php', 'LaporanKustomer.php'
 ]);
 ?>
@@ -47,7 +47,7 @@ $isLaporan = in_array($current, [
     <button class="dropdown-toggle <?= $isLaporan ? 'active-dropdown' : '' ?>" onclick="toggleDropdown('laporanDropdown', this)">Laporan ▾</button>
     <div class="dropdown-content <?= $isLaporan ? 'show' : '' ?>" id="laporanDropdown">
         <a href="LaporanStok.php" class="<?= $current == 'LaporanStok.php' ? 'active-link' : '' ?>">Laporan Stok</a>
-        <a href="LaporanPelanggan.php" class="<?= $current == 'LaporanPelanggan.php' ? 'active-link' : '' ?>">Laporan Pelanggan</a>
+        <a href="LaporanKustomer.php" class="<?= $current == 'LaporanKustomer.php' ? 'active-link' : '' ?>">Laporan Kustomer</a>
         <a href="LaporanSupplier.php" class="<?= $current == 'LaporanSupplier.php' ? 'active-link' : '' ?>">Laporan Supplier</a>
         <a href="LaporanPembelian.php" class="<?= $current == 'LaporanPembelian.php' ? 'active-link' : '' ?>">Laporan Pembelian</a>
         <a href="LaporanPenjualan.php" class="<?= $current == 'LaporanPenjualan.php' ? 'active-link' : '' ?>">Laporan Penjualan</a>
