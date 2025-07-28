@@ -133,10 +133,40 @@ function initializeFormButtons() {
   document.getElementById('kodegrup').disabled = true;
   document.getElementById('namagrup').disabled = true;
 
+  document.getElementById('searchKode').value = '';
+  document.getElementById('searchNama').value = '';
+  document.getElementById('searchKode').disabled = false;
+  document.getElementById('searchNama').disabled = false;
+  document.getElementById('searchbtn').disabled = false;
+
   resetButtonStyles();
 
 }
 initializeFormButtons();
+
+function initializeFormButtonsCancel() {
+    currentstat = null;
+
+    document.getElementById('kodegrup').value = previousFormData.kodegrup;
+    document.getElementById('namagrup').value = previousFormData.namagrup;
+    document.getElementById('btnTambah').disabled = true;
+    document.getElementById('btnEdit').disabled = false;
+    document.getElementById('btnHapus').disabled = true;
+    document.getElementById('btnCancel').disabled = false; 
+    document.getElementById('btnSave').disabled = true;
+
+    document.getElementById('kodegrup').disabled = true;
+    document.getElementById('namagrup').disabled = true;
+
+    document.getElementById('searchKode').value = '';
+    document.getElementById('searchNama').value = '';
+    document.getElementById('searchKode').disabled = false;
+    document.getElementById('searchNama').disabled = false;
+    document.getElementById('searchbtn').disabled = false;
+
+  resetButtonStyles();
+
+}
 
 function initializeTambah() {
   currentstat = 'tambah';
@@ -175,6 +205,7 @@ function initializeUbah() {
   document.getElementById('btnSave').disabled = false;
 
   document.getElementById('kodegrup').disabled = false;
+  document.getElementById('kodegrup').readOnly = false;
   document.getElementById('namagrup').disabled = false;
 
   document.getElementById('searchKode').disabled = true;
@@ -205,22 +236,7 @@ function cancelForm() {
       document.getElementById('grupForm').reset();
       currentstat = null;
   } else if (currentstat === 'update') {
-    document.getElementById('kodegrup').value = previousFormData.kodegrup;
-    document.getElementById('namagrup').value = previousFormData.namagrup;
-    document.getElementById('btnTambah').disabled = true;
-    document.getElementById('btnEdit').disabled = false;
-    document.getElementById('btnHapus').disabled = true;
-    document.getElementById('btnCancel').disabled = false; 
-    document.getElementById('btnSave').disabled = true;
-
-    document.getElementById('kodegrup').disabled = true;
-    document.getElementById('namagrup').disabled = true;
-
-    document.getElementById('searchKode').value = '';
-    document.getElementById('searchNama').value = '';
-    document.getElementById('searchKode').disabled = false;
-    document.getElementById('searchNama').disabled = false;
-    document.getElementById('searchbtn').disabled = false;
+    initializeFormButtonsCancel();
     currentstat = null;
   } else if (currentstat === null) {
     initializeFormButtons();
@@ -407,7 +423,22 @@ document.getElementById('grupForm').addEventListener('submit', function (e) {
   .then(response => {
     if (response.status === 'success') {
       showToast(`Data berhasil ${response.aksi === 'tambah' ? 'ditambahkan' : response.aksi === 'update' ? 'diupdate' : 'dihapus'}`);
-      initializeFormButtons();
+
+      if (currentstat === 'tambah' || currentstat === 'update') {
+      previousFormData = {
+        kodegrup: document.getElementById('kodegrup').value.trim(),
+        namagrup: document.getElementById('namagrup').value.trim(),
+        kodegrup_lama: document.getElementById('kodegrup').value.trim()
+      };
+
+      if (currentstat === 'tambah') {
+        initializeFormButtons();
+      } else {
+        initializeFormButtonsCancel();
+      }
+    }
+    
+
       // Kamu bisa isi ulang form dengan data sebelumnya kalau mau
     } else if (response.status === 'duplikat') {
       showToast('Kode grup sudah ada!', '#dc3545');

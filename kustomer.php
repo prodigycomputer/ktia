@@ -68,9 +68,9 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 <div class="form-bawah">
                 </div>
 
-            <button id="btnSave" type="submit" onclick="prepareSave()">Simpan</button>
-            <button id="btnTambah" type="submit" onclick="initializeTambah() ">Tambah</button>
-            <button id="btnEdit" type="submit" onclick="initializeUbah()">Ubah</button>
+            <button id="btnSave" type="submit">Simpan</button>
+            <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>
+            <button id="btnEdit" type="button" onclick="initializeUbah()">Ubah</button>
             <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()">Hapus</button>
             <button id="btnCancel" type="button" onclick="cancelEdit()">Batal</button>
 
@@ -149,6 +149,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         </div>
     </div>
     <script>
+        let previousFormData = {};
+
         function initializeFormButtons() {
             document.getElementById('btnTambah').disabled = false;
             document.getElementById('btnEdit').disabled = true;
@@ -166,14 +168,60 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('npwp').disabled = true;
             document.getElementById('gambar').disabled = true;
             document.getElementById('upload').disabled = true;
+
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchKode').disabled = false;
+            document.getElementById('searchNama').disabled = false;
+            document.getElementById('searchbtn').disabled = false;
+
+            resetButtonStyles();
         }
         initializeFormButtons();
+
+        function initializeFormButtonsCancel() {
+            currentstat = null;
+
+            document.getElementById('kodekust').value = previousFormData.kodekust;
+            document.getElementById('namakust').value = previousFormData.namakust;
+            document.getElementById('alamat').value = previousFormData.alamat;
+            document.getElementById('kota').value = previousFormData.kota;
+            document.getElementById('kodehrg').value = previousFormData.kodehrg;
+            document.getElementById('ktp').value = previousFormData.ktp;
+            document.getElementById('npwp').value = previousFormData.npwp;
+            document.getElementById('btnTambah').disabled = true;
+            document.getElementById('btnEdit').disabled = false;
+            document.getElementById('btnHapus').disabled = true;
+            document.getElementById('btnCancel').disabled = false; 
+            document.getElementById('btnSave').disabled = true;
+
+            document.getElementById('kodekust').disabled = true;
+            document.getElementById('namakust').disabled = true;
+            document.getElementById('alamat').disabled = true;
+            document.getElementById('kota').disabled = true;
+            document.getElementById('kodehrg').disabled = true;
+            document.getElementById('ktp').disabled = true;
+            document.getElementById('npwp').disabled = true;
+            document.getElementById('gambar').disabled = true;
+            document.getElementById('upload').disabled = true;
+
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchKode').disabled = false;
+            document.getElementById('searchNama').disabled = false;
+            document.getElementById('searchbtn').disabled = false;
+
+        resetButtonStyles();
+
+        }
 
         let currentstat = null;
 
         function initializeTambah() {
             currentstat = 'tambah';
             showToast('Kamu sedang menambah data...', '#ffc107');
+
+            document.getElementById('kustomerForm').reset();
 
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = true;
@@ -182,6 +230,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnSave').disabled = false;
 
             document.getElementById('kodekust').disabled = false;
+            document.getElementById('kodekust').readOnly = false;
             document.getElementById('namakust').disabled = false;
             document.getElementById('alamat').disabled = false;
             document.getElementById('kota').disabled = false;
@@ -213,6 +262,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnSave').disabled = false;
 
             document.getElementById('kodekust').disabled = false;
+            document.getElementById('kodekust').readOnly = false;
             document.getElementById('namakust').disabled = false;
             document.getElementById('alamat').disabled = false;
             document.getElementById('kota').disabled = false;
@@ -350,6 +400,17 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
         }
 
+        previousFormData = {
+            kodekust: document.getElementById('kodekust').value,
+            namakust: document.getElementById('namakust').value,
+            kodekust_lama: document.getElementById('kodekust_lama').value,
+            alamat: document.getElementById('alamat').value,
+            kota: document.getElementById('kota').value,
+            kodehrg: document.getElementById('kodehrg').value,
+            ktp: document.getElementById('ktp').value,
+            npwp: document.getElementById('npwp').value,
+        };
+
         function validateForm() {
             const kodekust = document.getElementById('kodekust').value.trim();
             const namakust = document.getElementById('namakust').value.trim();
@@ -414,6 +475,17 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = false; 
 
+            previousFormData = {
+                kodekust: data.kodekust,
+                namakust: data.namakust,
+                kodekust_lama: data.kodekust,
+                alamat: data.alamat,
+                kota: data.kota,
+                kodehrg: data.kodehrg,
+                ktp: data.ktp,
+                npwp: data.npwp
+            };
+
             document.getElementById('searchKode').value = '';
             document.getElementById('searchNama').value = '';
             document.getElementById('searchKode').disabled = false;
@@ -427,9 +499,6 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         }
 
         function cancelEdit() {
-            document.getElementById('kustomerForm').reset();
-            initializeFormButtons();
-
             // Reset search input
             const kodeInput = document.getElementById('searchKode');
             const namaInput = document.getElementById('searchNama');
@@ -438,6 +507,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             kodeInput.value = '';
             namaInput.value = '';
             document.getElementById('kodekust').readOnly = true;
+            document.getElementById('namakust').disabled = true;
             document.getElementById('searchbtn').disabled = false;
             document.getElementById('alamat').disabled = true;
             document.getElementById('kota').disabled = true;
@@ -446,7 +516,17 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('npwp').disabled = true;
             document.getElementById('gambar').value = '';
 
-            currentstat = null;
+            if (currentstat === 'tambah' ) {
+                initializeFormButtons();
+                document.getElementById('kustomerForm').reset();
+                currentstat = null;
+            } else if (currentstat === 'update') {
+                initializeFormButtonsCancel();
+                currentstat = null;
+            } else if (currentstat === null) {
+                initializeFormButtons();
+                document.getElementById('kustomerForm').reset();
+            }
             resetButtonStyles();
         }
 
@@ -479,6 +559,53 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             }
         });
 
+        document.getElementById('kustomerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            formData.set('aksi', currentstat); // 'tambah', 'update', 'hapus'
+
+            fetch('proseskustomer.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.status === 'success') {
+                showToast(`Data berhasil ${response.aksi === 'tambah' ? 'ditambahkan' : response.aksi === 'update' ? 'diupdate' : 'dihapus'}`);
+
+                if (currentstat === 'tambah' || currentstat === 'update') {
+                previousFormData = {
+                    kodekust: document.getElementById('kodekust').value.trim(),
+                    namakust: document.getElementById('namakust').value.trim(),
+                    kodekust_lama: document.getElementById('kodekust').value.trim(),
+                    alamat: document.getElementById('alamat').value.trim(),
+                    kota: document.getElementById('kota').value.trim(),
+                    kodehrg: document.getElementById('kodehrg').value.trim(),
+                    ktp: document.getElementById('ktp').value.trim(),
+                    npwp: document.getElementById('npwp').value.trim()
+                };
+
+                if (currentstat === 'tambah') {
+                    initializeFormButtons();
+                } else {
+                    initializeFormButtonsCancel();
+                }
+                }
+                
+
+                // Kamu bisa isi ulang form dengan data sebelumnya kalau mau
+                } else if (response.status === 'duplikat') {
+                showToast('Kode grup sudah ada!', '#dc3545');
+                } else {
+                showToast('Gagal menyimpan data!', '#dc3545');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast('Gagal koneksi ke server!', '#dc3545');
+            });
+        });
 
         const popup = document.getElementById('popupNotif');
         if (popup) {

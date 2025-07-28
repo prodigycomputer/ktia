@@ -66,8 +66,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 </div>
 
             <button id="btnSave" type="submit" onclick="prepareSave()">Simpan</button>
-            <button id="btnTambah" type="submit" onclick="initializeTambah() ">Tambah</button>
-            <button id="btnEdit" type="submit" onclick="initializeUbah()">Ubah</button>
+            <button id="btnTambah" type="button" onclick="initializeTambah() ">Tambah</button>
+            <button id="btnEdit" type="button" onclick="initializeUbah()">Ubah</button>
             <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()">Hapus</button>
             <button id="btnCancel" type="button" onclick="cancelEdit()">Batal</button>
 
@@ -145,6 +145,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         </div>
     </div>
     <script>
+        let previousFormData = {};
+
         function initializeFormButtons() {
             document.getElementById('btnTambah').disabled = false;
             document.getElementById('btnEdit').disabled = true;
@@ -160,14 +162,58 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('npwp').disabled = true;
             document.getElementById('gambar').disabled = true;
             document.getElementById('upload').disabled = true;
+
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchKode').disabled = false;
+            document.getElementById('searchNama').disabled = false;
+            document.getElementById('searchbtn').disabled = false;
+
+            resetButtonStyles();
         }
         initializeFormButtons();
+
+        function initializeFormButtonsCancel() {
+            currentstat = null;
+
+            document.getElementById('kodesup').value = previousFormData.kodesup;
+            document.getElementById('namasup').value = previousFormData.namasup;
+            document.getElementById('alamat').value = previousFormData.alamat;
+            document.getElementById('kota').value = previousFormData.kota;
+            document.getElementById('ktp').value = previousFormData.ktp;
+            document.getElementById('npwp').value = previousFormData.npwp;
+            document.getElementById('btnTambah').disabled = true;
+            document.getElementById('btnEdit').disabled = false;
+            document.getElementById('btnHapus').disabled = true;
+            document.getElementById('btnCancel').disabled = false; 
+            document.getElementById('btnSave').disabled = true;
+
+            document.getElementById('kodesup').disabled = true;
+            document.getElementById('namasup').disabled = true;
+            document.getElementById('alamat').disabled = true;
+            document.getElementById('kota').disabled = true;
+            document.getElementById('ktp').disabled = true;
+            document.getElementById('npwp').disabled = true;
+            document.getElementById('gambar').disabled = true;
+            document.getElementById('upload').disabled = true;
+
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchKode').disabled = false;
+            document.getElementById('searchNama').disabled = false;
+            document.getElementById('searchbtn').disabled = false;
+
+        resetButtonStyles();
+
+        }
 
         let currentstat = null;
 
         function initializeTambah() {
             currentstat = 'tambah';
             showToast('Kamu sedang menambah data...', '#ffc107');
+
+            document.getElementById('supplierForm').reset();
 
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = true;
@@ -176,6 +222,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnSave').disabled = false;
 
             document.getElementById('kodesup').disabled = false;
+            document.getElementById('kodesup').readOnly = false;
             document.getElementById('namasup').disabled = false;
             document.getElementById('alamat').disabled = false;
             document.getElementById('kota').disabled = false;
@@ -206,6 +253,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnSave').disabled = false;
 
             document.getElementById('kodesup').disabled = false;
+            document.getElementById('kodesup').readOnly = false;
             document.getElementById('namasup').disabled = false;
             document.getElementById('alamat').disabled = false;
             document.getElementById('kota').disabled = false;
@@ -343,6 +391,16 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
         }
 
+        previousFormData = {
+            kodesup: document.getElementById('kodesup').value,
+            namasup: document.getElementById('namasup').value,
+            kodesup_lama: document.getElementById('kodesup_lama').value,
+            alamat: document.getElementById('alamat').value,
+            kota: document.getElementById('kota').value,
+            ktp: document.getElementById('ktp').value,
+            npwp: document.getElementById('npwp').value,
+        };
+
         function validateForm() {
             const kodesup = document.getElementById('kodesup').value.trim();
             const namasup = document.getElementById('namasup').value.trim();
@@ -395,6 +453,16 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = false; 
 
+            previousFormData = {
+                kodesup: data.kodesup,
+                namasup: data.namasup,
+                kodesup_lama: data.kodesup,
+                alamat: data.alamat,
+                kota: data.kota,
+                ktp: data.ktp,
+                npwp: data.npwp
+            };
+
             document.getElementById('searchKode').value = '';
             document.getElementById('searchNama').value = '';
             document.getElementById('searchKode').disabled = false;
@@ -425,6 +493,18 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('ktp').disabled = true;
             document.getElementById('npwp').disabled = true;
             document.getElementById('gambar').value = '';
+
+            if (currentstat === 'tambah' ) {
+                initializeFormButtons();
+                document.getElementById('supplierForm').reset();
+                currentstat = null;
+            } else if (currentstat === 'update') {
+                initializeFormButtonsCancel();
+                currentstat = null;
+            } else if (currentstat === null) {
+                initializeFormButtons();
+                document.getElementById('supplierForm').reset();
+            }
 
             currentstat = null;
             resetButtonStyles();
@@ -459,6 +539,52 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             }
         });
 
+        document.getElementById('supplierForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            formData.set('aksi', currentstat); // 'tambah', 'update', 'hapus'
+
+            fetch('prosessupplier.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.status === 'success') {
+                showToast(`Data berhasil ${response.aksi === 'tambah' ? 'ditambahkan' : response.aksi === 'update' ? 'diupdate' : 'dihapus'}`);
+
+                if (currentstat === 'tambah' || currentstat === 'update') {
+                previousFormData = {
+                    kodesup: document.getElementById('kodesup').value.trim(),
+                    namasup: document.getElementById('namasup').value.trim(),
+                    kodesup_lama: document.getElementById('kodesup').value.trim(),
+                    alamat: document.getElementById('alamat').value.trim(),
+                    kota: document.getElementById('kota').value.trim(),
+                    ktp: document.getElementById('ktp').value.trim(),
+                    npwp: document.getElementById('npwp').value.trim()
+                };
+
+                if (currentstat === 'tambah') {
+                    initializeFormButtons();
+                } else {
+                    initializeFormButtonsCancel();
+                }
+                }
+                
+
+                // Kamu bisa isi ulang form dengan data sebelumnya kalau mau
+                } else if (response.status === 'duplikat') {
+                showToast('Kode grup sudah ada!', '#dc3545');
+                } else {
+                showToast('Gagal menyimpan data!', '#dc3545');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast('Gagal koneksi ke server!', '#dc3545');
+            });
+        });
 
         const popup = document.getElementById('popupNotif');
         if (popup) {

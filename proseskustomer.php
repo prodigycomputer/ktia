@@ -1,5 +1,8 @@
 <?php
 include 'koneksi.php';
+session_start();
+
+header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_reporting(E_ALL);
@@ -7,56 +10,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $aksi = $_POST['aksi'] ?? '';
 
-    // --- Ambil data utama dari form ---
+    // --- Ambil data dan sanitasi ---
     $kodekust       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodekust'] ?? '')));
     $kodekust_lama  = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodekust_lama'] ?? $kodekust)));
     $namakust       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['namakust'] ?? '')));
-    $alamat       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['alamat'] ?? '-')));
-    $kota       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kota'] ?? '-')));
-    $kodehrg       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodehrg'] ?? '-')));
-    $ktp       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['ktp'] ?? '-')));
-    $npwp       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['npwp'] ?? '-')));
+    $alamat         = strtoupper(mysqli_real_escape_string($conn, trim($_POST['alamat'] ?? '-')));
+    $kota           = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kota'] ?? '-')));
+    $kodehrg        = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodehrg'] ?? '-')));
+    $ktp            = strtoupper(mysqli_real_escape_string($conn, trim($_POST['ktp'] ?? '-')));
+    $npwp           = strtoupper(mysqli_real_escape_string($conn, trim($_POST['npwp'] ?? '-')));
 
-
-    // --- Proses sesuai aksi ---
-    if ($aksi === 'tambah') {
-        $cek = $conn->query("SELECT * FROM zkustomer WHERE kodekust='$kodekust'");
-        if ($cek && $cek->num_rows > 0) {
-            header("Location: kustomer.php?status=duplikat");
-            exit;
-        }
-
-        $query = "INSERT INTO zkustomer 
-        (kodekust, namakust, alamat, kota, kodehrg, ktp, npwp)
-        VALUES 
-        ('$kodekust', '$namakust', '$alamat', '$kota', '$kodehrg', '$ktp', '$npwp')";
-
-    } elseif ($aksi === 'update') {
-        $query = "UPDATE zkustomer SET 
-            kodekust = '$kodekust',
-            namakust = '$namakust',
-            alamat = '$alamat',
-            kota = '$kota',
-            kodehrg = '$kodehrg',
-            ktp = '$ktp',
-            npwp = '$npwp'
-            WHERE kodekust = '$kodekust_lama'";
-
-    } elseif ($aksi === 'hapus') {
-        $query = "DELETE FROM zkustomer WHERE kodekust='$kodekust'";
-    } else {
-        header("Location: kustomer.php?status=error");
+    // --- Validasi wajib isi minimal ---
+    if (!$kodekust || !$namakust) {
+        echo json_encode(['status' => 'error', 'message' => 'Kode dan Nama pelanggan wajib diisi']);
         exit;
     }
 
-    if (mysqli_query($conn, $query)) {
-        header("Location: kustomer.php?status=$aksi");
-    } else {
-        echo "<h3>Query Gagal:</h3>";
-        echo "<pre>$query</pre>";
-        echo "<h4>MySQL Error:</h4>";
-        echo mysqli_error($conn);
+    // --- Proses berdasarkan aksi ---
+    switch ($aksi) {
+        case 'tambah':
+            $cek = $conn->query("SELECT * FROM zkustomer WHERE kodekust = '$kodekust'");
+            if ($cek && $cek->num_rows > 0) {
+                echo json_encode(['status' => 'duplikat', 'message' => 'Kode pelanggan sudah ada']);
+                exit;
+            }
+            $query = "INSERT INTO zkustomer 
+                (kodekust, namakust, alamat, kota, kodehrg, ktp, npwp) VALUES 
+                ('$kodekust', '$namakust', '$alamat', '$kota', '$kodehrg', '$ktp', '$npwp')";
+            break;
+
+        case 'update':
+            $query = "UPDATE zkustomer SET 
+                kodekust = '$kodekust',
+                namakust = '$namakust',
+                alamat = '$alamat',
+                kota = '$kota',
+                kodehrg = '$kodehrg',
+                ktp = '$ktp',
+                npwp = '$npwp'
+                WHERE kodekust = '$kodekust_lama'";
+            break;
+
+        case 'hapus':
+            $query = "DELETE FROM zkustomer WHERE kodekust = '$kodekust'";
+            break;
+
+        default:
+            echo json_encode(['status' => 'error', 'message' => 'Aksi tidak valid']);
+            exit;
     }
+
+    // --- Eksekusi query dan kirim respons ---
+    if (mysqli_query($conn, $query)) {
+        echo json_encode(['status' => 'success', 'aksi' => $aksi]);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => mysqli_error($conn)]);
+    }
+
     exit;
 }
 ?>
