@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // --- Ambil dan sanitasi data utama ---
     $kodebrg       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodebrg'] ?? '')));
     $kodebrg_lama  = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodebrg_lama'] ?? $kodebrg)));
-    $kodegrup      = strtoupper(mysqli_real_escape_string($conn, trim($_POST['searchGrup'] ?? '')));
+    $kodegrup      = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodegrup'] ?? '')));
     $namabrg       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['namabrg'] ?? '')));
     $satuan1       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan1'] ?? '-')));
     $satuan2       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan2'] ?? '-')));

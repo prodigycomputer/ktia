@@ -43,13 +43,8 @@ while ($g = $grupResult->fetch_assoc()) {
                 <input type="hidden" name="kodebrg_lama" id="kodebrg_lama" value=""> 
 
                 <div class="form-atas">
-                    <label for="kodegrup">Grup</label>
-                    <div class="search-input">
-                        <div class="search-group">
-                            <input type="text" name="searchGrup" id="searchGrup" class="medium-input" oninput="filterDropdown()" style="text-transform: uppercase;">
-                            <div id="dropdownGrup" class="dropdown-barang"></div>
-                        </div>
-                    </div>
+                    <label for="kodegrup">Kode Grup</label>
+                    <input type="text" name="kodegrup" id="kodegrup" class="medium-input" required style="text-transform: uppercase;">
 
                     <label for="kodebrg">Kode Barang</label>
                     <input type="text" name="kodebrg" id="kodebrg" class="long-input" required style="text-transform: uppercase;">
@@ -217,11 +212,14 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('btnSave').disabled = true;
             document.getElementById('btnHarga').disabled = true;            
 
-            document.getElementById('searchGrup').disabled = true;
+            document.getElementById('kodegrup').disabled = true;
             document.getElementById('kodebrg').disabled = true;
             document.getElementById('namabrg').disabled = true;
             document.getElementById('satuan1').disabled = true;
             document.getElementById('isi1').disabled = true;
+            document.getElementById('satuan2').disabled = true;
+            document.getElementById('isi2').disabled = true;
+            document.getElementById('satuan3').disabled = true;
             document.getElementById('gambar').disabled = true;
             document.getElementById('upload').disabled = true;
 
@@ -239,7 +237,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('kodebrg').value = previousFormData.kodebrg;
             document.getElementById('kodebrg_lama').value = previousFormData.kodebrg_lama;
             document.getElementById('namabrg').value = previousFormData.namabrg;
-            document.getElementById('searchGrup').value = previousFormData.searchGrup;
+            document.getElementById('kodegrup').value = previousFormData.kodegrup;
             document.getElementById('satuan1').value = previousFormData.satuan1;
             document.getElementById('isi1').value = previousFormData.isi1;
             document.getElementById('satuan2').value = previousFormData.satuan2;
@@ -256,7 +254,7 @@ while ($g = $grupResult->fetch_assoc()) {
 
             document.getElementById('kodebrg').disabled = true;
             document.getElementById('namabrg').disabled = true;
-            document.getElementById('searchGrup').disabled = true;
+            document.getElementById('kodegrup').disabled = true;
             document.getElementById('satuan1').disabled = true;
             document.getElementById('satuan2').disabled = true;
             document.getElementById('satuan3').disabled = true;
@@ -288,7 +286,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('btnSave').disabled = false;
             document.getElementById('btnHarga').disabled = false; 
 
-            document.getElementById('searchGrup').disabled = false;
+            document.getElementById('kodegrup').disabled = false;
             document.getElementById('kodebrg').disabled = false;
             document.getElementById('kodebrg').readOnly = false;
             document.getElementById('namabrg').disabled = false;
@@ -318,7 +316,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
 
-            document.getElementById('searchGrup').disabled = false;
+            document.getElementById('kodegrup').disabled = false;
             document.getElementById('kodebrg').disabled = false;
             document.getElementById('kodebrg').readOnly = false;
             document.getElementById('namabrg').disabled = false;
@@ -410,7 +408,7 @@ while ($g = $grupResult->fetch_assoc()) {
             const hargaFields = Object.keys(dataList[0])
                 .filter(key => key.toLowerCase().startsWith('harga') && dataList[0][key] !== undefined);
 
-            const fixedFields = ['kodebrg', 'namabrg', 'satuan1', 'isi1', 'satuan2', 'isi2', 'satuan3'];
+            const fixedFields = ['kodebrg', 'kodegrup', 'namabrg', 'satuan1', 'isi1', 'satuan2', 'isi2', 'satuan3'];
 
             // Header
             const headerRow = document.createElement('tr');
@@ -488,7 +486,7 @@ while ($g = $grupResult->fetch_assoc()) {
             kodebrg: document.getElementById('kodebrg').value,
             kodebrg_lama: document.getElementById('kodebrg_lama').value,
             namabrg: document.getElementById('namabrg').value,
-            searchGrup: document.getElementById('searchGrup').value,
+            kodegrup: document.getElementById('kodegrup').value,
             satuan1: document.getElementById('satuan1').value,
             isi1: document.getElementById('isi1').value,
             satuan2: document.getElementById('satuan2').value,
@@ -503,6 +501,23 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('kodebrg_lama').value = data.kodebrg; 
             document.getElementById('namabrg').value = data.namabrg;
 
+            // Ambil list kodegrup dari PHP
+            const kodegrupList = <?= json_encode($kodegrupList) ?>;
+            const kodebrg = data.kodebrg;
+            let finalKodeGrup = '';
+
+            // Cek apakah ada grup yang cocok sebagai awalan kodebrg
+            const matchedGrup = kodegrupList.find(grup => kodebrg.startsWith(grup));
+
+            if (matchedGrup) {
+                finalKodeGrup = matchedGrup; // pakai dari zgrup
+            } else {
+                finalKodeGrup = data.kodegrup || ''; // fallback ke data zstok
+            }
+
+            document.getElementById('kodegrup').value = finalKodeGrup;
+
+            // Ambil dan simpan data harga
             hargaData = {};
             Object.keys(data).forEach(key => {
                 if (key.startsWith('harga')) {
@@ -510,40 +525,34 @@ while ($g = $grupResult->fetch_assoc()) {
                 }
             });
 
+            document.getElementById('satuan1').value = data.satuan1;
+            document.getElementById('isi1').value = data.isi1;
             document.getElementById('satuan2').value = data.satuan2;
             document.getElementById('isi2').value = data.isi2;
             document.getElementById('satuan3').value = data.satuan3;
 
-
-            document.getElementById('satuan1').value = data.satuan1;
-            document.getElementById('isi1').value = data.isi1;
-
-            // Logika enable/disable berdasarkan isi1 dan isi2
+            // Tombol state
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = false;
             document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnCancel').disabled = false;
-            document.getElementById('btnHarga').disabled = false; 
+            document.getElementById('btnHarga').disabled = false;
 
-            const kodebrg = data.kodebrg;
-            const kodegrupList = <?= json_encode($kodegrupList) ?>;
-
-            const matchedGrup = kodegrupList.find(grup => kodebrg.startsWith(grup));
-            document.getElementById('searchGrup').value = matchedGrup || '';
-
+            // Simpan kondisi sebelumnya
             previousFormData = {
                 kodebrg: data.kodebrg,
                 kodebrg_lama: data.kodebrg,
                 namabrg: data.namabrg,
-                searchGrup: data.kodegrup,
+                kodegrup: finalKodeGrup,
                 satuan1: data.satuan1,
                 isi1: data.isi1,
                 satuan2: data.satuan2,
                 isi2: data.isi2,
                 satuan3: data.satuan3,
-                hargaData: JSON.parse(JSON.stringify(hargaData)) // deep copy array harga
+                hargaData: JSON.parse(JSON.stringify(hargaData)) // deep copy
             };
 
+            // Reset dan tampil
             document.getElementById('searchKode').value = '';
             document.getElementById('searchNama').value = '';
             document.getElementById('searchKode').disabled = false;
@@ -587,7 +596,7 @@ while ($g = $grupResult->fetch_assoc()) {
         }
 
         function validateForm() {
-            const kodegrup = document.getElementById('searchGrup').value.trim();
+            const kodegrup = document.getElementById('kodegrup').value.trim();
             const kodebrg = document.getElementById('kodebrg').value.trim();
             const namabrg = document.getElementById('namabrg').value.trim();
             const satuan1 = document.getElementById('satuan1').value.trim();
@@ -639,7 +648,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('kodebrg').readOnly = true;
             document.getElementById('namabrg').disabled = true;
             document.getElementById('searchbtn').disabled = false;
-            document.getElementById('searchGrup').disabled = true;
+            document.getElementById('kodegrup').disabled = true;
             document.getElementById('satuan1').disabled = true;
             document.getElementById('isi1').disabled = true;
             document.getElementById('satuan2').disabled = true;
@@ -715,7 +724,7 @@ while ($g = $grupResult->fetch_assoc()) {
                     kodebrg: document.getElementById('kodebrg').value.trim(),
                     kodebrg_lama: document.getElementById('kodebrg').value.trim(),
                     namabrg: document.getElementById('namabrg').value.trim(),
-                    searchGrup: document.getElementById('searchGrup').value.trim(),
+                    kodegrup: document.getElementById('kodegrup').value.trim(),
                     satuan1: document.getElementById('satuan1').value.trim(),
                     isi1: document.getElementById('isi1').value.trim(),
                     satuan2: document.getElementById('satuan2').value.trim(),
@@ -861,47 +870,6 @@ while ($g = $grupResult->fetch_assoc()) {
 
             closeHargaPopup();
         }
-
-        function filterDropdown() {
-            const keyword = document.getElementById('searchGrup').value.toUpperCase().trim();
-            const dropdown = document.getElementById('dropdownGrup');
-
-            if (keyword === '') {
-                dropdown.style.display = 'none';
-                return;
-            }
-
-            fetch(`filter_grup.php?keyword=${encodeURIComponent(keyword)}`)
-                .then(res => res.json())
-                .then(data => {
-                    dropdown.innerHTML = '';
-                    if (data.length === 0) {
-                    dropdown.style.display = 'none';
-                    return;
-                    }
-
-                    data.forEach(grup => {
-                    const div = document.createElement('div');
-                    div.textContent = `${grup.kodegrup} - ${grup.namagrup}`;
-                    div.onclick = () => {
-                        // Isi form input
-                        document.getElementById('searchGrup').value = grup.kodegrup;
-                        dropdown.style.display = 'none';
-
-                        // Reset tombol mode Edit
-                        setEditModeButtons();
-                    };
-                    dropdown.appendChild(div);
-                    });
-
-                    dropdown.style.display = 'block';
-                });
-            }
-
-            const popup = document.getElementById('popupNotif');
-            if (popup) {
-                popup.addEventListener('click', () => popup.style.display = 'none');
-            }
 
         function tampilkanKonfirmasiHapus() {
             document.getElementById('popupConfirmHapus').style.display = 'block';
