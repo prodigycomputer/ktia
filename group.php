@@ -18,13 +18,12 @@ include 'koneksi.php';
   <h2>Group Barang</h2>
 
   <div class="search-bar">
-    <div class="search-group">
-      <input type="text" id="searchGrup" placeholder="Cari kode/nama grup..." class="input-group" oninput="filterDropdown()" style="text-transform: uppercase;">
-      <div id="dropdownGrup" class="dropdown-result"></div>
-    </div>
+      <input type="text" id="searchKode" class="search-kode" placeholder="Kode Grup" oninput="handleInput('kode')" style="text-transform: uppercase;">
+      <input type="text" id="searchNama" class="search-nama" placeholder="Nama Grup" oninput="handleInput('nama')" style="text-transform: uppercase;">
+      <button type="button" id="searchbtn" onclick="triggerSearch()">🔍 Cari</button>
   </div>
 
-  <form id="grupForm" action="prosesgrup.php" method="POST" enctype="multipart/form-data" onsubmit="return prepareSave()">
+  <form id="grupForm" action="prosesgrup.php" enctype="multipart/form-data" onsubmit="return false;">
     <input type="hidden" name="aksi" id="aksi" value="">
     <input type="hidden" name="kodegrup_lama" id="kodegrup_lama" value="">
 
@@ -44,6 +43,35 @@ include 'koneksi.php';
     </div>
   </form>
 </main>
+
+<div id="popupFilter" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
+    <div id="popupContent" style="
+        position:absolute; 
+        top:50%; left:50%; transform:translate(-50%, -50%); 
+        width:90%; 
+        max-width:835px; 
+        background:#fff; 
+        border-radius:8px; 
+        box-shadow:0 4px 15px rgba(0,0,0,0.3); 
+        padding:16px 16px 10px; 
+        max-height:80vh; 
+        overflow:auto;
+    ">
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h3 style="font-size:14px; margin:0;">Hasil Pencarian</h3>
+        <span onclick="closeFilterPopup()" style="cursor:pointer; font-weight:bold; font-size:16px; color:#666;">&times;</span>
+        </div>
+
+        <div style="max-height: 60vh; overflow: auto; border: 1px solid #ccc;">
+            <table style="min-width: 800px; border-collapse: collapse; font-size: 12px;">
+                <thead style="background:#f2f2f2;">
+                </thead>
+                <tbody id="popupList"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <div id="toast" style="
   display: none;
@@ -102,9 +130,11 @@ function initializeFormButtons() {
   document.getElementById('btnCancel').disabled = true;
   document.getElementById('btnSave').disabled = true;
 
-  document.getElementById('searchGrup').disabled = false;
   document.getElementById('kodegrup').disabled = true;
   document.getElementById('namagrup').disabled = true;
+
+  resetButtonStyles();
+
 }
 initializeFormButtons();
 
@@ -112,19 +142,25 @@ function initializeTambah() {
   currentstat = 'tambah';
   showToast('Kamu sedang menambah data...', '#ffc107');
 
+  document.getElementById('grupForm').reset();
+
   document.getElementById('btnTambah').disabled = true;
   document.getElementById('btnEdit').disabled = true;
   document.getElementById('btnHapus').disabled = true;
   document.getElementById('btnCancel').disabled = false;
   document.getElementById('btnSave').disabled = false;
 
-  document.getElementById('searchGrup').disabled = true;
   document.getElementById('kodegrup').disabled = false;
+  document.getElementById('kodegrup').readOnly = false;
   document.getElementById('namagrup').disabled = false;
 
-  document.getElementById('grupForm').reset();
-  document.getElementById('searchGrup').value = '';
+  document.getElementById('searchKode').disabled = true;
+  document.getElementById('searchNama').disabled = true;
+  document.getElementById('searchKode').value = '';
+  document.getElementById('searchNama').value = '';
+  document.getElementById('searchbtn').disabled = true;
 
+  resetButtonStyles();
   setActiveButtonStyle(document.getElementById('btnTambah'));
 }
 
@@ -138,19 +174,68 @@ function initializeUbah() {
   document.getElementById('btnCancel').disabled = false;
   document.getElementById('btnSave').disabled = false;
 
-  document.getElementById('searchGrup').disabled = true;
   document.getElementById('kodegrup').disabled = false;
   document.getElementById('namagrup').disabled = false;
-  setActiveButtonStyle(document.getElementById('btnEdit'))
+
+  document.getElementById('searchKode').disabled = true;
+  document.getElementById('searchNama').disabled = true;
+  document.getElementById('searchKode').value = '';
+  document.getElementById('searchNama').value = '';
+  document.getElementById('searchbtn').disabled = true;
+
+  resetButtonStyles();
+  setActiveButtonStyle(document.getElementById('btnEdit'));
 }
 
+
+
 function cancelForm() {
-  document.getElementById('grupForm').reset();
-  document.getElementById('aksi').value = '';
-  document.getElementById('searchGrup').value = '';
+  // Reset search input
+  const kodeInput = document.getElementById('searchKode');
+  const namaInput = document.getElementById('searchNama');
+  kodeInput.disabled = false;
+  namaInput.disabled = false;
+  kodeInput.value = '';
+  namaInput.value = '';
+  document.getElementById('kodegrup').readOnly = true;
+  document.getElementById('searchbtn').disabled = false;
+
+  if (currentstat === 'tambah' ) {
+      initializeFormButtons();
+      document.getElementById('grupForm').reset();
+      currentstat = null;
+  } else if (currentstat === 'update') {
+    document.getElementById('kodegrup').value = previousFormData.kodegrup;
+    document.getElementById('namagrup').value = previousFormData.namagrup;
+    document.getElementById('btnTambah').disabled = true;
+    document.getElementById('btnEdit').disabled = false;
+    document.getElementById('btnHapus').disabled = true;
+    document.getElementById('btnCancel').disabled = false; 
+    document.getElementById('btnSave').disabled = true;
+
+    document.getElementById('kodegrup').disabled = true;
+    document.getElementById('namagrup').disabled = true;
+
+    document.getElementById('searchKode').value = '';
+    document.getElementById('searchNama').value = '';
+    document.getElementById('searchKode').disabled = false;
+    document.getElementById('searchNama').disabled = false;
+    document.getElementById('searchbtn').disabled = false;
+    currentstat = null;
+  } else if (currentstat === null) {
+    initializeFormButtons();
+    document.getElementById('grupForm').reset();
+  }
   resetButtonStyles();
-  initializeFormButtons();
 }
+
+let previousFormData = {};
+
+previousFormData = {
+  kodegrup: document.getElementById('kodegrup').value,
+  namagrup: document.getElementById('namagrup').value,
+  kodegrup_lama: document.getElementById('kodegrup_lama').value
+};
 
 function prepareSave() {
   if (!currentstat) {
@@ -170,58 +255,173 @@ function forceUppercase(id) {
 forceUppercase('kodegrup');
 forceUppercase('namagrup');
 
-function filterDropdown() {
-  const keyword = document.getElementById('searchGrup').value.toUpperCase().trim();
-  const dropdown = document.getElementById('dropdownGrup');
+let inputSearch = null;
+let searchBtn = document.getElementById('searchbtn')
 
-  if (keyword === '') {
-    dropdown.style.display = 'none';
-    return;
-  }
+function handleInput(type) {
+    const kodeInput = document.getElementById('searchKode');
+    const namaInput = document.getElementById('searchNama');
 
-  fetch(`filter_grup.php?keyword=${encodeURIComponent(keyword)}`)
-    .then(res => res.json())
-    .then(data => {
-      dropdown.innerHTML = '';
-      if (data.length === 0) {
-        dropdown.style.display = 'none';
-        return;
-      }
-
-      data.forEach(grup => {
-        const div = document.createElement('div');
-        div.textContent = `${grup.kodegrup} - ${grup.namagrup}`;
-        div.onclick = () => {
-          document.getElementById('kodegrup').value = grup.kodegrup;
-           document.getElementById('kodegrup_lama').value = grup.kodegrup;
-          document.getElementById('namagrup').value = grup.namagrup;
-          document.getElementById('dropdownGrup').style.display = 'none';
-          document.getElementById('searchGrup').value = '';
-
-          // Aktifkan tombol edit
-          document.getElementById('btnTambah').disabled = true;
-          document.getElementById('btnEdit').disabled = false;
-          document.getElementById('btnHapus').disabled = true;
-          document.getElementById('btnCancel').disabled = false;
-          document.getElementById('btnSave').disabled = true;
-
-          document.getElementById('searchGrup').disabled = false;
-          document.getElementById('kodegrup').disabled = true;
-          document.getElementById('namagrup').disabled = true;
-        };
-        dropdown.appendChild(div);
-      });
-
-      dropdown.style.display = 'block';
-    });
+    if (type === 'kode') {
+        if (kodeInput.value.trim() !== '') {
+            namaInput.disabled = true;
+            inputSearch = kodeInput;
+        } else {
+            namaInput.disabled = false;
+            inputSearch = null;
+        }
+    } else {
+        if (namaInput.value.trim() !== '') {
+            kodeInput.disabled = true;
+            inputSearch = namaInput;
+        } else {
+            kodeInput.disabled = false;
+            inputSearch = null;
+        }
+    }
 }
 
-document.getElementById('grupForm').addEventListener('submit', function () {
-  setTimeout(() => {
-    initializeFormButtons();
-    document.getElementById('grupForm').reset();
-  }, 100);
+function showFilterPopup(dataList) {
+    const list = document.getElementById('popupList');
+    list.innerHTML = '';
+
+    const table = list.closest('table');
+    const thead = table.querySelector('thead');
+    thead.innerHTML = ''; // Kosongkan
+
+    if (!dataList || dataList.length === 0) return;
+
+    const fixedFields = ['kodegrup', 'namagrup'];
+
+    // Header
+    const headerRow = document.createElement('tr');
+    [...fixedFields].forEach(field => {
+        const th = document.createElement('th');
+        th.textContent = field.toUpperCase();
+        th.style.padding = '4px';
+        th.style.border = '1px solid #ccc';
+        th.style.background = '#f9f9f9';
+        th.style.fontSize = '12px';
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+
+    // Data
+    dataList.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.style.cursor = 'pointer';
+        tr.addEventListener('click', () => {
+            closeFilterPopup();
+            pilihGrup(item);
+        });
+
+        [...fixedFields].forEach(field => {
+            const td = document.createElement('td');
+            td.textContent = item[field] || '';
+            td.style.padding = '4px';
+            td.style.border = '1px solid #ccc';
+            td.style.fontSize = '14px';
+            tr.appendChild(td);
+        });
+
+        list.appendChild(tr);
+    });
+
+    document.getElementById('popupFilter').style.display = 'block';
+}
+
+
+function closeFilterPopup() {
+    document.getElementById('popupFilter').style.display = 'none';
+}
+
+function triggerSearch() {
+    if (!inputSearch) {
+        showToast('Isi kode atau nama terlebih dahulu!', '#dc3545');
+        return;
+    }
+
+    const keyword = inputSearch.value.trim().toUpperCase();
+    if (!keyword) {
+        showToast('Kolom pencarian tidak boleh kosong!', '#dc3545');
+        return;
+    }
+
+    fetch(`filter_grup.php?keyword=${encodeURIComponent(keyword)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length === 0) {
+                showToast('Data tidak ada!', '#dc3545');
+                return;
+            }
+
+            if (data.length === 1) {
+                showFilterPopup(data);
+            } else {
+                showFilterPopup(data); // tampilkan pilihan
+            }
+        })
+
+}
+
+function pilihGrup(data) {
+    document.getElementById('kodegrup').value = data.kodegrup;
+    document.getElementById('kodegrup_lama').value = data.kodegrup; 
+    document.getElementById('namagrup').value = data.namagrup;
+
+    // Logika enable/disable berdasarkan isi1 dan isi2
+    document.getElementById('btnTambah').disabled = true;
+    document.getElementById('btnEdit').disabled = false;
+    document.getElementById('btnHapus').disabled = true;
+    document.getElementById('btnCancel').disabled = false; 
+
+    previousFormData = {
+      kodegrup: data.kodegrup,
+      namagrup: data.namagrup,
+      kodegrup_lama: data.kodegrup
+    };
+
+    document.getElementById('searchKode').value = '';
+    document.getElementById('searchNama').value = '';
+    document.getElementById('searchKode').disabled = false;
+    document.getElementById('searchNama').disabled = false;
+    document.getElementById('searchbtn').disabled = false;
+    inputSearch = null;
+    dropdown.style.display = 'none';
+    closeFilterPopup();
+
+
+}
+
+document.getElementById('grupForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+  formData.set('aksi', currentstat); // 'tambah', 'update', 'hapus'
+
+  fetch('prosesgrup.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => res.json())
+  .then(response => {
+    if (response.status === 'success') {
+      showToast(`Data berhasil ${response.aksi === 'tambah' ? 'ditambahkan' : response.aksi === 'update' ? 'diupdate' : 'dihapus'}`);
+      initializeFormButtons();
+      // Kamu bisa isi ulang form dengan data sebelumnya kalau mau
+    } else if (response.status === 'duplikat') {
+      showToast('Kode grup sudah ada!', '#dc3545');
+    } else {
+      showToast('Gagal menyimpan data!', '#dc3545');
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    showToast('Gagal koneksi ke server!', '#dc3545');
+  });
 });
+
+
 
 function setActiveButtonStyle(button) {
     button.style.backgroundColor = 'white';
