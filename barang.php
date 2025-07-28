@@ -85,9 +85,9 @@ while ($g = $grupResult->fetch_assoc()) {
                     <div id="hiddenHargaFields"></div>
                 </div>
 
-            <button id="btnSave" type="submit" onclick="prepareSave()">Simpan</button>
-            <button id="btnTambah" type="submit" onclick="initializeTambah() ">Tambah</button>
-            <button id="btnEdit" type="submit" onclick="initializeUbah()">Ubah</button>
+            <button id="btnSave" type="submit">Simpan</button>
+            <button id="btnTambah" type="button" onclick="initializeTambah() ">Tambah</button>
+            <button id="btnEdit" type="button" onclick="initializeUbah()">Ubah</button>
             <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()">Hapus</button>
             <button id="btnCancel" type="button" onclick="cancelEdit()">Batal</button>
 
@@ -207,6 +207,8 @@ while ($g = $grupResult->fetch_assoc()) {
     </div>
 
     <script>
+
+        let previousFormData = {};
         function initializeFormButtons() {
             document.getElementById('btnTambah').disabled = false;
             document.getElementById('btnEdit').disabled = true;
@@ -222,8 +224,56 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('isi1').disabled = true;
             document.getElementById('gambar').disabled = true;
             document.getElementById('upload').disabled = true;
+
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchKode').disabled = false;
+            document.getElementById('searchNama').disabled = false;
+            document.getElementById('searchbtn').disabled = false;
         }
         initializeFormButtons();
+
+        function initializeFormButtonsCancel() {
+            currentstat = null;
+
+            document.getElementById('kodebrg').value = previousFormData.kodebrg;
+            document.getElementById('kodebrg_lama').value = previousFormData.kodebrg_lama;
+            document.getElementById('namabrg').value = previousFormData.namabrg;
+            document.getElementById('searchGrup').value = previousFormData.searchGrup;
+            document.getElementById('satuan1').value = previousFormData.satuan1;
+            document.getElementById('isi1').value = previousFormData.isi1;
+            document.getElementById('satuan2').value = previousFormData.satuan2;
+            document.getElementById('isi2').value = previousFormData.isi2;
+            document.getElementById('satuan3').value = previousFormData.satuan3;
+            hargaData = JSON.parse(JSON.stringify(previousFormData.hargaData));
+            generateHargaInputs(<?= $jmlharga ?>);
+
+            document.getElementById('btnTambah').disabled = true;
+            document.getElementById('btnEdit').disabled = false;
+            document.getElementById('btnHapus').disabled = true;
+            document.getElementById('btnCancel').disabled = false; 
+            document.getElementById('btnSave').disabled = true;
+
+            document.getElementById('kodebrg').disabled = true;
+            document.getElementById('namabrg').disabled = true;
+            document.getElementById('searchGrup').disabled = true;
+            document.getElementById('satuan1').disabled = true;
+            document.getElementById('satuan2').disabled = true;
+            document.getElementById('satuan3').disabled = true;
+            document.getElementById('isi1').disabled = true;
+            document.getElementById('isi2').disabled = true;
+            document.getElementById('gambar').disabled = true;
+            document.getElementById('upload').disabled = true;
+
+            document.getElementById('searchKode').value = '';
+            document.getElementById('searchNama').value = '';
+            document.getElementById('searchKode').disabled = false;
+            document.getElementById('searchNama').disabled = false;
+            document.getElementById('searchbtn').disabled = false;
+
+        resetButtonStyles();
+
+        }
 
         let currentstat = null;
 
@@ -240,6 +290,7 @@ while ($g = $grupResult->fetch_assoc()) {
 
             document.getElementById('searchGrup').disabled = false;
             document.getElementById('kodebrg').disabled = false;
+            document.getElementById('kodebrg').readOnly = false;
             document.getElementById('namabrg').disabled = false;
             document.getElementById('satuan1').disabled = false;
             document.getElementById('isi1').disabled = false;
@@ -269,6 +320,7 @@ while ($g = $grupResult->fetch_assoc()) {
 
             document.getElementById('searchGrup').disabled = false;
             document.getElementById('kodebrg').disabled = false;
+            document.getElementById('kodebrg').readOnly = false;
             document.getElementById('namabrg').disabled = false;
             document.getElementById('satuan1').disabled = false;
             document.getElementById('isi1').disabled = false;
@@ -432,6 +484,19 @@ while ($g = $grupResult->fetch_assoc()) {
 
         }
 
+        previousFormData = {
+            kodebrg: document.getElementById('kodebrg').value,
+            kodebrg_lama: document.getElementById('kodebrg_lama').value,
+            namabrg: document.getElementById('namabrg').value,
+            searchGrup: document.getElementById('searchGrup').value,
+            satuan1: document.getElementById('satuan1').value,
+            isi1: document.getElementById('isi1').value,
+            satuan2: document.getElementById('satuan2').value,
+            isi2: document.getElementById('isi2').value,
+            satuan3: document.getElementById('satuan3').value,
+            hargaData: JSON.parse(JSON.stringify(hargaData)) // deep copy supaya tidak berubah
+        };
+
 
         function pilihBarang(data) {
             document.getElementById('kodebrg').value = data.kodebrg;
@@ -465,6 +530,19 @@ while ($g = $grupResult->fetch_assoc()) {
 
             const matchedGrup = kodegrupList.find(grup => kodebrg.startsWith(grup));
             document.getElementById('searchGrup').value = matchedGrup || '';
+
+            previousFormData = {
+                kodebrg: data.kodebrg,
+                kodebrg_lama: data.kodebrg,
+                namabrg: data.namabrg,
+                searchGrup: data.kodegrup,
+                satuan1: data.satuan1,
+                isi1: data.isi1,
+                satuan2: data.satuan2,
+                isi2: data.isi2,
+                satuan3: data.satuan3,
+                hargaData: JSON.parse(JSON.stringify(hargaData)) // deep copy array harga
+            };
 
             document.getElementById('searchKode').value = '';
             document.getElementById('searchNama').value = '';
@@ -549,7 +627,6 @@ while ($g = $grupResult->fetch_assoc()) {
         }
 
         function cancelEdit() {
-            document.getElementById('barangForm').reset();
             initializeFormButtons();
 
             // Reset search input
@@ -560,8 +637,11 @@ while ($g = $grupResult->fetch_assoc()) {
             kodeInput.value = '';
             namaInput.value = '';
             document.getElementById('kodebrg').readOnly = true;
+            document.getElementById('namabrg').disabled = true;
             document.getElementById('searchbtn').disabled = false;
-
+            document.getElementById('searchGrup').disabled = true;
+            document.getElementById('satuan1').disabled = true;
+            document.getElementById('isi1').disabled = true;
             document.getElementById('satuan2').disabled = true;
             document.getElementById('isi2').disabled = true;
             document.getElementById('satuan3').disabled = true;
@@ -569,7 +649,17 @@ while ($g = $grupResult->fetch_assoc()) {
 
             hargaData = {};
             generateHargaInputs(<?= $jmlharga ?>);
-            currentstat = null;
+            if (currentstat === 'tambah' ) {
+                initializeFormButtons();
+                document.getElementById('barangForm').reset();
+                currentstat = null;
+            } else if (currentstat === 'update') {
+                initializeFormButtonsCancel();
+                currentstat = null;
+            } else if (currentstat === null) {
+                initializeFormButtons();
+                document.getElementById('barangForm').reset();
+            }
             resetButtonStyles();
         }
 
@@ -602,29 +692,57 @@ while ($g = $grupResult->fetch_assoc()) {
             }
         });
 
-        document.getElementById('barangForm').addEventListener('submit', function () {
-            const hiddenDiv = document.getElementById('hiddenHargaFields');
-            hiddenDiv.innerHTML = '';
-            hargaData.forEach((val, index) => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = `harga${index + 1}`;
-                input.value = val;
-                hiddenDiv.appendChild(input);
+        document.getElementById('barangForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            formData.set('aksi', currentstat); // 'tambah', 'update', 'hapus'
+            document.querySelectorAll('[name^="harga"]').forEach(input => {
+                formData.append(input.name, input.value);
             });
-            setTimeout(() => {
-                initializeFormButtons();
 
-                document.getElementById('searchKode').disabled = false;
-                document.getElementById('searchNama').disabled = false;
-                document.getElementById('searchKode').value = '';
-                document.getElementById('searchNama').value = '';
-                document.getElementById('searchbtn').disabled = false;
+            fetch('prosesbarang.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (response.status === 'success') {
+                showToast(`Data berhasil ${response.aksi === 'tambah' ? 'ditambahkan' : response.aksi === 'update' ? 'diupdate' : 'dihapus'}`);
 
-                currentstat = null;
-                resetButtonStyles();
-            }, 100);
+                if (currentstat === 'tambah' || currentstat === 'update') {
+                previousFormData = {
+                    kodebrg: document.getElementById('kodebrg').value.trim(),
+                    kodebrg_lama: document.getElementById('kodebrg').value.trim(),
+                    namabrg: document.getElementById('namabrg').value.trim(),
+                    searchGrup: document.getElementById('searchGrup').value.trim(),
+                    satuan1: document.getElementById('satuan1').value.trim(),
+                    isi1: document.getElementById('isi1').value.trim(),
+                    satuan2: document.getElementById('satuan2').value.trim(),
+                    isi2: document.getElementById('isi2').value.trim(),
+                    satuan3: document.getElementById('satuan3').value.trim(),
+                    hargaData: JSON.parse(JSON.stringify(hargaData)) // deep copy agar tidak berubah saat diedit
+                };
 
+                if (currentstat === 'tambah') {
+                    initializeFormButtons();
+                } else {
+                    initializeFormButtonsCancel();
+                }
+                }
+                
+
+                // Kamu bisa isi ulang form dengan data sebelumnya kalau mau
+                } else if (response.status === 'duplikat') {
+                showToast('Kode grup sudah ada!', '#dc3545');
+                } else {
+                showToast('Gagal menyimpan data!', '#dc3545');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast('Gagal koneksi ke server!', '#dc3545');
+            });
         });
         
 

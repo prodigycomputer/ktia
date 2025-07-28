@@ -10,15 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $aksi = $_POST['aksi'] ?? '';
 
-    // --- Ambil semua field kolom harga (harga1, harga11, dst.) ---
-    $hargaData = [];
-    $resField = $conn->query("SHOW COLUMNS FROM zstok WHERE Field LIKE 'harga%'");
-    while ($row = $resField->fetch_assoc()) {
-        $field = $row['Field'];
-        $hargaData[$field] = isset($_POST[$field]) && is_numeric($_POST[$field]) ? floatval($_POST[$field]) : 0;
-    }
-
-    // --- Ambil data utama dari form ---
+    // --- Ambil dan sanitasi data utama ---
     $kodebrg       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodebrg'] ?? '')));
     $kodebrg_lama  = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodebrg_lama'] ?? $kodebrg)));
     $kodegrup      = strtoupper(mysqli_real_escape_string($conn, trim($_POST['searchGrup'] ?? '')));
@@ -29,12 +21,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isi1          = is_numeric($_POST['isi1'] ?? '') ? floatval($_POST['isi1']) : 1;
     $isi2          = is_numeric($_POST['isi2'] ?? '') ? floatval($_POST['isi2']) : 1;
 
-    /*// Validasi minimal
+    // --- Validasi minimal wajib isi ---
     if (!$kodebrg || !$namabrg || !$kodegrup) {
-        echo json_encode(['status' => 'error', 'message' => 'Data tidak lengkap']);
+        echo json_encode(['status' => 'error', 'message' => 'Kode, Nama, dan Grup wajib diisi']);
         exit;
-    }*/
+    }
 
+    // --- Ambil semua kolom harga dari DB dan isi datanya dari POST ---
+    $hargaData = [];
+    $resField = $conn->query("SHOW COLUMNS FROM zstok WHERE Field LIKE 'harga%'");
+    while ($row = $resField->fetch_assoc()) {
+        $field = $row['Field'];
+        if (isset($_POST[$field]) && is_numeric($_POST[$field])) {
+            $hargaData[$field] = floatval($_POST[$field]);
+        } else {
+            $hargaData[$field] = 0;
+        }
+    }
+
+    // --- Susun bagian harga untuk query ---
     $fieldHarga = '';
     $valueHarga = '';
     $updateHarga = '';
@@ -44,10 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updateHarga .= ", `$field` = $val";
     }
 
-    // --- Proses sesuai aksi ---
+    // --- Proses berdasarkan aksi ---
     switch ($aksi) {
         case 'tambah':
-            $cek = $conn->query("SELECT * FROM zstok WHERE kodebrg='$kodebrg'");
+            $cek = $conn->query("SELECT 1 FROM zstok WHERE kodebrg = '$kodebrg'");
             if ($cek && $cek->num_rows > 0) {
                 echo json_encode(['status' => 'duplikat', 'message' => 'Kode barang sudah ada']);
                 exit;
@@ -73,18 +78,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'hapus':
-            $query = "DELETE FROM zstok WHERE kodebrg='$kodebrg'";
+            $query = "DELETE FROM zstok WHERE kodebrg = '$kodebrg'";
             break;
 
         default:
             echo json_encode(['status' => 'error', 'message' => 'Aksi tidak valid']);
             exit;
     }
-    
+
+    // --- Eksekusi query dan kirim respon ---
     if (mysqli_query($conn, $query)) {
         echo json_encode(['status' => 'success', 'aksi' => $aksi]);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Query gagal']);
+        echo json_encode(['status' => 'error', 'message' => mysqli_error($conn)]);
     }
+
     exit;
 }
+?>
