@@ -876,12 +876,31 @@ while ($g = $grupResult->fetch_assoc()) {
         }
 
         function konfirmasiHapus(setuju) {
-            const popup = document.getElementById('popupConfirmHapus');
-            popup.style.display = 'none';
+                const popup = document.getElementById('popupConfirmHapus');
+                popup.style.display = 'none';
 
-            if (setuju) {
-                document.getElementById('aksi').value = 'hapus';
-                document.getElementById('barangForm').submit();
+                if (setuju) {
+                    const formData = new FormData(document.getElementById('barangForm'));
+                    formData.set('aksi', 'hapus');
+
+                    fetch('prosesbarang.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(response => {
+                        if (response.status === 'success') {
+                            showToast('Data berhasil dihapus');
+                            initializeFormButtons(); // reset tampilan
+                            document.getElementById('barangForm').reset();
+                        } else {
+                            showToast('Gagal menghapus data!', '#dc3545');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        showToast('Gagal koneksi ke server!', '#dc3545');
+            });
             } else {
                 showToast('Penghapusan dibatalkan.', '#6c757d');
             }

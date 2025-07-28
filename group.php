@@ -469,12 +469,32 @@ function konfirmasiHapus(setuju) {
     popup.style.display = 'none';
 
     if (setuju) {
-        document.getElementById('aksi').value = 'hapus';
-        document.getElementById('grupForm').submit();
+        const formData = new FormData(document.getElementById('grupForm'));
+        formData.set('aksi', 'hapus');
+
+        fetch('prosesgrup.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.status === 'success') {
+                showToast('Data berhasil dihapus');
+                initializeFormButtons(); // reset tampilan
+                document.getElementById('grupForm').reset();
+            } else {
+                showToast('Gagal menghapus data!', '#dc3545');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('Gagal koneksi ke server!', '#dc3545');
+        });
     } else {
         showToast('Penghapusan dibatalkan.', '#6c757d');
     }
 }
+
 
 function resetButtonStyles() {
     const buttons = ['btnTambah', 'btnEdit'];

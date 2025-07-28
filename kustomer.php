@@ -596,7 +596,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
                 // Kamu bisa isi ulang form dengan data sebelumnya kalau mau
                 } else if (response.status === 'duplikat') {
-                showToast('Kode grup sudah ada!', '#dc3545');
+                showToast('Kode kustomer sudah ada!', '#dc3545');
                 } else {
                 showToast('Gagal menyimpan data!', '#dc3545');
                 }
@@ -621,12 +621,32 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             popup.style.display = 'none';
 
             if (setuju) {
-                document.getElementById('aksi').value = 'hapus';
-                document.getElementById('kustomerForm').submit();
+                const formData = new FormData(document.getElementById('kustomerForm'));
+                formData.set('aksi', 'hapus');
+
+                fetch('proseskustomer.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.status === 'success') {
+                        showToast('Data berhasil dihapus');
+                        initializeFormButtons(); // reset tampilan
+                        document.getElementById('kustomerForm').reset();
+                    } else {
+                        showToast('Gagal menghapus data!', '#dc3545');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showToast('Gagal koneksi ke server!', '#dc3545');
+                });
             } else {
                 showToast('Penghapusan dibatalkan.', '#6c757d');
             }
         }
+
 
         function resetButtonStyles() {
             const buttons = ['btnTambah', 'btnEdit'];
