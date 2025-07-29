@@ -18,8 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $satuan1       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan1'] ?? '-')));
     $satuan2       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan2'] ?? '-')));
     $satuan3       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan3'] ?? '-')));
-    $isi1          = is_numeric($_POST['isi1'] ?? '') ? floatval($_POST['isi1']) : 1;
-    $isi2          = is_numeric($_POST['isi2'] ?? '') ? floatval($_POST['isi2']) : 1;
+    $isi1          = is_numeric($_POST['isi1'] ?? '') ? floatval($_POST['isi1']) : 0;
+    $isi2          = is_numeric($_POST['isi2'] ?? '') ? floatval($_POST['isi2']) : 0;
 
     // --- Validasi minimal wajib isi ---
     if (!$kodebrg || !$namabrg || !$kodegrup) {

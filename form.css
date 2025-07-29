@@ -261,6 +261,113 @@
         display: block;
     }
 
+    .action-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 12px;
+        margin-bottom: 15px;
+        background-color: #fff;
+        padding: 10px 12px;
+        border-radius: 6px;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .action-bar input[type="text"],
+    .action-bar input[type="date"],
+    .action-bar select {
+        padding: 5px 8px;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        min-width: 120px;
+    }
+
+    .action-bar input[type="text"]::placeholder {
+        font-size: 11px;
+        color: #aaa;
+    }
+
+    .action-bar span {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    /* Tombol khusus dalam action-bar */
+    .action-bar .action-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    /* Tambah - Hijau */
+    .action-bar .action-btn.tambah {
+        background-color: #30b850;
+    }
+    .action-bar .action-btn.tambah:hover {
+        background-color: #17b42c;
+    }
+
+    /* Cari - Hijau tua */
+    .action-bar .action-btn.cari {
+        background-color: #28a745;
+    }
+    .action-bar .action-btn.cari:hover {
+        background-color: #218838;
+    }
+
+    #textview {
+        width: 100%;
+        max-height: 200px; /* Batas maksimal tinggi */
+        font-family: monospace;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+
+    /* === TABEL HASIL SIMPEL === */
+    .tabel-hasil {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1em;
+        font-size: 12px;
+        border: 1px solid #ccc;
+    }
+
+    .tabel-hasil th,
+    .tabel-hasil td {
+        padding: 6px 8px;
+        border: 1px solid #ccc;
+        text-align: left;
+        background-color: #fff;
+    }
+
+    .tabel-hasil th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* === TOMBOL KECIL === */
+    .tabel-hasil button {
+        padding: 3px 8px;
+        margin-right: 4px;
+        font-size: 11px;
+        border: 1px solid #bbb;
+        background-color: #f9f9f9;
+        color: #333;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .tabel-hasil button:hover {
+        background-color: #e0e0e0;
+    }
+
     .dropdown-result {
     position: absolute;
     top: 100%;
