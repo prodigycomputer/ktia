@@ -38,6 +38,28 @@
         border-radius: 4px;
     }
 
+    .action-pb-bar {
+        display: flex;
+        justify-content: space-between;
+        background: #fff;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 6px;
+        margin-top: 10px;
+        margin-bottom: 4px;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .action-pb-bar button {
+        padding: 6px 12px;
+        font-size: 13px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: white;
+    }
+
     /* Tambah - Biru */
     #btnSave {
         background-color: #0099ff;
@@ -77,6 +99,13 @@
     }
     #btnCancel:hover {
         background-color: #5a6268;
+    }
+
+    #btnKembali {
+        background-color: #35dcc0;
+    }
+    #btnKembali:hover {
+        background-color: #23c2c8;
     }
 
     .form-atas textarea.verylong-textarea {
@@ -225,6 +254,80 @@
         background-color: #218838;
     }
 
+    #form-pembelian-atas {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    #form-pembelian-tengah {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    #form-pembelian-bawah {
+        display: flex;
+        justify-content: flex-end; /* dorong konten ke kanan */
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    .form-pb-pos {
+        display: flex;
+        flex-direction: column; /* susun vertikal */
+        gap: 4px;
+        padding: 8px;
+        width: fit-content;
+    }
+
+    .form-pb-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-pb-col {
+        flex-basis: 30%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-pb-col label {
+        width: 110px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .form-pb-col input {
+        padding: 5px;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Ukuran input variatif */
+    .short-input {
+        width: 130px;
+    }
+
+    .medium-input {
+        width: 250px;
+    }
+
+    .long-input {
+        width: 400px;
+    }
+
+
+/* Responsive Mobile */
 
     .hamburger {
         display: none;
@@ -266,11 +369,10 @@
         flex-wrap: wrap;
         align-items: center;
         gap: 8px 12px;
-        margin-bottom: 15px;
+        margin-bottom: 4px;
         background-color: #fff;
         padding: 10px 12px;
         border-radius: 6px;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
     }
 
     .action-bar input[type="text"],

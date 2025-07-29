@@ -7,6 +7,7 @@ $tgl2 = $_GET['tgl2'] ?? '';
 $namasup = $_GET['namasup'] ?? '';
 $kodesup = '';
 $status = $_GET['status'] ?? 'all';
+$limit = intval($_GET['limit'] ?? 10); 
 
 if (!empty($namasup)) {
     $stmt = $conn->prepare("SELECT kodesup FROM zsupplier WHERE namasup LIKE ?");
@@ -48,7 +49,7 @@ if (count($where) > 0) {
     $sql .= " WHERE " . implode(" AND ", $where);
 }
 
-$sql .= " ORDER BY zbeli.tgl DESC";
+$sql .= " ORDER BY zbeli.tgl DESC LIMIT $limit";
 
 $result = $conn->query($sql);
 
@@ -63,9 +64,9 @@ if ($result->num_rows > 0) {
             <th>Aksi</th>
         </tr>";
     while ($row = $result->fetch_assoc()) {
-        $statusText = $row['lunas'] == 1 ? 'Lunas' : 'Belum';
+        $statusText = $row['lunas'] == 1 ? 'Lunas' : 'Belum Lunas';
         echo "<tr>
-                <td>{$row['tgl']}</td>
+                <td>" . date('d-m-Y', strtotime($row['tgl'])) . "</td>
                 <td>{$row['nonota']}</td>
                 <td>{$row['namasup']}</td>
                 <td align='right'>" . number_format($row['nilai']) . "</td>
