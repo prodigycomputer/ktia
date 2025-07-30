@@ -12,11 +12,8 @@ $query = mysqli_query($conn, "
 ");
 
 // Ambil data supplier untuk dropdown
-$suppliers = [];
-$supplierQuery = $conn->query("SELECT kodesup, namasup FROM zsupplier ORDER BY namasup");
-while ($row = $supplierQuery->fetch_assoc()) {
-    $suppliers[] = $row;
-}
+$supplierQuery = $conn->query("SELECT kodesup, namasup, alamat FROM zsupplier ORDER BY namasup");
+
 ?>
 
 <!DOCTYPE html>
@@ -167,7 +164,14 @@ while ($row = $supplierQuery->fetch_assoc()) {
             fetch('fillpembelian.php?' + params.toString())
                 .then(res => res.text())
                 .then(html => {
-                    document.getElementById("tabelHasil").innerHTML = html;
+                    if (html.includes("Tidak ada data ditemukan")) {
+                        showToast("Data tidak ditemukan!", "#dc3545");
+                        setTimeout(() => {
+                            window.location.href = 'pembelian.php';
+                        }, 2000); // Delay 2 detik sebelum kembali
+                    } else {
+                        document.getElementById("tabelHasil").innerHTML = html;
+                    }
                 })
                 .catch(err => {
                     alert("Gagal mengambil data: " + err);
@@ -201,7 +205,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 .then(data => {
                     if (data.success) {
                         showToast(data.message);
-                        triggerSearch();
+                        window.location.href='pembelian.php';
                     } else {
                         alert("Gagal menghapus: " + data.message);
                     }
@@ -276,21 +280,115 @@ while ($row = $supplierQuery->fetch_assoc()) {
             }
         });
 
-        function showToast(pesan) {
-                const toast = document.createElement('div');
-                toast.textContent = pesan;
-                toast.style.position = 'fixed';
-                toast.style.top = '20px';   
-                toast.style.right = '20px';
-                toast.style.background = '#28a745';
-                toast.style.color = 'white';
-                toast.style.padding = '10px 15px';
-                toast.style.borderRadius = '6px';
-                toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
-                toast.style.zIndex = 1000;
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 3000);
+        function showToast(pesan, warna = '#28a745') {
+            const toast = document.createElement('div');
+            toast.textContent = pesan;
+            toast.style.position = 'fixed';
+            toast.style.top = '20px';   
+            toast.style.right = '20px';
+            toast.style.background = warna;
+            toast.style.color = 'white';
+            toast.style.padding = '10px 15px';
+            toast.style.borderRadius = '6px';
+            toast.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
+            toast.style.zIndex = 1000;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        const inputKode = document.getElementById("kode_sup");
+        const inputNama = document.getElementById("nama_sup");
+        const dropdownKode = document.getElementById("dropdownKodeSup");
+        const dropdownNama = document.getElementById("dropdownNamaSup");
+        const alamatField = document.getElementById("alamat");
+
+        // Autocomplete berdasarkan KODE
+        inputKode.addEventListener("input", function () {
+            const val = this.value.trim().toUpperCase();
+            dropdownKode.innerHTML = "";
+
+            if (val === "") {
+                dropdownKode.style.display = "none";
+                return;
             }
+
+            const filtered = supplierList.filter(sup => sup.kodesup.toUpperCase().includes(val));
+
+            if (filtered.length === 0) {
+                dropdownKode.innerHTML = "<div class='dropdown-item'>Tidak ditemukan</div>";
+            } else {
+                filtered.forEach(sup => {
+                    const item = document.createElement("div");
+                    item.classList.add("dropdown-item");
+                    item.textContent = `${sup.kodesup} - ${sup.namasup}`;
+                    item.dataset.kodesup = sup.kodesup;
+                    item.dataset.namasup = sup.namasup;
+                    item.dataset.alamat = sup.alamat ?? '';
+                    dropdownKode.appendChild(item);
+                });
+            }
+
+            dropdownKode.style.display = "block";
+        });
+
+        // Autocomplete berdasarkan NAMA
+        inputNama.addEventListener("input", function () {
+            const val = this.value.trim().toUpperCase();
+            dropdownNama.innerHTML = "";
+
+            if (val === "") {
+                dropdownNama.style.display = "none";
+                return;
+            }
+
+            const filtered = supplierList.filter(sup => sup.namasup.toUpperCase().includes(val));
+
+            if (filtered.length === 0) {
+                dropdownNama.innerHTML = "<div class='dropdown-item'>Tidak ditemukan</div>";
+            } else {
+                filtered.forEach(sup => {
+                    const item = document.createElement("div");
+                    item.classList.add("dropdown-item");
+                    item.textContent = `${sup.namasup} (${sup.kodesup})`;
+                    item.dataset.kodesup = sup.kodesup;
+                    item.dataset.namasup = sup.namasup;
+                    item.dataset.alamat = sup.alamat ?? '';
+                    dropdownNama.appendChild(item);
+                });
+            }
+
+            dropdownNama.style.display = "block";
+        });
+
+        // Pilih dari dropdown KODE
+        dropdownKode.addEventListener("click", function (e) {
+            if (e.target.classList.contains("dropdown-item")) {
+                inputKode.value = e.target.dataset.kodesup;
+                inputNama.value = e.target.dataset.namasup;
+                alamatField.value = e.target.dataset.alamat;
+                dropdownKode.style.display = "none";
+            }
+        });
+
+        // Pilih dari dropdown NAMA
+        dropdownNama.addEventListener("click", function (e) {
+            if (e.target.classList.contains("dropdown-item")) {
+                inputNama.value = e.target.dataset.namasup;
+                inputKode.value = e.target.dataset.kodesup;
+                alamatField.value = e.target.dataset.alamat;
+                dropdownNama.style.display = "none";
+            }
+        });
+
+        // Tutup dropdown jika klik di luar
+        document.addEventListener("click", function (e) {
+            if (!inputKode.contains(e.target) && !dropdownKode.contains(e.target)) {
+                dropdownKode.style.display = "none";
+            }
+            if (!inputNama.contains(e.target) && !dropdownNama.contains(e.target)) {
+                dropdownNama.style.display = "none";
+            }
+        });
 
     </script>
 </body>

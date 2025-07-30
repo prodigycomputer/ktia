@@ -68,11 +68,25 @@
         background-color: #0089d9;
     }
 
+    #btnSaveItem {
+        background-color: #0099ff;
+    }
+    #btnSaveItem:hover {
+        background-color: #0089d9;
+    }
+
 
     #btnTambah {
         background-color: #30b850;
     }
     #btnTambah:hover {
+        background-color: #17b42c;
+    }
+
+    #btnTambahItem {
+        background-color: #30b850;
+    }
+    #btnTambahItem:hover {
         background-color: #17b42c;
     }
 
@@ -101,11 +115,78 @@
         background-color: #5a6268;
     }
 
+    #btnCancelItem {
+        background-color: #6c757d;
+    }
+    #btnCancelItem:hover {
+        background-color: #5a6268;
+    }
+
     #btnKembali {
         background-color: #35dcc0;
     }
     #btnKembali:hover {
         background-color: #23c2c8;
+    }
+
+    /* CSS untuk overlay popup */
+    .popup-pb-cari {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* semi transparan */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+    }
+
+    /* CSS untuk konten popup */
+    .popup-pb-contentcari {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 900px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    }
+
+    /* Tabel hasil */
+    .tabel-hasil {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .tabel-hasil th,
+    .tabel-hasil td {
+        border: 1px solid #ccc;
+        padding: 8px 10px;
+        text-align: left;
+    }
+
+    .tabel-hasil th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
+
+    /* Tombol Tutup */
+    .popup-pb-contentcari button {
+        padding: 6px 12px;
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .popup-pb-contentcari button:hover {
+        background-color: #c9302c;
     }
 
     .form-atas textarea.verylong-textarea {
@@ -167,6 +248,53 @@
         padding: 12px;
         margin-top: -20px;
     }
+
+    .popup-pb-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .popup-pb-content {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .popup-pb-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .popup-pb-row label {
+        flex-basis: 120px;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .popup-pb-row input {
+        flex: 1;
+        padding: 4px 6px;
+        font-size: 13px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    .popup-pb-row input:disabled {
+        background-color: #f0f0f0; /* abu-abu muda */
+        color: #555;               /* warna teks sedikit redup */
+        cursor: not-allowed;
+    }
+
 
     .harga-container {
         display: grid;
