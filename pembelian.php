@@ -12,7 +12,11 @@ $query = mysqli_query($conn, "
 ");
 
 // Ambil data supplier untuk dropdown
-$supplierQuery = $conn->query("SELECT kodesup, namasup, alamat FROM zsupplier ORDER BY namasup");
+$suppliers = [];
+$supplierQuery = $conn->query("SELECT kodesup, namasup FROM zsupplier ORDER BY namasup");
+while ($row = $supplierQuery->fetch_assoc()) {
+    $suppliers[] = $row;
+}
 
 ?>
 
@@ -87,21 +91,17 @@ $supplierQuery = $conn->query("SELECT kodesup, namasup, alamat FROM zsupplier OR
                             <th>Nama Supplier</th>
                             <th>Nilai</th>
                             <th>Status</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while($row = mysqli_fetch_assoc($query)): ?>
-                            <tr>
-                                <td><?= date('d-m-Y', strtotime($row['tgl'])) ?></td>
-                                <td><?= htmlspecialchars($row['nonota']) ?></td>
-                                <td><?= htmlspecialchars($row['namasup']) ?></td>
-                                <td style="text-align:right"><?= number_format($row['nilai']) ?></td>
-                                <td><?= $row['lunas'] ? 'Lunas' : 'Belum' ?></td>
-                                <td>
-                                    <button onclick="editPembelian('<?= $row['nonota'] ?>')">Edit</button>
-                                    <button type="button" onclick="hapusPembelian('<?= $row['nonota'] ?>')">Hapus</button>
-                                </td>
+                        <!--Tabel Isi -->
+                        <?php while ($row = mysqli_fetch_assoc($query)): ?>
+                            <tr onclick="tampilkanKonfirmasiEdit('<?= $row['nonota'] ?>')">
+                                <td><?= $row['tgl'] ?></td>
+                                <td><?= $row['nonota'] ?></td>
+                                <td><?= $row['namasup'] ?></td>
+                                <td style="text-align: right;"><?= number_format($row['nilai'], 0, ',', '.') ?></td>
+                                <td><?= $row['lunas'] ? 'LUNAS' : 'BELUM' ?></td>
                             </tr>
                         <?php endwhile; ?>
                     </tbody>
@@ -110,7 +110,7 @@ $supplierQuery = $conn->query("SELECT kodesup, namasup, alamat FROM zsupplier OR
         </form>
     </main>
 
-    <div id="popupConfirmHapus" style="
+    <div id="popupConfirmEdit" style="
         display: none;
         position: fixed;
         top: 0; left: 0;
@@ -130,9 +130,9 @@ $supplierQuery = $conn->query("SELECT kodesup, namasup, alamat FROM zsupplier OR
             max-width: 90%;
             text-align: center;
         ">
-            <p style="font-size: 14px; margin-bottom: 20px;">Apakah Anda yakin ingin menghapus data ini?</p>
-            <button onclick="konfirmasiHapus(true)" style="margin-right: 10px; padding: 6px 12px; background: #dc3545; color: white; border: none; border-radius: 4px;">Ya</button>
-            <button onclick="konfirmasiHapus(false)" style="padding: 6px 12px; background: #6c757d; color: white; border: none; border-radius: 4px;">Tidak</button>
+            <p style="font-size: 14px; margin-bottom: 20px;">Apakah Anda yakin ingin mengubah data ini?</p>
+            <button onclick="konfirmasiEdit(true)" style="margin-right: 10px; padding: 6px 12px; background: #35c3dcff; color: white; border: none; border-radius: 4px;">Ya</button>
+            <button onclick="konfirmasiEdit(false)" style="padding: 6px 12px; background: #6c757d; color: white; border: none; border-radius: 4px;">Tidak</button>
         </div>
     </div>
 
@@ -158,63 +158,52 @@ $supplierQuery = $conn->query("SELECT kodesup, namasup, alamat FROM zsupplier OR
                 tgl2: tgl2,
                 namasup: namasup,
                 status: status,
-                limit: 10 
             });
 
             fetch('fillpembelian.php?' + params.toString())
-                .then(res => res.text())
-                .then(html => {
-                    if (html.includes("Tidak ada data ditemukan")) {
-                        showToast("Data tidak ditemukan!", "#dc3545");
-                        setTimeout(() => {
-                            window.location.href = 'pembelian.php';
-                        }, 2000); // Delay 2 detik sebelum kembali
-                    } else {
-                        document.getElementById("tabelHasil").innerHTML = html;
-                    }
-                })
-                .catch(err => {
-                    alert("Gagal mengambil data: " + err);
-                });
-        }
-
-        function editPembelian(nonota) {
-            alert("Edit: " + nonota);
-        }
-
-        let nonotaUntukDihapus = '';
-
-        function hapusPembelian(nonota) {
-            nonotaUntukDihapus = nonota;
-            document.getElementById('popupConfirmHapus').style.display = 'block';
-        }
-
-        function konfirmasiHapus(ya) {
-            document.getElementById('popupConfirmHapus').style.display = 'none';
-
-            if (ya && nonotaUntukDihapus !== '') {
-                const formData = new URLSearchParams();
-                formData.append("aksi", "hapus");
-                formData.append("nonota", nonotaUntukDihapus);
-
-                fetch('prosespembelian.php', {
-                    method: 'POST',
-                    body: formData
-                })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.success) {
-                        showToast(data.message);
-                        window.location.href='pembelian.php';
-                    } else {
-                        alert("Gagal menghapus: " + data.message);
-                    }
-                })
-                .catch(err => {
-                    alert("Terjadi kesalahan saat menghapus: " + err);
-                });
+                    const tbody = document.querySelector(".tabel-hasil tbody");
+                    tbody.innerHTML = ''; // kosongkan dulu
 
-                nonotaUntukDihapus = '';
+                    if (data.length === 0) {
+                    showToast("Data tidak ditemukan!", "#dc3545");
+                    return;
+                    }
+
+                    data.forEach(row => {
+                    const tr = document.createElement("tr");
+                    tr.setAttribute("onclick", `tampilkanKonfirmasiEdit('${row.nonota}')`);
+
+                    tr.innerHTML = `
+                        <td>${row.tgl}</td>
+                        <td>${row.nonota}</td>
+                        <td>${row.namasup}</td>
+                        <td style="text-align:right">${parseInt(row.nilai).toLocaleString('id-ID')}</td>
+                        <td>${row.lunas === "1" ? "LUNAS" : "BELUM"}</td>
+                    `;
+
+                    tbody.appendChild(tr);
+                    });
+            })
+            .catch(err => {
+                alert("Gagal mengambil data: " + err);
+            });
+        }
+
+        function tampilkanKonfirmasiEdit(nonota) {
+            const popup = document.getElementById('popupConfirmEdit');
+            popup.style.display = 'block';
+            popup.setAttribute('data-nonota', nonota);
+        }
+
+        function konfirmasiEdit(ya) {
+            const popup = document.getElementById('popupConfirmEdit');
+            const nonota = popup.getAttribute('data-nonota');
+            popup.style.display = 'none';
+
+            if (ya && nonota) {
+                window.location.href = 'editpembelian.php?nonota=' + encodeURIComponent(nonota);
             }
         }
 

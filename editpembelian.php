@@ -13,7 +13,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Pembelian</title>
+    <title>Edit Pembelian</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
 </head>
@@ -23,11 +23,12 @@ while ($row = $supplierQuery->fetch_assoc()) {
     <?php include 'navbar.php'; ?>
 
     <main>
-        <h2>Input Pembelian</h2>
+        <h2>Edit Pembelian</h2>
         <div class="action-pb-bar" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
             <div style="display: flex; gap: 8px;">
                 <button id="btnSave" type="submit">Simpan</button>
-                <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>    
+                <button id="btnEdit" type="button" onclick="initializeEdit()">Edit</button>
+                <button id="btnHapus" type="button" onclick="initializeHapus()">Hapus</button>    
                 <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
             </div>
             <button id="btnKembali" type="button" onclick="window.location.href='pembelian.php'">Kembali</button>
@@ -77,7 +78,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             <!-- FORM BAWAH: RINCIAN -->
             <div class="form-pembelian-tengah">
                 <div style="display: flex; justify-content: flex-end;">
-                    <button id="btnTambahItem" type="button">+</button>
+                    <button id="btnEditItem" type="button">+</button>
                 </div>
                 <div style="overflow-x: auto;">
                     <table class="tabel-hasil" id="tabelPembelian" style="min-width: 1200px;">
@@ -154,7 +155,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
         </div>
         <div id="popupForm" class="popup-pb-overlay" style="display: none;">
             <div class="popup-pb-content">
-                <h3>Tambah Data Pembelian</h3>
+                <h3>Edit Data Pembelian</h3>
                 <form id="formDetailPembelian">
                     <input type="hidden" name="popup_isi1" id="popup_isi1" value=""> 
                     <input type="hidden" name="popup_isi2" id="popup_isi2" value=""> 
@@ -267,8 +268,34 @@ while ($row = $supplierQuery->fetch_assoc()) {
         </div>
     </div>
     <script>
-        let currentstat = null;
         let dataPembelian = [];
+        function loadPembelian(nonota) {
+            const noNota = new URLSearchParams(window.location.search).get('nonota');
+
+            fetch(`getpembelian.php?nonota=${noNota}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Isi form header
+                    document.getElementById('tanggal').value = data.header.tanggal;
+                    document.getElementById('no_nota').value = data.header.no_nota;
+                    document.getElementById('kode_sup').value = data.header.kode_sup;
+                    document.getElementById('nama_sup').value = data.header.nama_sup;
+                    document.getElementById('alamat').value = data.header.alamat;
+                    document.getElementById('jt_tempo').value = data.header.jt_tempo;
+
+                    // Tampilkan data ke tabel (data.datapembelian)
+                    renderTablePembelian(data.detail.dataPembelian);
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+
+        loadPembelian();
+
+        let currentstat = null;
+        
         let indexToDelete = null;
         const suppliers = <?php echo json_encode($suppliers); ?>;
         const kodeInput = document.getElementById('kode_sup');
@@ -287,12 +314,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
         const popupJlh1 = document.getElementById('popup_jlh1');
         const popupJlh2 = document.getElementById('popup_jlh2');
         const popupJlh3 = document.getElementById('popup_jlh3');
-        const popupHarga = document.getElementById('popup_harga');
-        const popupDisca = document.getElementById('popup_disca');
-        const popupDiscb = document.getElementById('popup_discb');
-        const popupDiscc = document.getElementById('popup_discc');
-        const popupDiscrp = document.getElementById('popup_discrp');
-        const popupJumlah = document.getElementById('popup_jumlah');
 
         // Trigger cari saat tekan Enter
         [popupKodeInput, popupNamaInput].forEach(input => {
@@ -350,6 +371,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             popupSatuan3.value = item.satuan3;
             popupIsi1.value = item.isi1;
             popupIsi2.value = item.isi2;
+
             if (popupIsi1.value > 1) {
                 popupJlh2.disabled = false;
                 if (popupIsi2.value > 1) {
@@ -375,8 +397,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
             dataPembelian.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="display: none;">${item.isi1}</td>
-                    <td style="display: none;">${item.isi2}</td>
                     <td>${item.kodebrg}</td>
                     <td>${item.namabrg}</td>
                     <td>${item.jlh1}</td>
@@ -404,8 +424,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
             e.preventDefault();
 
             const item = {
-                isi1: parseInt(document.getElementById('popup_isi1').value),
-                isi2: parseInt(document.getElementById('popup_isi2').value),
                 kodebrg: document.getElementById('popup_kodebrg').value.trim().toUpperCase(),
                 namabrg: document.getElementById('popup_namabrg').value.trim().toUpperCase(),
                 jlh1: parseInt(document.getElementById('popup_jlh1').value),
@@ -422,7 +440,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 jumlah: parseFloat(document.getElementById('popup_jumlah').value)
             };
 
-            // Tambah atau update
+            // Edit atau update
             if (formDetailPembelian.dataset.editingIndex) {
                 dataPembelian[formDetailPembelian.dataset.editingIndex] = item;
                 delete formDetailPembelian.dataset.editingIndex;
@@ -432,48 +450,35 @@ while ($row = $supplierQuery->fetch_assoc()) {
             }
 
             renderTabelPembelian();
-            resetitem();
             showToast('Item berhasil disimpan!');
         });
-
-        function resetitem() {
-            document.getElementById('formDetailPembelian').reset();
-            popupJlh2.disabled = true;
-            popupJlh3.disabled = true;
-        }
 
         function editItem(index) {
             const item = dataPembelian[index];
 
-            popupKodeInput.value = item.kodebrg;
-            popupNamaInput.value = item.namabrg;
-            popupJlh1.value = item.jlh1;
-            popupSatuan1.value = item.satuan1;
+            document.getElementById('popup_kodebrg').value = item.kodebrg;
+            document.getElementById('popup_namabrg').value = item.namabrg;
+            document.getElementById('popup_jlh1').value = item.jlh1;
+            document.getElementById('popup_satuan1').value = item.satuan1;
 
-            popupJlh2.value = item.jlh2 ?? '';
-            popupSatuan2.value = item.satuan2 ?? '';
-            popupJlh3.value = item.jlh3 ?? '';
-            popupSatuan3.value = item.satuan3 ?? '';
+            document.getElementById('popup_jlh2').value = item.jlh2 ?? '';
+            document.getElementById('popup_satuan2').value = item.satuan2 ?? '';
+            document.getElementById('popup_jlh3').value = item.jlh3 ?? '';
+            document.getElementById('popup_satuan3').value = item.satuan3 ?? '';
 
-            popupHarga.value = item.harga;
-            popupDisca.value = item.disca;
-            popupDiscb.value = item.discb;
-            popupDiscc.value = item.discc;
-            popupDiscrp.value = item.discrp;
-            popupJumlah.value = item.jumlah;
-            popupIsi1.value = item.isi1;
-            popupIsi2.value = item.isi2;
-            if (popupIsi1.value > 1) {
-                popupJlh2.disabled = false;
-                if (popupIsi2.value > 1) {
-                    popupJlh3.disabled = false;
-                } else {
-                    popupJlh3.disabled = true;
-                }
-            } else {
-                popupJlh2.disabled = true;
-                popupJlh3.disabled = true;
-            }
+            document.getElementById('popup_harga').value = item.harga;
+            document.getElementById('popup_disca').value = item.disca;
+            document.getElementById('popup_discb').value = item.discb;
+            document.getElementById('popup_discc').value = item.discc;
+            document.getElementById('popup_discrp').value = item.discrp;
+            document.getElementById('popup_jumlah').value = item.jumlah;
+
+            // Enable input tergantung jumlah
+            document.getElementById('popup_jlh2').disabled = !(item.jlh1 > 1);
+            document.getElementById('popup_satuan2').disabled = !(item.jlh1 > 1);
+            document.getElementById('popup_jlh3').disabled = !(item.jlh2 > 1);
+            document.getElementById('popup_satuan3').disabled = !(item.jlh2 > 1);
+
             formDetailPembelian.dataset.editingIndex = index;
             document.getElementById('popupForm').style.display = 'flex';
         }
@@ -561,8 +566,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
         function initializeFormButtons() {
             currentstat = null;
 
-            document.getElementById('btnTambah').disabled = false;
-            document.getElementById('btnTambahItem').disabled = true;
+            document.getElementById('btnEdit').disabled = false;
+            document.getElementById('btnEditItem').disabled = true;
             document.getElementById('btnCancel').disabled = true;
             document.getElementById('btnSave').disabled = true;
 
@@ -579,16 +584,15 @@ while ($row = $supplierQuery->fetch_assoc()) {
         }
         initializeFormButtons();
 
-        function initializeTambah() {
-            currentstat = 'tambah';
+        function initializeEdit() {
+            currentstat = 'update';
             showToast('Kamu sedang menambah data...', '#ffc107');
 
-            document.getElementById('formPembelian').reset();
             const today = new Date().toISOString().split('T')[0];
             document.getElementById("tanggal").value = today;
             document.getElementById("jt_tempo").value = today;
 
-            document.getElementById('btnTambah').disabled = true;
+            document.getElementById('btnEdit').disabled = true;
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
 
@@ -604,20 +608,19 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('totaljmlh').disabled = false;
 
             const nota = document.getElementById('no_nota').value.trim();
-            document.getElementById('btnTambahItem').disabled = (nota === '');
+            document.getElementById('btnEditItem').disabled = (nota === '');
         }
 
         function cancelForm() {
             initializeFormButtons();
                 // Reset form
-            document.getElementById('formPembelian').reset();
             // Set kembali tanggal dan jatuh tempo ke hari ini
             const today = new Date().toISOString().split('T')[0];
             document.getElementById("tanggal").value = today;
             document.getElementById("jt_tempo").value = today;
         }
 
-        document.getElementById('btnTambahItem').addEventListener('click', () => {
+        document.getElementById('btnEditItem').addEventListener('click', () => {
             document.getElementById('popupForm').style.display = 'flex';
         });
 
@@ -626,9 +629,12 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('formDetailPembelian').reset();
             delete formDetailPembelian.dataset.editingIndex;
             document.getElementById('popupForm').style.display = 'none';
+            popupJlh1.disabled = true;
             popupJlh2.disabled = true;
             popupJlh3.disabled = true;
         }
+
+        
 
         function filterDropdown(input, list, key) {
             const val = input.value.trim().toUpperCase();
@@ -695,10 +701,10 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById("jt_tempo").value = today;
         });
 
-        // Enable btnTambahItem jika no_nota terisi
+        // Enable btnEditItem jika no_nota terisi
         document.getElementById('no_nota').addEventListener('input', function () {
             const noNota = this.value.trim();
-            document.getElementById('btnTambahItem').disabled = (noNota === '');
+            document.getElementById('btnEditItem').disabled = (noNota === '');
         });
 
         document.getElementById('btnSave').addEventListener('click', () => {
@@ -707,7 +713,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 tanggal: document.getElementById('tanggal').value,
                 kode_sup: document.getElementById('kode_sup').value,
                 totaljmlh: parseFloat(document.getElementById('totaljmlh').value) || 0,
-                detail: dataPembelian // array yang sudah kamu simpan saat tambah item
+                detail: dataPembelian // array yang sudah kamu simpan saat update item
             };
 
             fetch('simpanpembelian.php', {

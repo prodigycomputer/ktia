@@ -41,44 +41,23 @@ if (empty($nonota)) {
     } elseif ($status == 'belum') {
         $where[] = "zbeli.lunas = 0";
     }
+
 } else {
-    $where[] = "zbeli.nonota LIKE '%" . $conn->real_escape_string($nonota) . "%'";
-}
-
-if (count($where) > 0) {
-    $sql .= " WHERE " . implode(" AND ", $where);
-}
-
-$sql .= " ORDER BY zbeli.tgl DESC LIMIT $limit";
-
-$result = $conn->query($sql);
-
-
-if ($result->num_rows > 0) {
-    echo "<table border='1' class='tabel-hasil'>";
-    echo "<tr>
-            <th>Tanggal</th>
-            <th>No Nota</th>
-            <th>Nama Supplier</th>
-            <th>Nilai</th>
-            <th>Status</th>
-            <th>Aksi</th>
-        </tr>";
-    while ($row = $result->fetch_assoc()) {
-        $statusText = $row['lunas'] == 1 ? 'Lunas' : 'Belum Lunas';
-        echo "<tr>
-                <td>" . date('d-m-Y', strtotime($row['tgl'])) . "</td>
-                <td>{$row['nonota']}</td>
-                <td>{$row['namasup']}</td>
-                <td align='right'>" . number_format($row['nilai']) . "</td>
-                <td>{$statusText}</td>
-                <td>
-                    <button onclick=\"editPembelian('{$row['nonota']}')\">Edit</button>
-                    <button onclick=\"hapusPembelian('{$row['nonota']}')\">Hapus</button>
-                </td>
-            </tr>";
+        $where[] = "zbeli.nonota LIKE '%" . $conn->real_escape_string($nonota) . "%'";
     }
-    echo "</table>";
-} else {
-    echo "<p>Tidak ada data ditemukan.</p>";
-}
+
+    if (count($where) > 0) {
+        $sql .= " WHERE " . implode(" AND ", $where);
+    }
+
+    $sql .= " ORDER BY zbeli.tgl DESC, zbeli.nonota DESC";
+    $result = mysqli_query($conn, $sql);
+
+    $data = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($data);
+?>
