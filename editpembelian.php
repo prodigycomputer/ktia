@@ -284,8 +284,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     document.getElementById('alamat').value = data.header.alamat;
                     document.getElementById('jt_tempo').value = data.header.jt_tempo;
 
-                    // Tampilkan data ke tabel (data.datapembelian)
-                    renderTablePembelian(data.detail.dataPembelian);
+                    dataPembelian = data.detail;
+                    renderTabelPembelian();
                 } else {
                     alert(data.message);
                 }
