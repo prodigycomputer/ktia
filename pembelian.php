@@ -192,20 +192,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
         }
 
         function tampilkanKonfirmasiEdit(nonota) {
-            const popup = document.getElementById('popupConfirmEdit');
-            popup.style.display = 'block';
-            popup.setAttribute('data-nonota', nonota);
+            window.location.href = 'editpembelian.php?nonota=' + encodeURIComponent(nonota);
         }
 
-        function konfirmasiEdit(ya) {
-            const popup = document.getElementById('popupConfirmEdit');
-            const nonota = popup.getAttribute('data-nonota');
-            popup.style.display = 'none';
-
-            if (ya && nonota) {
-                window.location.href = 'editpembelian.php?nonota=' + encodeURIComponent(nonota);
-            }
-        }
 
         document.getElementById('inputNoNota').addEventListener('input', () => {
             const noNota = document.getElementById('inputNoNota').value.trim();

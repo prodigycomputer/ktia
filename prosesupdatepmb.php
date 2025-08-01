@@ -5,12 +5,14 @@ header('Content-Type: application/json');
 $data = json_decode(file_get_contents("php://input"), true);
 
 $no_nota = strtoupper($data['no_nota'] ?? '');
+$no_nota_lama = strtoupper($data['no_nota_lama'] ?? '');
 $tanggal = $data['tanggal'] ?? '';
 $kode_sup = strtoupper($data['kode_sup'] ?? '');
+$tgltempo = $data['jt_tempo'] ?? '';
 $totaljmlh = $data['totaljmlh'] ?? 0;
 $detail = $data['detail'] ?? [];
 
-if (!$no_nota || !$tanggal || !$kode_sup || empty($detail)) {
+if (!$no_nota || !$no_nota_lama || !$tanggal || !$kode_sup || empty($detail)) {
     echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
     exit;
 }
@@ -18,13 +20,37 @@ if (!$no_nota || !$tanggal || !$kode_sup || empty($detail)) {
 $conn->begin_transaction();
 
 try {
-    // Simpan ke zbeli (header)
-    $stmt = $conn->prepare("INSERT INTO zbeli (nonota, tgl, kodesup, nilai, lunas) VALUES (?, ?, ?, ?, 0)");
-    $stmt->bind_param("sssd", $no_nota, $tanggal, $kode_sup, $totaljmlh);
-    $stmt->execute();
-    $stmt->close();
+    // Jika nomor nota berubah, cek apakah no_nota baru sudah dipakai
+    if ($no_nota !== $no_nota_lama) {
+        $cek = $conn->prepare("SELECT COUNT(*) FROM zbeli WHERE nonota = ?");
+        $cek->bind_param("s", $no_nota);
+        $cek->execute();
+        $cek->bind_result($jumlah);
+        $cek->fetch();
+        $cek->close();
 
-    // Simpan ke zbelim (detail)
+        if ($jumlah > 0) {
+            echo json_encode(['success' => false, 'message' => 'Nomor nota baru sudah terdaftar!']);
+            $conn->rollback();
+            exit;
+        }
+    }
+
+    // Hapus semua detail lama (berdasarkan nonota lama)
+    $hapusDetail = $conn->prepare("DELETE FROM zbelim WHERE nonota = ?");
+    $hapusDetail->bind_param("s", $no_nota_lama);
+    $hapusDetail->execute();
+    $hapusDetail->close();
+
+    // Update header (zbeli)
+    $updateHeader = $conn->prepare("
+        UPDATE zbeli SET nonota = ?, tgl = ?, kodesup = ?, nilai = ?, tgltempo = ? WHERE nonota = ?
+    ");
+    $updateHeader->bind_param("sssdsd", $no_nota, $tanggal, $kode_sup, $totaljmlh, $tgltempo, $no_nota_lama);
+    $updateHeader->execute();
+    $updateHeader->close();
+
+    // Insert detail baru (zbelim)
     $stmt = $conn->prepare("
         INSERT INTO zbelim (nonota, kodebrg, jlh1, jlh2, jlh3, harga, disca, discb, discc, discrp, jumlah, hdisca, hdiscb, hdiscc)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0)

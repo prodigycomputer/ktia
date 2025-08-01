@@ -35,6 +35,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
         </div>
 
         <form id="formPembelian" action="prosespembelian.php" method="POST">
+            <input type="hidden" name="no_nota_lama" id="no_nota_lama" value=""> 
             <div id="form-pembelian-atas">
                 <div class="form-pb-row">
                     <div class="form-pb-col">
@@ -78,7 +79,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             <!-- FORM BAWAH: RINCIAN -->
             <div class="form-pembelian-tengah">
                 <div style="display: flex; justify-content: flex-end;">
-                    <button id="btnEditItem" type="button">+</button>
+                    <button id="btnTambahItem" type="button">+</button>
                 </div>
                 <div style="overflow-x: auto;">
                     <table class="tabel-hasil" id="tabelPembelian" style="min-width: 1200px;">
@@ -98,7 +99,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                                 <th style="min-width: 50px;">Discc</th>
                                 <th style="min-width: 100px;">Disc Rp</th>
                                 <th style="min-width: 100px;">Jumlah</th>
-                                <th style="min-width: 120px;">Aksi</th>
+                                <th style="min-width: 120px; display: none;" id="thAksi">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -283,8 +284,10 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     document.getElementById('nama_sup').value = data.header.nama_sup;
                     document.getElementById('alamat').value = data.header.alamat;
                     document.getElementById('jt_tempo').value = data.header.jt_tempo;
+                    document.getElementById('totaljmlh').value = data.header.totaljmlh;
 
                     dataPembelian = data.detail;
+                    loadPerhitungan();
                     renderTabelPembelian();
                 } else {
                     alert(data.message);
@@ -314,6 +317,12 @@ while ($row = $supplierQuery->fetch_assoc()) {
         const popupJlh1 = document.getElementById('popup_jlh1');
         const popupJlh2 = document.getElementById('popup_jlh2');
         const popupJlh3 = document.getElementById('popup_jlh3');
+        const popupHarga = document.getElementById('popup_harga');
+        const popupDisca = document.getElementById('popup_disca');
+        const popupDiscb = document.getElementById('popup_discb');
+        const popupDiscc = document.getElementById('popup_discc');
+        const popupDiscrp = document.getElementById('popup_discrp');
+        const popupJumlah = document.getElementById('popup_jumlah');
 
         // Trigger cari saat tekan Enter
         [popupKodeInput, popupNamaInput].forEach(input => {
@@ -397,6 +406,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
             dataPembelian.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
+                    <td style="display: none;">${item.isi1}</td>
+                    <td style="display: none;">${item.isi2}</td>
                     <td>${item.kodebrg}</td>
                     <td>${item.namabrg}</td>
                     <td>${item.jlh1}</td>
@@ -411,7 +422,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     <td>${item.discc}</td>
                     <td>${item.discrp}</td>
                     <td>${item.jumlah}</td>
-                    <td>
+                    <td style="display: none;" id="td-btn-${index}">
                         <button type="button" onclick="editItem(${index})">Edit</button>
                         <button type="button" onclick="hapusItem(${index})">Hapus</button>
                     </td>
@@ -424,6 +435,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
             e.preventDefault();
 
             const item = {
+                isi1: parseInt(document.getElementById('popup_isi1').value),
+                isi2: parseInt(document.getElementById('popup_isi2').value),
                 kodebrg: document.getElementById('popup_kodebrg').value.trim().toUpperCase(),
                 namabrg: document.getElementById('popup_namabrg').value.trim().toUpperCase(),
                 jlh1: parseInt(document.getElementById('popup_jlh1').value),
@@ -450,35 +463,48 @@ while ($row = $supplierQuery->fetch_assoc()) {
             }
 
             renderTabelPembelian();
+            resetitem();
             showToast('Item berhasil disimpan!');
         });
+
+        function resetitem() {
+            document.getElementById('formDetailPembelian').reset();
+            popupJlh2.disabled = true;
+            popupJlh3.disabled = true;
+        }
 
         function editItem(index) {
             const item = dataPembelian[index];
 
-            document.getElementById('popup_kodebrg').value = item.kodebrg;
-            document.getElementById('popup_namabrg').value = item.namabrg;
-            document.getElementById('popup_jlh1').value = item.jlh1;
-            document.getElementById('popup_satuan1').value = item.satuan1;
+            popupKodeInput.value = item.kodebrg;
+            popupNamaInput.value = item.namabrg;
+            popupJlh1.value = item.jlh1;
+            popupSatuan1.value = item.satuan1;
 
-            document.getElementById('popup_jlh2').value = item.jlh2 ?? '';
-            document.getElementById('popup_satuan2').value = item.satuan2 ?? '';
-            document.getElementById('popup_jlh3').value = item.jlh3 ?? '';
-            document.getElementById('popup_satuan3').value = item.satuan3 ?? '';
+            popupJlh2.value = item.jlh2 ?? '';
+            popupSatuan2.value = item.satuan2 ?? '';
+            popupJlh3.value = item.jlh3 ?? '';
+            popupSatuan3.value = item.satuan3 ?? '';
 
-            document.getElementById('popup_harga').value = item.harga;
-            document.getElementById('popup_disca').value = item.disca;
-            document.getElementById('popup_discb').value = item.discb;
-            document.getElementById('popup_discc').value = item.discc;
-            document.getElementById('popup_discrp').value = item.discrp;
-            document.getElementById('popup_jumlah').value = item.jumlah;
-
-            // Enable input tergantung jumlah
-            document.getElementById('popup_jlh2').disabled = !(item.jlh1 > 1);
-            document.getElementById('popup_satuan2').disabled = !(item.jlh1 > 1);
-            document.getElementById('popup_jlh3').disabled = !(item.jlh2 > 1);
-            document.getElementById('popup_satuan3').disabled = !(item.jlh2 > 1);
-
+            popupHarga.value = item.harga;
+            popupDisca.value = item.disca;
+            popupDiscb.value = item.discb;
+            popupDiscc.value = item.discc;
+            popupDiscrp.value = item.discrp;
+            popupJumlah.value = item.jumlah;
+            popupIsi1.value = item.isi1;
+            popupIsi2.value = item.isi2;
+            if (popupIsi1.value > 1) {
+                popupJlh2.disabled = false;
+                if (popupIsi2.value > 1) {
+                    popupJlh3.disabled = false;
+                } else {
+                    popupJlh3.disabled = true;
+                }
+            } else {
+                popupJlh2.disabled = true;
+                popupJlh3.disabled = true;
+            }
             formDetailPembelian.dataset.editingIndex = index;
             document.getElementById('popupForm').style.display = 'flex';
         }
@@ -487,7 +513,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             indexToDelete = index;
             document.getElementById('popupConfirmHapus').style.display = 'block';
         }
-
+        
         // Fungsi ketika user klik "Ya" atau "Tidak"
         function konfirmasiHapus(ya) {
             document.getElementById('popupConfirmHapus').style.display = 'none';
@@ -548,6 +574,26 @@ while ($row = $supplierQuery->fetch_assoc()) {
             hitungSubtotalDariArray();
         });
 
+        function loadPerhitungan(){
+            let subtotal = 0;
+                dataPembelian.forEach(item => {
+                subtotal += parseFloat(item.jumlah) || 0;
+            });
+
+            document.getElementById('subtotal').value = Math.round(subtotal);
+
+            let ppn = subtotal * 11 / 100;
+
+            document.getElementById('ppn').value = Math.round(ppn);
+
+            let totaljmlh = parseFloat(document.getElementById('totaljmlh').value) || 0;
+
+            let lainlain = totaljmlh - (subtotal + ppn);
+
+            document.getElementById('lain_lain').value = Math.round(lainlain);
+        }
+        loadPerhitungan();  
+
         function hitungSubtotalDariArray() {
             let subtotal = 0;
             dataPembelian.forEach(item => {
@@ -567,8 +613,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
             currentstat = null;
 
             document.getElementById('btnEdit').disabled = false;
-            document.getElementById('btnEditItem').disabled = true;
+            document.getElementById('btnTambahItem').disabled = true;
             document.getElementById('btnCancel').disabled = true;
+            document.getElementById('btnHapus').disabled = false;
             document.getElementById('btnSave').disabled = true;
 
             document.getElementById('tanggal').disabled = true;
@@ -588,13 +635,18 @@ while ($row = $supplierQuery->fetch_assoc()) {
             currentstat = 'update';
             showToast('Kamu sedang menambah data...', '#ffc107');
 
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById("tanggal").value = today;
-            document.getElementById("jt_tempo").value = today;
+            // ✅ Tambahkan ini untuk menampilkan kolom Aksi
+            document.getElementById('thAksi').style.display = '';
+            const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
+            allTdAksi.forEach(td => {
+                td.style.display = '';
+            });
 
             document.getElementById('btnEdit').disabled = true;
             document.getElementById('btnCancel').disabled = false;
+            document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnSave').disabled = false;
+            document.getElementById('btnTambahItem').disabled = false;
 
             document.getElementById('tanggal').disabled = false;
             document.getElementById('no_nota').disabled = false;
@@ -607,8 +659,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('ppn').disabled = false;
             document.getElementById('totaljmlh').disabled = false;
 
-            const nota = document.getElementById('no_nota').value.trim();
-            document.getElementById('btnEditItem').disabled = (nota === '');
+            
         }
 
         function cancelForm() {
@@ -618,9 +669,16 @@ while ($row = $supplierQuery->fetch_assoc()) {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById("tanggal").value = today;
             document.getElementById("jt_tempo").value = today;
+
+            // ✅ Tambahkan ini untuk menampilkan kolom Aksi
+            document.getElementById('thAksi').style.display = 'none';
+            const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
+            allTdAksi.forEach(td => {
+                td.style.display = 'none';
+            });
         }
 
-        document.getElementById('btnEditItem').addEventListener('click', () => {
+        document.getElementById('btnTambahItem').addEventListener('click', () => {
             document.getElementById('popupForm').style.display = 'flex';
         });
 
@@ -629,7 +687,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('formDetailPembelian').reset();
             delete formDetailPembelian.dataset.editingIndex;
             document.getElementById('popupForm').style.display = 'none';
-            popupJlh1.disabled = true;
             popupJlh2.disabled = true;
             popupJlh3.disabled = true;
         }
@@ -701,10 +758,10 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById("jt_tempo").value = today;
         });
 
-        // Enable btnEditItem jika no_nota terisi
+        // Enable btnTambahItem jika no_nota terisi
         document.getElementById('no_nota').addEventListener('input', function () {
             const noNota = this.value.trim();
-            document.getElementById('btnEditItem').disabled = (noNota === '');
+            document.getElementById('btnTambahItem').disabled = (noNota === '');
         });
 
         document.getElementById('btnSave').addEventListener('click', () => {
@@ -716,7 +773,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 detail: dataPembelian // array yang sudah kamu simpan saat update item
             };
 
-            fetch('simpanpembelian.php', {
+            fetch('prosesupdatepmb.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
