@@ -29,6 +29,7 @@
                     <button id="btnSave" type="submit">Simpan</button>
                     <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>    
                     <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
+                    <button id="btnPrint" type="button" onclick="initializePrint()">Print</button>  
                 </div>
                 <button id="btnKembali" type="button" onclick="window.location.href='pembelian.php'">Kembali</button>
             </div>
@@ -240,7 +241,7 @@
 
                         <div class="popup-pb-row" style="justify-content: flex-end; gap: 10px;">
                             <button id="btnSaveItem" type="submit">Oke</button>
-                            <button id="btnCancelItem" type="button" onclick="tutupPopup()">Batal</button>
+                            <button id="btnCancelItem" type="button" onclick="tutupPopup()">Tutup</button>
                         </div>
                     </form>
                 </div>
@@ -767,8 +768,8 @@
 
             window.addEventListener("DOMContentLoaded", () => {
                 const today = new Date().toISOString().split('T')[0];
-                document.getElementById("tanggal").value = today;
-                document.getElementById("jt_tempo").value = today;
+                //document.getElementById("tanggal").value = today;
+                //document.getElementById("jt_tempo").value = today;
             });
 
             // Enable btnTambahItem jika no_nota terisi
@@ -782,7 +783,7 @@
                     no_nota: document.getElementById('no_nota').value,
                     tanggal: document.getElementById('tanggal').value,
                     kode_sup: document.getElementById('kode_sup').value,
-                    tgltempo: document.getElementById('jt_tempo').value,
+                    jt_tempo: document.getElementById('jt_tempo').value,
                     totaljmlh: parseFloat(document.getElementById('totaljmlh').value) || 0,
                     detail: dataPembelian // array yang sudah kamu simpan saat tambah item
                 };

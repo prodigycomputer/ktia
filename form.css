@@ -129,6 +129,13 @@
         background-color: #23c2c8;
     }
 
+    #btnPrint {
+        background-color: #67849c;
+    }
+    #btnPrint:hover {
+        background-color: #596a77;
+    }
+
     /* CSS untuk overlay popup */
     .popup-pb-cari {
         position: fixed;

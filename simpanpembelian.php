@@ -7,28 +7,20 @@ $data = json_decode(file_get_contents("php://input"), true);
 $no_nota = strtoupper($data['no_nota'] ?? '');
 $tanggal = $data['tanggal'] ?? '';
 $kode_sup = strtoupper($data['kode_sup'] ?? '');
-$tgljt = $data['jt_tempo'] ?? '';
 $totaljmlh = $data['totaljmlh'] ?? 0;
 $detail = $data['detail'] ?? [];
 
-if (!$no_nota || !$tanggal || !$kode_sup || !$tgljt || empty($detail)) {
+if (!$no_nota || !$tanggal || !$kode_sup || empty($detail)) {
     echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
     exit;
 }
 
-$cek = $conn->prepare("SELECT COUNT(*) FROM zbeli WHERE nonota = ?");
-$cek->bind_param("s", $no_nota);
-$cek->execute();
-$cek->bind_result($jumlah);
-$cek->fetch();
-$cek->close();
-
 $conn->begin_transaction();
 
 try {
-    // Simpan ke zbeli (header) 
-    $stmt = $conn->prepare("INSERT INTO zbeli (nonota, tgl, kodesup, nilai, tgltempo) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssds", $no_nota, $tanggal, $kode_sup, $totaljmlh, $tgljt);
+    // Simpan ke zbeli (header)
+    $stmt = $conn->prepare("INSERT INTO zbeli (nonota, tgl, kodesup, nilai, lunas) VALUES (?, ?, ?, ?, 0)");
+    $stmt->bind_param("sssd", $no_nota, $tanggal, $kode_sup, $totaljmlh);
     $stmt->execute();
     $stmt->close();
 

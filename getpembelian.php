@@ -12,7 +12,7 @@ if (!$nonota) {
 
 // Ambil data header dari zbeli dan supplier
 $queryHeader = mysqli_query($conn, "
-    SELECT b.nonota, b.tgl, b.kodesup, b.tgltempo, b.nilai, s.namasup, s.alamat
+    SELECT b.nonota, b.tgl, b.kodesup, b.nilai, b.tgltempo, s.namasup, s.alamat
     FROM zbeli b
     JOIN zsupplier s ON b.kodesup = s.kodesup
     WHERE b.nonota = '$nonota'
