@@ -748,38 +748,41 @@
 
             function editItem(index) {
                 const item = dataPembelian[index];
+                isi1Edit.value     = item.isi1;
+                isi2Edit.value     = item.isi2;
+                kodebrgEdit.value  = item.kodebrg;
+                namabrgEdit.value  = item.namabrg;
+                jlh1Edit.value     = item.jlh1;
+                satuan1Edit.value  = item.satuan1;
+                jlh2Edit.value     = item.jlh2 || '';
+                satuan2Edit.value  = item.satuan2 || '';
+                jlh3Edit.value     = item.jlh3 || '';
+                satuan3Edit.value  = item.satuan3 || '';
+                hargaEdit.value    = item.harga;
+                discaEdit.value    = item.disca;
+                discbEdit.value    = item.discb;
+                disccEdit.value    = item.discc;
+                discrpEdit.value   = item.discrp;
+                jumlahEdit.value   = item.jumlah;
 
-                popupKodeInput.value = item.kodebrg;
-                popupNamaInput.value = item.namabrg;
-                popupJlh1.value = item.jlh1;
-                popupSatuan1.value = item.satuan1;
-
-                popupJlh2.value = item.jlh2 ?? '';
-                popupSatuan2.value = item.satuan2 ?? '';
-                popupJlh3.value = item.jlh3 ?? '';
-                popupSatuan3.value = item.satuan3 ?? '';
-
-                popupHarga.value = item.harga;
-                popupDisca.value = item.disca;
-                popupDiscb.value = item.discb;
-                popupDiscc.value = item.discc;
-                popupDiscrp.value = item.discrp;
-                popupJumlah.value = item.jumlah;
-                popupIsi1.value = item.isi1;
-                popupIsi2.value = item.isi2;
-                if (popupIsi1.value > 1) {
-                    popupJlh2.disabled = false;
-                    if (popupIsi2.value > 1) {
-                        popupJlh3.disabled = false;
+                if (isi1Edit.value > 1) {
+                    jlh2Edit.disabled = false;
+                    if (isi2Edit.value > 1) {
+                        jlh3Edit.disabled = false;
                     } else {
-                        popupJlh3.disabled = true;
+                        jlh3Edit.disabled = true;
                     }
                 } else {
-                    popupJlh2.disabled = true;
-                    popupJlh3.disabled = true;
+                    jlh2Edit.disabled = true;
+                    jlh3Edit.disabled = true;
                 }
-                formDetailPembelian.dataset.editingIndex = index;
-                document.getElementById('popupForm').style.display = 'flex';
+
+                // Simpan index
+                const formEdit = document.getElementById('formDetailPembelianEdit');
+                formEdit.dataset.editingIndex = index;
+
+                // Tampilkan popup edit
+                document.getElementById('popupFormEdit').style.display = 'flex';
             }
 
             function hapusItem(index) {
@@ -807,11 +810,15 @@
             const inputFields = [
                 'popup_jlh1', 'popup_jlh2', 'popup_jlh3',
                 'popup_harga', 'popup_disca', 'popup_discb',
-                'popup_discc', 'popup_discrp', 'popup_satuan2', 'popup_satuan3'
+                'popup_discc', 'popup_discrp', 'popup_satuan2', 'popup_satuan3',
+                'edit_popup_jlh1', 'edit_popup_jlh2', 'edit_popup_jlh3',
+                'edit_popup_harga', 'edit_popup_disca', 'edit_popup_discb',
+                'edit_popup_discc', 'edit_popup_discrp', 'edit_popup_satuan2', 'edit_popup_satuan3'
             ];
 
             inputFields.forEach(id => {
                 document.getElementById(id).addEventListener('input', hitungJumlahPembelian);
+                document.getElementById(id).addEventListener('input', hitungJumlahPembelianEdit);
             });
 
             function hitungJumlahPembelian() {
@@ -846,6 +853,45 @@
                 let finalJumlah = smntaradis3 - discrp;
 
                 document.getElementById('popup_jumlah').value = Math.round(finalJumlah);
+            }
+
+            function hitungJumlahPembelianEdit() {
+                let jlh1 = parseFloat(jlh1Edit.value) || 0;
+                let jlh2 = parseFloat(jlh2Edit.value) || 0;
+                let jlh3 = parseFloat(jlh3Edit.value) || 0;
+                let harga = parseFloat(hargaEdit.value) || 0;
+
+                let isi1 = parseFloat(isi1Edit.value) || 0;
+                let isi2 = parseFloat(isi2Edit.value) || 0;
+
+                let disca = parseFloat(discaEdit.value) || 0;
+                let discb = parseFloat(discbEdit.value) || 0;
+                let discc = parseFloat(disccEdit.value) || 0;
+                let discrp = parseFloat(discrpEdit.value) || 0;
+
+                let hasil1 = jlh1 * harga;
+                let hasil2 = (jlh2 > 0 && isi1 > 0) ? (harga / isi1) * jlh2 : 0;
+                let hasil3 = (jlh3 > 0 && isi1 > 0 && isi2 > 0) ? (harga / (isi1 * isi2)) * jlh3 : 0;
+
+                let smntarajlmh = hasil1 + hasil2 + hasil3;
+
+                let afterDisca = smntarajlmh * disca / 100;
+                let smntaradis1 = smntarajlmh - afterDisca;
+
+                let afterDiscb = smntaradis1 * discb / 100;
+                let smntaradis2 = smntaradis1 - afterDiscb;
+
+                let afterDiscc = smntaradis2 * discc / 100;
+                let smntaradis3 = smntaradis2 - afterDiscc;
+
+                let finalJumlah = smntaradis3 - discrp;
+
+                jumlahEdit.value = Math.round(finalJumlah);
+                if (indexEdit !== undefined && dataPembelian[indexEdit]) {
+                    dataPembelian[indexEdit].jumlah = Math.round(finalJumlah);
+                }
+
+                hitungSubtotalDariArray();
             }
 
             document.getElementById('lain_lain').addEventListener('input', function() {
@@ -913,7 +959,7 @@
                 document.getElementById('ppn').disabled = true;
                 document.getElementById('totaljmlh').disabled = true;
             }
-            initializeFormButtons();
+            //initializeFormButtons();
 
             function initializeEdit() {
                 currentstat = 'update';
@@ -944,13 +990,38 @@
                 document.getElementById('totaljmlh').disabled = false;
             }
 
+            function laststat() {
+                document.getElementById('thAksi').style.display = '';
+                const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
+                allTdAksi.forEach(td => {
+                    td.style.display = '';
+                });
+
+                document.getElementById('btnEdit').disabled = true;
+                document.getElementById('btnCancel').disabled = false;
+                document.getElementById('btnHapus').disabled = true;
+                document.getElementById('btnSave').disabled = false;
+                document.getElementById('btnTambahItem').disabled = false;
+
+                document.getElementById('tanggal').disabled = false;
+                document.getElementById('no_nota').disabled = false;
+                document.getElementById('jt_tempo').disabled = false;
+                document.getElementById('nama_sup').disabled = false;
+                document.getElementById('kode_sup').disabled = false;
+                document.getElementById('alamat').disabled = false;
+                document.getElementById('subtotal').disabled = false;
+                document.getElementById('lain_lain').disabled = false;
+                document.getElementById('ppn').disabled = false;
+                document.getElementById('totaljmlh').disabled = false;
+            }
+
             function cancelForm() {
                 initializeFormButtons();
                     // Reset form
                 // Set kembali tanggal dan jatuh tempo ke hari ini
                 const today = new Date().toISOString().split('T')[0];
-                document.getElementById("tanggal").value = today;
-                document.getElementById("jt_tempo").value = today;
+                //document.getElementById("tanggal").value = today;
+                //document.getElementById("jt_tempo").value = today;
 
                 // ✅ Tambahkan ini untuk menampilkan kolom Aksi
                 document.getElementById('thAksi').style.display = 'none';
@@ -958,6 +1029,7 @@
                 allTdAksi.forEach(td => {
                     td.style.display = 'none';
                 });
+                localStorage.removeItem('formPembelianState');
             }
 
             document.getElementById('btnTambahItem').addEventListener('click', () => {
@@ -973,10 +1045,32 @@
                 popupJlh3.disabled = true;
             }
 
-            window.addEventListener("DOMContentLoaded", () => {
-                const today = new Date().toISOString().split('T')[0];
-                //document.getElementById("tanggal").value = today;
-                //document.getElementById("jt_tempo").value = today;
+            window.addEventListener('DOMContentLoaded', () => {
+                const saved = JSON.parse(localStorage.getItem('formPembelianState') || '{}');
+                const form = document.getElementById('formPembelian');
+
+                currentstat = saved.currentstat || null;
+
+                Object.keys(saved).forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.value = saved[id].value;
+                        el.disabled = saved[id].disabled;
+                    }
+                });
+
+                if (saved.dataPembelian) {
+                    dataPembelian = saved.dataPembelian;
+                    renderTabelPembelian();
+                    hitungSubtotalDariArray();
+                }
+
+                // Pulihkan status tombol/form berdasarkan currentstat
+                if (saved.currentstat === 'update') {
+                    laststat();
+                } else {
+                    initializeFormButtons();
+                }
             });
 
             // Enable btnTambahItem jika no_nota terisi
@@ -1007,6 +1101,7 @@
                 .then(res => {
                     if (res.success) {
                         showToast('Data berhasil disimpan!');
+                        localStorage.removeItem('formPembelianState');
                         initializeFormButtons();
                     } else {
                         showToast('Gagal menyimpan: ' + res.message, '#dc3545');
@@ -1032,6 +1127,26 @@
                 document.body.appendChild(toast);
                 setTimeout(() => toast.remove(), 1500);
             }
+            window.addEventListener('beforeunload', () => {
+                const form = document.getElementById('formPembelian');
+                const formData = {};
+
+                form.querySelectorAll('input, select, textarea, button').forEach(el => {
+                    formData[el.id] = {
+                        value: el.value,
+                        disabled: el.disabled
+                    };
+                });
+
+                // Simpan currentstat
+                formData['currentstat'] = currentstat;
+
+                // Simpan dataPembelian juga jika penting
+                formData['dataPembelian'] = dataPembelian;
+
+                // Simpan ke localStorage
+                localStorage.setItem('formPembelianState', JSON.stringify(formData));
+            });
         </script>
     </body>
     </html>
