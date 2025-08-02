@@ -35,6 +35,7 @@
             </div>
 
             <form id="formPembelian" action="prosespembelian.php" method="POST">
+                <input type="hidden" name="no_nota_lama" id="no_nota_lama" />
                 <div id="form-pembelian-atas">
                     <div class="form-pb-row">
                         <div class="form-pb-col">
@@ -53,6 +54,7 @@
                         <div class="form-pb-col">
                             <label for="no_nota">No Nota</label>
                             <input type="text" id="no_nota" data-table="zbeli" data-field="nonota" data-check="duplikat" onblur="cekValidasi(this)" name="no_nota" class="short-input" style="text-transform: uppercase;">
+                            
                         </div>
                         <div class="form-pb-col" style="position: relative;">
                             <label for="nama_supplier">Nama Supplier</label>
@@ -139,6 +141,7 @@
                                 <th>Satuan 1</th>
                                 <th>Satuan 2</th>
                                 <th>Satuan 3</th>
+                                <th>Harga</th>
                                 <th>Pilih</th>
                             </tr>
                         </thead>
@@ -246,6 +249,80 @@
                     </form>
                 </div>
             </div>
+            <div id="popupFormEdit" class="popup-pb-overlay" style="display: none;">
+                <div class="popup-pb-content">
+                    <h3>Edit Data Pembelian</h3>
+                    <form id="formDetailPembelianEdit">
+                        <input type="hidden" name="edit_popup_isi1" id="edit_popup_isi1" value=""> 
+                        <input type="hidden" name="edit_popup_isi2" id="edit_popup_isi2" value=""> 
+                        <div class="popup-pb-row">
+                            <label for="popup_kodebrg">Kode Barang</label>
+                            <input type="text" id="edit_popup_kodebrg" data-table="zstok" data-field="kodebrg" data-check="eksistensi" data-reset="edit_popup_namabrg" onblur="cekValidasi(this)" name="edit_popup_kodebrg" style="text-transform: uppercase;">
+                        </div>
+                        <div class="popup-pb-row">
+                            <label for="popup_namabrg">Nama Barang</label>
+                            <input type="text" id="edit_popup_namabrg" data-table="zstok" data-field="namabrg" data-check="eksistensi" data-reset="edit_popup_kodebrg" onblur="cekValidasi(this)" name="edit_popup_namabrg" style="text-transform: uppercase;">
+                        </div>
+
+                        <div class="popup-pb-row">
+                            <label for="popup_jlh1">Jumlah 1</label>
+                            <input type="number" id="edit_popup_jlh1" name="edit_popup_jlh1" min="0">
+                        </div>
+                        <div class="popup-pb-row">
+                            <label for="popup_satuan1">Satuan 1</label>
+                            <input type="text" id="edit_popup_satuan1" name="edit_popup_satuan1" disabled>
+                        </div>
+
+                        <div class="popup-pb-row">
+                            <label for="popup_jlh2">Jumlah 2</label>
+                            <input type="number" id="edit_popup_jlh2" name="edit_popup_jlh2" min="0" disabled>
+                        </div>
+                        <div class="popup-pb-row">
+                            <label for="popup_satuan2">Satuan 2</label>
+                            <input type="text" id="edit_popup_satuan2" name="edit_popup_satuan2" disabled>
+                        </div>
+
+                        <div class="popup-pb-row">
+                            <label for="popup_jlh3">Jumlah 3</label>
+                            <input type="number" id="edit_popup_jlh3" name="edit_popup_jlh3" min="0" disabled>
+                        </div>
+                        <div class="popup-pb-row">
+                            <label for="popup_satuan3">Satuan 3</label>
+                            <input type="text" id="edit_popup_satuan3" name="edit_popup_satuan3" disabled>
+                        </div>
+
+                        <div class="popup-pb-row">
+                            <label for="popup_harga">Harga</label>
+                            <input type="number" id="edit_popup_harga" name="edit_popup_harga" value="0" disabled>
+                        </div>
+                        <div class="popup-pb-row">
+                            <label for="popup_disca">Disca</label>
+                            <input type="number" id="edit_popup_disca" name="edit_popup_disca" value="0">
+                        </div>
+                        <div class="popup-pb-row">
+                            <label for="popup_discb">Discb</label>
+                            <input type="number" id="edit_popup_discb" name="edit_popup_discb" value="0">
+                        </div>
+                        <div class="popup-pb-row">
+                            <label for="popup_discc">Discc</label>
+                            <input type="number" id="edit_popup_discc" name="edit_popup_discc" value="0">
+                        </div>
+                        <div class="popup-pb-row">
+                            <label for="popup_discrp">Disc Rp</label>
+                            <input type="number" id="edit_popup_discrp" name="edit_popup_discrp" value="0">
+                        </div>
+                        <div class="popup-pb-row">
+                            <label for="popup_jumlah">Jumlah</label>
+                            <input type="number" id="edit_popup_jumlah" name="edit_popup_jumlah"required>
+                        </div>
+
+                        <div class="popup-pb-row" style="justify-content: flex-end; gap: 10px;">
+                            <button id="btnSaveItem" type="submit">Oke</button>
+                            <button id="btnCancelItem" type="button" onclick="tutupPopupEdit()">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </main>
 
         <div id="toast" style="
@@ -287,7 +364,9 @@
             </div>
         </div>
         <script>
+            let currentstat = null;
             let dataPembelian = [];
+            let indexToDelete = null;
             function loadPembelian(nonota) {
                 const noNota = new URLSearchParams(window.location.search).get('nonota');
 
@@ -298,6 +377,7 @@
                         // Isi form header
                         document.getElementById('tanggal').value = data.header.tanggal;
                         document.getElementById('no_nota').value = data.header.no_nota;
+                        document.getElementById('no_nota_lama').value = data.header.no_nota;
                         document.getElementById('kode_sup').value = data.header.kode_sup;
                         document.getElementById('nama_sup').value = data.header.nama_sup;
                         document.getElementById('alamat').value = data.header.alamat;
@@ -314,10 +394,6 @@
             }
 
             loadPembelian();
-
-            let currentstat = null;
-
-            let indexToDelete = null;
             const kodeInput = document.getElementById('kode_sup');
             const namaInput = document.getElementById('nama_sup');
             const alamatInput = document.getElementById('alamat');
@@ -339,6 +415,22 @@
             const popupDiscrp = document.getElementById('popup_discrp');
             const popupJumlah = document.getElementById('popup_jumlah');
             
+            const isi1Edit       = document.getElementById('edit_popup_isi1');
+            const isi2Edit       = document.getElementById('edit_popup_isi2');
+            const kodebrgEdit    = document.getElementById('edit_popup_kodebrg');
+            const namabrgEdit    = document.getElementById('edit_popup_namabrg');
+            const jlh1Edit       = document.getElementById('edit_popup_jlh1');
+            const satuan1Edit    = document.getElementById('edit_popup_satuan1');
+            const jlh2Edit       = document.getElementById('edit_popup_jlh2');
+            const satuan2Edit    = document.getElementById('edit_popup_satuan2');
+            const jlh3Edit       = document.getElementById('edit_popup_jlh3');
+            const satuan3Edit    = document.getElementById('edit_popup_satuan3');
+            const hargaEdit      = document.getElementById('edit_popup_harga');
+            const discaEdit      = document.getElementById('edit_popup_disca');
+            const discbEdit      = document.getElementById('edit_popup_discb');
+            const disccEdit      = document.getElementById('edit_popup_discc');
+            const discrpEdit     = document.getElementById('edit_popup_discrp');
+            const jumlahEdit     = document.getElementById('edit_popup_jumlah');
 
             // Trigger cari saat tekan Enter
             [popupKodeInput, popupNamaInput].forEach(input => {
@@ -399,6 +491,7 @@
                                 <td>${item.satuan1}</td>
                                 <td>${item.satuan2}</td>
                                 <td>${item.satuan3}</td>
+                                <td>${item.hrgbeli}</td>
                                 <td><button type="button" onclick='pilihBarang(${JSON.stringify(item)})'>Pilih</button></td>
                             `;
                             tbody.appendChild(tr);
@@ -502,6 +595,7 @@
                 popupSatuan1.value = item.satuan1;
                 popupSatuan2.value = item.satuan2;
                 popupSatuan3.value = item.satuan3;
+                popupHarga.value = item.hrgbeli;
                 popupIsi1.value = item.isi1;
                 popupIsi2.value = item.isi2;
                 if (popupIsi1.value > 1) {
@@ -601,6 +695,46 @@
                 showToast('Item berhasil disimpan!');
             });
 
+            document.getElementById('formDetailPembelianEdit').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const item = {
+                    isi1: parseInt(document.getElementById('edit_popup_isi1').value),
+                    isi2: parseInt(document.getElementById('edit_popup_isi2').value),
+                    kodebrg: document.getElementById('edit_popup_kodebrg').value.trim().toUpperCase(),
+                    namabrg: document.getElementById('edit_popup_namabrg').value.trim().toUpperCase(),
+                    jlh1: parseInt(document.getElementById('edit_popup_jlh1').value),
+                    satuan1: document.getElementById('edit_popup_satuan1').value.trim(),
+                    jlh2: parseInt(document.getElementById('edit_popup_jlh2').value) || null,
+                    satuan2: document.getElementById('edit_popup_satuan2').value.trim() || null,
+                    jlh3: parseInt(document.getElementById('edit_popup_jlh3').value) || null,
+                    satuan3: document.getElementById('edit_popup_satuan3').value.trim() || null,
+                    harga: parseFloat(document.getElementById('edit_popup_harga').value),
+                    disca: parseFloat(document.getElementById('edit_popup_disca').value),
+                    discb: parseFloat(document.getElementById('edit_popup_discb').value),
+                    discc: parseFloat(document.getElementById('edit_popup_discc').value),
+                    discrp: parseFloat(document.getElementById('edit_popup_discrp').value),
+                    jumlah: parseFloat(document.getElementById('edit_popup_jumlah').value)
+                };
+
+                const editIndex = formDetailPembelianEdit.dataset.editingIndex;
+                if (editIndex !== undefined && editIndex !== null) {
+                    dataPembelian[editIndex] = item;
+                    delete formDetailPembelianEdit.dataset.editingIndex;
+                    renderTabelPembelian();
+                    hitungSubtotalDariArray();
+                    showToast('Item berhasil diperbarui!');
+                }
+
+                // Tutup popup edit
+                document.getElementById('popupFormEdit').style.display = 'none';
+                document.getElementById('thAksi').style.display = '';
+                const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
+                allTdAksi.forEach(td => {
+                    td.style.display = '';
+                });
+            });
+
             function resetitem() {
                 document.getElementById('formDetailPembelian').reset();
                 document.getElementById('thAksi').style.display = '';
@@ -660,7 +794,7 @@
                     dataPembelian.splice(indexToDelete, 1);
                     renderTabelPembelian();
                     hitungSubtotalDariArray();
-                        document.getElementById('thAksi').style.display = '';
+                    document.getElementById('thAksi').style.display = '';
                     const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
                     allTdAksi.forEach(td => {
                         td.style.display = '';
@@ -841,8 +975,8 @@
 
             window.addEventListener("DOMContentLoaded", () => {
                 const today = new Date().toISOString().split('T')[0];
-                document.getElementById("tanggal").value = today;
-                document.getElementById("jt_tempo").value = today;
+                //document.getElementById("tanggal").value = today;
+                //document.getElementById("jt_tempo").value = today;
             });
 
             // Enable btnTambahItem jika no_nota terisi
@@ -854,6 +988,7 @@
             document.getElementById('btnSave').addEventListener('click', () => {
                 const data = {
                     no_nota: document.getElementById('no_nota').value,
+                    no_nota_lama: document.getElementById('no_nota_lama').value,
                     tanggal: document.getElementById('tanggal').value,
                     kode_sup: document.getElementById('kode_sup').value,
                     jt_tempo: document.getElementById('jt_tempo').value,
@@ -872,7 +1007,7 @@
                 .then(res => {
                     if (res.success) {
                         showToast('Data berhasil disimpan!');
-                        window.location.reload();
+                        initializeFormButtons();
                     } else {
                         showToast('Gagal menyimpan: ' + res.message, '#dc3545');
                     }

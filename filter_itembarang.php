@@ -11,7 +11,7 @@ if (!$keyword || !in_array($mode, ['kode', 'nama'])) {
 
 $field = $mode === 'kode' ? 'kodebrg' : 'namabrg';
 
-$query = $conn->prepare("SELECT kodebrg, namabrg, satuan1, satuan2, satuan3, isi1, isi2 FROM zstok WHERE $field LIKE CONCAT('%', ?, '%') LIMIT 50");
+$query = $conn->prepare("SELECT kodebrg, namabrg, satuan1, satuan2, satuan3, isi1, isi2, hrgbeli FROM zstok WHERE $field LIKE CONCAT('%', ?, '%') LIMIT 50");
 $query->bind_param("s", $keyword);
 $query->execute();
 $result = $query->get_result();

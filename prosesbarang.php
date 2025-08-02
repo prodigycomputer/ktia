@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $satuan3       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan3'] ?? '-')));
     $isi1          = is_numeric($_POST['isi1'] ?? '') ? floatval($_POST['isi1']) : 0;
     $isi2          = is_numeric($_POST['isi2'] ?? '') ? floatval($_POST['isi2']) : 0;
+    $hargabeli     = is_numeric($_POST['hargabeli'] ?? '') ? floatval($_POST['hargabeli']) : 0;
 
     // --- Validasi minimal wajib isi ---
     if (!$kodebrg || !$namabrg || !$kodegrup) {
@@ -58,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
             $query = "INSERT INTO zstok 
-                (kodebrg, kodegrup, namabrg, satuan1, satuan2, satuan3, isi1, isi2$fieldHarga)
+                (kodebrg, kodegrup, namabrg, satuan1, satuan2, satuan3, isi1, isi2, hrgbeli$fieldHarga)
                 VALUES 
-                ('$kodebrg', '$kodegrup', '$namabrg', '$satuan1', '$satuan2', '$satuan3', $isi1, $isi2$valueHarga)";
+                ('$kodebrg', '$kodegrup', '$namabrg', '$satuan1', '$satuan2', '$satuan3', $isi1, $isi2, $hargabeli$valueHarga)";
             break;
 
         case 'update':
@@ -72,7 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 satuan2 = '$satuan2',
                 satuan3 = '$satuan3',
                 isi1 = $isi1,
-                isi2 = $isi2
+                isi2 = $isi2,
+                hrgbeli = $hargabeli
                 $updateHarga
                 WHERE kodebrg = '$kodebrg_lama'";
             break;

@@ -24,7 +24,7 @@ $dataHeader = mysqli_fetch_assoc($queryHeader);
 $queryDetail = mysqli_query($conn, "
     SELECT d.kodebrg, z.namabrg, d.jlh1, d.jlh2, d.jlh3,
            d.harga, d.disca, d.discb, d.discc, d.discrp, d.jumlah,
-           z.isi1, z.isi2, z.satuan1, z.satuan2, z.satuan3
+           z.isi1, z.isi2, z.satuan1, z.satuan2, z.satuan3, z.hrgbeli
     FROM zbelim d
     JOIN zstok z ON d.kodebrg = z.kodebrg
     WHERE d.nonota = '$nonota'

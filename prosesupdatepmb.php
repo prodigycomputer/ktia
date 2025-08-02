@@ -5,13 +5,14 @@
     $data = json_decode(file_get_contents("php://input"), true);
 
     $no_nota = strtoupper($data['no_nota'] ?? '');
+    $no_nota_lama = strtoupper($data['no_nota_lama'] ?? $no_nota);
     $tanggal = $data['tanggal'] ?? '';
     $kode_sup = strtoupper($data['kode_sup'] ?? '');
     $jt_tempo = $data['jt_tempo'] ?? '';
     $totaljmlh = $data['totaljmlh'] ?? 0;
     $detail = $data['detail'] ?? [];
 
-    if (!$no_nota || !$tanggal || !$kode_sup || empty($detail)) {
+    if (!$no_nota || !$tanggal || !$kode_sup || !$jt_tempo || empty($detail)) {
         echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
         exit;
     }
@@ -20,21 +21,25 @@
         $conn->begin_transaction();
 
         $hapusDetail = $conn->prepare("DELETE FROM zbelim WHERE nonota = ?");
-        $hapusDetail->bind_param("s", $no_nota);
+        $hapusDetail->bind_param("s", $no_nota_lama);
         $hapusDetail->execute();
         $hapusDetail->close();
         // Hapus detail lama
-        $hapusDetail1 = $conn->prepare("DELETE FROM zbeli WHERE nonota = ?");
-        $hapusDetail1->bind_param("s", $no_nota);
-        $hapusDetail1->execute();
-        $hapusDetail1->close();
-
+        $hapusHeader = $conn->prepare("DELETE FROM zbeli WHERE nonota = ?");
+        $hapusHeader->bind_param("s", $no_nota_lama);
+        $hapusHeader->execute();
+        $hapusHeader->close();
+        
         // Insert detail baru
-        $stmt = $conn->prepare("
+        $stmtHeader = $conn->prepare("
             INSERT INTO zbeli 
-            (nonota, tgl, kodesup, nilai, tgltempo, lunas)
-            VALUES (?, ?, ?, ?, ?, 0)
+            (nonota, tgl, kodesup, nilai, tgltempo)
+            VALUES (?, ?, ?, ?, ?)
         ");
+
+        $stmtHeader->bind_param("sssds", $no_nota, $tanggal, $kode_sup, $totaljmlh, $jt_tempo);
+        $stmtHeader->execute();
+        $stmtHeader->close();
 
         $stmt = $conn->prepare("
             INSERT INTO zbelim 

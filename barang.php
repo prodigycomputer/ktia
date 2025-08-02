@@ -67,6 +67,9 @@ while ($g = $grupResult->fetch_assoc()) {
                     <label for="satuan3">Satuan 3</label>
                     <input type="text" name="satuan3" id="satuan3" class="lesslong-input" disabled style="text-transform: uppercase;">
 
+                    <label for="hargabeli">Harga Beli</label>
+                    <input type="number" step="0.01" name="hargabeli" id="hargabeli" class="medium-input" disabled oninput="checkIsi2()">
+
                     <label for="gambar">Gambar</label>
                     <div style="display: flex; gap: 5px; align-items: center;">
                         <input type="text" name="gambar" id="gambar" class="lesslong-input" readonly>
@@ -220,6 +223,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('satuan2').disabled = true;
             document.getElementById('isi2').disabled = true;
             document.getElementById('satuan3').disabled = true;
+            document.getElementById('hargabeli').disabled = true;
             document.getElementById('gambar').disabled = true;
             document.getElementById('upload').disabled = true;
 
@@ -243,6 +247,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('satuan2').value = previousFormData.satuan2;
             document.getElementById('isi2').value = previousFormData.isi2;
             document.getElementById('satuan3').value = previousFormData.satuan3;
+            document.getElementById('hargabeli').value = previousFormData.hargabeli;
             hargaData = JSON.parse(JSON.stringify(previousFormData.hargaData));
             generateHargaInputs(<?= $jmlharga ?>);
 
@@ -260,6 +265,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('satuan3').disabled = true;
             document.getElementById('isi1').disabled = true;
             document.getElementById('isi2').disabled = true;
+            document.getElementById('hargabeli').disabled = true;
             document.getElementById('gambar').disabled = true;
             document.getElementById('upload').disabled = true;
 
@@ -292,6 +298,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('namabrg').disabled = false;
             document.getElementById('satuan1').disabled = false;
             document.getElementById('isi1').disabled = false;
+            document.getElementById('hargabeli').disabled = false;
             document.getElementById('gambar').disabled = false;
             document.getElementById('upload').disabled = false;
 
@@ -322,6 +329,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('namabrg').disabled = false;
             document.getElementById('satuan1').disabled = false;
             document.getElementById('isi1').disabled = false;
+            document.getElementById('hargabeli').disabled = false;
             document.getElementById('gambar').disabled = false;
             document.getElementById('upload').disabled = false;
 
@@ -408,7 +416,7 @@ while ($g = $grupResult->fetch_assoc()) {
             const hargaFields = Object.keys(dataList[0])
                 .filter(key => key.toLowerCase().startsWith('harga') && dataList[0][key] !== undefined);
 
-            const fixedFields = ['kodebrg', 'kodegrup', 'namabrg', 'satuan1', 'isi1', 'satuan2', 'isi2', 'satuan3'];
+            const fixedFields = ['kodebrg', 'kodegrup', 'namabrg', 'satuan1', 'isi1', 'satuan2', 'isi2', 'satuan3', 'hrgbeli'];
 
             // Header
             const headerRow = document.createElement('tr');
@@ -492,6 +500,7 @@ while ($g = $grupResult->fetch_assoc()) {
             satuan2: document.getElementById('satuan2').value,
             isi2: document.getElementById('isi2').value,
             satuan3: document.getElementById('satuan3').value,
+            hargabeli: document.getElementById('hargabeli').value,
             hargaData: JSON.parse(JSON.stringify(hargaData)) // deep copy supaya tidak berubah
         };
 
@@ -653,6 +662,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('isi1').disabled = true;
             document.getElementById('satuan2').disabled = true;
             document.getElementById('isi2').disabled = true;
+            document.getElementById('hargabeli').disabled = true;
             document.getElementById('satuan3').disabled = true;
             document.getElementById('gambar').value = '';
 
@@ -730,6 +740,7 @@ while ($g = $grupResult->fetch_assoc()) {
                     satuan2: document.getElementById('satuan2').value.trim(),
                     isi2: document.getElementById('isi2').value.trim(),
                     satuan3: document.getElementById('satuan3').value.trim(),
+                    hargabeli: document.getElementById('hargabeli').value.trim(),
                     hargaData: JSON.parse(JSON.stringify(hargaData)) // deep copy agar tidak berubah saat diedit
                 };
 

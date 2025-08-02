@@ -69,4 +69,29 @@ function toggleDropdown(id) {
     content.classList.toggle('show');
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const current = window.location.pathname.split("/").pop();
+
+    // Grup pembelian saja (bukan seluruh transaksi)
+    const pembelianPages = ['pembelian.php', 'inputpembelian.php', 'editpembelian.php'];
+
+    // Simpan halaman terakhir dari grup pembelian
+    if (pembelianPages.includes(current)) {
+        localStorage.setItem('lastPembelianPage', current);
+    }
+
+    // Reset jika user kembali ke pembelian.php
+    if (current === 'pembelian.php') {
+        localStorage.removeItem('lastPembelianPage');
+    }
+
+    // Ganti href dari link Pembelian
+    const pembelianLink = document.querySelector('a[href="pembelian.php"]');
+    const lastPage = localStorage.getItem('lastPembelianPage');
+
+    if (pembelianLink && lastPage && lastPage !== 'pembelian.php') {
+        pembelianLink.setAttribute('href', lastPage);
+    }
+}); 
+
 </script>
