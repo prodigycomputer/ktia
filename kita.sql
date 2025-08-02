@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 01, 2025 at 12:24 PM
+-- Generation Time: Aug 02, 2025 at 12:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -207,6 +207,7 @@ CREATE TABLE `zstok` (
   `satuan3` char(10) NOT NULL,
   `isi1` double NOT NULL,
   `isi2` double NOT NULL,
+  `hrgbeli` double DEFAULT 0,
   `harga1` double DEFAULT NULL,
   `harga11` double DEFAULT NULL,
   `harga111` double DEFAULT NULL,
@@ -231,11 +232,11 @@ CREATE TABLE `zstok` (
 -- Dumping data for table `zstok`
 --
 
-INSERT INTO `zstok` (`kodebrg`, `kodegrup`, `namabrg`, `satuan1`, `satuan2`, `satuan3`, `isi1`, `isi2`, `harga1`, `harga11`, `harga111`, `harga2`, `harga22`, `harga222`, `harga3`, `harga33`, `harga333`, `harga4`, `harga44`, `harga444`, `harga5`, `harga55`, `harga555`, `harga6`, `harga66`, `harga666`) VALUES
-('A02', 'ADA', 'SDFA', 'SADF', '-', '-', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('D01', 'A02', 'SUSU DANCOW BALITA MADU', 'DUS', 'KTK', '-', 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('L01', 'A03', 'KERTAS KADO', 'LBR', '-', '-', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('LA12', 'A01', 'ROKOK LA 12 BATANG', 'DUS', 'SLOP', 'BKS', 15, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `zstok` (`kodebrg`, `kodegrup`, `namabrg`, `satuan1`, `satuan2`, `satuan3`, `isi1`, `isi2`, `hrgbeli`, `harga1`, `harga11`, `harga111`, `harga2`, `harga22`, `harga222`, `harga3`, `harga33`, `harga333`, `harga4`, `harga44`, `harga444`, `harga5`, `harga55`, `harga555`, `harga6`, `harga66`, `harga666`) VALUES
+('A02', 'ADA', 'SDFA', 'SADF', '-', '-', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('D01', 'A02', 'SUSU DANCOW BALITA MADU', 'DUS', 'KTK', '-', 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('L01', 'A03', 'KERTAS KADO', 'LBR', '-', '-', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('LA12', 'A01', 'ROKOK LA 12 BATANG', 'DUS', 'SLOP', 'BKS', 15, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
