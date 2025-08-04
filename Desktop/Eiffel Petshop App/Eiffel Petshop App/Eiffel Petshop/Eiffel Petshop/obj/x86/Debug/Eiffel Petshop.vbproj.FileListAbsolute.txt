@@ -1,0 +1,22 @@
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel_Petshop.Login.resources
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel_Petshop.Menu.resources
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel_Petshop.Resources.resources
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel Petshop.vbproj.GenerateResource.Cache
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\Eiffel Petshop.exe.config
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\Eiffel Petshop.exe
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\Eiffel Petshop.pdb
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\Eiffel Petshop.xml
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\AForge.Video.DirectShow.dll
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\AForge.Video.dll
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\itextsharp.dll
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\itextsharp.pdfa.dll
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\zxing.dll
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\itextsharp.xml
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\zxing.pdb
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\bin\Debug\zxing.xml
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel Petshop.exe
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel Petshop.xml
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel Petshop.pdb
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel Petshop.vbprojResolveAssemblyReference.cache
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel_Petshop.LaporanPenjualanViewer.resources
+C:\Users\Asus\OneDrive\Documents\Data Kuliah\Data Skripsi\Skripsiv2\Eiffel Petshop App\Eiffel Petshop\Eiffel Petshop\obj\x86\Debug\Eiffel_Petshop.LaporanStokViewer.resources
