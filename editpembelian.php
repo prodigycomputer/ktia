@@ -28,7 +28,7 @@
                 <div style="display: flex; gap: 8px;">
                     <button id="btnSave" type="submit">Simpan</button>
                     <button id="btnEdit" type="button" onclick="initializeEdit()">Edit</button>
-                    <button id="btnHapus" type="button" onclick="initializeHapus()">Hapus</button>    
+                    <button id="btnHapus" type="button" >Hapus</button>    
                     <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
                 </div>
                 <button id="btnKembali" type="button" onclick="window.location.href='pembelian.php'">Kembali</button>
@@ -367,6 +367,7 @@
             let currentstat = null;
             let dataPembelian = [];
             let indexToDelete = null;
+            let hapusTipe = 'item';
             function loadPembelian(nonota) {
                 const noNota = new URLSearchParams(window.location.search).get('nonota');
 
@@ -786,6 +787,15 @@
             }
 
             function hapusItem(index) {
+                showPopupKonfirmasiHapus('item', index);
+            }
+
+            document.getElementById('btnHapus').addEventListener('click', () => {
+                showPopupKonfirmasiHapus('nota');
+            });
+
+            function showPopupKonfirmasiHapus(tipe, index = null) {
+                hapusTipe = tipe;
                 indexToDelete = index;
                 document.getElementById('popupConfirmHapus').style.display = 'block';
             }
@@ -793,18 +803,40 @@
             // Fungsi ketika user klik "Ya" atau "Tidak"
             function konfirmasiHapus(ya) {
                 document.getElementById('popupConfirmHapus').style.display = 'none';
-                if (ya && indexToDelete !== null) {
-                    dataPembelian.splice(indexToDelete, 1);
-                    renderTabelPembelian();
-                    hitungSubtotalDariArray();
-                    document.getElementById('thAksi').style.display = '';
-                    const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
-                    allTdAksi.forEach(td => {
-                        td.style.display = '';
-                    });
-                    showToast('Item berhasil dihapus!', '#dc3545');
+                
+                if (ya) {
+                    if (hapusTipe === 'item' && indexToDelete !== null) {
+                        // Hapus satu item dari array
+                        dataPembelian.splice(indexToDelete, 1);
+                        renderTabelPembelian();
+                        hitungSubtotalDariArray();
+                        document.getElementById('thAksi').style.display = '';
+                        const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
+                        allTdAksi.forEach(td => td.style.display = '');
+                        showToast('Item berhasil dihapus!', '#dc3545');
+                    }
+
+                    if (hapusTipe === 'nota') {
+                        const noNota = document.getElementById('no_nota').value;
+                        fetch(`proseshapuspmb.php?nonota=${encodeURIComponent(noNota)}`, {
+                            method: 'GET'
+                        })
+                        .then(res => res.json())
+                        .then(response => {
+                            if (response.success) {
+                                showToast('Pembelian berhasil dihapus!', '#dc3545');
+                                // redirect atau reset halaman
+                                setTimeout(() => window.location.href = 'pembelian.php', 1000);
+                            } else {
+                                showToast('Gagal menghapus pembelian!', '#dc3545');
+                            }
+                        })
+                        .catch(() => showToast('Terjadi kesalahan server!', '#dc3545'));
+                    }
                 }
+
                 indexToDelete = null;
+                hapusTipe = 'item';
             }
 
             const inputFields = [
@@ -1043,6 +1075,14 @@
                 document.getElementById('popupForm').style.display = 'none';
                 popupJlh2.disabled = true;
                 popupJlh3.disabled = true;
+            }
+
+            function tutupPopupEdit() {
+                document.getElementById('formDetailPembelianEdit').reset();
+                delete formDetailPembelian.dataset.editingIndex;
+                document.getElementById('popupFormEdit').style.display = 'none';
+                jlh2Edit.disabled = true;
+                jlh3Edit.disabled = true;
             }
 
             window.addEventListener('DOMContentLoaded', () => {
