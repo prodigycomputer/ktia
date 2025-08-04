@@ -29,9 +29,10 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 <button id="btnSave" type="submit">Simpan</button>
                 <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>    
                 <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
-                <button id="btnPrint" type="button" onclick="initializePrint()">Print</button>  
+                <button id="btnPrint" type="button">Print</button>
+  
             </div>
-            <button id="btnKembali" type="button" onclick="window.location.href='pembelian.php'">Kembali</button>
+            <button id="btnKembali" type="button" onclick="window.location.href='pembelian.php'">List Nota</button>
         </div>
 
         <form id="formPembelian" action="prosespembelian.php" method="POST">
@@ -217,7 +218,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_harga">Harga</label>
-                        <input type="number" id="popup_harga" name="popup_harga" value="0" disabled>
+                        <input type="number" id="popup_harga" name="popup_harga" value="0">
                     </div>
                     <div class="popup-pb-row">
                         <label for="popup_disca">Disca</label>
@@ -893,6 +894,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('btnTambahItem').disabled = true;
             document.getElementById('btnCancel').disabled = true;
             document.getElementById('btnSave').disabled = true;
+            document.getElementById('btnPrint').disabled = false;
 
             document.getElementById('tanggal').disabled = true;
             document.getElementById('no_nota').disabled = true;
@@ -923,6 +925,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
+            document.getElementById('btnPrint').disabled = true;
 
             document.getElementById('tanggal').disabled = false;
             document.getElementById('no_nota').disabled = false;
@@ -1080,68 +1083,18 @@ while ($row = $supplierQuery->fetch_assoc()) {
             });
         });
 
-        function initializePrint() {
-            const printContent = document.querySelector("#formPembelian").cloneNode(true);
+        document.getElementById('btnPrint').addEventListener('click', () => {
+            const noNota = document.getElementById('no_nota').value;
 
-            // Hilangkan kolom "Aksi" jika ada
-            const aksiHeader = printContent.querySelector("#thAksi");
-            if (aksiHeader) aksiHeader.remove();
-            const aksiCells = printContent.querySelectorAll("td:nth-last-child(1)");
-            aksiCells.forEach(td => {
-                if (td && td.innerText.includes("Hapus")) td.remove(); // contoh isi
-            });
+            if (!noNota) {
+                alert("Nomor nota tidak boleh kosong!");
+                return;
+            }
 
-            // Hilangkan semua tombol dari hasil cetak
-            printContent.querySelectorAll("button").forEach(btn => btn.remove());
-
-            // Aktifkan semua input readonly/disabled supaya nilainya muncul di cetakan
-            printContent.querySelectorAll("input").forEach(input => {
-                input.removeAttribute("disabled");
-                input.setAttribute("readonly", "true");
-            });
-
-            // Siapkan jendela popup untuk cetak
-            const printWindow = window.open("", "_blank", "width=800,height=600");
-
-            // Gaya khusus untuk cetakan A5 horizontal
-            const style = `
-                <style>
-                    @media print {
-                        @page { size: A5 landscape; margin: 10mm; }
-                        body { font-family: Arial, sans-serif; font-size: 11px; }
-                        h2 { text-align: center; margin-bottom: 10px; }
-                        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-                        th, td { border: 1px solid #000; padding: 4px; text-align: left; }
-                        input { border: none; background: transparent; }
-                        label { font-weight: bold; display: inline-block; min-width: 80px; }
-                        .form-pb-row, .form-pb-pos { display: flex; justify-content: space-between; margin-bottom: 4px; }
-                        .form-pb-col { flex: 1; margin-right: 10px; }
-                    }
-                </style>
-            `;
-
-            // Tulis isi dokumen ke jendela baru
-            printWindow.document.open();
-            printWindow.document.write(`
-                <html>
-                    <head>
-                        <title>Print Pembelian</title>
-                        ${style}
-                    </head>
-                    <body>
-                        <h2>Faktur Pembelian</h2>
-                        ${printContent.innerHTML}
-                    </body>
-                </html>
-            `);
-            printWindow.document.close();
-
-            // Tunggu sampai selesai load lalu cetak
-            printWindow.onload = () => {
-                printWindow.print();
-                printWindow.close();
-            };
-        }
+            // Buka halaman nota dalam tab baru
+            const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}`;
+            window.open(url, '_blank');
+        });
 
         function showToast(pesan, warna = '#28a745') {
             const toast = document.createElement('div');

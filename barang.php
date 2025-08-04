@@ -68,7 +68,7 @@ while ($g = $grupResult->fetch_assoc()) {
                     <input type="text" name="satuan3" id="satuan3" class="lesslong-input" disabled style="text-transform: uppercase;">
 
                     <label for="hargabeli">Harga Beli</label>
-                    <input type="number" step="0.01" name="hargabeli" id="hargabeli" class="medium-input" disabled oninput="checkIsi2()">
+                    <input type="number" step="0.01" name="hargabeli" id="hargabeli" class="medium-input" disabled>
 
                     <label for="gambar">Gambar</label>
                     <div style="display: flex; gap: 5px; align-items: center;">
@@ -119,6 +119,18 @@ while ($g = $grupResult->fetch_assoc()) {
                 </table>
             </div>
         </div>
+    </div>
+
+    <div id="popupGrup" style="display: none; position: absolute; border: 1px solid #ccc; background: #fff; z-index: 1000; max-height: 200px; overflow-y: auto;">
+        <table id="tabelGrup" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #f1f1f1;">
+                    <th>Kode Grup</th>
+                    <th>Nama Grup</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 
     <!-- ✅ POPUP HARGA -->
@@ -284,6 +296,8 @@ while ($g = $grupResult->fetch_assoc()) {
         function initializeTambah() {
             currentstat = 'tambah';
             showToast('Kamu sedang menambah data...', '#ffc107');
+
+            document.getElementById('barangForm').reset();
 
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = true;
@@ -539,6 +553,7 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('satuan2').value = data.satuan2;
             document.getElementById('isi2').value = data.isi2;
             document.getElementById('satuan3').value = data.satuan3;
+            document.getElementById('hargabeli').value = data.hrgbeli;
 
             // Tombol state
             document.getElementById('btnTambah').disabled = true;
@@ -558,6 +573,7 @@ while ($g = $grupResult->fetch_assoc()) {
                 satuan2: data.satuan2,
                 isi2: data.isi2,
                 satuan3: data.satuan3,
+                hrgbeli: data.hrgbeli,
                 hargaData: JSON.parse(JSON.stringify(hargaData)) // deep copy
             };
 
