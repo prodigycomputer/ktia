@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cetak Nota </title>
-    <script src="perhitungan.js"></script>
+    <script src="fungsi.js"></script>
     <style>
         html, body {
             margin: 0;
@@ -28,35 +28,32 @@
         h2 {
             margin-bottom: 10px;
         }
-
+  
         .form-header {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 kolom */
+            gap: 6px 20px;
             margin-bottom: 20px;
             font-size: 12px;
         }
 
-        .form-header div {
-            width: 50%;
+        .form-header .field {
             display: flex;
-            padding: 3px 0;
             align-items: center;
         }
 
         .form-header label {
-            flex: 1;
-            text-align: left;
+            min-width: 100px;
+            font-weight: bold;
         }
 
         .form-header span {
-            flex: none;
-            min-width: 150px;
-            padding: 2px 6px;
-            border: 1px  #ccc;
-            background-color: #f9f9f9;
-            font-family: monospace;
-            text-align: left;
-        }
+            flex: 1;
+        border: 1px #ccc;
+        padding: 2px 6px;
+        font-family: monospace;
+        background-color: #f9f9f9;
+    }
 
         .form-footer {
             display: flex;
@@ -94,11 +91,31 @@
             margin-bottom: 20px;
         }
 
-        th, td {
+        th {
+            border: 1px solid #aaa;
+            padding: 6px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        td {
             border: 1px solid #aaa;
             padding: 6px;
             text-align: left;
             font-size: 12px;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            padding: 8px 16px;
+            font-size: 12px;
+            cursor: pointer;
         }
 
         /* Optional: cetak tetap sesuai A5 */   
@@ -137,33 +154,37 @@
                 box-sizing: border-box;
                 overflow: hidden;
             }
+            .action-buttons {
+                display: none;
+            }
         }
 
     </style>
 </head>
 <body>
     <div class="container-a5">
+        <?php include 'header.php'; ?>
         <h2>Nota Pembelian</h2>
 
         <div class="form-header">
-            <div><strong>Tanggal:</strong> <span id="tanggal"></span></div>
-            <div><strong>Kode Supplier:</strong> <span id="kode_sup"></span></div>
-            <div><strong>No Nota:</strong> <span id="no_nota"></span></div>
-            <div><strong>Nama Supplier:</strong> <span id="nama_sup"></span></div>
-            <div><strong>Jatuh Tempo:</strong> <span id="jt_tempo"></span></div>
-            <div><strong>Alamat:</strong> <span id="alamat"></span></div>
+            <div class="field"><label>Tanggal :</label> <span id="tanggal"></span></div>
+            <div class="field"><label>Kode Supplier :</label> <span id="kode_sup"></span></div>
+            <div class="field"><label>No Nota :</label> <span id="no_nota"></span></div>
+            <div class="field"><label>Nama Supplier :</label> <span id="nama_sup"></span></div>
+            <div class="field"><label>Jatuh Tempo :</label> <span id="jt_tempo"></span></div>
+            <div class="field"><label>Alamat :</label> <span id="alamat"></span></div>
         </div>
 
         <table>
             <thead>
                 <tr>
-                    <th style="min-width: 30px;">Kode brg</th>
-                    <th style="min-width: 200px;">Nama brg</th>
-                    <th style="min-width: 10px;">QTY</th>
-                    <th style="min-width: 10px;">Disc %</th>
-                    <th style="min-width: 10px;">Disrp</th>
-                    <th style="min-width: 20px;">Harga</th>
-                    <th style="min-width: 20px;">Jumlah</th>
+                    <th style="width: 50px;">Kode brg</th>
+                    <th style="width: 150px;">Nama brg</th>
+                    <th style="width: 70px;">QTY</th>
+                    <th style="width: 70px;">Disc %</th>
+                    <th style="width: 10px;">Disrp</th>
+                    <th style="width: 10px;">Harga</th>
+                    <th style="width: 10px;">Jumlah</th>
                 </tr>
             </thead>
             <tbody id="table-detail">
@@ -179,6 +200,11 @@
                 <label><strong>Total Jumlah :</strong></label>
                 <span id="totaljmlh" style="font-weight: bold;"></span>
             </div>
+        </div>
+
+        <div class="action-buttons">
+            <button onclick="window.location.href='inputpembelian.php'">← Kembali</button>
+            <button onclick="window.print()">🖨️ Print</button>
         </div>
 
         <script>
