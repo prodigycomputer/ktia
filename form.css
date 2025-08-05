@@ -423,6 +423,32 @@
         margin-bottom: 6px;
     }
 
+    #form-penjualan-atas {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    #form-penjualan-tengah {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    #form-penjualan-bawah {
+        display: flex;
+        justify-content: flex-end; /* dorong konten ke kanan */
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
     .form-pb-pos {
         display: flex;
         flex-direction: column; /* susun vertikal */

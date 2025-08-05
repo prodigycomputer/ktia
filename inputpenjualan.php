@@ -13,7 +13,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Pembelian</title>
+    <title>Input Penjualan</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
 </head>
@@ -23,7 +23,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
     <?php include 'navbar.php'; ?>
 
     <main>
-        <h2>Input Pembelian</h2>
+        <h2>Input Penjualan</h2>
         <div class="action-pb-bar" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
             <div style="display: flex; gap: 8px;">
                 <button id="btnSave" type="submit">Simpan</button>
@@ -32,11 +32,11 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 <button id="btnPrint" type="button">Print</button>
   
             </div>
-            <button id="btnKembali" type="button" onclick="window.location.href='pembelian.php'">List Nota</button>
+            <button id="btnKembali" type="button" onclick="window.location.href='penjualan.php'">List Nota</button>
         </div>
 
-        <form id="formPembelian" action="prosespembelian.php" method="POST">
-            <div id="form-pembelian-atas">
+        <form id="formPembelian" action="prosespenjualan.php" method="POST">
+            <div id="form-penjualan-atas">
                 <div class="form-pb-row">
                     <div class="form-pb-col">
                         <label for="tanggal">Tanggal</label>
@@ -75,7 +75,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 </div>
             </div>
             <!-- FORM BAWAH: RINCIAN -->
-            <div class="form-pembelian-tengah">
+            <div class="form-penjualan-tengah">
                 <div style="display: flex; justify-content: flex-end;">
                     <button id="btnTambahItem" type="button">+</button>
                 </div>
@@ -85,7 +85,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
                             <tr>
                                 <th style="min-width: 100px;">Kode brg</th>
                                 <th style="min-width: 200px;">Nama brg</th>
-                                <th style="min-width: 100px;">Kode Gudang</th>
                                 <th style="min-width: 50px;">Jlh 1</th>
                                 <th style="min-width: 80px;">Satuan 1</th>
                                 <th style="min-width: 50px;">Jlh 2</th>
@@ -102,13 +101,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- isi dari popupitempembelian-->
+                            <!-- isi dari popupitempenjualan-->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div id="form-pembelian-bawah">
+            <div id="form-penjualan-bawah">
                 <div class="form-pb-pos">
                     <div class="form-pb-col">
                         <label for="subtotal">Subtotal</label>
@@ -183,7 +182,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     <input type="hidden" name="popup_isi2" id="popup_isi2" value=""> 
                     <div class="popup-pb-row">
                         <label for="popup_kodegd">Kode Gudang</label>
-                        <select id="popup_kodegd" name="popup_kodegd" required>
+                        <select id="popup_kodegd" name="popup_gd" required>
                             <option value="">Pilih Gudang</option>
                             <!-- Akan diisi via JavaScript -->
                         </select>
@@ -387,7 +386,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
         const popupKodeInput = document.getElementById('popup_kodebrg');
         const popupNamaInput = document.getElementById('popup_namabrg');
-        const popupKodeGd = document.getElementById('popup_kodegd');
         const popupSatuan1 = document.getElementById('popup_satuan1');
         const popupSatuan2 = document.getElementById('popup_satuan2');
         const popupSatuan3 = document.getElementById('popup_satuan3');
@@ -407,7 +405,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
         const isi2Edit       = document.getElementById('edit_popup_isi2');
         const kodebrgEdit    = document.getElementById('edit_popup_kodebrg');
         const namabrgEdit    = document.getElementById('edit_popup_namabrg');
-        const kodegdEdit    = document.getElementById('edit_popup_kodegd');
         const jlh1Edit       = document.getElementById('edit_popup_jlh1');
         const satuan1Edit    = document.getElementById('edit_popup_satuan1');
         const jlh2Edit       = document.getElementById('edit_popup_jlh2');
@@ -629,7 +626,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     <td style="display: none;">${item.isi2}</td>
                     <td>${item.kodebrg}</td>
                     <td>${item.namabrg}</td>
-                    <td>${item.kodegd}</td>
                     <td>${item.jlh1}</td>
                     <td>${item.satuan1}</td>
                     <td>${item.jlh2 || ''}</td>
@@ -659,7 +655,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 isi2: parseInt(document.getElementById('popup_isi2').value),
                 kodebrg: document.getElementById('popup_kodebrg').value.trim().toUpperCase(),
                 namabrg: document.getElementById('popup_namabrg').value.trim().toUpperCase(),
-                kodegd: document.getElementById('popup_kodegd').value.trim().toUpperCase(),
                 jlh1: parseInt(document.getElementById('popup_jlh1').value),
                 satuan1: document.getElementById('popup_satuan1').value.trim(),
                 jlh2: parseInt(document.getElementById('popup_jlh2').value) || null,
@@ -696,7 +691,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 isi2: parseInt(document.getElementById('edit_popup_isi2').value),
                 kodebrg: document.getElementById('edit_popup_kodebrg').value.trim().toUpperCase(),
                 namabrg: document.getElementById('edit_popup_namabrg').value.trim().toUpperCase(),
-                kodegd: document.getElementById('edit_popup_kodegd').value.trim().toUpperCase(),
                 jlh1: parseInt(document.getElementById('edit_popup_jlh1').value),
                 satuan1: document.getElementById('edit_popup_satuan1').value.trim(),
                 jlh2: parseInt(document.getElementById('edit_popup_jlh2').value) || null,
@@ -746,7 +740,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
             isi2Edit.value     = item.isi2;
             kodebrgEdit.value  = item.kodebrg;
             namabrgEdit.value  = item.namabrg;
-            kodegdEdit.value  = item.kodegd;
             jlh1Edit.value     = item.jlh1;
             satuan1Edit.value  = item.satuan1;
             jlh2Edit.value     = item.jlh2 || '';

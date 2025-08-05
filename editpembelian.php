@@ -87,6 +87,7 @@
                                 <tr>
                                     <th style="min-width: 100px;">Kode brg</th>
                                     <th style="min-width: 200px;">Nama brg</th>
+                                    <th style="min-width: 100px;">Kode Gudang</th>
                                     <th style="min-width: 50px;">Jlh 1</th>
                                     <th style="min-width: 80px;">Satuan 1</th>
                                     <th style="min-width: 50px;">Jlh 2</th>
@@ -183,6 +184,13 @@
                         <input type="hidden" name="popup_isi1" id="popup_isi1" value=""> 
                         <input type="hidden" name="popup_isi2" id="popup_isi2" value=""> 
                         <div class="popup-pb-row">
+                            <label for="popup_kodegd">Kode Gudang</label>
+                            <select id="popup_kodegd" name="popup_kodegd" required>
+                                <option value="">Pilih Gudang</option>
+                                <!-- Akan diisi via JavaScript -->
+                            </select>
+                        </div>
+                        <div class="popup-pb-row">
                             <label for="popup_kodebrg">Kode Barang</label>
                             <input type="text" id="popup_kodebrg" data-table="zstok" data-field="kodebrg" data-check="eksistensi" data-reset="popup_namabrg" onblur="cekValidasi(this)" name="popup_kodebrg" style="text-transform: uppercase;">
                         </div>
@@ -256,6 +264,13 @@
                     <form id="formDetailPembelianEdit">
                         <input type="hidden" name="edit_popup_isi1" id="edit_popup_isi1" value=""> 
                         <input type="hidden" name="edit_popup_isi2" id="edit_popup_isi2" value=""> 
+                        <div class="popup-pb-row">
+                            <label for="edit_popup_kodegd">Kode Gudang</label>
+                            <select id="edit_popup_kodegd" name="edit_popup_kodegd" required>
+                                <option value="">Pilih Gudang</option>
+                                <!-- Akan diisi via JavaScript -->
+                            </select>
+                        </div>
                         <div class="popup-pb-row">
                             <label for="popup_kodebrg">Kode Barang</label>
                             <input type="text" id="edit_popup_kodebrg" data-table="zstok" data-field="kodebrg" data-check="eksistensi" data-reset="edit_popup_namabrg" onblur="cekValidasi(this)" name="edit_popup_kodebrg" style="text-transform: uppercase;">
@@ -378,6 +393,7 @@
                     if (data.status === 'success') {
                         // Isi form header
                         document.getElementById('tanggal').value = data.header.tanggal;
+                        document.getElementById('kode_gd').value = data.header.kode_gd;
                         document.getElementById('no_nota').value = data.header.no_nota;
                         document.getElementById('no_nota_lama').value = data.header.no_nota;
                         document.getElementById('kode_sup').value = data.header.kode_sup;
@@ -402,6 +418,7 @@
 
             const popupKodeInput = document.getElementById('popup_kodebrg');
             const popupNamaInput = document.getElementById('popup_namabrg');
+            const popupKodeGd = document.getElementById('popup_kodegd');
             const popupSatuan1 = document.getElementById('popup_satuan1');
             const popupSatuan2 = document.getElementById('popup_satuan2');
             const popupSatuan3 = document.getElementById('popup_satuan3');
@@ -421,6 +438,7 @@
             const isi2Edit       = document.getElementById('edit_popup_isi2');
             const kodebrgEdit    = document.getElementById('edit_popup_kodebrg');
             const namabrgEdit    = document.getElementById('edit_popup_namabrg');
+            const kodegdEdit    = document.getElementById('edit_popup_kodegd');
             const jlh1Edit       = document.getElementById('edit_popup_jlh1');
             const satuan1Edit    = document.getElementById('edit_popup_satuan1');
             const jlh2Edit       = document.getElementById('edit_popup_jlh2');
@@ -641,6 +659,7 @@
                         <td style="display: none;">${item.isi2}</td>
                         <td>${item.kodebrg}</td>
                         <td>${item.namabrg}</td>
+                        <td>${item.kodegd}</td>
                         <td>${item.jlh1}</td>
                         <td>${item.satuan1}</td>
                         <td>${item.jlh2 || ''}</td>
@@ -670,6 +689,7 @@
                     isi2: parseInt(document.getElementById('popup_isi2').value),
                     kodebrg: document.getElementById('popup_kodebrg').value.trim().toUpperCase(),
                     namabrg: document.getElementById('popup_namabrg').value.trim().toUpperCase(),
+                    kodegd: document.getElementById('popup_kodegd').value.trim().toUpperCase(),
                     jlh1: parseInt(document.getElementById('popup_jlh1').value),
                     satuan1: document.getElementById('popup_satuan1').value.trim(),
                     jlh2: parseInt(document.getElementById('popup_jlh2').value) || null,
@@ -705,6 +725,7 @@
                     isi2: parseInt(document.getElementById('edit_popup_isi2').value),
                     kodebrg: document.getElementById('edit_popup_kodebrg').value.trim().toUpperCase(),
                     namabrg: document.getElementById('edit_popup_namabrg').value.trim().toUpperCase(),
+                    kodegd: document.getElementById('edit_popup_kodegd').value.trim().toUpperCase(),
                     jlh1: parseInt(document.getElementById('edit_popup_jlh1').value),
                     satuan1: document.getElementById('edit_popup_satuan1').value.trim(),
                     jlh2: parseInt(document.getElementById('edit_popup_jlh2').value) || null,
@@ -754,6 +775,7 @@
                 isi2Edit.value     = item.isi2;
                 kodebrgEdit.value  = item.kodebrg;
                 namabrgEdit.value  = item.namabrg;
+                kodegdEdit.value  = item.kodegd;
                 jlh1Edit.value     = item.jlh1;
                 satuan1Edit.value  = item.satuan1;
                 jlh2Edit.value     = item.jlh2 || '';
