@@ -30,6 +30,7 @@
                     <button id="btnEdit" type="button" onclick="initializeEdit()">Edit</button>
                     <button id="btnHapus" type="button" >Hapus</button>    
                     <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
+                    <button id="btnPrint" type="button">Print</button>
                 </div>
                 <button id="btnKembali" type="button" onclick="window.location.href='pembelian.php'">Kembali</button>
             </div>
@@ -973,6 +974,7 @@
                 document.getElementById('btnCancel').disabled = true;
                 document.getElementById('btnHapus').disabled = false;
                 document.getElementById('btnSave').disabled = true;
+                document.getElementById('btnPrint').disabled = false;
 
                 document.getElementById('thAksi').style.display = 'none';
                 const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
@@ -1009,6 +1011,7 @@
                 document.getElementById('btnHapus').disabled = true;
                 document.getElementById('btnSave').disabled = false;
                 document.getElementById('btnTambahItem').disabled = false;
+                document.getElementById('btnPrint').disabled = true;
 
                 document.getElementById('tanggal').disabled = false;
                 document.getElementById('no_nota').disabled = false;
@@ -1150,6 +1153,19 @@
                 .catch(err => {
                     showToast('Error: ' + err, '#dc3545');
                 });
+            });
+
+            document.getElementById('btnPrint').addEventListener('click', () => {
+                const noNota = document.getElementById('no_nota').value;
+
+                if (!noNota) {
+                    alert("Nomor nota tidak boleh kosong!");
+                    return;
+                }
+
+                // Buka halaman nota dalam tab baru
+                const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}`;
+                window.open(url, '_blank');
             });
 
             function showToast(pesan, warna = '#28a745') {
