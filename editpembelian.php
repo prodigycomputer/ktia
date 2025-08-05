@@ -393,7 +393,6 @@
                     if (data.status === 'success') {
                         // Isi form header
                         document.getElementById('tanggal').value = data.header.tanggal;
-                        document.getElementById('kode_gd').value = data.header.kode_gd;
                         document.getElementById('no_nota').value = data.header.no_nota;
                         document.getElementById('no_nota_lama').value = data.header.no_nota;
                         document.getElementById('kode_sup').value = data.header.kode_sup;
