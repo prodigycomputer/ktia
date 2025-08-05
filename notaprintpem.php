@@ -31,9 +31,9 @@
   
         .form-header {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 kolom */
-            gap: 6px 20px;
-            margin-bottom: 20px;
+            grid-template-columns: 1fr 1.6fr; /* 2 kolom */
+            gap: 3px 0px;
+            margin-bottom: 3px;
             font-size: 12px;
         }
 
@@ -49,11 +49,10 @@
 
         .form-header span {
             flex: 1;
-        border: 1px #ccc;
-        padding: 2px 6px;
-        font-family: monospace;
-        background-color: #f9f9f9;
-    }
+            border: 1px #ccc;
+            padding: 2px 6px;
+            font-family: monospace;
+        }
 
         .form-footer {
             display: flex;
@@ -82,25 +81,24 @@
             border: 1px #ccc;
             padding: 2px 6px;
             font-family: monospace;
-            background-color: #f9f9f9;
         }
 
         table {
             border-collapse: collapse;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 3px;
         }
 
         th {
             border: 1px solid #aaa;
-            padding: 6px;
+            padding: 3px;
             text-align: center;
             font-size: 12px;
         }
 
         td {
             border: 1px solid #aaa;
-            padding: 6px;
+            padding: 3px;
             text-align: left;
             font-size: 12px;
         }
@@ -164,7 +162,6 @@
 <body>
     <div class="container-a5">
         <?php include 'header.php'; ?>
-        <h2>Nota Pembelian</h2>
 
         <div class="form-header">
             <div class="field"><label>Tanggal :</label> <span id="tanggal"></span></div>
