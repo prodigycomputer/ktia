@@ -181,6 +181,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     <input type="hidden" name="popup_isi1" id="popup_isi1" value=""> 
                     <input type="hidden" name="popup_isi2" id="popup_isi2" value=""> 
                     <div class="popup-pb-row">
+                        <label for="popup_kodegd">Kode Gudang</label>
+                        <select id="popup_kodegd" name="popup_gd" required>
+                            <option value="">Pilih Gudang</option>
+                            <!-- Akan diisi via JavaScript -->
+                        </select>
+                    </div>
+                    <div class="popup-pb-row">
                         <label for="popup_kodebrg">Kode Barang</label>
                         <input type="text" id="popup_kodebrg" data-table="zstok" data-field="kodebrg" data-check="eksistensi" data-reset="popup_namabrg" onblur="cekValidasi(this)" name="popup_kodebrg" style="text-transform: uppercase;">
                     </div>
@@ -253,7 +260,14 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 <h3>Edit Data Pembelian</h3>
                 <form id="formDetailPembelianEdit">
                     <input type="hidden" name="edit_popup_isi1" id="edit_popup_isi1" value=""> 
-                    <input type="hidden" name="edit_popup_isi2" id="edit_popup_isi2" value=""> 
+                    <input type="hidden" name="edit_popup_isi2" id="edit_popup_isi2" value="">
+                    <div class="popup-pb-row">
+                        <label for="edit_popup_kodegd">Kode Gudang</label>
+                        <select id="edit_popup_kodegd" name="edit_popup_kodegd" required>
+                            <option value="">Pilih Gudang</option>
+                            <!-- Akan diisi via JavaScript -->
+                        </select>
+                    </div>
                     <div class="popup-pb-row">
                         <label for="popup_kodebrg">Kode Barang</label>
                         <input type="text" id="edit_popup_kodebrg" data-table="zstok" data-field="kodebrg" data-check="eksistensi" data-reset="edit_popup_namabrg" onblur="cekValidasi(this)" name="edit_popup_kodebrg" style="text-transform: uppercase;">
@@ -1016,6 +1030,27 @@ while ($row = $supplierQuery->fetch_assoc()) {
             jlh2Edit.disabled = true;
             jlh3Edit.disabled = true;
         }
+
+        function isiDropdownGudang() {
+            fetch('getgudang.php')
+                .then(response => response.json())
+                .then(data => {
+                    const dropdownTambah = document.getElementById('popup_kodegd');
+                    const dropdownEdit = document.getElementById('edit_popup_kodegd');
+
+                    data.forEach(gd => {
+                        const teksTampil = `${gd.kodegd} - ${gd.namagd}`;
+                        const optTambah = new Option(teksTampil, gd.kodegd);
+                        const optEdit = new Option(teksTampil, gd.kodegd);
+
+                        dropdownTambah.add(optTambah);
+                        dropdownEdit.add(optEdit);
+                    });
+                })
+                .catch(error => console.error('Gagal ambil data gudang:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', isiDropdownGudang);
 
         window.addEventListener('DOMContentLoaded', () => {
             const saved = JSON.parse(localStorage.getItem('formPembelianState') || '{}');
