@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2025 at 12:10 PM
+-- Generation Time: Aug 06, 2025 at 12:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,25 +34,33 @@ CREATE TABLE `zbeli` (
   `kodegd` char(10) NOT NULL,
   `nilai` double DEFAULT 0,
   `lunas` int(11) DEFAULT 0,
-  `tgltempo` date DEFAULT NULL
+  `tgltempo` date DEFAULT NULL,
+  `ppn` double(10,2) DEFAULT 0.00,
+  `hppn` double(10,2) DEFAULT 0.00,
+  `disc1` double(10,2) DEFAULT 0.00,
+  `hdisc1` double(10,2) DEFAULT 0.00,
+  `disc2` double(10,2) DEFAULT 0.00,
+  `hdisc2` double(10,2) DEFAULT 0.00,
+  `disc3` double(10,2) DEFAULT 0.00,
+  `hdisc3` double(10,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `zbeli`
 --
 
-INSERT INTO `zbeli` (`nonota`, `tgl`, `kodesup`, `kodegd`, `nilai`, `lunas`, `tgltempo`) VALUES
-('B001/25', '2025-01-01', 'S001', '', 1000000, 0, NULL),
-('TS3001/25', '2025-04-01', 'S002', '', 2044130000, 0, NULL),
-('BS001/25', '2025-03-01', 'S001', '', 4200000, 0, NULL),
-('AB001/25', '2025-02-01', 'S001', '', 300000, 0, NULL),
-('TCD3001/25', '2025-05-01', 'S002', '', 2030000, 0, NULL),
-('TQR3401/25', '2025-06-05', 'S002', '', 20450000, 0, NULL),
-('X1', '2025-08-01', 'S002', '', 1, 0, '0000-00-00'),
-('X3', '2025-08-01', 'S002', '', 1, 0, '2025-08-02'),
-('AC001', '2025-08-05', 'S002', '', 432900, 0, '2025-08-05'),
-('ADAFE', '2025-08-05', 'S001', '', 49654, 0, '2025-08-05'),
-('NOTA5825', '2025-08-05', 'S002', 'G01', 1617640, 0, '2025-08-05');
+INSERT INTO `zbeli` (`nonota`, `tgl`, `kodesup`, `kodegd`, `nilai`, `lunas`, `tgltempo`, `ppn`, `hppn`, `disc1`, `hdisc1`, `disc2`, `hdisc2`, `disc3`, `hdisc3`) VALUES
+('B001/25', '2025-01-01', 'S001', '', 1000000, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('TS3001/25', '2025-04-01', 'S002', '', 2044130000, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('BS001/25', '2025-03-01', 'S001', '', 4200000, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('AB001/25', '2025-02-01', 'S001', '', 300000, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('TCD3001/25', '2025-05-01', 'S002', '', 2030000, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('TQR3401/25', '2025-06-05', 'S002', '', 20450000, 0, NULL, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('X1', '2025-08-01', 'S002', '', 1, 0, '0000-00-00', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('X3', '2025-08-01', 'S002', '', 1, 0, '2025-08-02', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('AC001', '2025-08-05', 'S002', '', 432900, 0, '2025-08-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('ADAFE', '2025-08-05', 'S001', '', 49654, 0, '2025-08-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('NOTA5825', '2025-08-05', 'S002', 'G01', 1617640, 0, '2025-08-05', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -126,15 +134,16 @@ INSERT INTO `zbelim` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `ha
 --
 
 CREATE TABLE `zconfig` (
-  `jmlharga` int(11) DEFAULT 12
+  `jmlharga` int(11) DEFAULT 12,
+  `qppn` double(10,2) DEFAULT 11.00
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `zconfig`
 --
 
-INSERT INTO `zconfig` (`jmlharga`) VALUES
-(6);
+INSERT INTO `zconfig` (`jmlharga`, `qppn`) VALUES
+(6, 11.00);
 
 -- --------------------------------------------------------
 
