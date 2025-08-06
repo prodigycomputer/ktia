@@ -7,6 +7,9 @@ $supplierQuery = $conn->query("SELECT kodesup, namasup, alamat FROM zsupplier OR
 while ($row = $supplierQuery->fetch_assoc()) {
     $suppliers[] = $row;
 }*/
+$q = mysqli_query($conn, "SELECT qppn FROM zconfig LIMIT 1");
+$data = mysqli_fetch_assoc($q);
+$default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,20 +115,41 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 <div class="form-pb-pos">
                     <div class="form-pb-col">
                         <label for="subtotal">Subtotal</label>
-                        <input type="number" id="subtotal" name="subtotal" class="short-input">
+                        <input type="number" id="subtotal" name="subtotal" style="text-align: right;" class="medshort-input">
                     </div>
+                    
+                    <div class="form-pb-col">
+                        <label for="diskon1">Diskon 1</label>
+                        <input type="number" id="diskon1" name="diskon1" style="text-align: right;" class="veryshort-input">
+                        <input type="number" id="hdiskon1" name="hdiskon1" style="text-align: right;" class="lesshort-input">
+                    </div>
+
+                    <div class="form-pb-col">
+                        <label for="diskon2">Diskon 2</label>
+                        <input type="number" id="diskon2" name="diskon2" style="text-align: right;" class="veryshort-input">
+                        <input type="number" id="hdiskon2" name="hdiskon2" style="text-align: right;" class="lesshort-input">
+                    </div>
+
+                    <div class="form-pb-col">
+                        <label for="diskon3">Diskon 3</label>
+                        <input type="number" id="diskon3" name="diskon3" style="text-align: right;" class="veryshort-input">
+                        <input type="number" id="hdiskon3" name="hdiskon3" style="text-align: right;" class="lesshort-input">
+                    </div>
+
                     <div class="form-pb-col">
                         <label for="lain_lain">Lain-Lain</label>
-                        <input type="number" id="lain_lain" name="lain_lain" class="short-input">
+                        <input type="number" id="lain_lain" name="lain_lain" style="text-align: right;" value="0" class="medshort-input">
                     </div>
+
                     <div class="form-pb-col">
                         <label for="ppn">PPN</label>
-                        <input type="number" id="ppn" name="ppn" class="short-input">
+                        <input type="number" id="ppn" name="ppn" style="text-align: right;" value="<?= $default_ppn ?>" class="veryshort-input">
+                        <input type="number" id="hppn" name="hppn" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pb-col">
                         <label for="totaljmlh">Total Jumlah</label>
-                        <input type="number" id="totaljmlh" name="totaljmlh" class="short-input">
+                        <input type="number" id="totaljmlh" name="totaljmlh" style="text-align: right;" class="medshort-input">
                     </div>
                 </div>
             </div>
@@ -181,6 +205,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 <form id="formDetailPembelian">
                     <input type="hidden" name="popup_isi1" id="popup_isi1" value=""> 
                     <input type="hidden" name="popup_isi2" id="popup_isi2" value=""> 
+                    <input type="hidden" name="popup_hdiskon1" id="popup_hdiskon1" value=""> 
+                    <input type="hidden" name="popup_hdiskon2" id="popup_hdiskon2" value="">
+                    <input type="hidden" name="popup_hdiskon3" id="popup_hdiskon3" value=""> 
                     <div class="popup-pb-row">
                         <label for="popup_kodegd">Kode Gudang</label>
                         <select id="popup_kodegd" name="popup_kodegd" required>
@@ -199,7 +226,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_jlh1">Jumlah 1</label>
-                        <input type="number" id="popup_jlh1" name="popup_jlh1" min="0">
+                        <input type="number" id="popup_jlh1" name="popup_jlh1" style="text-align: right;" min="0">
                     </div>
                     <div class="popup-pb-row">
                         <label for="popup_satuan1">Satuan 1</label>
@@ -208,7 +235,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_jlh2">Jumlah 2</label>
-                        <input type="number" id="popup_jlh2" name="popup_jlh2" min="0" disabled>
+                        <input type="number" id="popup_jlh2" name="popup_jlh2" style="text-align: right;" min="0" disabled>
                     </div>
                     <div class="popup-pb-row">
                         <label for="popup_satuan2">Satuan 2</label>
@@ -217,8 +244,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_jlh3">Jumlah 3</label>
-                        <input type="number" id="popup_jlh3" name="popup_jlh3" min="0" disabled>
+                        <input type="number" id="popup_jlh3" name="popup_jlh3" style="text-align: right;" min="0" disabled>
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_satuan3">Satuan 3</label>
                         <input type="text" id="popup_satuan3" name="popup_satuan3" disabled>
@@ -226,27 +254,32 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_harga">Harga</label>
-                        <input type="number" id="popup_harga" name="popup_harga" value="0">
+                        <input type="number" id="popup_harga" name="popup_harga" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_disca">Disca</label>
-                        <input type="number" id="popup_disca" name="popup_disca" value="0">
+                        <input type="number" id="popup_disca" name="popup_disca" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_discb">Discb</label>
-                        <input type="number" id="popup_discb" name="popup_discb" value="0">
+                        <input type="number" id="popup_discb" name="popup_discb" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_discc">Discc</label>
-                        <input type="number" id="popup_discc" name="popup_discc" value="0">
+                        <input type="number" id="popup_discc" name="popup_discc" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_discrp">Disc Rp</label>
-                        <input type="number" id="popup_discrp" name="popup_discrp" value="0">
+                        <input type="number" id="popup_discrp" name="popup_discrp" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_jumlah">Jumlah</label>
-                        <input type="number" id="popup_jumlah" name="popup_jumlah"required>
+                        <input type="number" id="popup_jumlah" name="popup_jumlah" style="text-align: right;" required>
                     </div>
 
                     <div class="popup-pb-row" style="justify-content: flex-end; gap: 10px;">
@@ -262,6 +295,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 <form id="formDetailPembelianEdit">
                     <input type="hidden" name="edit_popup_isi1" id="edit_popup_isi1" value=""> 
                     <input type="hidden" name="edit_popup_isi2" id="edit_popup_isi2" value="">
+                    <input type="hidden" name="edit_popup_hdiskon1" id="edit_popup_hdiskon1" value=""> 
+                    <input type="hidden" name="edit_popup_hdiskon2" id="edit_popup_hdiskon2" value="">
+                    <input type="hidden" name="edit_popup_hdiskon3" id="edit_popup_hdiskon3" value=""> 
                     <div class="popup-pb-row">
                         <label for="edit_popup_kodegd">Kode Gudang</label>
                         <select id="edit_popup_kodegd" name="edit_popup_kodegd" required>
@@ -273,6 +309,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                         <label for="popup_kodebrg">Kode Barang</label>
                         <input type="text" id="edit_popup_kodebrg" data-table="zstok" data-field="kodebrg" data-check="eksistensi" data-reset="edit_popup_namabrg" onblur="cekValidasi(this)" name="edit_popup_kodebrg" style="text-transform: uppercase;">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_namabrg">Nama Barang</label>
                         <input type="text" id="edit_popup_namabrg" data-table="zstok" data-field="namabrg" data-check="eksistensi" data-reset="edit_popup_kodebrg" onblur="cekValidasi(this)" name="edit_popup_namabrg" style="text-transform: uppercase;">
@@ -280,8 +317,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_jlh1">Jumlah 1</label>
-                        <input type="number" id="edit_popup_jlh1" name="edit_popup_jlh1" min="0">
+                        <input type="number" id="edit_popup_jlh1" name="edit_popup_jlh1" style="text-align: right;" min="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_satuan1">Satuan 1</label>
                         <input type="text" id="edit_popup_satuan1" name="edit_popup_satuan1" disabled>
@@ -289,8 +327,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_jlh2">Jumlah 2</label>
-                        <input type="number" id="edit_popup_jlh2" name="edit_popup_jlh2" min="0" disabled>
+                        <input type="number" id="edit_popup_jlh2" name="edit_popup_jlh2" style="text-align: right;" min="0" disabled>
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_satuan2">Satuan 2</label>
                         <input type="text" id="edit_popup_satuan2" name="edit_popup_satuan2" disabled>
@@ -298,8 +337,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_jlh3">Jumlah 3</label>
-                        <input type="number" id="edit_popup_jlh3" name="edit_popup_jlh3" min="0" disabled>
+                        <input type="number" id="edit_popup_jlh3" name="edit_popup_jlh3" style="text-align: right;" min="0" disabled>
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_satuan3">Satuan 3</label>
                         <input type="text" id="edit_popup_satuan3" name="edit_popup_satuan3" disabled>
@@ -307,27 +347,32 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_harga">Harga</label>
-                        <input type="number" id="edit_popup_harga" name="edit_popup_harga" value="0" disabled>
+                        <input type="number" id="edit_popup_harga" name="edit_popup_harga" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_disca">Disca</label>
-                        <input type="number" id="edit_popup_disca" name="edit_popup_disca" value="0">
+                        <input type="number" id="edit_popup_disca" name="edit_popup_disca" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_discb">Discb</label>
-                        <input type="number" id="edit_popup_discb" name="edit_popup_discb" value="0">
+                        <input type="number" id="edit_popup_discb" name="edit_popup_discb" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_discc">Discc</label>
-                        <input type="number" id="edit_popup_discc" name="edit_popup_discc" value="0">
+                        <input type="number" id="edit_popup_discc" name="edit_popup_discc" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_discrp">Disc Rp</label>
-                        <input type="number" id="edit_popup_discrp" name="edit_popup_discrp" value="0">
+                        <input type="number" id="edit_popup_discrp" name="edit_popup_discrp" style="text-align: right;" value="0">
                     </div>
+
                     <div class="popup-pb-row">
                         <label for="popup_jumlah">Jumlah</label>
-                        <input type="number" id="edit_popup_jumlah" name="edit_popup_jumlah"required>
+                        <input type="number" id="edit_popup_jumlah" name="edit_popup_jumlah" style="text-align: right;" required>
                     </div>
 
                     <div class="popup-pb-row" style="justify-content: flex-end; gap: 10px;">
@@ -402,6 +447,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
         const popupDiscc = document.getElementById('popup_discc');
         const popupDiscrp = document.getElementById('popup_discrp');
         const popupJumlah = document.getElementById('popup_jumlah');
+        const popupHdiskon1 = document.getElementById('popup_hdiskon1');
+        const popupHdiskon2 = document.getElementById('popup_hdiskon2');
+        const popupHdiskon3= document.getElementById('popup_hdiskon3');
 
         const isi1Edit       = document.getElementById('edit_popup_isi1');
         const isi2Edit       = document.getElementById('edit_popup_isi2');
@@ -420,6 +468,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
         const disccEdit      = document.getElementById('edit_popup_discc');
         const discrpEdit     = document.getElementById('edit_popup_discrp');
         const jumlahEdit     = document.getElementById('edit_popup_jumlah');
+        const hdiskon1Edit = document.getElementById('edit_popup_hdiskon1');
+        const hdiskon2Edit = document.getElementById('edit_popup_hdiskon2');
+        const hdiskon3Edit = document.getElementById('edit_popup_hdiskon3');
         
 
         // Trigger cari saat tekan Enter
@@ -630,18 +681,21 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     <td>${item.kodebrg}</td>
                     <td>${item.namabrg}</td>
                     <td>${item.kodegd}</td>
-                    <td>${item.jlh1}</td>
+                    <td style="text-align: right;">${item.jlh1}</td>
                     <td>${item.satuan1}</td>
-                    <td>${item.jlh2 || ''}</td>
+                    <td style="text-align: right;">${item.jlh2 || ''}</td>
                     <td>${item.satuan2 || ''}</td>
-                    <td>${item.jlh3 || ''}</td>
+                    <td style="text-align: right;">${item.jlh3 || ''}</td>
                     <td>${item.satuan3 || ''}</td>
-                    <td>${item.harga}</td>
-                    <td>${item.disca}</td>
-                    <td>${item.discb}</td>
-                    <td>${item.discc}</td>
-                    <td>${item.discrp}</td>
-                    <td>${item.jumlah}</td>
+                    <td style="text-align: right;">${item.harga}</td>
+                    <td style="text-align: right;">${item.disca}</td>
+                    <td style="text-align: right;">${item.discb}</td>
+                    <td style="text-align: right;">${item.discc}</td>
+                    <td style="display: none; text-align: right;">${item.hdisca}</td>
+                    <td style="display: none; text-align: right;">${item.hdiscb}</td>
+                    <td style="display: none; text-align: right;">${item.hdiscc}</td>
+                    <td style="text-align: right;">${item.discrp}</td>
+                    <td style="text-align: right;">${item.jumlah}</td>
                     <td style="display: none;" id="td-btn-${index}">
                         <button type="button" onclick="editItem(${index})">Edit</button>
                         <button type="button" onclick="hapusItem(${index})">Hapus</button>
@@ -671,6 +725,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 discb: parseFloat(document.getElementById('popup_discb').value),
                 discc: parseFloat(document.getElementById('popup_discc').value),
                 discrp: parseFloat(document.getElementById('popup_discrp').value),
+                hdisca: parseFloat(document.getElementById('popup_hdiskon1').value),
+                hdiscb: parseFloat(document.getElementById('popup_hdiskon2').value),
+                hdiscc: parseFloat(document.getElementById('popup_hdiskon3').value),
                 jumlah: parseFloat(document.getElementById('popup_jumlah').value)
             };
 
@@ -708,6 +765,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 discb: parseFloat(document.getElementById('edit_popup_discb').value),
                 discc: parseFloat(document.getElementById('edit_popup_discc').value),
                 discrp: parseFloat(document.getElementById('edit_popup_discrp').value),
+                hdisca: parseFloat(document.getElementById('edit_popup_hdiskon1').value),
+                hdiscb: parseFloat(document.getElementById('edit_popup_hdiskon2').value),
+                hdiscc: parseFloat(document.getElementById('edit_popup_hdiskon3').value),
                 jumlah: parseFloat(document.getElementById('edit_popup_jumlah').value)
             };
 
@@ -759,6 +819,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
             disccEdit.value    = item.discc;
             discrpEdit.value   = item.discrp;
             jumlahEdit.value   = item.jumlah;
+            hdiskon1Edit.value   = item.hdisca;
+            hdiskon2Edit.value   = item.hdiscb;
+            hdiskon3Edit.value   = item.hdiscc;
 
             if (isi1Edit.value > 1) {
                 jlh2Edit.disabled = false;
@@ -839,11 +902,17 @@ while ($row = $supplierQuery->fetch_assoc()) {
             let afterDisca = smntarajlmh * disca / 100;
             let smntaradis1 = smntarajlmh - afterDisca;
 
+            popupHdiskon1.value = smntaradis1.toFixed(2);
+
             let afterDiscb = smntaradis1 * discb / 100;
             let smntaradis2 = smntaradis1 - afterDiscb;
 
+            popupHdiskon2.value = smntaradis2.toFixed(2);
+
             let afterDiscc = smntaradis2 * discc / 100;
             let smntaradis3 = smntaradis2 - afterDiscc;
+
+            popupHdiskon3.value = smntaradis3.toFixed(2);
 
             let finalJumlah = smntaradis3 - discrp;
 
@@ -882,12 +951,36 @@ while ($row = $supplierQuery->fetch_assoc()) {
             let finalJumlah = smntaradis3 - discrp;
 
             jumlahEdit.value = Math.round(finalJumlah);
+
+            hdiskon1Edit.value = smntaradis1.toFixed(2);
+            hdiskon2Edit.value = smntaradis2.toFixed(2);
+            hdiskon3Edit.value = smntaradis3.toFixed(2);
+
             if (indexEdit !== undefined && dataPembelian[indexEdit]) {
                 dataPembelian[indexEdit].jumlah = Math.round(finalJumlah);
+                dataPembelian[indexEdit].hdisca = Math.round(afterDisca);
+                dataPembelian[indexEdit].hdiscb = Math.round(afterDiscb);
+                dataPembelian[indexEdit].hdiscc = Math.round(afterDiscc);
             }
 
             hitungSubtotalDariArray();
         }
+
+        document.getElementById('diskon1').addEventListener('input', function() {
+            hitungSubtotalDariArray();
+        });
+
+        document.getElementById('diskon2').addEventListener('input', function() {
+            hitungSubtotalDariArray();
+        });
+
+        document.getElementById('diskon3').addEventListener('input', function() {
+            hitungSubtotalDariArray();
+        });
+
+        document.getElementById('ppn').addEventListener('input', function() {
+            hitungSubtotalDariArray();
+        });
 
         document.getElementById('lain_lain').addEventListener('input', function() {
             hitungSubtotalDariArray();
@@ -895,17 +988,34 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
         function hitungSubtotalDariArray() {
             let subtotal = 0;
+            let dc1 = parseFloat(document.getElementById('diskon1').value) || 0;
+            let dc2 = parseFloat(document.getElementById('diskon2').value) || 0;
+            let dc3 = parseFloat(document.getElementById('diskon3').value) || 0;
+            let persenppn = parseFloat(document.getElementById('ppn').value) || 0;
+
+
             dataPembelian.forEach(item => {
                 subtotal += parseFloat(item.jumlah) || 0;
             });
 
-            let ppn = subtotal * 11 / 100;
-            let lainLain = parseFloat(document.getElementById('lain_lain').value) || 0;
-            let totaljmlh = subtotal + ppn + lainLain;
+            let hrgdc1 = subtotal * dc1 / 100;
+            let smntarahrgdc1 = subtotal - hrgdc1;
+            let hrgdc2 = smntarahrgdc1 * dc2 / 100;
+            let smntarahrgdc2 = smntarahrgdc1 - hrgdc2;
+            let hrgdc3 = smntarahrgdc2 * dc3 / 100;
+            let smntarahrgdc3 = smntarahrgdc2 - hrgdc3;
+            let hrppn = smntarahrgdc3 * persenppn / 100;
+            let totalppn = smntarahrgdc3 + hrppn;
 
-            document.getElementById('subtotal').value = Math.round(subtotal);
-            document.getElementById('ppn').value = Math.round(ppn);
-            document.getElementById('totaljmlh').value = Math.round(totaljmlh);
+            let lainLain = parseFloat(document.getElementById('lain_lain').value) || 0;
+            let totaljmlh = totalppn + lainLain;
+
+            document.getElementById('subtotal').value = subtotal.toFixed(2);
+            document.getElementById('hdiskon1').value = hrgdc1.toFixed(2);
+            document.getElementById('hdiskon2').value = hrgdc2.toFixed(2);
+            document.getElementById('hdiskon3').value = hrgdc3.toFixed(2);
+            document.getElementById('hppn').value = hrppn.toFixed(2);
+            document.getElementById('totaljmlh').value = totaljmlh.toFixed(2);
         }
 
         function initializeFormButtons() {
@@ -924,7 +1034,14 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('kode_sup').disabled = true;
             document.getElementById('subtotal').disabled = true;
             document.getElementById('lain_lain').disabled = true;
+            document.getElementById('diskon1').disabled = true;
+            document.getElementById('hdiskon1').disabled = true;
+            document.getElementById('diskon2').disabled = true;
+            document.getElementById('hdiskon2').disabled = true;
+            document.getElementById('diskon3').disabled = true;
+            document.getElementById('hdiskon3').disabled = true;
             document.getElementById('ppn').disabled = true;
+            document.getElementById('hppn').disabled = true;
             document.getElementById('totaljmlh').disabled = true;
             document.getElementById('thAksi').style.display = 'none';
             const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
@@ -955,7 +1072,14 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('kode_sup').disabled = false;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
+            document.getElementById('diskon1').disabled = false;
+            document.getElementById('hdiskon1').disabled = false;
+            document.getElementById('diskon2').disabled = false;
+            document.getElementById('hdiskon2').disabled = false;
+            document.getElementById('diskon3').disabled = false;
+            document.getElementById('hdiskon3').disabled = false;
             document.getElementById('ppn').disabled = false;
+            document.getElementById('hppn').disabled = false;
             document.getElementById('totaljmlh').disabled = false;
 
             const nota = document.getElementById('no_nota').value.trim();
@@ -1099,6 +1223,14 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 tanggal: document.getElementById('tanggal').value,
                 kode_sup: document.getElementById('kode_sup').value,
                 jt_tempo: document.getElementById('jt_tempo').value,
+                prsnppn: parseFloat(document.getElementById('ppn').value) || 0,
+                hrgppn: parseFloat(document.getElementById('hppn').value) || 0,
+                disk1: parseFloat(document.getElementById('diskon1').value) || 0,
+                hdisk1: parseFloat(document.getElementById('hdiskon1').value) || 0,
+                disk2: parseFloat(document.getElementById('diskon2').value) || 0,
+                hdisk2: parseFloat(document.getElementById('hdiskon1').value) || 0,
+                disk3: parseFloat(document.getElementById('diskon3').value) || 0,
+                hdisk3: parseFloat(document.getElementById('hdiskon1').value) || 0,
                 totaljmlh: parseFloat(document.getElementById('totaljmlh').value) || 0,
                 detail: dataPembelian // array yang sudah kamu simpan saat tambah item
             };

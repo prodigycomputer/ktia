@@ -4,13 +4,24 @@
     header('Content-Type: application/json');
     $data = json_decode(file_get_contents("php://input"), true);
 
+    $detail = $data['detail'] ?? [];
+
     $no_nota = strtoupper($data['no_nota'] ?? '');
     $no_nota_lama = strtoupper($data['no_nota_lama'] ?? $no_nota);
     $tanggal = $data['tanggal'] ?? '';
     $kode_sup = strtoupper($data['kode_sup'] ?? '');
+    $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
     $jt_tempo = $data['jt_tempo'] ?? '';
     $totaljmlh = $data['totaljmlh'] ?? 0;
-    $detail = $data['detail'] ?? [];
+    $prsnppn = $data['prsnppn'] ?? 0;
+    $hrgppn = $data['hrgppn'] ?? 0;
+    $disk1 = $data['disk1'] ?? 0;
+    $hdisk1 = $data['hdisk1'] ?? 0;
+    $disk2 = $data['disk2'] ?? 0;
+    $hdisk2 = $data['hdisk2'] ?? 0;
+    $disk3 = $data['disk3'] ?? 0;
+    $hdisk3 = $data['hdisk3'] ?? 0;
+    
 
     if (!$no_nota || !$tanggal || !$kode_sup || !$jt_tempo || empty($detail)) {
         echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
@@ -33,22 +44,23 @@
         // Insert detail baru
         $stmtHeader = $conn->prepare("
             INSERT INTO zbeli 
-            (nonota, tgl, kodesup, nilai, tgltempo)
-            VALUES (?, ?, ?, ?, ?)
+            (nonota, tgl, kodesup, nilai, tgltempo, ppn, hppn, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
 
-        $stmtHeader->bind_param("sssds", $no_nota, $tanggal, $kode_sup, $totaljmlh, $jt_tempo);
+        $stmtHeader->bind_param("sssdsdddddddd", $no_nota, $tanggal, $kode_sup, $totaljmlh, $jt_tempo, $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3);
         $stmtHeader->execute();
         $stmtHeader->close();
 
         $stmt = $conn->prepare("
             INSERT INTO zbelim 
             (nonota, kodebrg, jlh1, jlh2, jlh3, harga, disca, discb, discc, discrp, jumlah, hdisca, hdiscb, hdiscc)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
 
         foreach ($detail as $item) {
             $kodebrg = strtoupper($item['kodebrg'] ?? '-');
+            $kodegd = strtoupper($item['kodegd'] ?? '-');
             $jlh1    = intval($item['jlh1'] ?? 0);
             $jlh2    = intval($item['jlh2'] ?? 0);
             $jlh3    = intval($item['jlh3'] ?? 0);
@@ -58,9 +70,12 @@
             $discc   = floatval($item['discc'] ?? 0);
             $discrp  = floatval($item['discrp'] ?? 0);
             $jumlah  = floatval($item['jumlah'] ?? 0);
+            $hdisca = floatval($item['hdisca'] ?? 0);
+            $hdiscb = floatval($item['hdiscb'] ?? 0);
+            $hdiscc = floatval($item['hdiscc'] ?? 0);
 
             $stmt->bind_param(
-                "ssiiidddddd",
+                "ssiiiddddddddd",
                 $no_nota, // perbaikan: gunakan nonota baru
                 $kodebrg,
                 $jlh1,
@@ -71,7 +86,10 @@
                 $discb,
                 $discc,
                 $discrp,
-                $jumlah
+                $jumlah,
+                $hdisca,
+                $hdiscb,
+                $hdiscc
             );
             $stmt->execute();
         }

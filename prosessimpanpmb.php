@@ -12,6 +12,15 @@ $kode_sup = strtoupper($data['kode_sup'] ?? '');
 $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
 $tgljt = $data['jt_tempo'] ?? '';
 $totaljmlh = $data['totaljmlh'] ?? 0;
+$prsnppn = $data['prsnppn'] ?? 0;
+$hrgppn = $data['hrgppn'] ?? 0;
+$disk1 = $data['disk1'] ?? 0;
+$hdisk1 = $data['hdisk1'] ?? 0;
+$disk2 = $data['disk2'] ?? 0;
+$hdisk2 = $data['hdisk2'] ?? 0;
+$disk3 = $data['disk3'] ?? 0;
+$hdisk3 = $data['hdisk3'] ?? 0;
+
 
 
 if (!$no_nota || !$tanggal || !$kode_sup || !$tgljt || !$kodegd || empty($detail)) {
@@ -30,15 +39,15 @@ $conn->begin_transaction();
 
 try {
     // Simpan ke zbeli (header) 
-    $stmt = $conn->prepare("INSERT INTO zbeli (nonota, tgl, kodesup, kodegd, nilai, tgltempo) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssds", $no_nota, $tanggal, $kode_sup, $kodegd, $totaljmlh, $tgljt);
+    $stmt = $conn->prepare("INSERT INTO zbeli (nonota, tgl, kodesup, kodegd, nilai, tgltempo, ppn, hppn, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssdsdddddddd", $no_nota, $tanggal, $kode_sup, $kodegd, $totaljmlh, $tgljt, $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3);
     $stmt->execute();
     $stmt->close();
 
     // Simpan ke zbelim (detail)
     $stmt = $conn->prepare("
         INSERT INTO zbelim (nonota, kodebrg, kodegd, jlh1, jlh2, jlh3, harga, disca, discb, discc, discrp, jumlah, hdisca, hdiscb, hdiscc)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
 
     foreach ($detail as $item) {
@@ -53,9 +62,12 @@ try {
         $discc   = floatval($item['discc'] ?? 0);
         $discrp  = floatval($item['discrp'] ?? 0);
         $jumlah  = floatval($item['jumlah'] ?? 0);
+        $hdisca = floatval($item['hdisca'] ?? 0);
+        $hdiscb = floatval($item['hdiscb'] ?? 0);
+        $hdiscc = floatval($item['hdiscc'] ?? 0);
 
         $stmt->bind_param(
-            "sssiiidddddd",
+            "sssiiiddddddddd",
             $no_nota,
             $kodebrg,
             $kodegd,
@@ -67,7 +79,10 @@ try {
             $discb,
             $discc,
             $discrp,
-            $jumlah
+            $jumlah,
+            $hdisca,
+            $hdiscb,
+            $hdiscc
         );
         $stmt->execute();
     }

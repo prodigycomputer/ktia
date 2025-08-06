@@ -329,6 +329,7 @@
         font-size: 12px;
         width: 100%;
     }
+    
     .harga-container input.short-input { width: 80px; }
     .harga-container input.medium-input { width: 120px; }
     .harga-container input.long-input { width: 220px; }
@@ -483,6 +484,18 @@
     }
 
     /* Ukuran input variatif */
+    .veryshort-input {
+        width: 50px;
+    }
+
+    .lesshort-input {
+        width: 120px;
+    }
+
+    .medshort-input {
+        width: 180px;
+    }
+
     .short-input {
         width: 130px;
     }

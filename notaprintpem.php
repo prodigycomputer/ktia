@@ -30,27 +30,48 @@
         }
   
         .form-header {
-            display: grid;
-            grid-template-columns: 1fr 1.6fr; /* 2 kolom */
-            gap: 3px 0px;
-            margin-bottom: 3px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 5px;
             font-size: 12px;
         }
 
-        .form-header .field {
+        .form-kiri, .form-kanan {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .form-kiri {
+            width: 30%;
+            margin-right: 10px; /* Jarak ke kanan */
+        }
+
+        .form-kanan {
+            width: 60%;
+            margin-left: 10px; /* Jarak ke kiri */
+        }
+
+
+        .field {
             display: flex;
             align-items: center;
         }
 
-        .form-header label {
-            min-width: 100px;
+        .field label:first-child {
+            width: 100px;
             font-weight: bold;
         }
 
-        .form-header span {
+        .field label:nth-child(2) {
+            margin-right: 4px;
+            width: 10px;
+        }
+
+        .field span {
             flex: 1;
-            border: 1px #ccc;
-            padding: 2px 6px;
+        
             font-family: monospace;
         }
 
@@ -66,7 +87,6 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            min-width: 100px;
         }
 
         .form-footer label {
@@ -76,12 +96,15 @@
 
         .form-footer span {
             flex: none;
-            min-width: 100px;
             text-align: right;
             border: 1px #ccc;
             padding: 2px 6px;
             font-family: monospace;
         }
+
+        .span-kecil { width: 30px; }
+        .span-sedang { width: 70px; }
+        .span-besar  { width: 112px; }
 
         table {
             border-collapse: collapse;
@@ -100,7 +123,7 @@
             border: 1px solid #aaa;
             padding: 3px;
             text-align: left;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .action-buttons {
@@ -164,12 +187,41 @@
         <?php include 'header.php'; ?>
 
         <div class="form-header">
-            <div class="field"><label>Tanggal :</label> <span id="tanggal"></span></div>
-            <div class="field"><label>Kode Supplier :</label> <span id="kode_sup"></span></div>
-            <div class="field"><label>No Nota :</label> <span id="no_nota"></span></div>
-            <div class="field"><label>Nama Supplier :</label> <span id="nama_sup"></span></div>
-            <div class="field"><label>Jatuh Tempo :</label> <span id="jt_tempo"></span></div>
-            <div class="field"><label>Alamat :</label> <span id="alamat"></span></div>
+            <div class="form-kiri">
+                <div class="field">
+                    <label>Tanggal</label>
+                    <label>:</label>
+                    <span id="tanggal"></span>
+                </div>
+                <div class="field">
+                    <label>No Nota</label>
+                    <label>:</label>
+                    <span id="no_nota"></span>
+                </div>
+                <div class="field">
+                    <label>Jatuh Tempo</label>
+                    <label>:</label>
+                    <span id="jt_tempo"></span>
+                </div>
+            </div>
+
+            <div class="form-kanan">
+                <div class="field">
+                    <label>Kode Supplier</label>
+                    <label>:</label>
+                    <span id="kode_sup"></span>
+                </div>
+                <div class="field">
+                    <label>Nama Supplier</label>
+                    <label>:</label>
+                    <span id="nama_sup"></span>
+                </div>
+                <div class="field">
+                    <label>Alamat</label>
+                    <label>:</label>
+                    <span id="alamat"></span>
+                </div>
+            </div>
         </div>
 
         <table>
@@ -190,17 +242,20 @@
         </table>
 
         <div class="form-footer">
-            <div><label>Subtotal :</label> <span id="subtotal"></span></div>
-            <div><label>Lain-Lain :</label> <span id="lain">0</span></div>
-            <div><label>PPN :</label> <span id="ppn"></span></div>
+            <div><label>Subtotal :</label> <span id="subtotal" class="span-besar"></span></div>
+            <div><label>Diskon 1 :</label> <span id="diskon1" class="span-kecil"></span><span id="hdiskon1" class="span-sedang"></span></div>
+            <div><label>Diskon 2 :</label> <span id="diskon2" class="span-kecil"></span><span id="hdiskon2" class="span-sedang"></span></div>
+            <div><label>Diskon 3 :</label> <span id="diskon3" class="span-kecil"></span><span id="hdiskon3" class="span-sedang"></span></div>
+            <div><label>Lain-Lain :</label> <span id="lain" class="span-besar">0</span></div>
+            <div><label>PPN :</label> <span id="ppn" class="span-kecil">></span><span id="hppn" class="span-sedang"></span></div>
             <div style="border-top: 1px solid #000; padding-top: 4px;">
                 <label><strong>Total Jumlah :</strong></label>
-                <span id="totaljmlh" style="font-weight: bold;"></span>
+                <span id="totaljmlh" style="font-weight: bold;" class="span-besar"></span>
             </div>
         </div>
 
         <div class="action-buttons">
-            <button onclick="window.location.href='inputpembelian.php'">← Kembali</button>
+            <button onclick="window.history.back()">← Kembali</button>
             <button onclick="window.print()">🖨️ Print</button>
         </div>
 
@@ -246,12 +301,32 @@
                     });
 
                     const lain = 0; // atau ambil dari data jika dinamis
-                    const ppn = Math.round(subtotal * 0.11);
-                    const total = subtotal + lain + ppn;
+                    const ppn = h.prsnppn;
+                    const hppn = h.hrgppn;
+                    const diskon1 = h.disk1;
+                    const hdiskon1 = h.hdisk1;
+                    const diskon2 = h.disk2;
+                    const hdiskon2 = h.hdisk2;
+                    const diskon3 = h.disk3;
+                    const hdiskon3 = h.hdisk3;
+                    const total = h.totaljmlh;
+
+                    if (parseFloat(ppn) === 0 && parseFloat(hppn) === 0) {
+                        document.getElementById('ppn').parentElement.style.display = 'none';
+                        document.getElementById('hppn').parentElement.style.display = 'none';
+                    }
 
                     document.getElementById('subtotal').textContent = subtotal.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     document.getElementById('ppn').textContent = ppn.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('hppn').textContent = hppn.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('diskon1').textContent = diskon1.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('hdiskon1').textContent = hdiskon1.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('diskon2').textContent = diskon2.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('hdiskon2').textContent = hdiskon2.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('diskon3').textContent = diskon3.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('hdiskon3').textContent = hdiskon3.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     document.getElementById('totaljmlh').textContent = total.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    
 
 
 
