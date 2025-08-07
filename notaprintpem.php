@@ -255,7 +255,7 @@
         </div>
 
         <div class="action-buttons">
-            <button onclick="window.history.back()">← Kembali</button>
+            <button onclick="goBack()">← Kembali</button>
             <button onclick="window.print()">🖨️ Print</button>
         </div>
 
@@ -308,6 +308,7 @@
                     const diskon2 = h.disk2;
                     const hdiskon2 = h.hdisk2;
                     const diskon3 = h.disk3;
+                    
                     const hdiskon3 = h.hdisk3;
                     const total = h.totaljmlh;
 
@@ -317,13 +318,13 @@
                     }
 
                     document.getElementById('subtotal').textContent = subtotal.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('ppn').textContent = ppn.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('ppn').textContent = ppn.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%' ;
                     document.getElementById('hppn').textContent = hppn.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('diskon1').textContent = diskon1.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('diskon1').textContent = diskon1.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
                     document.getElementById('hdiskon1').textContent = hdiskon1.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('diskon2').textContent = diskon2.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('diskon2').textContent = diskon2.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
                     document.getElementById('hdiskon2').textContent = hdiskon2.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('diskon3').textContent = diskon3.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('diskon3').textContent = diskon3.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
                     document.getElementById('hdiskon3').textContent = hdiskon3.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     document.getElementById('totaljmlh').textContent = total.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     
@@ -339,6 +340,15 @@
                     console.error(err);
                     alert("Gagal mengambil data");
                 });
+
+                function goBack() {
+                    const from = new URLSearchParams(window.location.search).get('from');
+                    if (from) {
+                        window.location.href = from;
+                    } else {
+                        window.history.back();
+                    }
+                }
         </script>
     </div>
 

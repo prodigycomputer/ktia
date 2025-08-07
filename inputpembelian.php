@@ -1110,9 +1110,15 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('kode_sup').disabled = false;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
+            document.getElementById('diskon1').disabled = false;
+            document.getElementById('hdiskon1').disabled = false;
+            document.getElementById('diskon2').disabled = false;
+            document.getElementById('hdiskon2').disabled = false;
+            document.getElementById('diskon3').disabled = false;
+            document.getElementById('hdiskon3').disabled = false;
             document.getElementById('ppn').disabled = false;
+            document.getElementById('hppn').disabled = false;
             document.getElementById('totaljmlh').disabled = false;
-
             const nota = document.getElementById('no_nota').value.trim();
             document.getElementById('btnTambahItem').disabled = (nota === '');
             document.getElementById('thAksi').style.display = '';
@@ -1228,9 +1234,9 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 disk1: parseFloat(document.getElementById('diskon1').value) || 0,
                 hdisk1: parseFloat(document.getElementById('hdiskon1').value) || 0,
                 disk2: parseFloat(document.getElementById('diskon2').value) || 0,
-                hdisk2: parseFloat(document.getElementById('hdiskon1').value) || 0,
+                hdisk2: parseFloat(document.getElementById('hdiskon2').value) || 0,
                 disk3: parseFloat(document.getElementById('diskon3').value) || 0,
-                hdisk3: parseFloat(document.getElementById('hdiskon1').value) || 0,
+                hdisk3: parseFloat(document.getElementById('hdiskon3').value) || 0,
                 totaljmlh: parseFloat(document.getElementById('totaljmlh').value) || 0,
                 detail: dataPembelian // array yang sudah kamu simpan saat tambah item
             };
@@ -1265,9 +1271,9 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 return;
             }
 
-            // Buka halaman nota dalam tab baru
-            const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}`;
-            window.open(url, '_blank');
+            // Buka halaman nota di tab yang sama
+            const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}&from=inputpembelian.php`;
+            window.location.href = url;
         });
 
         function showToast(pesan, warna = '#28a745') {

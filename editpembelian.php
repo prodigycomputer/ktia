@@ -1319,9 +1319,9 @@
                     disk1: parseFloat(document.getElementById('diskon1').value) || 0,
                     hdisk1: parseFloat(document.getElementById('hdiskon1').value) || 0,
                     disk2: parseFloat(document.getElementById('diskon2').value) || 0,
-                    hdisk2: parseFloat(document.getElementById('hdiskon1').value) || 0,
+                    hdisk2: parseFloat(document.getElementById('hdiskon2').value) || 0,
                     disk3: parseFloat(document.getElementById('diskon3').value) || 0,
-                    hdisk3: parseFloat(document.getElementById('hdiskon1').value) || 0,
+                    hdisk3: parseFloat(document.getElementById('hdiskon3').value) || 0,
                     totaljmlh: parseFloat(document.getElementById('totaljmlh').value) || 0,
                     detail: dataPembelian // array yang sudah kamu simpan saat tambah item
                 };
@@ -1357,8 +1357,8 @@
                 }
 
                 // Buka halaman nota dalam tab baru
-                const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}`;
-                window.open(url, '_blank');
+                const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}&from=editpembelian.php`;
+                window.location.href = url;
             });
 
             function showToast(pesan, warna = '#28a745') {
