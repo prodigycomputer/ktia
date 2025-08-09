@@ -450,6 +450,39 @@
         margin-bottom: 6px;
     }
 
+    .form-pj-pos {
+        display: flex;
+        flex-direction: column; /* susun vertikal */
+        gap: 4px;
+        padding: 8px;
+        width: fit-content;
+    }
+
+    .form-pj-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-pj-col {
+        flex-basis: 30%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-pj-col label {
+        width: 110px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .form-pj-col input {
+        padding: 5px;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
     .form-pb-pos {
         display: flex;
         flex-direction: column; /* susun vertikal */
@@ -494,6 +527,10 @@
 
     .medshort-input {
         width: 180px;
+    }
+
+    .medlesshort-input {
+        width: 220px;
     }
 
     .short-input {

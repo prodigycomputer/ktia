@@ -3,7 +3,7 @@ session_start();
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
 /*$suppliers = [];
-$supplierQuery = $conn->query("SELECT kodesup, namasup, alamat FROM zsupplier ORDER BY kodesup");
+$supplierQuery = $conn->query("SELECT kodekust, namasls, alamat FROM zsales ORDER BY kodekust");
 while ($row = $supplierQuery->fetch_assoc()) {
     $suppliers[] = $row;
 }*/
@@ -37,40 +37,58 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
         <form id="formPembelian" action="prosespenjualan.php" method="POST">
             <div id="form-penjualan-atas">
-                <div class="form-pb-row">
-                    <div class="form-pb-col">
+                <div class="form-pj-row">
+                    <div class="form-pj-col">
                         <label for="tanggal">Tanggal</label>
                         <input type="date" id="tanggal" name="tanggal" class="short-input" style="text-transform: uppercase;">
                     </div>
-                    <div class="form-pb-col">
-                        <label for="kode_supplier">Kode Supplier</label>
-                        <div style="position: relative; flex: 1;">
-                            <input type="text" id="kode_sup" data-table="zsupplier" data-field="kodesup" data-check="eksistensi" data-reset="nama_sup,alamat" onblur="cekValidasi(this)" name="kode_supplier" class="short-input" style="text-transform: uppercase; width: 100%;">
+                    <div class="form-pj-col">
+                        <label for="kode_kustomer">Kode Kustomer</label>
+                        <div style="position: relative; flex: 1;" class="short-input">
+                            <input type="text" id="kode_kust" data-table="zkustomer" data-field="kodekust" data-check="eksistensi" data-reset="nama_kust,alamat" onblur="cekValidasi(this)" name="kode_kustomer" style="text-transform: uppercase;">
+                        </div>
+                    </div>
+                    <div class="form-pj-col">
+                        <label for="kode_sales">Kode Sales</label>
+                        <div style="position: relative; flex: 1;" class="short-input">
+                            <input type="text" id="kode_sls" data-table="zsales" data-field="kodesls" data-check="eksistensi" data-reset="nama_sls,alamat" onblur="cekValidasi(this)" name="kode_sales" style="text-transform: uppercase;">
                         </div>
                     </div>
                 </div>
 
-                <div class="form-pb-row">
-                    <div class="form-pb-col">
+                <div class="form-pj-row">
+                    <div class="form-pj-col">
                         <label for="no_nota">No Nota</label>
                         <input type="text" id="no_nota" data-table="zbeli" data-field="nonota" data-check="duplikat" onblur="cekValidasi(this)" name="no_nota" class="short-input" style="text-transform: uppercase;">
                     </div>
-                    <div class="form-pb-col" style="position: relative;">
-                        <label for="nama_supplier">Nama Supplier</label>
-                        <div style="position: relative; flex: 1;" class="medium-input">
-                            <input type="text" id="nama_sup" data-table="zsupplier" data-field="namasup" data-check="eksistensi" data-reset="kode_sup,alamat" onblur="cekValidasi(this)" name="nama_supplier" style="text-transform: uppercase; width: 100%;">
+                    <div class="form-pj-col" style="position: relative;">
+                        <label for="nama_kustomer">Nama Kustomer</label>
+                        <div style="position: relative; flex: 1;">
+                            <input type="text" id="nama_kust" data-table="zkustomer" data-field="namakust" data-check="eksistensi" data-reset="kode_kust,alamat" onblur="cekValidasi(this)" name="nama_kustomer" class="medlesshort-input" style="text-transform: uppercase;">
+                        </div>
+                    </div>
+                    <div class="form-pj-col" style="position: relative;">
+                        <label for="nama_sales">Nama Sales</label>
+                        <div style="position: relative; flex: 1;">
+                            <input type="text" id="nama_sls" data-table="zsales" data-field="namasls" data-check="eksistensi" data-reset="kode_sls,alamat" onblur="cekValidasi(this)" name="nama_sales" class="medlesshort-input" style="text-transform: uppercase;">
                         </div>
                     </div>
                 </div>
 
-                <div class="form-pb-row">
-                    <div class="form-pb-col">
+                <div class="form-pj-row">
+                    <div class="form-pj-col">
                         <label for="jt_tempo">Jatuh Tempo</label>
                         <input type="date" id="jt_tempo" name="jt_tempo" class="short-input" style="text-transform: uppercase;">
                     </div>
-                    <div class="form-pb-col">
+                    <div class="form-pj-col">
                         <label for="alamat">Alamat</label>
                         <input type="text" id="alamat" name="alamat" class="long-input" style="text-transform: uppercase;" disabled>
+                    </div>
+                </div>
+                <div class="form-pj-row">
+                    <div class="form-pj-col">
+                        <label for="kodehrg">Kode Harga</label>
+                        <input type="text" id="kodehrg" name="kodehrg" class="short-input" style="text-transform: uppercase;">
                     </div>
                 </div>
             </div>
@@ -108,21 +126,21 @@ while ($row = $supplierQuery->fetch_assoc()) {
             </div>
 
             <div id="form-penjualan-bawah">
-                <div class="form-pb-pos">
-                    <div class="form-pb-col">
+                <div class="form-pj-pos">
+                    <div class="form-pj-col">
                         <label for="subtotal">Subtotal</label>
                         <input type="number" id="subtotal" name="subtotal" class="short-input">
                     </div>
-                    <div class="form-pb-col">
+                    <div class="form-pj-col">
                         <label for="lain_lain">Lain-Lain</label>
                         <input type="number" id="lain_lain" name="lain_lain" class="short-input">
                     </div>
-                    <div class="form-pb-col">
+                    <div class="form-pj-col">
                         <label for="ppn">PPN</label>
                         <input type="number" id="ppn" name="ppn" class="short-input">
                     </div>
 
-                    <div class="form-pb-col">
+                    <div class="form-pj-col">
                         <label for="totaljmlh">Total Jumlah</label>
                         <input type="number" id="totaljmlh" name="totaljmlh" class="short-input">
                     </div>
@@ -153,24 +171,65 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 </div>
             </div>
         </div>
-        <div id="popupCariSupplier" class="popup-pb-cari" style="display: none;">
+        <div id="popupCariKustomer" class="popup-pb-cari" style="display: none;">
             <div class="popup-pb-contentcari">
-                <h3>Pilih Supplier</h3>
+                <h3>Pilih Kustomer</h3>
                 <table class="tabel-hasil" style="min-width: 700px;">
                     <thead>
                         <tr>
                             <th>Kode</th>
                             <th>Nama</th>
                             <th>Alamat</th>
+                            <th>Kode Harga</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="tbodyHasilSupplier">
+                    <tbody id="tbodyHasilKustomer">
                         <!-- hasil dari filter_barang.php -->
                     </tbody>
                 </table>
                 <div style="text-align: right; margin-top: 10px;">
-                    <button type="button" onclick="tutupPopupSupplier()">Tutup</button>
+                    <button type="button" onclick="tutupPopupKustomer()">Tutup</button>
+                </div>
+            </div>
+        </div>
+        <div id="popupCariSales" class="popup-pb-cari" style="display: none;">
+            <div class="popup-pb-contentcari">
+                <h3>Pilih Sales</h3>
+                <table class="tabel-hasil" style="min-width: 700px;">
+                    <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyHasilSales">
+                        <!-- hasil dari filter_barang.php -->
+                    </tbody>
+                </table>
+                <div style="text-align: right; margin-top: 10px;">
+                    <button type="button" onclick="tutupPopupSales()">Tutup</button>
+                </div>
+            </div>
+        </div>
+        <div id="popupPilihHarga" class="popup-pb-cari" style="display:none;">
+            <div class="popup-pb-contentcari">
+                <h3>Pilih Harga</h3>
+                <table class="tabel-hasil" style="min-width: 300px;">
+                    <thead>
+                        <tr>
+                            <th>Tipe Harga</th>
+                            <th>Nominal</th>
+                            <th>Pilih</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyPilihanHarga">
+                        <!-- diisi via JS -->
+                    </tbody>
+                </table>
+                <div style="text-align: right; margin-top: 10px;">
+                    <button type="button" onclick="tutupPopupHarga()">Tutup</button>
                 </div>
             </div>
         </div>
@@ -380,9 +439,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
         let currentstat = null;
         let dataPembelian = [];
         let indexToDelete = null;
-        const kodeInput = document.getElementById('kode_sup');
-        const namaInput = document.getElementById('nama_sup');
+        const kodeInput = document.getElementById('kode_kust');
+        const namaInput = document.getElementById('nama_kust');
         const alamatInput = document.getElementById('alamat');
+        const kodehrgInput = document.getElementById('kodehrg');
+
+        const kodeSlsInput = document.getElementById('kode_sls');
+        const namaSlsInput = document.getElementById('nama_sls');
 
         const popupKodeInput = document.getElementById('popup_kodebrg');
         const popupNamaInput = document.getElementById('popup_namabrg');
@@ -438,19 +501,36 @@ while ($row = $supplierQuery->fetch_assoc()) {
         });
 
         [kodeInput, namaInput].forEach(input => {
-            const tipe = input.id === 'kode_sup' ? 'kode' : 'nama';
+            const tipe = input.id === 'kode_kust' ? 'kode' : 'nama';
 
             input.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     const val = this.value.trim();
-                    if (val) cariSupplier(tipe, val);
+                    if (val) cariKustomer(tipe, val);
                 }
             });
 
             input.addEventListener('blur', function() {
                 const val = this.value.trim();
-                if (val) cariSupplier(tipe, val);
+                if (val) cariKustomer(tipe, val);
+            });
+        });
+
+        [kodeSlsInput, namaSlsInput].forEach(input => {
+            const tipe = input.id === 'kode_sls' ? 'kode' : 'nama';
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value.trim();
+                    if (val) cariSales(tipe, val);
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const val = this.value.trim();
+                if (val) cariSales(tipe, val);
             });
         });
 
@@ -492,17 +572,17 @@ while ($row = $supplierQuery->fetch_assoc()) {
             });
         }
 
-        function cariSupplier(mode, keyword) {
+        function cariKustomer(mode, keyword) {
             if (!keyword) return;
 
-            fetch('filter_itemsupplier.php', {
+            fetch('filter_itemkustomer.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
             })
             .then(res => res.json())
             .then(data => {
-                const tbody = document.getElementById('tbodyHasilSupplier');
+                const tbody = document.getElementById('tbodyHasilKustomer');
                 tbody.innerHTML = '';
 
                 if (data.length === 0) {
@@ -511,16 +591,51 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     data.forEach(item => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td>${item.kodesup}</td>
-                            <td>${item.namasup}</td>
+                            <td>${item.kodekust}</td>
+                            <td>${item.namakust}</td>
                             <td>${item.alamat}</td>
-                            <td><button type="button" onclick='pilihSupplier(${JSON.stringify(item)})'>Pilih</button></td>
+                            <td>${item.kodehrg}</td>
+                            <td><button type="button" onclick='pilihKustomer(${JSON.stringify(item)})'>Pilih</button></td>
                         `;
                         tbody.appendChild(tr);
                     });
                 }
 
-                document.getElementById('popupCariSupplier').style.display = 'flex';
+                document.getElementById('popupCariKustomer').style.display = 'flex';
+            })
+            .catch(() => {
+                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            });
+        }
+
+        function cariSales(mode, keyword) {
+            if (!keyword) return;
+
+            fetch('filter_itemsales.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbodyHasilSales');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                } else {
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.kodesls}</td>
+                            <td>${item.namasls}</td>
+                            <td><button type="button" onclick='pilihSales(${JSON.stringify(item)})'>Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                document.getElementById('popupCariSales').style.display = 'flex';
             })
             .catch(() => {
                 showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
@@ -599,20 +714,85 @@ while ($row = $supplierQuery->fetch_assoc()) {
             tutupPopupBarang();
         }
 
-        function pilihSupplier(item) {
-            kodeInput.value = item.kodesup;
-            namaInput.value = item.namasup;
+        function pilihKustomer(item) {
+            kodeInput.value = item.kodekust;
+            namaInput.value = item.namakust;
             alamatInput.value = item.alamat;
-            tutupPopupSupplier();
+            kodehrgInput.value = item.kodehrg;
+            tutupPopupKustomer();
+        }
+
+        function pilihSales(item) {
+            kodeSlsInput.value = item.kodesls;
+            namaSlsInput.value = item.namasls;
+            tutupPopupSales();
         }
 
         function tutupPopupBarang() {
             document.getElementById('popupCariBarang').style.display = 'none';
         }
 
-        function tutupPopupSupplier() {
-            document.getElementById('popupCariSupplier').style.display = 'none';
+        function tutupPopupKustomer() {
+            document.getElementById('popupCariKustomer').style.display = 'none';
         }
+
+        function tutupPopupSales() {
+            document.getElementById('popupCariSales').style.display = 'none';
+        }
+
+        function bukaPopupHarga(targetInputId) {
+            let kodehrg = document.getElementById("kodehrg").value.trim();
+            let kodebrg = document.getElementById(targetInputId.includes("edit") ? "edit_popup_kodebrg" : "popup_kodebrg").value.trim();
+
+            if (!kodehrg) {
+                showToast("Isi Kode Harga terlebih dahulu.", '#dc3545');
+                return;
+            }
+            if (!kodebrg) {
+                showToast("Isi Kode Barang terlebih dahulu.", '#dc3545');
+                return;
+            }
+
+            // Ambil data harga dari PHP
+            fetch(`get_harga_barang.php?kodebrg=${encodeURIComponent(kodebrg)}&kodehrg=${encodeURIComponent(kodehrg)}`)
+                .then(res => res.json())
+                .then(data => {
+                    let tbody = document.getElementById("tbodyPilihanHarga");
+                    tbody.innerHTML = "";
+                    data.forEach(item => {
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td>${item.label}</td>
+                            <td>${parseFloat(item.value).toLocaleString('id-ID')}</td>
+                            <td><button type="button" onclick="pilihHarga('${item.value}', '${targetInputId}')">Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                    document.getElementById("popupPilihHarga").style.display = "flex";
+                });
+        }
+
+        function tutupPopupHarga() {
+            document.getElementById("popupPilihHarga").style.display = "none";
+        }
+
+        function pilihHarga(val, targetInputId) {
+            document.getElementById(targetInputId).value = val;
+            tutupPopupHarga();
+        }
+
+        // Event listener saat tekan Enter di popup_harga atau edit_popup_harga
+        ["popup_harga", "edit_popup_harga"].forEach(id => {
+            let el = document.getElementById(id);
+            if (el) {
+                el.addEventListener("keydown", function(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        bukaPopupHarga(id);
+                    }
+                });
+            }
+        });
 
 
         function renderTabelPembelian() {
@@ -911,10 +1091,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('btnPrint').disabled = false;
 
             document.getElementById('tanggal').disabled = true;
+            document.getElementById('kodehrg').disabled = true;
             document.getElementById('no_nota').disabled = true;
             document.getElementById('jt_tempo').disabled = true;
-            document.getElementById('nama_sup').disabled = true;
-            document.getElementById('kode_sup').disabled = true;
+            document.getElementById('nama_kust').disabled = true;
+            document.getElementById('kode_kust').disabled = true;
+            document.getElementById('nama_sls').disabled = true;
+            document.getElementById('kode_sls').disabled = true;
             document.getElementById('subtotal').disabled = true;
             document.getElementById('lain_lain').disabled = true;
             document.getElementById('ppn').disabled = true;
@@ -942,10 +1125,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('btnPrint').disabled = true;
 
             document.getElementById('tanggal').disabled = false;
+            document.getElementById('kodehrg').disabled = false;
             document.getElementById('no_nota').disabled = false;
             document.getElementById('jt_tempo').disabled = false;
-            document.getElementById('nama_sup').disabled = false;
-            document.getElementById('kode_sup').disabled = false;
+            document.getElementById('nama_kust').disabled = false;
+            document.getElementById('kode_kust').disabled = false;
+            document.getElementById('nama_sls').disabled = false;
+            document.getElementById('kode_sls').disabled = false;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
             document.getElementById('ppn').disabled = false;
@@ -973,10 +1159,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('btnSave').disabled = false;
 
             document.getElementById('tanggal').disabled = false;
+            document.getElementById('kodehrg').disabled = false;
             document.getElementById('no_nota').disabled = false;
             document.getElementById('jt_tempo').disabled = false;
-            document.getElementById('nama_sup').disabled = false;
-            document.getElementById('kode_sup').disabled = false;
+            document.getElementById('nama_kust').disabled = false;
+            document.getElementById('kode_kust').disabled = false;
+            document.getElementById('nama_sls').disabled = false;
+            document.getElementById('kode_sls').disabled = false;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
             document.getElementById('ppn').disabled = false;
@@ -1090,7 +1279,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             const data = {
                 no_nota: document.getElementById('no_nota').value,
                 tanggal: document.getElementById('tanggal').value,
-                kode_sup: document.getElementById('kode_sup').value,
+                kode_kust: document.getElementById('kode_kust').value,
                 jt_tempo: document.getElementById('jt_tempo').value,
                 totaljmlh: parseFloat(document.getElementById('totaljmlh').value) || 0,
                 detail: dataPembelian // array yang sudah kamu simpan saat tambah item
