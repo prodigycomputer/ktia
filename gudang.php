@@ -111,401 +111,401 @@ include 'koneksi.php';
     </div>
 </div>
 <script>
-let currentstat = null;
+      let currentstat = null;
 
-function showToast(message, color = '#28a745') {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.style.backgroundColor = color;
-  toast.style.display = 'block';
-  setTimeout(() => toast.style.display = 'none', 2000);
-}
+      function showToast(message, color = '#28a745') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.style.backgroundColor = color;
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 2000);
+      }
 
-function initializeFormButtons() {
-  currentstat = null;
+      function initializeFormButtons() {
+        currentstat = null;
 
-  document.getElementById('btnTambah').disabled = false;
-  document.getElementById('btnEdit').disabled = false;
-  document.getElementById('btnHapus').disabled = false;
-  document.getElementById('btnCancel').disabled = true;
-  document.getElementById('btnSave').disabled = true;
+        document.getElementById('btnTambah').disabled = false;
+        document.getElementById('btnEdit').disabled = false;
+        document.getElementById('btnHapus').disabled = false;
+        document.getElementById('btnCancel').disabled = true;
+        document.getElementById('btnSave').disabled = true;
 
-  document.getElementById('kodegudang').disabled = true;
-  document.getElementById('namagudang').disabled = true;
+        document.getElementById('kodegudang').disabled = true;
+        document.getElementById('namagudang').disabled = true;
 
-  document.getElementById('searchKode').value = '';
-  document.getElementById('searchNama').value = '';
-  document.getElementById('searchKode').disabled = false;
-  document.getElementById('searchNama').disabled = false;
-  document.getElementById('searchbtn').disabled = false;
+        document.getElementById('searchKode').value = '';
+        document.getElementById('searchNama').value = '';
+        document.getElementById('searchKode').disabled = false;
+        document.getElementById('searchNama').disabled = false;
+        document.getElementById('searchbtn').disabled = false;
 
-  resetButtonStyles();
+        resetButtonStyles();
 
-}
-initializeFormButtons();
-
-function initializeFormButtonsCancel() {
-    currentstat = null;
-
-    document.getElementById('kodegudang').value = previousFormData.kodegudang;
-    document.getElementById('namagudang').value = previousFormData.namagudang;
-    document.getElementById('btnTambah').disabled = true;
-    document.getElementById('btnEdit').disabled = false;
-    document.getElementById('btnHapus').disabled = true;
-    document.getElementById('btnCancel').disabled = false; 
-    document.getElementById('btnSave').disabled = true;
-
-    document.getElementById('kodegudang').disabled = true;
-    document.getElementById('namagudang').disabled = true;
-
-    document.getElementById('searchKode').value = '';
-    document.getElementById('searchNama').value = '';
-    document.getElementById('searchKode').disabled = false;
-    document.getElementById('searchNama').disabled = false;
-    document.getElementById('searchbtn').disabled = false;
-
-  resetButtonStyles();
-
-}
-
-function initializeTambah() {
-  currentstat = 'tambah';
-  showToast('Kamu sedang menambah data...', '#ffc107');
-
-  document.getElementById('gudangForm').reset();
-
-  document.getElementById('btnTambah').disabled = true;
-  document.getElementById('btnEdit').disabled = true;
-  document.getElementById('btnHapus').disabled = true;
-  document.getElementById('btnCancel').disabled = false;
-  document.getElementById('btnSave').disabled = false;
-
-  document.getElementById('kodegudang').disabled = false;
-  document.getElementById('kodegudang').readOnly = false;
-  document.getElementById('namagudang').disabled = false;
-
-  document.getElementById('searchKode').disabled = true;
-  document.getElementById('searchNama').disabled = true;
-  document.getElementById('searchKode').value = '';
-  document.getElementById('searchNama').value = '';
-  document.getElementById('searchbtn').disabled = true;
-
-  resetButtonStyles();
-  setActiveButtonStyle(document.getElementById('btnTambah'));
-}
-
-function initializeUbah() {
-  currentstat = 'update';
-  showToast('Kamu sedang mengubah data...', '#ffc107');
-
-  document.getElementById('btnTambah').disabled = true;
-  document.getElementById('btnEdit').disabled = true;
-  document.getElementById('btnHapus').disabled = false;
-  document.getElementById('btnCancel').disabled = false;
-  document.getElementById('btnSave').disabled = false;
-
-  document.getElementById('kodegudang').disabled = false;
-  document.getElementById('kodegudang').readOnly = false;
-  document.getElementById('namagudang').disabled = false;
-
-  document.getElementById('searchKode').disabled = true;
-  document.getElementById('searchNama').disabled = true;
-  document.getElementById('searchKode').value = '';
-  document.getElementById('searchNama').value = '';
-  document.getElementById('searchbtn').disabled = true;
-
-  resetButtonStyles();
-  setActiveButtonStyle(document.getElementById('btnEdit'));
-}
-
-
-
-function cancelForm() {
-  // Reset search input
-  const kodeInput = document.getElementById('searchKode');
-  const namaInput = document.getElementById('searchNama');
-  kodeInput.disabled = false;
-  namaInput.disabled = false;
-  kodeInput.value = '';
-  namaInput.value = '';
-  document.getElementById('kodegudang').readOnly = true;
-  document.getElementById('searchbtn').disabled = false;
-
-  if (currentstat === 'tambah' ) {
+      }
       initializeFormButtons();
-      document.getElementById('gudangForm').reset();
-      currentstat = null;
-  } else if (currentstat === 'update') {
-    initializeFormButtonsCancel();
-    currentstat = null;
-  } else if (currentstat === null) {
-    initializeFormButtons();
-    document.getElementById('gudangForm').reset();
-  }
-  resetButtonStyles();
-}
 
-let previousFormData = {};
+      function initializeFormButtonsCancel() {
+          currentstat = null;
 
-previousFormData = {
-  kodegudang: document.getElementById('kodegudang').value,
-  namagudang: document.getElementById('namagudang').value,
-  kodegudang_lama: document.getElementById('kodegudang_lama').value
-};
+          document.getElementById('kodegudang').value = previousFormData.kodegudang;
+          document.getElementById('namagudang').value = previousFormData.namagudang;
+          document.getElementById('btnTambah').disabled = true;
+          document.getElementById('btnEdit').disabled = false;
+          document.getElementById('btnHapus').disabled = true;
+          document.getElementById('btnCancel').disabled = false; 
+          document.getElementById('btnSave').disabled = true;
 
-function prepareSave() {
-  if (!currentstat) {
-    showToast('Tidak ada data yang sedang diubah atau ditambah.', '#dc3545');
-    return false;
-  }
-  document.getElementById('aksi').value = currentstat;
-  return true;
-}
+          document.getElementById('kodegudang').disabled = true;
+          document.getElementById('namagudang').disabled = true;
 
-function forceUppercase(id) {
-  const input = document.getElementById(id);
-  input.addEventListener('input', () => {
-    input.value = input.value.toUpperCase();
-  });
-}
-forceUppercase('kodegudang');
-forceUppercase('namagudang');
+          document.getElementById('searchKode').value = '';
+          document.getElementById('searchNama').value = '';
+          document.getElementById('searchKode').disabled = false;
+          document.getElementById('searchNama').disabled = false;
+          document.getElementById('searchbtn').disabled = false;
 
-let inputSearch = null;
-let searchBtn = document.getElementById('searchbtn')
+        resetButtonStyles();
 
-function handleInput(type) {
-    const kodeInput = document.getElementById('searchKode');
-    const namaInput = document.getElementById('searchNama');
+      }
 
-    if (type === 'kode') {
-        if (kodeInput.value.trim() !== '') {
-            namaInput.disabled = true;
-            inputSearch = kodeInput;
-        } else {
-            namaInput.disabled = false;
-            inputSearch = null;
+      function initializeTambah() {
+        currentstat = 'tambah';
+        showToast('Kamu sedang menambah data...', '#ffc107');
+
+        document.getElementById('gudangForm').reset();
+
+        document.getElementById('btnTambah').disabled = true;
+        document.getElementById('btnEdit').disabled = true;
+        document.getElementById('btnHapus').disabled = true;
+        document.getElementById('btnCancel').disabled = false;
+        document.getElementById('btnSave').disabled = false;
+
+        document.getElementById('kodegudang').disabled = false;
+        document.getElementById('kodegudang').readOnly = false;
+        document.getElementById('namagudang').disabled = false;
+
+        document.getElementById('searchKode').disabled = true;
+        document.getElementById('searchNama').disabled = true;
+        document.getElementById('searchKode').value = '';
+        document.getElementById('searchNama').value = '';
+        document.getElementById('searchbtn').disabled = true;
+
+        resetButtonStyles();
+        setActiveButtonStyle(document.getElementById('btnTambah'));
+      }
+
+      function initializeUbah() {
+        currentstat = 'update';
+        showToast('Kamu sedang mengubah data...', '#ffc107');
+
+        document.getElementById('btnTambah').disabled = true;
+        document.getElementById('btnEdit').disabled = true;
+        document.getElementById('btnHapus').disabled = false;
+        document.getElementById('btnCancel').disabled = false;
+        document.getElementById('btnSave').disabled = false;
+
+        document.getElementById('kodegudang').disabled = false;
+        document.getElementById('kodegudang').readOnly = false;
+        document.getElementById('namagudang').disabled = false;
+
+        document.getElementById('searchKode').disabled = true;
+        document.getElementById('searchNama').disabled = true;
+        document.getElementById('searchKode').value = '';
+        document.getElementById('searchNama').value = '';
+        document.getElementById('searchbtn').disabled = true;
+
+        resetButtonStyles();
+        setActiveButtonStyle(document.getElementById('btnEdit'));
+      }
+
+
+
+      function cancelForm() {
+        // Reset search input
+        const kodeInput = document.getElementById('searchKode');
+        const namaInput = document.getElementById('searchNama');
+        kodeInput.disabled = false;
+        namaInput.disabled = false;
+        kodeInput.value = '';
+        namaInput.value = '';
+        document.getElementById('kodegudang').readOnly = true;
+        document.getElementById('searchbtn').disabled = false;
+
+        if (currentstat === 'tambah' ) {
+            initializeFormButtons();
+            document.getElementById('gudangForm').reset();
+            currentstat = null;
+        } else if (currentstat === 'update') {
+          initializeFormButtonsCancel();
+          currentstat = null;
+        } else if (currentstat === null) {
+          initializeFormButtons();
+          document.getElementById('gudangForm').reset();
         }
-    } else {
-        if (namaInput.value.trim() !== '') {
-            kodeInput.disabled = true;
-            inputSearch = namaInput;
-        } else {
-            kodeInput.disabled = false;
-            inputSearch = null;
-        }
-    }
-}
+        resetButtonStyles();
+      }
 
-function showFilterPopup(dataList) {
-    const list = document.getElementById('popupList');
-    list.innerHTML = '';
+      let previousFormData = {};
 
-    const table = list.closest('table');
-    const thead = table.querySelector('thead');
-    thead.innerHTML = ''; // Kosongkan
-
-    if (!dataList || dataList.length === 0) return;
-
-    const fixedFields = ['kodegudang', 'namagudang'];
-
-    // Header
-    const headerRow = document.createElement('tr');
-    [...fixedFields].forEach(field => {
-        const th = document.createElement('th');
-        th.textContent = field.toUpperCase();
-        th.style.padding = '4px';
-        th.style.border = '1px solid #ccc';
-        th.style.background = '#f9f9f9';
-        th.style.fontSize = '12px';
-        headerRow.appendChild(th);
-    });
-    thead.appendChild(headerRow);
-
-    // Data
-    dataList.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.style.cursor = 'pointer';
-        tr.addEventListener('click', () => {
-            closeFilterPopup();
-            pilihGudang(item);
-        });
-
-        [...fixedFields].forEach(field => {
-            const td = document.createElement('td');
-            td.textContent = item[field] || '';
-            td.style.padding = '4px';
-            td.style.border = '1px solid #ccc';
-            td.style.fontSize = '14px';
-            tr.appendChild(td);
-        });
-
-        list.appendChild(tr);
-    });
-
-    document.getElementById('popupFilter').style.display = 'block';
-}
-
-
-function closeFilterPopup() {
-    document.getElementById('popupFilter').style.display = 'none';
-}
-
-function triggerSearch() {
-    if (!inputSearch) {
-        showToast('Isi kode atau nama terlebih dahulu!', '#dc3545');
-        return;
-    }
-
-    const keyword = inputSearch.value.trim().toUpperCase();
-    if (!keyword) {
-        showToast('Kolom pencarian tidak boleh kosong!', '#dc3545');
-        return;
-    }
-
-    fetch(`filter_gudang.php?keyword=${encodeURIComponent(keyword)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length === 0) {
-                showToast('Data tidak ada!', '#dc3545');
-                return;
-            }
-
-            if (data.length === 1) {
-                showFilterPopup(data);
-            } else {
-                showFilterPopup(data); // tampilkan pilihan
-            }
-        })
-
-}
-
-function pilihGudang(data) {
-    document.getElementById('kodegudang').value = data.kodegudang;
-    document.getElementById('kodegudang_lama').value = data.kodegudang; 
-    document.getElementById('namagudang').value = data.namagudang;
-
-    // Logika enable/disable berdasarkan isi1 dan isi2
-    document.getElementById('btnTambah').disabled = true;
-    document.getElementById('btnEdit').disabled = false;
-    document.getElementById('btnHapus').disabled = true;
-    document.getElementById('btnCancel').disabled = false; 
-
-    previousFormData = {
-      kodegudang: data.kodegudang,
-      namagudang: data.namagudang,
-      kodegudang_lama: data.kodegudang
-    };
-
-    document.getElementById('searchKode').value = '';
-    document.getElementById('searchNama').value = '';
-    document.getElementById('searchKode').disabled = false;
-    document.getElementById('searchNama').disabled = false;
-    document.getElementById('searchbtn').disabled = false;
-    inputSearch = null;
-    dropdown.style.display = 'none';
-    closeFilterPopup();
-
-
-}
-
-document.getElementById('gudangForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  const formData = new FormData(this);
-  formData.set('aksi', currentstat); // 'tambah', 'update', 'hapus'
-
-  fetch('prosesgudang.php', {
-    method: 'POST',
-    body: formData
-  })
-  .then(res => res.json())
-  .then(response => {
-    if (response.status === 'success') {
-      showToast(`Data berhasil ${response.aksi === 'tambah' ? 'ditambahkan' : response.aksi === 'update' ? 'diupdate' : 'dihapus'}`);
-
-      if (currentstat === 'tambah' || currentstat === 'update') {
       previousFormData = {
-        kodegudang: document.getElementById('kodegudang').value.trim(),
-        namagudang: document.getElementById('namagudang').value.trim(),
-        kodegudang_lama: document.getElementById('kodegudang').value.trim()
+        kodegudang: document.getElementById('kodegudang').value,
+        namagudang: document.getElementById('namagudang').value,
+        kodegudang_lama: document.getElementById('kodegudang_lama').value
       };
 
-      if (currentstat === 'tambah') {
-        initializeFormButtons();
-      } else {
-        initializeFormButtonsCancel();
+      function prepareSave() {
+        if (!currentstat) {
+          showToast('Tidak ada data yang sedang diubah atau ditambah.', '#dc3545');
+          return false;
+        }
+        document.getElementById('aksi').value = currentstat;
+        return true;
       }
-    }
-    
 
-      // Kamu bisa isi ulang form dengan data sebelumnya kalau mau
-    } else if (response.status === 'duplikat') {
-      showToast('Kode gudang sudah ada!', '#dc3545');
-    } else {
-      showToast('Gagal menyimpan data!', '#dc3545');
-    }
-  })
-  .catch(err => {
-    console.error(err);
-    showToast('Gagal koneksi ke server!', '#dc3545');
-  });
-});
+      function forceUppercase(id) {
+        const input = document.getElementById(id);
+        input.addEventListener('input', () => {
+          input.value = input.value.toUpperCase();
+        });
+      }
+      forceUppercase('kodegudang');
+      forceUppercase('namagudang');
+
+      let inputSearch = null;
+      let searchBtn = document.getElementById('searchbtn')
+
+      function handleInput(type) {
+          const kodeInput = document.getElementById('searchKode');
+          const namaInput = document.getElementById('searchNama');
+
+          if (type === 'kode') {
+              if (kodeInput.value.trim() !== '') {
+                  namaInput.disabled = true;
+                  inputSearch = kodeInput;
+              } else {
+                  namaInput.disabled = false;
+                  inputSearch = null;
+              }
+          } else {
+              if (namaInput.value.trim() !== '') {
+                  kodeInput.disabled = true;
+                  inputSearch = namaInput;
+              } else {
+                  kodeInput.disabled = false;
+                  inputSearch = null;
+              }
+          }
+      }
+
+      function showFilterPopup(dataList) {
+          const list = document.getElementById('popupList');
+          list.innerHTML = '';
+
+          const table = list.closest('table');
+          const thead = table.querySelector('thead');
+          thead.innerHTML = ''; // Kosongkan
+
+          if (!dataList || dataList.length === 0) return;
+
+          const fixedFields = ['kodegudang', 'namagudang'];
+
+          // Header
+          const headerRow = document.createElement('tr');
+          [...fixedFields].forEach(field => {
+              const th = document.createElement('th');
+              th.textContent = field.toUpperCase();
+              th.style.padding = '4px';
+              th.style.border = '1px solid #ccc';
+              th.style.background = '#f9f9f9';
+              th.style.fontSize = '12px';
+              headerRow.appendChild(th);
+          });
+          thead.appendChild(headerRow);
+
+          // Data
+          dataList.forEach(item => {
+              const tr = document.createElement('tr');
+              tr.style.cursor = 'pointer';
+              tr.addEventListener('click', () => {
+                  closeFilterPopup();
+                  pilihGudang(item);
+              });
+
+              [...fixedFields].forEach(field => {
+                  const td = document.createElement('td');
+                  td.textContent = item[field] || '';
+                  td.style.padding = '4px';
+                  td.style.border = '1px solid #ccc';
+                  td.style.fontSize = '14px';
+                  tr.appendChild(td);
+              });
+
+              list.appendChild(tr);
+          });
+
+          document.getElementById('popupFilter').style.display = 'block';
+      }
 
 
+      function closeFilterPopup() {
+          document.getElementById('popupFilter').style.display = 'none';
+      }
 
-function setActiveButtonStyle(button) {
-    button.style.backgroundColor = 'white';
-    button.style.color = 'black';
-    button.style.border = '1px solid #999';
-}
+      function triggerSearch() {
+          if (!inputSearch) {
+              showToast('Isi kode atau nama terlebih dahulu!', '#dc3545');
+              return;
+          }
 
-function tampilkanKonfirmasiHapus() {
-    document.getElementById('popupConfirmHapus').style.display = 'block';
-}
+          const keyword = inputSearch.value.trim().toUpperCase();
+          if (!keyword) {
+              showToast('Kolom pencarian tidak boleh kosong!', '#dc3545');
+              return;
+          }
 
-function konfirmasiHapus(setuju) {
-    const popup = document.getElementById('popupConfirmHapus');
-    popup.style.display = 'none';
+          fetch(`filter_gudang.php?keyword=${encodeURIComponent(keyword)}`)
+              .then(response => response.json())
+              .then(data => {
+                  if (data.length === 0) {
+                      showToast('Data tidak ada!', '#dc3545');
+                      return;
+                  }
 
-    if (setuju) {
-        const formData = new FormData(document.getElementById('gudangForm'));
-        formData.set('aksi', 'hapus');
+                  if (data.length === 1) {
+                      showFilterPopup(data);
+                  } else {
+                      showFilterPopup(data); // tampilkan pilihan
+                  }
+              })
+
+      }
+
+      function pilihGudang(data) {
+          document.getElementById('kodegudang').value = data.kodegudang;
+          document.getElementById('kodegudang_lama').value = data.kodegudang; 
+          document.getElementById('namagudang').value = data.namagudang;
+
+          // Logika enable/disable berdasarkan isi1 dan isi2
+          document.getElementById('btnTambah').disabled = true;
+          document.getElementById('btnEdit').disabled = false;
+          document.getElementById('btnHapus').disabled = true;
+          document.getElementById('btnCancel').disabled = false; 
+
+          previousFormData = {
+            kodegudang: data.kodegudang,
+            namagudang: data.namagudang,
+            kodegudang_lama: data.kodegudang
+          };
+
+          document.getElementById('searchKode').value = '';
+          document.getElementById('searchNama').value = '';
+          document.getElementById('searchKode').disabled = false;
+          document.getElementById('searchNama').disabled = false;
+          document.getElementById('searchbtn').disabled = false;
+          inputSearch = null;
+          dropdown.style.display = 'none';
+          closeFilterPopup();
+
+
+      }
+
+      document.getElementById('gudangForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        formData.set('aksi', currentstat); // 'tambah', 'update', 'hapus'
 
         fetch('prosesgudang.php', {
-            method: 'POST',
-            body: formData
+          method: 'POST',
+          body: formData
         })
         .then(res => res.json())
         .then(response => {
-            if (response.status === 'success') {
-                showToast('Data berhasil dihapus');
-                initializeFormButtons(); // reset tampilan
-                document.getElementById('gudangForm').reset();
+          if (response.status === 'success') {
+            showToast(`Data berhasil ${response.aksi === 'tambah' ? 'ditambahkan' : response.aksi === 'update' ? 'diupdate' : 'dihapus'}`);
+
+            if (currentstat === 'tambah' || currentstat === 'update') {
+            previousFormData = {
+              kodegudang: document.getElementById('kodegudang').value.trim(),
+              namagudang: document.getElementById('namagudang').value.trim(),
+              kodegudang_lama: document.getElementById('kodegudang').value.trim()
+            };
+
+            if (currentstat === 'tambah') {
+              initializeFormButtons();
             } else {
-                showToast('Gagal menghapus data!', '#dc3545');
+              initializeFormButtonsCancel();
             }
+          }
+          
+
+            // Kamu bisa isi ulang form dengan data sebelumnya kalau mau
+          } else if (response.status === 'duplikat') {
+            showToast('Kode gudang sudah ada!', '#dc3545');
+          } else {
+            showToast('Gagal menyimpan data!', '#dc3545');
+          }
         })
         .catch(err => {
-            console.error(err);
-            showToast('Gagal koneksi ke server!', '#dc3545');
+          console.error(err);
+          showToast('Gagal koneksi ke server!', '#dc3545');
         });
-    } else {
-        showToast('Penghapusan dibatalkan.', '#6c757d');
-    }
-}
+      });
 
 
-function resetButtonStyles() {
-    const buttons = ['btnTambah', 'btnEdit'];
-    buttons.forEach(id => {
-        const btn = document.getElementById(id);
-        btn.style.backgroundColor = '';
-        btn.style.color = '';
-        btn.style.border = '';
-    });
-}
+
+      function setActiveButtonStyle(button) {
+          button.style.backgroundColor = 'white';
+          button.style.color = 'black';
+          button.style.border = '1px solid #999';
+      }
+
+      function tampilkanKonfirmasiHapus() {
+          document.getElementById('popupConfirmHapus').style.display = 'block';
+      }
+
+      function konfirmasiHapus(setuju) {
+          const popup = document.getElementById('popupConfirmHapus');
+          popup.style.display = 'none';
+
+          if (setuju) {
+              const formData = new FormData(document.getElementById('gudangForm'));
+              formData.set('aksi', 'hapus');
+
+              fetch('prosesgudang.php', {
+                  method: 'POST',
+                  body: formData
+              })
+              .then(res => res.json())
+              .then(response => {
+                  if (response.status === 'success') {
+                      showToast('Data berhasil dihapus');
+                      initializeFormButtons(); // reset tampilan
+                      document.getElementById('gudangForm').reset();
+                  } else {
+                      showToast('Gagal menghapus data!', '#dc3545');
+                  }
+              })
+              .catch(err => {
+                  console.error(err);
+                  showToast('Gagal koneksi ke server!', '#dc3545');
+              });
+          } else {
+              showToast('Penghapusan dibatalkan.', '#6c757d');
+          }
+      }
+
+
+      function resetButtonStyles() {
+          const buttons = ['btnTambah', 'btnEdit'];
+          buttons.forEach(id => {
+              const btn = document.getElementById(id);
+              btn.style.backgroundColor = '';
+              btn.style.color = '';
+              btn.style.border = '';
+          });
+      }
 </script>
-<script src="notif.js"></script>
+    <script src="notif.js"></script>
 </body>
 </html>

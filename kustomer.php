@@ -150,6 +150,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
     </div>
     <script>
         let previousFormData = {};
+        const maxHarga = <?= $jmlharga ?>;
 
         function initializeFormButtons() {
             document.getElementById('btnTambah').disabled = false;
@@ -214,6 +215,16 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         resetButtonStyles();
 
         }
+
+        document.getElementById('kodehrg').addEventListener('blur', function() {
+            let val = parseFloat(this.value) || 0;
+            if (val > maxHarga) {
+                showToast(`Harga tidak boleh lebih dari ${maxHarga}`, '#dc3545');
+                this.value = maxHarga; // Opsional: set otomatis ke batas max
+                this.focus();
+                this.select();
+            }
+        });
 
         let currentstat = null;
 

@@ -246,7 +246,7 @@
             <div><label>Diskon 1 :</label> <span id="diskon1" class="span-kecil"></span><span id="hdiskon1" class="span-sedang"></span></div>
             <div><label>Diskon 2 :</label> <span id="diskon2" class="span-kecil"></span><span id="hdiskon2" class="span-sedang"></span></div>
             <div><label>Diskon 3 :</label> <span id="diskon3" class="span-kecil"></span><span id="hdiskon3" class="span-sedang"></span></div>
-            <div><label>Lain-Lain :</label> <span id="lain" class="span-besar">0</span></div>
+            <div><label>Lain-Lain :</label> <span id="lain" class="span-besar"></span></div>
             <div><label>PPN :</label> <span id="ppn" class="span-kecil">></span><span id="hppn" class="span-sedang"></span></div>
             <div style="border-top: 1px solid #000; padding-top: 4px;">
                 <label><strong>Total Jumlah :</strong></label>
@@ -300,7 +300,8 @@
                         tbody.appendChild(tr);
                     });
 
-                    const lain = 0; // atau ambil dari data jika dinamis
+                    let totalhasil = subtotal - (parseFloat(h.hdisk1) || 0) - (parseFloat(h.hdisk2) || 0) - (parseFloat(h.hdisk3) || 0) + (parseFloat(h.hrgppn) || 0);
+                    let lain = (parseFloat(h.totaljmlh) || 0) - totalhasil;
                     const ppn = h.prsnppn;
                     const hppn = h.hrgppn;
                     const diskon1 = h.disk1;
@@ -316,10 +317,10 @@
                         document.getElementById('ppn').parentElement.style.display = 'none';
                         document.getElementById('hppn').parentElement.style.display = 'none';
                     }
-
                     document.getElementById('subtotal').textContent = subtotal.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     document.getElementById('ppn').textContent = ppn.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%' ;
                     document.getElementById('hppn').textContent = hppn.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('lain').textContent = lain.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     document.getElementById('diskon1').textContent = diskon1.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
                     document.getElementById('hdiskon1').textContent = hdiskon1.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     document.getElementById('diskon2').textContent = diskon2.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
