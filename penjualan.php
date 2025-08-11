@@ -4,19 +4,15 @@ include 'koneksi.php';
 
 // Query data pembelian awal
 $query = mysqli_query($conn, "
-    SELECT zbeli.tgl, zbeli.nonota, zsupplier.namasup, zbeli.nilai, zbeli.lunas 
-    FROM zbeli
-    JOIN zsupplier ON zbeli.kodesup = zsupplier.kodesup
-    ORDER BY zbeli.tgl DESC, zbeli.nonota DESC
+    SELECT zjual.tgl, zjual.nonota, zkustomer.namakust, zsales.namasls, zjual.nilai, zjual.lunas 
+    FROM zjual
+    JOIN zkustomer ON zjual.kodekust = zkustomer.kodekust
+    JOIN zsales ON zjual.kodesls = zsales.kodesls
+    ORDER BY zjual.tgl DESC, zjual.nonota DESC
     LIMIT 10
 ");
 
-// Ambil data supplier untuk dropdown
-$suppliers = [];
-$supplierQuery = $conn->query("SELECT kodesup, namasup FROM zsupplier ORDER BY namasup");
-while ($row = $supplierQuery->fetch_assoc()) {
-    $suppliers[] = $row;
-}
+// Ambil data supplier untuk dropdown}
 
 ?>
 
@@ -28,25 +24,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
     <title>Data Penjualan</title>
     <link rel="stylesheet" href="navbar.css" />
     <link rel="stylesheet" href="form.css" />
-    <style>
-        .dropdown-result {
-            position: absolute;
-            background: white;
-            border: 1px solid #ccc;
-            max-height: 150px;
-            overflow-y: auto;
-            width: 100%;
-            z-index: 999;
-            display: none;
-        }
-        .dropdown-item {
-            padding: 8px;
-            cursor: pointer;
-        }
-        .dropdown-item:hover {
-            background-color: #f0f0f0;
-        }
-    </style>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -65,12 +42,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
             <span>%</span>
             <input type="date" name="tgl2" id="inputTgl2">
 
-            <input type="hidden" name="kodesup" id="inputKodesup" style="text-transform: uppercase;">
+            <input type="hidden" name="kodekust" id="inputKodekust" style="text-transform: uppercase;">
 
-            <div style="position: relative;">
-                <input type="text" name="namasup" id="inputNamasup" placeholder="Nama supplier" autocomplete="off" style="text-transform: uppercase;">
-                <div id="dropdownSupplier" class="dropdown-result"></div>
-            </div>
+            <input type="text" name="namakust" id="inputNamakust" placeholder="Nama Kustomer" autocomplete="off" style="text-transform: uppercase;">
+
+            <input type="hidden" name="kodesls" id="inputKodesls" style="text-transform: uppercase;">
+
+            <input type="text" name="namasls" id="inputNamasls" placeholder="Nama Sales" autocomplete="off" style="text-transform: uppercase;">
 
             <select name="statusBayar" id="statusBayar">
                 <option value="all">ALL</option>
@@ -81,14 +59,15 @@ while ($row = $supplierQuery->fetch_assoc()) {
             <button type="button" name="btnSearch" id="btnSearch" class="action-btn cari" onclick="triggerSearch()">🔍 Cari</button>
         </div>
 
-        <form id="pembelianForm" action="prosespembelian.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()"> 
+        <form id="penjualanForm" action="prosespenjualan.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()"> 
             <div id="tabelHasil" class="form-grid" style="margin-top: 20px;">
                 <table class="tabel-hasil">
                     <thead>
                         <tr>
                             <th>Tanggal</th>
                             <th>No. Nota</th>
-                            <th>Nama Supplier</th>
+                            <th>Nama Kustomer</th>
+                            <th>Nama Sales</th>
                             <th>Nilai</th>
                             <th>Status</th>
                         </tr>
@@ -99,7 +78,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
                             <tr onclick="tampilkanKonfirmasiEdit('<?= $row['nonota'] ?>')">
                                 <td><?= $row['tgl'] ?></td>
                                 <td><?= $row['nonota'] ?></td>
-                                <td><?= $row['namasup'] ?></td>
+                                <td><?= $row['namakust'] ?></td>
+                                <td><?= $row['namasls'] ?></td>
                                 <td style="text-align: right;"><?= number_format($row['nilai'], 0, ',', '.') ?></td>
                                 <td><?= $row['lunas'] ? 'LUNAS' : 'BELUM' ?></td>
                             </tr>
@@ -109,6 +89,49 @@ while ($row = $supplierQuery->fetch_assoc()) {
             </div>
         </form>
     </main>
+
+    <div id="popupCariKustomer" class="popup-pb-cari" style="display: none;">
+        <div class="popup-pb-contentcari">
+            <h3>Pilih Kustomer</h3>
+            <table class="tabel-hasil" style="min-width: 700px;">
+                <thead>
+                    <tr>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>Alamat</th>
+                        <th>Kode Harga</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyHasilKustomer">
+                    <!-- hasil dari filter_barang.php -->
+                </tbody>
+            </table>
+            <div style="text-align: right; margin-top: 10px;">
+                <button type="button" onclick="tutupPopupKustomer()">Tutup</button>
+            </div>
+        </div>
+    </div>
+    <div id="popupCariSales" class="popup-pb-cari" style="display: none;">
+        <div class="popup-pb-contentcari">
+            <h3>Pilih Sales</h3>
+            <table class="tabel-hasil" style="min-width: 700px;">
+                <thead>
+                    <tr>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyHasilSales">
+                    <!-- hasil dari filter_barang.php -->
+                </tbody>
+            </table>
+            <div style="text-align: right; margin-top: 10px;">
+                <button type="button" onclick="tutupPopupSales()">Tutup</button>
+            </div>
+        </div>
+    </div>
 
     <div id="popupConfirmEdit" style="
         display: none;
@@ -137,7 +160,126 @@ while ($row = $supplierQuery->fetch_assoc()) {
     </div>
 
     <script>
-        const supplierList = <?= json_encode($suppliers) ?>;
+
+        const kodekustInput = document.getElementById('inputKodekust');
+        const namakustInput = document.getElementById('inputNamakust');
+
+        const kodeslsInput = document.getElementById('inputKodesls');
+        const namaslsInput = document.getElementById('inputNamasls');
+
+        [kodekustInput, namakustInput].forEach(input => {
+            const tipe = input.id === 'inputNamakust' ? 'kode' : 'nama';
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value.trim();
+                    if (val) cariKustomer(tipe, val);
+                }
+            });
+        });
+
+        [kodeslsInput, namaslsInput].forEach(input => {
+            const tipe = input.id === 'inputNamasls' ? 'kode' : 'nama';
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value.trim();
+                    if (val) cariSales(tipe, val);
+                }
+            });
+        });
+
+        function cariKustomer(mode, keyword) {
+            if (!keyword) return;
+
+            fetch('filter_itemkustomer.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbodyHasilKustomer');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                } else {
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.kodekust}</td>
+                            <td>${item.namakust}</td>
+                            <td>${item.alamat}</td>
+                            <td>${item.kodehrg}</td>
+                            <td><button type="button" onclick='pilihKustomer(${JSON.stringify(item)})'>Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                document.getElementById('popupCariKustomer').style.display = 'flex';
+            })
+            .catch(() => {
+                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            });
+        }
+
+        function cariSales(mode, keyword) {
+            if (!keyword) return;
+
+            fetch('filter_itemsales.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbodyHasilSales');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                } else {
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.kodesls}</td>
+                            <td>${item.namasls}</td>
+                            <td><button type="button" onclick='pilihSales(${JSON.stringify(item)})'>Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                document.getElementById('popupCariSales').style.display = 'flex';
+            })
+            .catch(() => {
+                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            });
+        }
+
+        function pilihKustomer(item) {
+            kodekustInput.value = item.kodekust;
+            namakustInput.value = item.namakust;
+            tutupPopupKustomer();
+        }
+
+        function pilihSales(item) {
+            kodeslsInput.value = item.kodesls;
+            namaslsInput.value = item.namasls;
+            tutupPopupSales();
+        }
+
+        function tutupPopupKustomer() {
+            document.getElementById('popupCariKustomer').style.display = 'none';
+        }
+
+        function tutupPopupSales() {
+            document.getElementById('popupCariSales').style.display = 'none';
+        }
 
         window.addEventListener("DOMContentLoaded", () => {
             const today = new Date().toISOString().split('T')[0];
@@ -149,18 +291,20 @@ while ($row = $supplierQuery->fetch_assoc()) {
             const noNota = document.getElementById('inputNoNota').value.trim();
             const tgl1 = document.getElementById('inputTgl1').value;
             const tgl2 = document.getElementById('inputTgl2').value;
-            const namasup = document.getElementById('inputNamasup').value;
+            const namakust = document.getElementById('inputNamakust').value;
+            const namasls = document.getElementById('inputNamasls').value;
             const status = document.getElementById('statusBayar').value;
 
             const params = new URLSearchParams({
                 nonota: noNota,
                 tgl1: tgl1,
                 tgl2: tgl2,
-                namasup: namasup,
+                namakust: namakust,
+                namasls: namasls,
                 status: status,
             });
 
-            fetch('fillpembelian.php?' + params.toString())
+            fetch('fillpenjualan.php?' + params.toString())
                 .then(res => res.json())
                 .then(data => {
                     const tbody = document.querySelector(".tabel-hasil tbody");
@@ -178,7 +322,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     tr.innerHTML = `
                         <td>${row.tgl}</td>
                         <td>${row.nonota}</td>
-                        <td>${row.namasup}</td>
+                        <td>${row.namakust}</td>
+                        <td>${row.namasls}</td>
                         <td style="text-align:right">${parseInt(row.nilai).toLocaleString('id-ID')}</td>
                         <td>${row.lunas === "1" ? "LUNAS" : "BELUM"}</td>
                     `;
@@ -192,7 +337,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
         }
 
         function tampilkanKonfirmasiEdit(nonota) {
-            window.location.href = 'editpembelian.php?nonota=' + encodeURIComponent(nonota);
+            window.location.href = 'editpenjualan.php?nonota=' + encodeURIComponent(nonota);
         }
 
 
@@ -202,61 +347,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
             document.getElementById('inputTgl1').disabled = isFilled;
             document.getElementById('inputTgl2').disabled = isFilled;
-            document.getElementById('inputNamasup').disabled = isFilled;
+            document.getElementById('inputNamakust').disabled = isFilled;
+            document.getElementById('inputNamasls').disabled = isFilled;
             document.getElementById('statusBayar').disabled = isFilled;
         });
 
         // Autocomplete supplier
-        const inputNamasup = document.getElementById("inputNamasup");
-        const kodesupField = document.getElementById("inputKodesup");
-        const dropdown = document.getElementById("dropdownSupplier");
-
-        inputNamasup.addEventListener("input", function () {
-            const val = this.value.trim().toUpperCase();
-            dropdown.innerHTML = "";
-
-            if (val === "") {
-                dropdown.style.display = "none";
-                return;
-            }
-
-            const filtered = supplierList.filter(sup =>
-                sup.namasup.toUpperCase().includes(val)
-            );
-
-            if (filtered.length === 0) {
-                dropdown.innerHTML = "<div class='dropdown-item'>Tidak ditemukan</div>";
-            } else {
-                filtered.forEach(sup => {
-                    const item = document.createElement("div");
-                    item.classList.add("dropdown-item");
-                    item.textContent = `${sup.namasup}`;
-                    item.dataset.kodesup = sup.kodesup;
-                    item.dataset.namasup = sup.namasup;
-                    dropdown.appendChild(item);
-                });
-            }
-
-            dropdown.style.display = "block";
-        });
-
-        dropdown.addEventListener("click", function (e) {
-            if (e.target.classList.contains("dropdown-item")) {
-                const kodesup = e.target.dataset.kodesup;
-                const namasup = e.target.dataset.namasup;
-
-                inputNamasup.value = namasup;
-                kodesupField.value = kodesup;
-                dropdown.innerHTML = "";
-                dropdown.style.display = "none";
-            }
-        });
-
-        document.addEventListener("click", function (e) {
-            if (!inputNamasup.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.style.display = "none";
-            }
-        });
+        
 
         function showToast(pesan, warna = '#28a745') {
             const toast = document.createElement('div');
@@ -273,100 +370,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
-
-        const inputKode = document.getElementById("kode_sup");
-        const inputNama = document.getElementById("nama_sup");
-        const dropdownKode = document.getElementById("dropdownKodeSup");
-        const dropdownNama = document.getElementById("dropdownNamaSup");
-        const alamatField = document.getElementById("alamat");
-
-        // Autocomplete berdasarkan KODE
-        inputKode.addEventListener("input", function () {
-            const val = this.value.trim().toUpperCase();
-            dropdownKode.innerHTML = "";
-
-            if (val === "") {
-                dropdownKode.style.display = "none";
-                return;
-            }
-
-            const filtered = supplierList.filter(sup => sup.kodesup.toUpperCase().includes(val));
-
-            if (filtered.length === 0) {
-                dropdownKode.innerHTML = "<div class='dropdown-item'>Tidak ditemukan</div>";
-            } else {
-                filtered.forEach(sup => {
-                    const item = document.createElement("div");
-                    item.classList.add("dropdown-item");
-                    item.textContent = `${sup.kodesup} - ${sup.namasup}`;
-                    item.dataset.kodesup = sup.kodesup;
-                    item.dataset.namasup = sup.namasup;
-                    item.dataset.alamat = sup.alamat ?? '';
-                    dropdownKode.appendChild(item);
-                });
-            }
-
-            dropdownKode.style.display = "block";
-        });
-
-        // Autocomplete berdasarkan NAMA
-        inputNama.addEventListener("input", function () {
-            const val = this.value.trim().toUpperCase();
-            dropdownNama.innerHTML = "";
-
-            if (val === "") {
-                dropdownNama.style.display = "none";
-                return;
-            }
-
-            const filtered = supplierList.filter(sup => sup.namasup.toUpperCase().includes(val));
-
-            if (filtered.length === 0) {
-                dropdownNama.innerHTML = "<div class='dropdown-item'>Tidak ditemukan</div>";
-            } else {
-                filtered.forEach(sup => {
-                    const item = document.createElement("div");
-                    item.classList.add("dropdown-item");
-                    item.textContent = `${sup.namasup} (${sup.kodesup})`;
-                    item.dataset.kodesup = sup.kodesup;
-                    item.dataset.namasup = sup.namasup;
-                    item.dataset.alamat = sup.alamat ?? '';
-                    dropdownNama.appendChild(item);
-                });
-            }
-
-            dropdownNama.style.display = "block";
-        });
-
-        // Pilih dari dropdown KODE
-        dropdownKode.addEventListener("click", function (e) {
-            if (e.target.classList.contains("dropdown-item")) {
-                inputKode.value = e.target.dataset.kodesup;
-                inputNama.value = e.target.dataset.namasup;
-                alamatField.value = e.target.dataset.alamat;
-                dropdownKode.style.display = "none";
-            }
-        });
-
-        // Pilih dari dropdown NAMA
-        dropdownNama.addEventListener("click", function (e) {
-            if (e.target.classList.contains("dropdown-item")) {
-                inputNama.value = e.target.dataset.namasup;
-                inputKode.value = e.target.dataset.kodesup;
-                alamatField.value = e.target.dataset.alamat;
-                dropdownNama.style.display = "none";
-            }
-        });
-
-        // Tutup dropdown jika klik di luar
-        document.addEventListener("click", function (e) {
-            if (!inputKode.contains(e.target) && !dropdownKode.contains(e.target)) {
-                dropdownKode.style.display = "none";
-            }
-            if (!inputNama.contains(e.target) && !dropdownNama.contains(e.target)) {
-                dropdownNama.style.display = "none";
-            }
-        });
 
     </script>
 </body>

@@ -2,7 +2,7 @@
 <?php
 $current = basename($_SERVER['PHP_SELF']);
 $isFile = in_array($current, ['barang.php', 'supplier.php', 'kustomer.php', 'sales.php','gudang.php', 'group.php']);
-$isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php', 'inputpembelian.php', 'editpembelian.php']);
+$isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php', 'inputpembelian.php', 'editpembelian.php', 'inputpenjualan.php', 'editpenjualan.php']);
 $isLaporan = in_array($current, [
   'LaporanStok.php', 'LaporanPenjualan.php', 'LaporanSupplier.php',
   'LaporanPembelian.php', 'LaporanKustomer.php'
@@ -40,7 +40,7 @@ $isLaporan = in_array($current, [
     <button class="dropdown-toggle <?= $isTransaksi ? 'active-dropdown' : '' ?>" onclick="toggleDropdown('transaksiDropdown', this)">Transaksi ▾</button>
     <div class="dropdown-content <?= $isTransaksi ? 'show' : '' ?>" id="transaksiDropdown">
         <a href="pembelian.php" class="<?= in_array($current, ['pembelian.php', 'inputpembelian.php', 'editpembelian.php']) ? 'active-link' : '' ?>">Pembelian</a>
-        <a href="penjualan.php" class="<?= $current == 'penjualan.php' ? 'active-link' : '' ?>">Penjualan</a>
+        <a href="penjualan.php" class="<?= in_array($current, ['penjualan.php', 'inputpenjualan.php', 'editpenjualan.php']) ? 'active-link' : '' ?>">Penjualan</a>
     </div>
     </div>
     
@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Grup pembelian saja (bukan seluruh transaksi)
     const pembelianPages = ['pembelian.php', 'inputpembelian.php', 'editpembelian.php'];
+    const penjualanPages = ['penjualan.php', 'inputpenjualan.php', 'editpenjualan.php'];
 
     // Simpan halaman terakhir dari grup pembelian
     if (pembelianPages.includes(current)) {
@@ -92,6 +93,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (pembelianLink && lastPage && lastPage !== 'pembelian.php') {
         pembelianLink.setAttribute('href', lastPage);
+    }
+
+    // Simpan halaman terakhir dari grup pembelian
+    if (penjualanPages.includes(current)) {
+        localStorage.setItem('lastPenjualanPage', current);
+    }
+
+    // Reset jika user kembali ke pembelian.php
+    if (current === 'penjualan.php') {
+        localStorage.removeItem('lastPenjualanPage');
+    }
+
+    // Ganti href dari link Pembelian
+    const penjualanLink = document.querySelector('a[href="penjualan.php"]');
+    const last2Page = localStorage.getItem('lastPenjualanPage');
+
+    if (penjualanLink && last2Page && last2Page !== 'penjualan.php') {
+        penjualanLink.setAttribute('href', last2Page);
     }
 }); 
 

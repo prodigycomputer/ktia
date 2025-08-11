@@ -2,11 +2,6 @@
 session_start();
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
-/*$suppliers = [];
-$supplierQuery = $conn->query("SELECT kodesup, namasup, alamat FROM zsupplier ORDER BY kodesup");
-while ($row = $supplierQuery->fetch_assoc()) {
-    $suppliers[] = $row;
-}*/
 $q = mysqli_query($conn, "SELECT qppn FROM zconfig LIMIT 1");
 $data = mysqli_fetch_assoc($q);
 $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada

@@ -11,13 +11,6 @@ $query = mysqli_query($conn, "
     LIMIT 10
 ");
 
-// Ambil data supplier untuk dropdown
-$suppliers = [];
-$supplierQuery = $conn->query("SELECT kodesup, namasup FROM zsupplier ORDER BY namasup");
-while ($row = $supplierQuery->fetch_assoc()) {
-    $suppliers[] = $row;
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -28,25 +21,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
     <title>Data Pembelian</title>
     <link rel="stylesheet" href="navbar.css" />
     <link rel="stylesheet" href="form.css" />
-    <style>
-        .dropdown-result {
-            position: absolute;
-            background: white;
-            border: 1px solid #ccc;
-            max-height: 150px;
-            overflow-y: auto;
-            width: 100%;
-            z-index: 999;
-            display: none;
-        }
-        .dropdown-item {
-            padding: 8px;
-            cursor: pointer;
-        }
-        .dropdown-item:hover {
-            background-color: #f0f0f0;
-        }
-    </style>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -67,10 +41,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
             <input type="hidden" name="kodesup" id="inputKodesup" style="text-transform: uppercase;">
 
-            <div style="position: relative;">
-                <input type="text" name="namasup" id="inputNamasup" placeholder="Nama supplier" autocomplete="off" style="text-transform: uppercase;">
-                <div id="dropdownSupplier" class="dropdown-result"></div>
-            </div>
+            <input type="text" name="namasup" id="inputNamasup" placeholder="Nama supplier" class="medium-input" style="text-transform: uppercase;">
 
             <select name="statusBayar" id="statusBayar">
                 <option value="all">ALL</option>
@@ -110,34 +81,88 @@ while ($row = $supplierQuery->fetch_assoc()) {
         </form>
     </main>
 
-    <div id="popupConfirmEdit" style="
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0,0,0,0.4);
-        z-index: 1001;
-    ">
-        <div style="
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            width: 320px;
-            max-width: 90%;
-            text-align: center;
-        ">
-            <p style="font-size: 14px; margin-bottom: 20px;">Apakah Anda yakin ingin mengubah data ini?</p>
-            <button onclick="konfirmasiEdit(true)" style="margin-right: 10px; padding: 6px 12px; background: #35c3dcff; color: white; border: none; border-radius: 4px;">Ya</button>
-            <button onclick="konfirmasiEdit(false)" style="padding: 6px 12px; background: #6c757d; color: white; border: none; border-radius: 4px;">Tidak</button>
+    <div id="popupCariSupplier" class="popup-pb-cari" style="display: none;">
+        <div class="popup-pb-contentcari">
+            <h3>Pilih Supplier</h3>
+            <table class="tabel-hasil" style="min-width: 700px;">
+                <thead>
+                    <tr>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>Alamat</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyHasilSupplier">
+                    <!-- hasil dari filter_barang.php -->
+                </tbody>
+            </table>
+            <div style="text-align: right; margin-top: 10px;">
+                <button type="button" onclick="tutupPopupSupplier()">Tutup</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const supplierList = <?= json_encode($suppliers) ?>;
+        const kodeInput = document.getElementById('inputKodesup');
+        const namaInput = document.getElementById('inputNamasup');
+
+        [kodeInput, namaInput].forEach(input => {
+            const tipe = input.id === 'inputNamasup' ? 'kode' : 'nama';
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value.trim();
+                    if (val) cariSupplier(tipe, val);
+                }
+            });
+        });
+
+        function cariSupplier(mode, keyword) {
+            if (!keyword) return;
+
+            fetch('filter_itemsupplier.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbodyHasilSupplier');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                } else {
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.kodesup}</td>
+                            <td>${item.namasup}</td>
+                            <td>${item.alamat}</td>
+                            <td><button type="button" onclick='pilihSupplier(${JSON.stringify(item)})'>Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                document.getElementById('popupCariSupplier').style.display = 'flex';
+            })
+            .catch(() => {
+                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            });
+        }
+
+        function pilihSupplier(item) {
+            kodeInput.value = item.kodesup;
+            namaInput.value = item.namasup;
+            tutupPopupSupplier();
+        }
+
+        function tutupPopupSupplier() {
+            document.getElementById('popupCariSupplier').style.display = 'none';
+        }
 
         window.addEventListener("DOMContentLoaded", () => {
             const today = new Date().toISOString().split('T')[0];
@@ -206,58 +231,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('statusBayar').disabled = isFilled;
         });
 
-        // Autocomplete supplier
-        const inputNamasup = document.getElementById("inputNamasup");
-        const kodesupField = document.getElementById("inputKodesup");
-        const dropdown = document.getElementById("dropdownSupplier");
-
-        inputNamasup.addEventListener("input", function () {
-            const val = this.value.trim().toUpperCase();
-            dropdown.innerHTML = "";
-
-            if (val === "") {
-                dropdown.style.display = "none";
-                return;
-            }
-
-            const filtered = supplierList.filter(sup =>
-                sup.namasup.toUpperCase().includes(val)
-            );
-
-            if (filtered.length === 0) {
-                dropdown.innerHTML = "<div class='dropdown-item'>Tidak ditemukan</div>";
-            } else {
-                filtered.forEach(sup => {
-                    const item = document.createElement("div");
-                    item.classList.add("dropdown-item");
-                    item.textContent = `${sup.namasup}`;
-                    item.dataset.kodesup = sup.kodesup;
-                    item.dataset.namasup = sup.namasup;
-                    dropdown.appendChild(item);
-                });
-            }
-
-            dropdown.style.display = "block";
-        });
-
-        dropdown.addEventListener("click", function (e) {
-            if (e.target.classList.contains("dropdown-item")) {
-                const kodesup = e.target.dataset.kodesup;
-                const namasup = e.target.dataset.namasup;
-
-                inputNamasup.value = namasup;
-                kodesupField.value = kodesup;
-                dropdown.innerHTML = "";
-                dropdown.style.display = "none";
-            }
-        });
-
-        document.addEventListener("click", function (e) {
-            if (!inputNamasup.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.style.display = "none";
-            }
-        });
-
         function showToast(pesan, warna = '#28a745') {
             const toast = document.createElement('div');
             toast.textContent = pesan;
@@ -273,100 +246,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
-
-        const inputKode = document.getElementById("kode_sup");
-        const inputNama = document.getElementById("nama_sup");
-        const dropdownKode = document.getElementById("dropdownKodeSup");
-        const dropdownNama = document.getElementById("dropdownNamaSup");
-        const alamatField = document.getElementById("alamat");
-
-        // Autocomplete berdasarkan KODE
-        inputKode.addEventListener("input", function () {
-            const val = this.value.trim().toUpperCase();
-            dropdownKode.innerHTML = "";
-
-            if (val === "") {
-                dropdownKode.style.display = "none";
-                return;
-            }
-
-            const filtered = supplierList.filter(sup => sup.kodesup.toUpperCase().includes(val));
-
-            if (filtered.length === 0) {
-                dropdownKode.innerHTML = "<div class='dropdown-item'>Tidak ditemukan</div>";
-            } else {
-                filtered.forEach(sup => {
-                    const item = document.createElement("div");
-                    item.classList.add("dropdown-item");
-                    item.textContent = `${sup.kodesup} - ${sup.namasup}`;
-                    item.dataset.kodesup = sup.kodesup;
-                    item.dataset.namasup = sup.namasup;
-                    item.dataset.alamat = sup.alamat ?? '';
-                    dropdownKode.appendChild(item);
-                });
-            }
-
-            dropdownKode.style.display = "block";
-        });
-
-        // Autocomplete berdasarkan NAMA
-        inputNama.addEventListener("input", function () {
-            const val = this.value.trim().toUpperCase();
-            dropdownNama.innerHTML = "";
-
-            if (val === "") {
-                dropdownNama.style.display = "none";
-                return;
-            }
-
-            const filtered = supplierList.filter(sup => sup.namasup.toUpperCase().includes(val));
-
-            if (filtered.length === 0) {
-                dropdownNama.innerHTML = "<div class='dropdown-item'>Tidak ditemukan</div>";
-            } else {
-                filtered.forEach(sup => {
-                    const item = document.createElement("div");
-                    item.classList.add("dropdown-item");
-                    item.textContent = `${sup.namasup} (${sup.kodesup})`;
-                    item.dataset.kodesup = sup.kodesup;
-                    item.dataset.namasup = sup.namasup;
-                    item.dataset.alamat = sup.alamat ?? '';
-                    dropdownNama.appendChild(item);
-                });
-            }
-
-            dropdownNama.style.display = "block";
-        });
-
-        // Pilih dari dropdown KODE
-        dropdownKode.addEventListener("click", function (e) {
-            if (e.target.classList.contains("dropdown-item")) {
-                inputKode.value = e.target.dataset.kodesup;
-                inputNama.value = e.target.dataset.namasup;
-                alamatField.value = e.target.dataset.alamat;
-                dropdownKode.style.display = "none";
-            }
-        });
-
-        // Pilih dari dropdown NAMA
-        dropdownNama.addEventListener("click", function (e) {
-            if (e.target.classList.contains("dropdown-item")) {
-                inputNama.value = e.target.dataset.namasup;
-                inputKode.value = e.target.dataset.kodesup;
-                alamatField.value = e.target.dataset.alamat;
-                dropdownNama.style.display = "none";
-            }
-        });
-
-        // Tutup dropdown jika klik di luar
-        document.addEventListener("click", function (e) {
-            if (!inputKode.contains(e.target) && !dropdownKode.contains(e.target)) {
-                dropdownKode.style.display = "none";
-            }
-            if (!inputNama.contains(e.target) && !dropdownNama.contains(e.target)) {
-                dropdownNama.style.display = "none";
-            }
-        });
 
     </script>
 </body>

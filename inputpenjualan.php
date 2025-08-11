@@ -35,7 +35,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             <button id="btnKembali" type="button" onclick="window.location.href='penjualan.php'">List Nota</button>
         </div>
 
-        <form id="formPembelian" action="prosespenjualan.php" method="POST">
+        <form id="formPenjualan" action="prosespenjualan.php" method="POST">
             <div id="form-penjualan-atas">
                 <div class="form-pj-row">
                     <div class="form-pj-col">
@@ -43,15 +43,15 @@ while ($row = $supplierQuery->fetch_assoc()) {
                         <input type="date" id="tanggal" name="tanggal" class="short-input" style="text-transform: uppercase;">
                     </div>
                     <div class="form-pj-col">
-                        <label for="kode_kustomer">Kode Kustomer</label>
+                        <label for="kode_kust">Kode Kustomer</label>
                         <div style="position: relative; flex: 1;" class="short-input">
-                            <input type="text" id="kode_kust" data-table="zkustomer" data-field="kodekust" data-check="eksistensi" data-reset="nama_kust,alamat" onblur="cekValidasi(this)" name="kode_kustomer" style="text-transform: uppercase;">
+                            <input type="text" id="kode_kust" data-table="zkustomer" data-field="kodekust" data-check="eksistensi" data-reset="nama_kust,alamat" onblur="cekValidasi(this)" name="kode_kust" style="text-transform: uppercase;">
                         </div>
                     </div>
                     <div class="form-pj-col">
-                        <label for="kode_sales">Kode Sales</label>
+                        <label for="kode_sls">Kode Sales</label>
                         <div style="position: relative; flex: 1;" class="short-input">
-                            <input type="text" id="kode_sls" data-table="zsales" data-field="kodesls" data-check="eksistensi" data-reset="nama_sls,alamat" onblur="cekValidasi(this)" name="kode_sales" style="text-transform: uppercase;">
+                            <input type="text" id="kode_sls" data-table="zsales" data-field="kodesls" data-check="eksistensi" data-reset="nama_sls,alamat" onblur="cekValidasi(this)" name="kode_sls" style="text-transform: uppercase;">
                         </div>
                     </div>
                 </div>
@@ -62,15 +62,15 @@ while ($row = $supplierQuery->fetch_assoc()) {
                         <input type="text" id="no_nota" data-table="zbeli" data-field="nonota" data-check="duplikat" onblur="cekValidasi(this)" name="no_nota" class="short-input" style="text-transform: uppercase;">
                     </div>
                     <div class="form-pj-col" style="position: relative;">
-                        <label for="nama_kustomer">Nama Kustomer</label>
+                        <label for="nama_kust">Nama Kustomer</label>
                         <div style="position: relative; flex: 1;">
-                            <input type="text" id="nama_kust" data-table="zkustomer" data-field="namakust" data-check="eksistensi" data-reset="kode_kust,alamat" onblur="cekValidasi(this)" name="nama_kustomer" class="medlesshort-input" style="text-transform: uppercase;">
+                            <input type="text" id="nama_kust" data-table="zkustomer" data-field="namakust" data-check="eksistensi" data-reset="kode_kust,alamat" onblur="cekValidasi(this)" name="nama_kust" class="medlesshort-input" style="text-transform: uppercase;">
                         </div>
                     </div>
                     <div class="form-pj-col" style="position: relative;">
-                        <label for="nama_sales">Nama Sales</label>
+                        <label for="nama_sls">Nama Sales</label>
                         <div style="position: relative; flex: 1;">
-                            <input type="text" id="nama_sls" data-table="zsales" data-field="namasls" data-check="eksistensi" data-reset="kode_sls,alamat" onblur="cekValidasi(this)" name="nama_sales" class="medlesshort-input" style="text-transform: uppercase;">
+                            <input type="text" id="nama_sls" data-table="zsales" data-field="namasls" data-check="eksistensi" data-reset="kode_sls,alamat" onblur="cekValidasi(this)" name="nama_sls" class="medlesshort-input" style="text-transform: uppercase;">
                         </div>
                     </div>
                 </div>
@@ -98,11 +98,12 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     <button id="btnTambahItem" type="button">+</button>
                 </div>
                 <div style="overflow-x: auto;">
-                    <table class="tabel-hasil" id="tabelPembelian" style="min-width: 1200px;">
+                    <table class="tabel-hasil" id="tabelPenjualan" style="min-width: 1200px;">
                         <thead>
                             <tr>
                                 <th style="min-width: 100px;">Kode brg</th>
                                 <th style="min-width: 200px;">Nama brg</th>
+                                <th style="min-width: 100px;">Kode Gudang</th>
                                 <th style="min-width: 50px;">Jlh 1</th>
                                 <th style="min-width: 80px;">Satuan 1</th>
                                 <th style="min-width: 50px;">Jlh 2</th>
@@ -235,10 +236,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
         </div>
         <div id="popupForm" class="popup-pb-overlay" style="display: none;">
             <div class="popup-pb-content">
-                <h3>Tambah Data Pembelian</h3>
-                <form id="formDetailPembelian">
+                <h3>Tambah Data Penjualan</h3>
+                <form id="formDetailPenjualan">
                     <input type="hidden" name="popup_isi1" id="popup_isi1" value=""> 
-                    <input type="hidden" name="popup_isi2" id="popup_isi2" value=""> 
+                    <input type="hidden" name="popup_isi2" id="popup_isi2" value="">
+                    <input type="hidden" name="popup_hdiskon1" id="popup_hdiskon1" value=""> 
+                    <input type="hidden" name="popup_hdiskon2" id="popup_hdiskon2" value="">
+                    <input type="hidden" name="popup_hdiskon3" id="popup_hdiskon3" value="">  
                     <div class="popup-pb-row">
                         <label for="popup_kodegd">Kode Gudang</label>
                         <select id="popup_kodegd" name="popup_gd" required>
@@ -316,10 +320,13 @@ while ($row = $supplierQuery->fetch_assoc()) {
         </div>
         <div id="popupFormEdit" class="popup-pb-overlay" style="display: none;">
             <div class="popup-pb-content">
-                <h3>Edit Data Pembelian</h3>
-                <form id="formDetailPembelianEdit">
+                <h3>Edit Data Penjualan</h3>
+                <form id="formDetailPenjualanEdit">
                     <input type="hidden" name="edit_popup_isi1" id="edit_popup_isi1" value=""> 
                     <input type="hidden" name="edit_popup_isi2" id="edit_popup_isi2" value="">
+                    <input type="hidden" name="edit_popup_hdiskon1" id="edit_popup_hdiskon1" value=""> 
+                    <input type="hidden" name="edit_popup_hdiskon2" id="edit_popup_hdiskon2" value="">
+                    <input type="hidden" name="edit_popup_hdiskon3" id="edit_popup_hdiskon3" value=""> 
                     <div class="popup-pb-row">
                         <label for="edit_popup_kodegd">Kode Gudang</label>
                         <select id="edit_popup_kodegd" name="edit_popup_kodegd" required>
@@ -365,7 +372,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="popup-pb-row">
                         <label for="popup_harga">Harga</label>
-                        <input type="number" id="edit_popup_harga" name="edit_popup_harga" value="0" disabled>
+                        <input type="number" id="edit_popup_harga" name="edit_popup_harga" value="0">
                     </div>
                     <div class="popup-pb-row">
                         <label for="popup_disca">Disca</label>
@@ -437,7 +444,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
     </div>
     <script>
         let currentstat = null;
-        let dataPembelian = [];
+        let dataPenjualan = [];
         let indexToDelete = null;
         const kodeInput = document.getElementById('kode_kust');
         const namaInput = document.getElementById('nama_kust');
@@ -449,6 +456,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
         const popupKodeInput = document.getElementById('popup_kodebrg');
         const popupNamaInput = document.getElementById('popup_namabrg');
+        const popupKodeGd = document.getElementById('popup_kodegd');
         const popupSatuan1 = document.getElementById('popup_satuan1');
         const popupSatuan2 = document.getElementById('popup_satuan2');
         const popupSatuan3 = document.getElementById('popup_satuan3');
@@ -463,11 +471,15 @@ while ($row = $supplierQuery->fetch_assoc()) {
         const popupDiscc = document.getElementById('popup_discc');
         const popupDiscrp = document.getElementById('popup_discrp');
         const popupJumlah = document.getElementById('popup_jumlah');
+        const popupHdiskon1 = document.getElementById('popup_hdiskon1');
+        const popupHdiskon2 = document.getElementById('popup_hdiskon2');
+        const popupHdiskon3= document.getElementById('popup_hdiskon3');
 
         const isi1Edit       = document.getElementById('edit_popup_isi1');
         const isi2Edit       = document.getElementById('edit_popup_isi2');
         const kodebrgEdit    = document.getElementById('edit_popup_kodebrg');
         const namabrgEdit    = document.getElementById('edit_popup_namabrg');
+        const kodegdEdit    = document.getElementById('edit_popup_kodegd');
         const jlh1Edit       = document.getElementById('edit_popup_jlh1');
         const satuan1Edit    = document.getElementById('edit_popup_satuan1');
         const jlh2Edit       = document.getElementById('edit_popup_jlh2');
@@ -480,6 +492,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
         const disccEdit      = document.getElementById('edit_popup_discc');
         const discrpEdit     = document.getElementById('edit_popup_discrp');
         const jumlahEdit     = document.getElementById('edit_popup_jumlah');
+        const hdiskon1Edit = document.getElementById('edit_popup_hdiskon1');
+        const hdiskon2Edit = document.getElementById('edit_popup_hdiskon2');
+        const hdiskon3Edit = document.getElementById('edit_popup_hdiskon3');
         
 
         // Trigger cari saat tekan Enter
@@ -691,7 +706,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
         }
 
         function pilihBarang(item) {
-            document.getElementById('formDetailPembelian').reset();
+            document.getElementById('formDetailPenjualan').reset();
             popupKodeInput.value = item.kodebrg;
             popupNamaInput.value = item.namabrg;
             popupSatuan1.value = item.satuan1;
@@ -795,29 +810,33 @@ while ($row = $supplierQuery->fetch_assoc()) {
         });
 
 
-        function renderTabelPembelian() {
-            const tbody = document.querySelector('#tabelPembelian tbody');
+        function renderTabelPenjualan() {
+            const tbody = document.querySelector('#tabelPenjualan tbody');
             tbody.innerHTML = '';
 
-            dataPembelian.forEach((item, index) => {
+            dataPenjualan.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td style="display: none;">${item.isi1}</td>
                     <td style="display: none;">${item.isi2}</td>
                     <td>${item.kodebrg}</td>
                     <td>${item.namabrg}</td>
-                    <td>${item.jlh1}</td>
+                    <td>${item.kodegd}</td>
+                    <td style="text-align: right;">${item.jlh1}</td>
                     <td>${item.satuan1}</td>
-                    <td>${item.jlh2 || ''}</td>
+                    <td style="text-align: right;">${item.jlh2 || ''}</td>
                     <td>${item.satuan2 || ''}</td>
-                    <td>${item.jlh3 || ''}</td>
+                    <td style="text-align: right;">${item.jlh3 || ''}</td>
                     <td>${item.satuan3 || ''}</td>
-                    <td>${item.harga}</td>
-                    <td>${item.disca}</td>
-                    <td>${item.discb}</td>
-                    <td>${item.discc}</td>
-                    <td>${item.discrp}</td>
-                    <td>${item.jumlah}</td>
+                    <td style="text-align: right;">${item.harga}</td>
+                    <td style="text-align: right;">${item.disca}</td>
+                    <td style="text-align: right;">${item.discb}</td>
+                    <td style="text-align: right;">${item.discc}</td>
+                    <td style="display: none; text-align: right;">${item.hdisca}</td>
+                    <td style="display: none; text-align: right;">${item.hdiscb}</td>
+                    <td style="display: none; text-align: right;">${item.hdiscc}</td>
+                    <td style="text-align: right;">${item.discrp}</td>
+                    <td style="text-align: right;">${item.jumlah}</td>
                     <td style="display: none;" id="td-btn-${index}">
                         <button type="button" onclick="editItem(${index})">Edit</button>
                         <button type="button" onclick="hapusItem(${index})">Hapus</button>
@@ -827,7 +846,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             });
         }
 
-        document.getElementById('formDetailPembelian').addEventListener('submit', function (e) {
+        document.getElementById('formDetailPenjualan').addEventListener('submit', function (e) {
             e.preventDefault();
 
             const item = {
@@ -835,6 +854,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 isi2: parseInt(document.getElementById('popup_isi2').value),
                 kodebrg: document.getElementById('popup_kodebrg').value.trim().toUpperCase(),
                 namabrg: document.getElementById('popup_namabrg').value.trim().toUpperCase(),
+                kodegd: document.getElementById('popup_kodegd').value.trim().toUpperCase(),
                 jlh1: parseInt(document.getElementById('popup_jlh1').value),
                 satuan1: document.getElementById('popup_satuan1').value.trim(),
                 jlh2: parseInt(document.getElementById('popup_jlh2').value) || null,
@@ -850,20 +870,20 @@ while ($row = $supplierQuery->fetch_assoc()) {
             };
 
             // Tambah atau update
-            if (formDetailPembelian.dataset.editingIndex) {
-                dataPembelian[formDetailPembelian.dataset.editingIndex] = item;
-                delete formDetailPembelian.dataset.editingIndex;
+            if (formDetailPenjualan.dataset.editingIndex) {
+                dataPenjualan[formDetailPenjualan.dataset.editingIndex] = item;
+                delete formDetailPenjualan.dataset.editingIndex;
             } else {
-                dataPembelian.push(item);
+                dataPenjualan.push(item);
                 hitungSubtotalDariArray();
             }
 
-            renderTabelPembelian();
+            renderTabelPenjualan();
             resetitem();
             showToast('Item berhasil disimpan!');
         });
 
-        document.getElementById('formDetailPembelianEdit').addEventListener('submit', function (e) {
+        document.getElementById('formDetailPenjualanEdit').addEventListener('submit', function (e) {
             e.preventDefault();
 
             const item = {
@@ -871,6 +891,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 isi2: parseInt(document.getElementById('edit_popup_isi2').value),
                 kodebrg: document.getElementById('edit_popup_kodebrg').value.trim().toUpperCase(),
                 namabrg: document.getElementById('edit_popup_namabrg').value.trim().toUpperCase(),
+                kodegd: document.getElementById('edit_popup_kodegd').value.trim().toUpperCase(),
                 jlh1: parseInt(document.getElementById('edit_popup_jlh1').value),
                 satuan1: document.getElementById('edit_popup_satuan1').value.trim(),
                 jlh2: parseInt(document.getElementById('edit_popup_jlh2').value) || null,
@@ -885,11 +906,11 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 jumlah: parseFloat(document.getElementById('edit_popup_jumlah').value)
             };
 
-            const editIndex = formDetailPembelianEdit.dataset.editingIndex;
+            const editIndex = formDetailPenjualanEdit.dataset.editingIndex;
             if (editIndex !== undefined && editIndex !== null) {
-                dataPembelian[editIndex] = item;
-                delete formDetailPembelianEdit.dataset.editingIndex;
-                renderTabelPembelian();
+                dataPenjualan[editIndex] = item;
+                delete formDetailPenjualanEdit.dataset.editingIndex;
+                renderTabelPenjualan();
                 hitungSubtotalDariArray();
                 showToast('Item berhasil diperbarui!');
             }
@@ -904,7 +925,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
         });
 
         function resetitem() {
-            document.getElementById('formDetailPembelian').reset();
+            document.getElementById('formDetailPenjualan').reset();
             document.getElementById('thAksi').style.display = '';
             const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
             allTdAksi.forEach(td => {
@@ -915,11 +936,12 @@ while ($row = $supplierQuery->fetch_assoc()) {
         }
 
         function editItem(index) {
-            const item = dataPembelian[index];
+            const item = dataPenjualan[index];
             isi1Edit.value     = item.isi1;
             isi2Edit.value     = item.isi2;
             kodebrgEdit.value  = item.kodebrg;
             namabrgEdit.value  = item.namabrg;
+            kodegdEdit.value   = item.kodegd;
             jlh1Edit.value     = item.jlh1;
             satuan1Edit.value  = item.satuan1;
             jlh2Edit.value     = item.jlh2 || '';
@@ -946,7 +968,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             }
 
             // Simpan index
-            const formEdit = document.getElementById('formDetailPembelianEdit');
+            const formEdit = document.getElementById('formDetailPenjualanEdit');
             formEdit.dataset.editingIndex = index;
 
             // Tampilkan popup edit
@@ -962,8 +984,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
         function konfirmasiHapus(ya) {
             document.getElementById('popupConfirmHapus').style.display = 'none';
             if (ya && indexToDelete !== null) {
-                dataPembelian.splice(indexToDelete, 1);
-                renderTabelPembelian();
+                dataPenjualan.splice(indexToDelete, 1);
+                renderTabelPenjualan();
                 hitungSubtotalDariArray();
                 document.getElementById('thAksi').style.display = '';
                 const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
@@ -985,11 +1007,11 @@ while ($row = $supplierQuery->fetch_assoc()) {
         ];
 
         inputFields.forEach(id => {
-            document.getElementById(id).addEventListener('input', hitungJumlahPembelian);
-            document.getElementById(id).addEventListener('input', hitungJumlahPembelianEdit);
+            document.getElementById(id).addEventListener('input', hitungJumlahPenjualan);
+            document.getElementById(id).addEventListener('input', hitungJumlahPenjualanEdit);
         });
 
-        function hitungJumlahPembelian() {
+        function hitungJumlahPenjualan() {
             let jlh1 = parseFloat(popupJlh1.value) || 0;
             let jlh2 = parseFloat(popupJlh2.value) || 0;
             let jlh3 = parseFloat(popupJlh3.value) || 0;
@@ -1023,7 +1045,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             popupJumlah.value = Math.round(finalJumlah);
         }
 
-        function hitungJumlahPembelianEdit() {
+        function hitungJumlahPenjualanEdit() {
             let jlh1 = parseFloat(jlh1Edit.value) || 0;
             let jlh2 = parseFloat(jlh2Edit.value) || 0;
             let jlh3 = parseFloat(jlh3Edit.value) || 0;
@@ -1055,8 +1077,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
             let finalJumlah = smntaradis3 - discrp;
 
             jumlahEdit.value = Math.round(finalJumlah);
-            if (indexEdit !== undefined && dataPembelian[indexEdit]) {
-                dataPembelian[indexEdit].jumlah = Math.round(finalJumlah);
+            if (indexEdit !== undefined && dataPenjualan[indexEdit]) {
+                dataPenjualan[indexEdit].jumlah = Math.round(finalJumlah);
             }
 
             hitungSubtotalDariArray();
@@ -1068,7 +1090,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
         function hitungSubtotalDariArray() {
             let subtotal = 0;
-            dataPembelian.forEach(item => {
+            dataPenjualan.forEach(item => {
                 subtotal += parseFloat(item.jumlah) || 0;
             });
 
@@ -1113,7 +1135,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             currentstat = 'tambah';
             showToast('Kamu sedang menambah data...', '#ffc107');
 
-            document.getElementById('formPembelian').reset();
+            document.getElementById('formPenjualan').reset();
             
             const today = new Date().toISOString().split('T')[0];
             document.getElementById("tanggal").value = today;
@@ -1145,8 +1167,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 td.style.display = '';
             });
 
-            dataPembelian = [];
-            renderTabelPembelian();
+            dataPenjualan = [];
+            renderTabelPenjualan();
         }
 
         function laststat() {
@@ -1184,7 +1206,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
         function cancelForm() {
             initializeFormButtons();
                 // Reset form
-            document.getElementById('formPembelian').reset();
+            document.getElementById('formPenjualan').reset();
             // Set kembali tanggal dan jatuh tempo ke hari ini
             const today = new Date().toISOString().split('T')[0];
             //document.getElementById("tanggal").value = today;
@@ -1194,9 +1216,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
             allTdAksi.forEach(td => {
                 td.style.display = '';
             });
-            dataPembelian = [];
-            renderTabelPembelian();
-            localStorage.removeItem('formPembelianState');
+            dataPenjualan = [];
+            renderTabelPenjualan();
+            localStorage.removeItem('formPenjualanState');
         }
 
         document.getElementById('btnTambahItem').addEventListener('click', () => {
@@ -1205,16 +1227,16 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
         // Tutup popup
         function tutupPopup() {
-            document.getElementById('formDetailPembelian').reset();
-            delete formDetailPembelian.dataset.editingIndex;
+            document.getElementById('formDetailPenjualan').reset();
+            delete formDetailPenjualan.dataset.editingIndex;
             document.getElementById('popupForm').style.display = 'none';
             popupJlh2.disabled = true;
             popupJlh3.disabled = true;
         }
 
         function tutupPopupEdit() {
-            document.getElementById('formDetailPembelianEdit').reset();
-            delete formDetailPembelian.dataset.editingIndex;
+            document.getElementById('formDetailPenjualanEdit').reset();
+            delete formDetailPenjualan.dataset.editingIndex;
             document.getElementById('popupFormEdit').style.display = 'none';
             jlh2Edit.disabled = true;
             jlh3Edit.disabled = true;
@@ -1242,8 +1264,8 @@ while ($row = $supplierQuery->fetch_assoc()) {
         document.addEventListener('DOMContentLoaded', isiDropdownGudang);
 
         window.addEventListener('DOMContentLoaded', () => {
-            const saved = JSON.parse(localStorage.getItem('formPembelianState') || '{}');
-            const form = document.getElementById('formPembelian');
+            const saved = JSON.parse(localStorage.getItem('formPenjualanState') || '{}');
+            const form = document.getElementById('formPenjualan');
 
             currentstat = saved.currentstat || null;
 
@@ -1255,9 +1277,9 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 }
             });
 
-            if (saved.dataPembelian) {
-                dataPembelian = saved.dataPembelian;
-                renderTabelPembelian();
+            if (saved.dataPenjualan) {
+                dataPenjualan = saved.dataPenjualan;
+                renderTabelPenjualan();
                 hitungSubtotalDariArray();
             }
 
@@ -1277,15 +1299,16 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
         document.getElementById('btnSave').addEventListener('click', () => {
             const data = {
-                no_nota: document.getElementById('no_nota').value,
+                nonota: document.getElementById('no_nota').value,
                 tanggal: document.getElementById('tanggal').value,
-                kode_kust: document.getElementById('kode_kust').value,
+                kodekust: document.getElementById('kode_kust').value,
+                kodesls: document.getElementById('kode_sls').value,
                 jt_tempo: document.getElementById('jt_tempo').value,
                 totaljmlh: parseFloat(document.getElementById('totaljmlh').value) || 0,
-                detail: dataPembelian // array yang sudah kamu simpan saat tambah item
+                detail: dataPenjualan // array yang sudah kamu simpan saat tambah item
             };
 
-            fetch('prosessimpanpmb.php', {
+            fetch('prosessimpanpnj.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1296,7 +1319,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             .then(res => {
                 if (res.success) {
                     showToast('Data berhasil disimpan!');
-                    localStorage.removeItem('formPembelianState');
+                    localStorage.removeItem('formPenjualanState');
                     initializeFormButtons();
                 } else {
                     showToast('Gagal menyimpan: ' + res.message, '#dc3545');
@@ -1336,7 +1359,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             setTimeout(() => toast.remove(), 1500);
         }
         window.addEventListener('beforeunload', () => {
-            const form = document.getElementById('formPembelian');
+            const form = document.getElementById('formPenjualan');
             const formData = {};
 
             form.querySelectorAll('input, select, textarea, button').forEach(el => {
@@ -1349,11 +1372,11 @@ while ($row = $supplierQuery->fetch_assoc()) {
             // Simpan currentstat
             formData['currentstat'] = currentstat;
 
-            // Simpan dataPembelian juga jika penting
-            formData['dataPembelian'] = dataPembelian;
+            // Simpan dataPenjualan juga jika penting
+            formData['dataPenjualan'] = dataPenjualan;
 
             // Simpan ke localStorage
-            localStorage.setItem('formPembelianState', JSON.stringify(formData));
+            localStorage.setItem('formPenjualanState', JSON.stringify(formData));
         });
 
     </script>

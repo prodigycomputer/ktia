@@ -9,21 +9,14 @@
     $no_nota = strtoupper($data['no_nota'] ?? '');
     $no_nota_lama = strtoupper($data['no_nota_lama'] ?? $no_nota);
     $tanggal = $data['tanggal'] ?? '';
-    $kode_sup = strtoupper($data['kode_sup'] ?? '');
+    $kodekust = strtoupper($data['kode_kust'] ?? '');
+    $kodesls = strtoupper($data['kode_sls'] ?? '');
     $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
     $jt_tempo = $data['jt_tempo'] ?? '';
     $totaljmlh = $data['totaljmlh'] ?? 0;
-    $prsnppn = $data['prsnppn'] ?? 0;
-    $hrgppn = $data['hrgppn'] ?? 0;
-    $disk1 = $data['disk1'] ?? 0;
-    $hdisk1 = $data['hdisk1'] ?? 0;
-    $disk2 = $data['disk2'] ?? 0;
-    $hdisk2 = $data['hdisk2'] ?? 0;
-    $disk3 = $data['disk3'] ?? 0;
-    $hdisk3 = $data['hdisk3'] ?? 0;
     
 
-    if (!$no_nota || !$tanggal || !$kode_sup || !$jt_tempo || empty($detail)) {
+    if (!$no_nota || !$tanggal || !$kodekust || !$kodesls || !$jt_tempo || empty($detail)) {
         echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
         exit;
     }
@@ -31,29 +24,29 @@
     try {
         $conn->begin_transaction();
 
-        $hapusDetail = $conn->prepare("DELETE FROM zbelim WHERE nonota = ?");
+        $hapusDetail = $conn->prepare("DELETE FROM zjualm WHERE nonota = ?");
         $hapusDetail->bind_param("s", $no_nota_lama);
         $hapusDetail->execute();
         $hapusDetail->close();
         // Hapus detail lama
-        $hapusHeader = $conn->prepare("DELETE FROM zbeli WHERE nonota = ?");
+        $hapusHeader = $conn->prepare("DELETE FROM zjual WHERE nonota = ?");
         $hapusHeader->bind_param("s", $no_nota_lama);
         $hapusHeader->execute();
         $hapusHeader->close();
         
         // Insert detail baru
         $stmtHeader = $conn->prepare("
-            INSERT INTO zbeli 
-            (nonota, tgl, kodesup, kodegd, nilai, tgltempo, ppn, hppn, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO zjual 
+            (nonota, tgl, kodekust, kodesls, kodegd, nilai, tgltempo)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
 
-        $stmtHeader->bind_param("ssssdsdddddddd", $no_nota, $tanggal, $kode_sup, $kodegd, $totaljmlh, $jt_tempo, $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3);
+        $stmtHeader->bind_param("sssssds", $no_nota, $tanggal, $kodekust, $kodesls, $kodegd, $totaljmlh, $jt_tempo);
         $stmtHeader->execute();
         $stmtHeader->close();
 
         $stmt = $conn->prepare("
-            INSERT INTO zbelim 
+            INSERT INTO zjualm 
             (nonota, kodebrg, kodegd, jlh1, jlh2, jlh3, harga, disca, discb, discc, discrp, jumlah, hdisca, hdiscb, hdiscc)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
