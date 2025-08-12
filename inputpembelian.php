@@ -14,6 +14,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
     <title>Input Pembelian</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
+    <script src="hitung.js"></script>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -196,7 +197,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         </div>
         <div id="popupForm" class="popup-pb-overlay" style="display: none;">
             <div class="popup-pb-content">
-                <h3>Tambah Data Pembelian</h3>
+                <h3>List Data Barang</h3>
                 <form id="formDetailPembelian">
                     <input type="hidden" name="popup_isi1" id="popup_isi1" value=""> 
                     <input type="hidden" name="popup_isi2" id="popup_isi2" value=""> 
@@ -284,99 +285,6 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 </form>
             </div>
         </div>
-        <div id="popupFormEdit" class="popup-pb-overlay" style="display: none;">
-            <div class="popup-pb-content">
-                <h3>Edit Data Pembelian</h3>
-                <form id="formDetailPembelianEdit">
-                    <input type="hidden" name="edit_popup_isi1" id="edit_popup_isi1" value=""> 
-                    <input type="hidden" name="edit_popup_isi2" id="edit_popup_isi2" value="">
-                    <input type="hidden" name="edit_popup_hdiskon1" id="edit_popup_hdiskon1" value=""> 
-                    <input type="hidden" name="edit_popup_hdiskon2" id="edit_popup_hdiskon2" value="">
-                    <input type="hidden" name="edit_popup_hdiskon3" id="edit_popup_hdiskon3" value=""> 
-                    <div class="popup-pb-row">
-                        <label for="edit_popup_kodegd">Kode Gudang</label>
-                        <select id="edit_popup_kodegd" name="edit_popup_kodegd" required>
-                            <option value="">Pilih Gudang</option>
-                            <!-- Akan diisi via JavaScript -->
-                        </select>
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_kodebrg">Kode Barang</label>
-                        <input type="text" id="edit_popup_kodebrg" data-table="zstok" data-field="kodebrg" data-check="eksistensi" data-reset="edit_popup_namabrg" onblur="cekValidasi(this)" name="edit_popup_kodebrg" style="text-transform: uppercase;">
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_namabrg">Nama Barang</label>
-                        <input type="text" id="edit_popup_namabrg" data-table="zstok" data-field="namabrg" data-check="eksistensi" data-reset="edit_popup_kodebrg" onblur="cekValidasi(this)" name="edit_popup_namabrg" style="text-transform: uppercase;">
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_jlh1">Jumlah 1</label>
-                        <input type="number" id="edit_popup_jlh1" name="edit_popup_jlh1" style="text-align: right;" min="0">
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_satuan1">Satuan 1</label>
-                        <input type="text" id="edit_popup_satuan1" name="edit_popup_satuan1" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_jlh2">Jumlah 2</label>
-                        <input type="number" id="edit_popup_jlh2" name="edit_popup_jlh2" style="text-align: right;" min="0" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_satuan2">Satuan 2</label>
-                        <input type="text" id="edit_popup_satuan2" name="edit_popup_satuan2" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_jlh3">Jumlah 3</label>
-                        <input type="number" id="edit_popup_jlh3" name="edit_popup_jlh3" style="text-align: right;" min="0" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_satuan3">Satuan 3</label>
-                        <input type="text" id="edit_popup_satuan3" name="edit_popup_satuan3" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_harga">Harga</label>
-                        <input type="number" id="edit_popup_harga" name="edit_popup_harga" style="text-align: right;" value="0">
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_disca">Disca</label>
-                        <input type="number" id="edit_popup_disca" name="edit_popup_disca" style="text-align: right;" value="0">
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_discb">Discb</label>
-                        <input type="number" id="edit_popup_discb" name="edit_popup_discb" style="text-align: right;" value="0">
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_discc">Discc</label>
-                        <input type="number" id="edit_popup_discc" name="edit_popup_discc" style="text-align: right;" value="0">
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_discrp">Disc Rp</label>
-                        <input type="number" id="edit_popup_discrp" name="edit_popup_discrp" style="text-align: right;" value="0">
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_jumlah">Jumlah</label>
-                        <input type="number" id="edit_popup_jumlah" name="edit_popup_jumlah" style="text-align: right;" required>
-                    </div>
-
-                    <div class="popup-pb-row" style="justify-content: flex-end; gap: 10px;">
-                        <button id="btnSaveItem" type="submit">Oke</button>
-                        <button id="btnCancelItem" type="button" onclick="tutupPopupEdit()">Batal</button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </main>
 
     <div id="toast" style="
@@ -419,6 +327,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
     </div>
     <script>
         let currentstat = null;
+        let currentMode = "input";
         let dataPembelian = [];
         let indexToDelete = null;
         const kodeInput = document.getElementById('kode_sup');
@@ -704,84 +613,45 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             e.preventDefault();
 
             const item = {
-                isi1: parseInt(document.getElementById('popup_isi1').value),
-                isi2: parseInt(document.getElementById('popup_isi2').value),
-                kodebrg: document.getElementById('popup_kodebrg').value.trim().toUpperCase(),
-                namabrg: document.getElementById('popup_namabrg').value.trim().toUpperCase(),
-                kodegd: document.getElementById('popup_kodegd').value.trim().toUpperCase(),
-                jlh1: parseInt(document.getElementById('popup_jlh1').value),
-                satuan1: document.getElementById('popup_satuan1').value.trim(),
-                jlh2: parseInt(document.getElementById('popup_jlh2').value) || null,
-                satuan2: document.getElementById('popup_satuan2').value.trim() || null,
-                jlh3: parseInt(document.getElementById('popup_jlh3').value) || null,
-                satuan3: document.getElementById('popup_satuan3').value.trim() || null,
-                harga: parseFloat(document.getElementById('popup_harga').value),
-                disca: parseFloat(document.getElementById('popup_disca').value),
-                discb: parseFloat(document.getElementById('popup_discb').value),
-                discc: parseFloat(document.getElementById('popup_discc').value),
-                discrp: parseFloat(document.getElementById('popup_discrp').value),
-                hdisca: parseFloat(document.getElementById('popup_hdiskon1').value),
-                hdiscb: parseFloat(document.getElementById('popup_hdiskon2').value),
-                hdiscc: parseFloat(document.getElementById('popup_hdiskon3').value),
-                jumlah: parseFloat(document.getElementById('popup_jumlah').value)
+                isi1: parseInt(popupIsi1.value) || 0,
+                isi2: parseInt(popupIsi2.value) || 0,
+                kodebrg: popupKodeInput.value.trim().toUpperCase(),
+                namabrg: popupNamaInput.value.trim().toUpperCase(),
+                kodegd: popupKodeGd.value.trim().toUpperCase(),
+                jlh1: parseInt(popupJlh1.value) || 0,
+                satuan1: popupSatuan1.value.trim(),
+                jlh2: parseInt(popupJlh2.value) || null,
+                satuan2: popupSatuan2.value.trim() || null,
+                jlh3: parseInt(popupJlh3.value) || null,
+                satuan3: popupSatuan3.value.trim() || null,
+                harga: parseFloat(popupHarga.value) || 0,
+                disca: parseFloat(popupDisca.value) || 0,
+                discb: parseFloat(popupDiscb.value) || 0,
+                discc: parseFloat(popupDiscc.value) || 0,
+                discrp: parseFloat(popupDiscrp.value) || 0,
+                hdisca: parseFloat(popupHdiskon1.value) || 0,
+                hdiscb: parseFloat(popupHdiskon2.value) || 0,
+                hdiscc: parseFloat(popupHdiskon3.value) || 0,
+                jumlah: parseFloat(popupJumlah.value) || 0
             };
 
-            // Tambah atau update
-            if (formDetailPembelian.dataset.editingIndex) {
-                dataPembelian[formDetailPembelian.dataset.editingIndex] = item;
-                delete formDetailPembelian.dataset.editingIndex;
+            if (currentMode === "edit" && this.dataset.editingIndex !== undefined) {
+                // UPDATE item
+                const idx = parseInt(this.dataset.editingIndex, 10);
+                dataPembelian[idx] = item;
+                tutupPopup();
+                showToast('Item berhasil diupdate!');
             } else {
+                // TAMBAH item baru
                 dataPembelian.push(item);
-                hitungSubtotalDariArray();
+                showToast('Item berhasil disimpan!');
             }
 
+            hitungSubtotalDariArray();
             renderTabelPembelian();
             resetitem();
-            showToast('Item berhasil disimpan!');
-        });
-
-        document.getElementById('formDetailPembelianEdit').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const item = {
-                isi1: parseInt(document.getElementById('edit_popup_isi1').value),
-                isi2: parseInt(document.getElementById('edit_popup_isi2').value),
-                kodebrg: document.getElementById('edit_popup_kodebrg').value.trim().toUpperCase(),
-                namabrg: document.getElementById('edit_popup_namabrg').value.trim().toUpperCase(),
-                kodegd: document.getElementById('edit_popup_kodegd').value.trim().toUpperCase(),
-                jlh1: parseInt(document.getElementById('edit_popup_jlh1').value),
-                satuan1: document.getElementById('edit_popup_satuan1').value.trim(),
-                jlh2: parseInt(document.getElementById('edit_popup_jlh2').value) || null,
-                satuan2: document.getElementById('edit_popup_satuan2').value.trim() || null,
-                jlh3: parseInt(document.getElementById('edit_popup_jlh3').value) || null,
-                satuan3: document.getElementById('edit_popup_satuan3').value.trim() || null,
-                harga: parseFloat(document.getElementById('edit_popup_harga').value),
-                disca: parseFloat(document.getElementById('edit_popup_disca').value),
-                discb: parseFloat(document.getElementById('edit_popup_discb').value),
-                discc: parseFloat(document.getElementById('edit_popup_discc').value),
-                discrp: parseFloat(document.getElementById('edit_popup_discrp').value),
-                hdisca: parseFloat(document.getElementById('edit_popup_hdiskon1').value),
-                hdiscb: parseFloat(document.getElementById('edit_popup_hdiskon2').value),
-                hdiscc: parseFloat(document.getElementById('edit_popup_hdiskon3').value),
-                jumlah: parseFloat(document.getElementById('edit_popup_jumlah').value)
-            };
-
-            const editIndex = formDetailPembelianEdit.dataset.editingIndex;
-            if (editIndex !== undefined && editIndex !== null) {
-                dataPembelian[editIndex] = item;
-                delete formDetailPembelianEdit.dataset.editingIndex;
-                renderTabelPembelian();
-                hitungSubtotalDariArray();
-                showToast('Item berhasil diperbarui!');
-            }
-
-            // Tutup popup edit
-            document.getElementById('popupFormEdit').style.display = 'none';
-            document.getElementById('thAksi').style.display = '';
-            const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
-            allTdAksi.forEach(td => {
-                td.style.display = '';
-            });
+            currentMode = "input";
+            delete this.dataset.editingIndex;
         });
 
         function resetitem() {
@@ -796,46 +666,47 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         }
 
         function editItem(index) {
+            currentMode = "edit";
             const item = dataPembelian[index];
-            isi1Edit.value     = item.isi1;
-            isi2Edit.value     = item.isi2;
-            kodebrgEdit.value  = item.kodebrg;
-            namabrgEdit.value  = item.namabrg;
-            kodegdEdit.value  = item.kodegd;
-            jlh1Edit.value     = item.jlh1;
-            satuan1Edit.value  = item.satuan1;
-            jlh2Edit.value     = item.jlh2 || '';
-            satuan2Edit.value  = item.satuan2 || '';
-            jlh3Edit.value     = item.jlh3 || '';
-            satuan3Edit.value  = item.satuan3 || '';
-            hargaEdit.value    = item.harga;
-            discaEdit.value    = item.disca;
-            discbEdit.value    = item.discb;
-            disccEdit.value    = item.discc;
-            discrpEdit.value   = item.discrp;
-            jumlahEdit.value   = item.jumlah;
-            hdiskon1Edit.value   = item.hdisca;
-            hdiskon2Edit.value   = item.hdiscb;
-            hdiskon3Edit.value   = item.hdiscc;
+            popupIsi1.value       = item.isi1;
+            popupIsi2.value       = item.isi2;
+            popupKodeInput.value  = item.kodebrg;
+            popupNamaInput.value  = item.namabrg;
+            popupKodeGd.value     = item.kodegd;
+            popupJlh1.value       = item.jlh1;
+            popupSatuan1.value    = item.satuan1;
+            popupJlh2.value       = item.jlh2 || '';
+            popupSatuan2.value    = item.satuan2 || '';
+            popupJlh3.value       = item.jlh3 || '';
+            popupSatuan3.value    = item.satuan3 || '';
+            popupHarga.value      = item.harga;
+            popupDisca.value      = item.disca;
+            popupDiscb.value      = item.discb;
+            popupDiscc.value      = item.discc;
+            popupDiscrp.value     = item.discrp;
+            popupHdiskon1.value   = item.hdisca;
+            popupHdiskon2.value   = item.hdiscb;
+            popupHdiskon3.value   = item.hdiscc;
+            popupJumlah.value     = item.jumlah;
 
-            if (isi1Edit.value > 1) {
-                jlh2Edit.disabled = false;
-                if (isi2Edit.value > 1) {
-                    jlh3Edit.disabled = false;
+            if (popupIsi1.value > 1) {
+                popupJlh2.disabled = false;
+                if (popupIsi2.value > 1) {
+                    popupJlh3.disabled = false;
                 } else {
-                    jlh3Edit.disabled = true;
+                    popupJlh3.disabled = true;
                 }
             } else {
-                jlh2Edit.disabled = true;
-                jlh3Edit.disabled = true;
+                popupJlh2.disabled = true;
+                popupJlh3.disabled = true;
             }
 
             // Simpan index
-            const formEdit = document.getElementById('formDetailPembelianEdit');
+            const formEdit = document.getElementById('formDetailPembelian');
             formEdit.dataset.editingIndex = index;
 
             // Tampilkan popup edit
-            document.getElementById('popupFormEdit').style.display = 'flex';
+            document.getElementById('popupForm').style.display = 'flex';
         }
 
         function hapusItem(index) {
@@ -863,103 +734,14 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         const inputFields = [
             'popup_jlh1', 'popup_jlh2', 'popup_jlh3',
             'popup_harga', 'popup_disca', 'popup_discb',
-            'popup_discc', 'popup_discrp', 'popup_satuan2', 'popup_satuan3',
-            'edit_popup_jlh1', 'edit_popup_jlh2', 'edit_popup_jlh3',
-            'edit_popup_harga', 'edit_popup_disca', 'edit_popup_discb',
-            'edit_popup_discc', 'edit_popup_discrp', 'edit_popup_satuan2', 'edit_popup_satuan3'
+            'popup_discc', 'popup_discrp', 'popup_satuan2', 'popup_satuan3'
         ];
 
         inputFields.forEach(id => {
-            document.getElementById(id).addEventListener('input', hitungJumlahPembelian);
-            document.getElementById(id).addEventListener('input', hitungJumlahPembelianEdit);
+            document.getElementById(id).addEventListener('input', () => {
+                hitungJumlahPembelian(currentMode);
+            });
         });
-
-        function hitungJumlahPembelian() {
-            let jlh1 = parseFloat(popupJlh1.value) || 0;
-            let jlh2 = parseFloat(popupJlh2.value) || 0;
-            let jlh3 = parseFloat(popupJlh3.value) || 0;
-            let harga = parseFloat(popupHarga.value) || 0;
-
-            let isi1 = parseFloat(popupIsi1.value) || 0;
-            let isi2 = parseFloat(popupIsi2.value) || 0;
-
-            let disca = parseFloat(popupDisca.value) || 0;
-            let discb = parseFloat(popupDiscb.value) || 0;
-            let discc = parseFloat(popupDiscc.value) || 0;
-            let discrp = parseFloat(popupDiscrp.value) || 0;
-
-            let hasil1 = jlh1 * harga;
-            let hasil2 = (jlh2 > 0 && isi1 > 0) ? (harga / isi1) * jlh2 : 0;
-            let hasil3 = (jlh3 > 0 && isi1 > 0 && isi2 > 0) ? (harga / (isi1 * isi2)) * jlh3 : 0;
-
-            let smntarajlmh = hasil1 + hasil2 + hasil3;
-
-            let afterDisca = smntarajlmh * disca / 100;
-            let smntaradis1 = smntarajlmh - afterDisca;
-
-            popupHdiskon1.value = smntaradis1.toFixed(2);
-
-            let afterDiscb = smntaradis1 * discb / 100;
-            let smntaradis2 = smntaradis1 - afterDiscb;
-
-            popupHdiskon2.value = smntaradis2.toFixed(2);
-
-            let afterDiscc = smntaradis2 * discc / 100;
-            let smntaradis3 = smntaradis2 - afterDiscc;
-
-            popupHdiskon3.value = smntaradis3.toFixed(2);
-
-            let finalJumlah = smntaradis3 - discrp;
-
-            popupJumlah.value = Math.round(finalJumlah);
-        }
-
-        function hitungJumlahPembelianEdit() {
-            let jlh1 = parseFloat(jlh1Edit.value) || 0;
-            let jlh2 = parseFloat(jlh2Edit.value) || 0;
-            let jlh3 = parseFloat(jlh3Edit.value) || 0;
-            let harga = parseFloat(hargaEdit.value) || 0;
-
-            let isi1 = parseFloat(isi1Edit.value) || 0;
-            let isi2 = parseFloat(isi2Edit.value) || 0;
-
-            let disca = parseFloat(discaEdit.value) || 0;
-            let discb = parseFloat(discbEdit.value) || 0;
-            let discc = parseFloat(disccEdit.value) || 0;
-            let discrp = parseFloat(discrpEdit.value) || 0;
-
-            let hasil1 = jlh1 * harga;
-            let hasil2 = (jlh2 > 0 && isi1 > 0) ? (harga / isi1) * jlh2 : 0;
-            let hasil3 = (jlh3 > 0 && isi1 > 0 && isi2 > 0) ? (harga / (isi1 * isi2)) * jlh3 : 0;
-
-            let smntarajlmh = hasil1 + hasil2 + hasil3;
-
-            let afterDisca = smntarajlmh * disca / 100;
-            let smntaradis1 = smntarajlmh - afterDisca;
-
-            let afterDiscb = smntaradis1 * discb / 100;
-            let smntaradis2 = smntaradis1 - afterDiscb;
-
-            let afterDiscc = smntaradis2 * discc / 100;
-            let smntaradis3 = smntaradis2 - afterDiscc;
-
-            let finalJumlah = smntaradis3 - discrp;
-
-            jumlahEdit.value = Math.round(finalJumlah);
-
-            hdiskon1Edit.value = smntaradis1.toFixed(2);
-            hdiskon2Edit.value = smntaradis2.toFixed(2);
-            hdiskon3Edit.value = smntaradis3.toFixed(2);
-
-            if (indexEdit !== undefined && dataPembelian[indexEdit]) {
-                dataPembelian[indexEdit].jumlah = Math.round(finalJumlah);
-                dataPembelian[indexEdit].hdisca = Math.round(afterDisca);
-                dataPembelian[indexEdit].hdiscb = Math.round(afterDiscb);
-                dataPembelian[indexEdit].hdiscc = Math.round(afterDiscc);
-            }
-
-            hitungSubtotalDariArray();
-        }
 
         document.getElementById('diskon1').addEventListener('input', function() {
             hitungSubtotalDariArray();
@@ -980,38 +762,6 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         document.getElementById('lain_lain').addEventListener('input', function() {
             hitungSubtotalDariArray();
         });
-
-        function hitungSubtotalDariArray() {
-            let subtotal = 0;
-            let dc1 = parseFloat(document.getElementById('diskon1').value) || 0;
-            let dc2 = parseFloat(document.getElementById('diskon2').value) || 0;
-            let dc3 = parseFloat(document.getElementById('diskon3').value) || 0;
-            let persenppn = parseFloat(document.getElementById('ppn').value) || 0;
-
-
-            dataPembelian.forEach(item => {
-                subtotal += parseFloat(item.jumlah) || 0;
-            });
-
-            let hrgdc1 = subtotal * dc1 / 100;
-            let smntarahrgdc1 = subtotal - hrgdc1;
-            let hrgdc2 = smntarahrgdc1 * dc2 / 100;
-            let smntarahrgdc2 = smntarahrgdc1 - hrgdc2;
-            let hrgdc3 = smntarahrgdc2 * dc3 / 100;
-            let smntarahrgdc3 = smntarahrgdc2 - hrgdc3;
-            let hrppn = smntarahrgdc3 * persenppn / 100;
-            let totalppn = smntarahrgdc3 + hrppn;
-
-            let lainLain = parseFloat(document.getElementById('lain_lain').value) || 0;
-            let totaljmlh = totalppn + lainLain;
-
-            document.getElementById('subtotal').value = subtotal.toFixed(2);
-            document.getElementById('hdiskon1').value = hrgdc1.toFixed(2);
-            document.getElementById('hdiskon2').value = hrgdc2.toFixed(2);
-            document.getElementById('hdiskon3').value = hrgdc3.toFixed(2);
-            document.getElementById('hppn').value = hrppn.toFixed(2);
-            document.getElementById('totaljmlh').value = totaljmlh.toFixed(2);
-        }
 
         function initializeFormButtons() {
             currentstat = null;
@@ -1143,6 +893,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         }
 
         document.getElementById('btnTambahItem').addEventListener('click', () => {
+            currentMode = "input";
             document.getElementById('popupForm').style.display = 'flex';
         });
 
