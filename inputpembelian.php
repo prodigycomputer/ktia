@@ -722,15 +722,46 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         });
 
         const hitungFields = [
-            'diskon1', 'diskon2', 'diskon3',
-            'ppn', 'lain_lain'
+            'subtotal','diskon1','hdiskon1','diskon2','hdiskon2',
+            'diskon3','hdiskon3','lain_lain','ppn','hppn','totaljmlh'
         ];
 
-        hitungFields.forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
-                hitungSubtotalDariArrayBeli();
+        hitungFields.forEach(id => attachNumberFormatter(id, () => {
+            hitungSubtotalDariArrayBeli();
+        }));
+
+        function formatNumberID(value) {
+            let number = parseFloat(value) || 0;
+            return number.toLocaleString('id-ID', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
             });
-        });   
+        }
+
+        function attachNumberFormatter(id, onChange) {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            el.addEventListener('input', () => {
+                // Hapus semua karakter non-digit
+                let raw = el.value.replace(/[^0-9]/g, '');
+                // Ubah ke number
+                let num = parseFloat(raw) / 100; // bagi 100 biar langsung ada 2 desimal
+                el.value = formatNumberID(num);
+                if (onChange) onChange();
+            });
+
+            // Saat fokus, kembalikan ke angka mentah supaya gampang edit
+            el.addEventListener('focus', () => {
+                el.value = el.value.replace(/\./g, '').replace(',', '.');
+            });
+
+            // Saat blur, format lagi
+            el.addEventListener('blur', () => {
+                let num = parseFloat(el.value.replace(/\./g, '').replace(',', '.')) || 0;
+                el.value = formatNumberID(num);
+            });
+        }
 
         function initializeFormButtons() {
             currentstat = null;

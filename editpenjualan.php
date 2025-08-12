@@ -123,45 +123,45 @@
                     </div>
                 </div>
 
-                <div id="form-penjualan-bawah">
-                    <div class="form-pj-pos">
-                        <div class="form-pj-col">
+                <div id="form-pembelian-bawah">
+                    <div class="form-pb-pos">
+                        <div class="form-pb-col">
                             <label for="subtotal">Subtotal</label>
-                            <input type="number" id="subtotal" name="subtotal" style="text-align: right;" class="medshort-input">
+                            <input type="text" id="subtotal" name="subtotal" style="text-align: right;" class="medshort-input">
                         </div>
 
-                        <div class="form-pj-col">
+                        <div class="form-pb-col">
                             <label for="diskon1">Diskon 1</label>
-                            <input type="number" id="diskon1" name="diskon1" style="text-align: right;" class="veryshort-input">
-                            <input type="number" id="hdiskon1" name="hdiskon1" style="text-align: right;" class="lesshort-input">
+                            <input type="text" id="diskon1" name="diskon1" style="text-align: right;" class="veryshort-input">
+                            <input type="text" id="hdiskon1" name="hdiskon1" style="text-align: right;" class="lesshort-input">
                         </div>
 
-                        <div class="form-pj-col">
+                        <div class="form-pb-col">
                             <label for="diskon2">Diskon 2</label>
-                            <input type="number" id="diskon2" name="diskon2" style="text-align: right;" class="veryshort-input">
-                            <input type="number" id="hdiskon2" name="hdiskon2" style="text-align: right;" class="lesshort-input">
+                            <input type="text" id="diskon2" name="diskon2" style="text-align: right;" class="veryshort-input">
+                            <input type="text" id="hdiskon2" name="hdiskon2" style="text-align: right;" class="lesshort-input">
                         </div>
 
-                        <div class="form-pj-col">
+                        <div class="form-pb-col">
                             <label for="diskon3">Diskon 3</label>
-                            <input type="number" id="diskon3" name="diskon3" style="text-align: right;" class="veryshort-input">
-                            <input type="number" id="hdiskon3" name="hdiskon3" style="text-align: right;" class="lesshort-input">
+                            <input type="text" id="diskon3" name="diskon3" style="text-align: right;" class="veryshort-input">
+                            <input type="text" id="hdiskon3" name="hdiskon3" style="text-align: right;" class="lesshort-input">
                         </div>
 
-                        <div class="form-pj-col">
+                        <div class="form-pb-col">
                             <label for="lain_lain">Lain-Lain</label>
-                            <input type="number" id="lain_lain" name="lain_lain" style="text-align: right;" value="0" class="medshort-input">
+                            <input type="text" id="lain_lain" name="lain_lain" style="text-align: right;" value="0" class="medshort-input">
                         </div>
 
-                        <div class="form-pj-col">
+                        <div class="form-pb-col">
                             <label for="ppn">PPN</label>
-                            <input type="number" id="ppn" name="ppn" style="text-align: right;" value="<?= $default_ppn ?>" class="veryshort-input">
-                            <input type="number" id="hppn" name="hppn" style="text-align: right;" class="lesshort-input">
+                            <input type="text" id="ppn" name="ppn" style="text-align: right;" value="<?= $default_ppn ?>" class="veryshort-input">
+                            <input type="text" id="hppn" name="hppn" style="text-align: right;" class="lesshort-input">
                         </div>
 
-                        <div class="form-pj-col">
+                        <div class="form-pb-col">
                             <label for="totaljmlh">Total Jumlah</label>
-                            <input type="number" id="totaljmlh" name="totaljmlh" style="text-align: right;" class="medshort-input">
+                            <input type="text" id="totaljmlh" name="totaljmlh" style="text-align: right;" class="medshort-input">
                         </div>
                     </div>
                 </div>
@@ -889,15 +889,46 @@
             });
 
             const hitungFields = [
-                'diskon1', 'diskon2', 'diskon3',
-                'ppn', 'lain_lain'
+                'subtotal','diskon1','hdiskon1','diskon2','hdiskon2',
+                'diskon3','hdiskon3','lain_lain','ppn','hppn','totaljmlh'
             ];
 
-            hitungFields.forEach(id => {
-                document.getElementById(id).addEventListener('input', () => {
-                    hitungSubtotalDariArrayJual();
+            hitungFields.forEach(id => attachNumberFormatter(id, () => {
+                hitungSubtotalDariArrayJual();
+            }));
+
+            function formatNumberID(value) {
+                let number = parseFloat(value) || 0;
+                return number.toLocaleString('id-ID', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
                 });
-            });
+            }
+
+            function attachNumberFormatter(id, onChange) {
+                const el = document.getElementById(id);
+                if (!el) return;
+
+                el.addEventListener('input', () => {
+                    // Hapus semua karakter non-digit
+                    let raw = el.value.replace(/[^0-9]/g, '');
+                    // Ubah ke number
+                    let num = parseFloat(raw) / 100; // bagi 100 biar langsung ada 2 desimal
+                    el.value = formatNumberID(num);
+                    if (onChange) onChange();
+                });
+
+                // Saat fokus, kembalikan ke angka mentah supaya gampang edit
+                el.addEventListener('focus', () => {
+                    el.value = el.value.replace(/\./g, '').replace(',', '.');
+                });
+
+                // Saat blur, format lagi
+                el.addEventListener('blur', () => {
+                    let num = parseFloat(el.value.replace(/\./g, '').replace(',', '.')) || 0;
+                    el.value = formatNumberID(num);
+                });
+            }
 
             function initializeFormButtons() {
                 currentstat = null;
@@ -977,12 +1008,6 @@
             }
 
             function laststat() {
-                document.getElementById('thAksi').style.display = '';
-                const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
-                allTdAksi.forEach(td => {
-                    td.style.display = '';
-                });
-
                 document.getElementById('btnEdit').disabled = true;
                 document.getElementById('btnCancel').disabled = false;
                 document.getElementById('btnHapus').disabled = true;
@@ -1001,6 +1026,11 @@
                 document.getElementById('lain_lain').disabled = false;
                 document.getElementById('ppn').disabled = false;
                 document.getElementById('totaljmlh').disabled = false;
+                document.getElementById('thAksi').style.display = '';
+                const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
+                allTdAksi.forEach(td => {
+                    td.style.display = '';
+                });
             }
 
             function cancelForm() {
