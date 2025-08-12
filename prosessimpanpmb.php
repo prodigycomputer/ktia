@@ -11,15 +11,15 @@ $tanggal = $data['tanggal'] ?? '';
 $kode_sup = strtoupper($data['kode_sup'] ?? '');
 $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
 $tgljt = $data['jt_tempo'] ?? '';
-$totaljmlh = $data['totaljmlh'] ?? 0;
+$totaljmlh = floatval($data['totaljmlh']) ?? 0;
 $prsnppn = $data['prsnppn'] ?? 0;
-$hrgppn = $data['hrgppn'] ?? 0;
+$hrgppn = floatval($data['hrgppn']) ?? 0;
 $disk1 = $data['disk1'] ?? 0;
-$hdisk1 = $data['hdisk1'] ?? 0;
+$hdisk1 = floatval($data['hdisk1']) ?? 0;
 $disk2 = $data['disk2'] ?? 0;
-$hdisk2 = $data['hdisk2'] ?? 0;
+$hdisk2 = floatval($data['hdisk2']) ?? 0;
 $disk3 = $data['disk3'] ?? 0;
-$hdisk3 = $data['hdisk3'] ?? 0;
+$hdisk3 = floatval($data['hdisk3']) ?? 0;
 
 
 

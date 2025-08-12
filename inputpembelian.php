@@ -111,41 +111,41 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 <div class="form-pb-pos">
                     <div class="form-pb-col">
                         <label for="subtotal">Subtotal</label>
-                        <input type="number" id="subtotal" name="subtotal" style="text-align: right;" class="medshort-input">
+                        <input type="text" id="subtotal" name="subtotal" style="text-align: right;" class="medshort-input">
                     </div>
-                    
+
                     <div class="form-pb-col">
                         <label for="diskon1">Diskon 1</label>
-                        <input type="number" id="diskon1" name="diskon1" style="text-align: right;" class="veryshort-input">
-                        <input type="number" id="hdiskon1" name="hdiskon1" style="text-align: right;" class="lesshort-input">
+                        <input type="text" id="diskon1" name="diskon1" style="text-align: right;" class="veryshort-input">
+                        <input type="text" id="hdiskon1" name="hdiskon1" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pb-col">
                         <label for="diskon2">Diskon 2</label>
-                        <input type="number" id="diskon2" name="diskon2" style="text-align: right;" class="veryshort-input">
-                        <input type="number" id="hdiskon2" name="hdiskon2" style="text-align: right;" class="lesshort-input">
+                        <input type="text" id="diskon2" name="diskon2" style="text-align: right;" class="veryshort-input">
+                        <input type="text" id="hdiskon2" name="hdiskon2" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pb-col">
                         <label for="diskon3">Diskon 3</label>
-                        <input type="number" id="diskon3" name="diskon3" style="text-align: right;" class="veryshort-input">
-                        <input type="number" id="hdiskon3" name="hdiskon3" style="text-align: right;" class="lesshort-input">
+                        <input type="text" id="diskon3" name="diskon3" style="text-align: right;" class="veryshort-input">
+                        <input type="text" id="hdiskon3" name="hdiskon3" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pb-col">
                         <label for="lain_lain">Lain-Lain</label>
-                        <input type="number" id="lain_lain" name="lain_lain" style="text-align: right;" value="0" class="medshort-input">
+                        <input type="text" id="lain_lain" name="lain_lain" style="text-align: right;" value="0" class="medshort-input">
                     </div>
 
                     <div class="form-pb-col">
                         <label for="ppn">PPN</label>
-                        <input type="number" id="ppn" name="ppn" style="text-align: right;" value="<?= $default_ppn ?>" class="veryshort-input">
-                        <input type="number" id="hppn" name="hppn" style="text-align: right;" class="lesshort-input">
+                        <input type="text" id="ppn" name="ppn" style="text-align: right;" value="<?= $default_ppn ?>" class="veryshort-input">
+                        <input type="text" id="hppn" name="hppn" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pb-col">
                         <label for="totaljmlh">Total Jumlah</label>
-                        <input type="number" id="totaljmlh" name="totaljmlh" style="text-align: right;" class="medshort-input">
+                        <input type="text" id="totaljmlh" name="totaljmlh" style="text-align: right;" class="medshort-input">
                     </div>
                 </div>
             </div>
@@ -353,29 +353,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         const popupJumlah = document.getElementById('popup_jumlah');
         const popupHdiskon1 = document.getElementById('popup_hdiskon1');
         const popupHdiskon2 = document.getElementById('popup_hdiskon2');
-        const popupHdiskon3= document.getElementById('popup_hdiskon3');
-
-        const isi1Edit       = document.getElementById('edit_popup_isi1');
-        const isi2Edit       = document.getElementById('edit_popup_isi2');
-        const kodebrgEdit    = document.getElementById('edit_popup_kodebrg');
-        const namabrgEdit    = document.getElementById('edit_popup_namabrg');
-        const kodegdEdit    = document.getElementById('edit_popup_kodegd');
-        const jlh1Edit       = document.getElementById('edit_popup_jlh1');
-        const satuan1Edit    = document.getElementById('edit_popup_satuan1');
-        const jlh2Edit       = document.getElementById('edit_popup_jlh2');
-        const satuan2Edit    = document.getElementById('edit_popup_satuan2');
-        const jlh3Edit       = document.getElementById('edit_popup_jlh3');
-        const satuan3Edit    = document.getElementById('edit_popup_satuan3');
-        const hargaEdit      = document.getElementById('edit_popup_harga');
-        const discaEdit      = document.getElementById('edit_popup_disca');
-        const discbEdit      = document.getElementById('edit_popup_discb');
-        const disccEdit      = document.getElementById('edit_popup_discc');
-        const discrpEdit     = document.getElementById('edit_popup_discrp');
-        const jumlahEdit     = document.getElementById('edit_popup_jumlah');
-        const hdiskon1Edit = document.getElementById('edit_popup_hdiskon1');
-        const hdiskon2Edit = document.getElementById('edit_popup_hdiskon2');
-        const hdiskon3Edit = document.getElementById('edit_popup_hdiskon3');
-        
+        const popupHdiskon3= document.getElementById('popup_hdiskon3');        
 
         // Trigger cari saat tekan Enter
         [popupKodeInput, popupNamaInput].forEach(input => {
@@ -591,7 +569,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                     <td>${item.satuan2 || ''}</td>
                     <td style="text-align: right;">${item.jlh3 || ''}</td>
                     <td>${item.satuan3 || ''}</td>
-                    <td style="text-align: right;">${item.harga}</td>
+                    <td style="text-align: right;">${parseInt(item.harga).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td style="text-align: right;">${item.disca}</td>
                     <td style="text-align: right;">${item.discb}</td>
                     <td style="text-align: right;">${item.discc}</td>
@@ -599,7 +577,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                     <td style="display: none; text-align: right;">${item.hdiscb}</td>
                     <td style="display: none; text-align: right;">${item.hdiscc}</td>
                     <td style="text-align: right;">${item.discrp}</td>
-                    <td style="text-align: right;">${item.jumlah}</td>
+                    <td style="text-align: right;">${parseInt(item.jumlah).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td style="display: none;" id="td-btn-${index}">
                         <button type="button" onclick="editItem(${index})">Edit</button>
                         <button type="button" onclick="hapusItem(${index})">Hapus</button>
@@ -647,7 +625,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 showToast('Item berhasil disimpan!');
             }
 
-            hitungSubtotalDariArray();
+            hitungSubtotalDariArrayBeli();
             renderTabelPembelian();
             resetitem();
             currentMode = "input";
@@ -720,7 +698,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             if (ya && indexToDelete !== null) {
                 dataPembelian.splice(indexToDelete, 1);
                 renderTabelPembelian();
-                hitungSubtotalDariArray();
+                hitungSubtotalDariArrayBeli();
                 document.getElementById('thAksi').style.display = '';
                 const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
                 allTdAksi.forEach(td => {
@@ -743,25 +721,16 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             });
         });
 
-        document.getElementById('diskon1').addEventListener('input', function() {
-            hitungSubtotalDariArray();
-        });
+        const hitungFields = [
+            'diskon1', 'diskon2', 'diskon3',
+            'ppn', 'lain_lain'
+        ];
 
-        document.getElementById('diskon2').addEventListener('input', function() {
-            hitungSubtotalDariArray();
-        });
-
-        document.getElementById('diskon3').addEventListener('input', function() {
-            hitungSubtotalDariArray();
-        });
-
-        document.getElementById('ppn').addEventListener('input', function() {
-            hitungSubtotalDariArray();
-        });
-
-        document.getElementById('lain_lain').addEventListener('input', function() {
-            hitungSubtotalDariArray();
-        });
+        hitungFields.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                hitungSubtotalDariArrayBeli();
+            });
+        });   
 
         function initializeFormButtons() {
             currentstat = null;
@@ -906,28 +875,17 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             popupJlh3.disabled = true;
         }
 
-        function tutupPopupEdit() {
-            document.getElementById('formDetailPembelianEdit').reset();
-            delete formDetailPembelian.dataset.editingIndex;
-            document.getElementById('popupFormEdit').style.display = 'none';
-            jlh2Edit.disabled = true;
-            jlh3Edit.disabled = true;
-        }
-
         function isiDropdownGudang() {
             fetch('getgudang.php')
                 .then(response => response.json())
                 .then(data => {
                     const dropdownTambah = document.getElementById('popup_kodegd');
-                    const dropdownEdit = document.getElementById('edit_popup_kodegd');
 
                     data.forEach(gd => {
                         const teksTampil = `${gd.kodegd} - ${gd.namagd}`;
                         const optTambah = new Option(teksTampil, gd.kodegd);
-                        const optEdit = new Option(teksTampil, gd.kodegd);
 
                         dropdownTambah.add(optTambah);
-                        dropdownEdit.add(optEdit);
                     });
                 })
                 .catch(error => console.error('Gagal ambil data gudang:', error));
@@ -952,7 +910,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             if (saved.dataPembelian) {
                 dataPembelian = saved.dataPembelian;
                 renderTabelPembelian();
-                hitungSubtotalDariArray();
+                hitungSubtotalDariArrayBeli();
             }
 
             // Pulihkan status tombol/form berdasarkan currentstat
@@ -969,6 +927,11 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('btnTambahItem').disabled = (noNota === '');
         });
 
+        function parseIDNumber(str) {
+            if (!str) return 0;
+            return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
+        }
+
         document.getElementById('btnSave').addEventListener('click', () => {
             const data = {
                 no_nota: document.getElementById('no_nota').value,
@@ -976,14 +939,14 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 kode_sup: document.getElementById('kode_sup').value,
                 jt_tempo: document.getElementById('jt_tempo').value,
                 prsnppn: parseFloat(document.getElementById('ppn').value) || 0,
-                hrgppn: parseFloat(document.getElementById('hppn').value) || 0,
+                hrgppn: parseIDNumber(document.getElementById('hppn').value) || 0,
                 disk1: parseFloat(document.getElementById('diskon1').value) || 0,
-                hdisk1: parseFloat(document.getElementById('hdiskon1').value) || 0,
+                hdisk1: parseIDNumber(document.getElementById('hdiskon1').value) || 0,
                 disk2: parseFloat(document.getElementById('diskon2').value) || 0,
-                hdisk2: parseFloat(document.getElementById('hdiskon2').value) || 0,
+                hdisk2: parseIDNumber(document.getElementById('hdiskon2').value) || 0,
                 disk3: parseFloat(document.getElementById('diskon3').value) || 0,
-                hdisk3: parseFloat(document.getElementById('hdiskon3').value) || 0,
-                totaljmlh: parseFloat(document.getElementById('totaljmlh').value) || 0,
+                hdisk3: parseIDNumber(document.getElementById('hdiskon3').value) || 0,
+                totaljmlh: parseIDNumber(document.getElementById('totaljmlh').value) || 0,
                 detail: dataPembelian // array yang sudah kamu simpan saat tambah item
             };
 

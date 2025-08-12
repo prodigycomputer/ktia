@@ -16,6 +16,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
     <title>Input Penjualan</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
+    <script src="hitung.js"></script>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -130,20 +131,41 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 <div class="form-pj-pos">
                     <div class="form-pj-col">
                         <label for="subtotal">Subtotal</label>
-                        <input type="number" id="subtotal" name="subtotal" class="short-input">
+                        <input type="number" id="subtotal" name="subtotal" style="text-align: right;" class="medshort-input">
                     </div>
+                    
+                    <div class="form-pj-col">
+                        <label for="diskon1">Diskon 1</label>
+                        <input type="number" id="diskon1" name="diskon1" style="text-align: right;" class="veryshort-input">
+                        <input type="number" id="hdiskon1" name="hdiskon1" style="text-align: right;" class="lesshort-input">
+                    </div>
+
+                    <div class="form-pj-col">
+                        <label for="diskon2">Diskon 2</label>
+                        <input type="number" id="diskon2" name="diskon2" style="text-align: right;" class="veryshort-input">
+                        <input type="number" id="hdiskon2" name="hdiskon2" style="text-align: right;" class="lesshort-input">
+                    </div>
+
+                    <div class="form-pj-col">
+                        <label for="diskon3">Diskon 3</label>
+                        <input type="number" id="diskon3" name="diskon3" style="text-align: right;" class="veryshort-input">
+                        <input type="number" id="hdiskon3" name="hdiskon3" style="text-align: right;" class="lesshort-input">
+                    </div>
+
                     <div class="form-pj-col">
                         <label for="lain_lain">Lain-Lain</label>
-                        <input type="number" id="lain_lain" name="lain_lain" class="short-input">
+                        <input type="number" id="lain_lain" name="lain_lain" style="text-align: right;" value="0" class="medshort-input">
                     </div>
+
                     <div class="form-pj-col">
                         <label for="ppn">PPN</label>
-                        <input type="number" id="ppn" name="ppn" class="short-input">
+                        <input type="number" id="ppn" name="ppn" style="text-align: right;" value="<?= $default_ppn ?>" class="veryshort-input">
+                        <input type="number" id="hppn" name="hppn" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pj-col">
                         <label for="totaljmlh">Total Jumlah</label>
-                        <input type="number" id="totaljmlh" name="totaljmlh" class="short-input">
+                        <input type="number" id="totaljmlh" name="totaljmlh" style="text-align: right;" class="medshort-input">
                     </div>
                 </div>
             </div>
@@ -318,90 +340,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 </form>
             </div>
         </div>
-        <div id="popupFormEdit" class="popup-pb-overlay" style="display: none;">
-            <div class="popup-pb-content">
-                <h3>Edit Data Penjualan</h3>
-                <form id="formDetailPenjualanEdit">
-                    <input type="hidden" name="edit_popup_isi1" id="edit_popup_isi1" value=""> 
-                    <input type="hidden" name="edit_popup_isi2" id="edit_popup_isi2" value="">
-                    <input type="hidden" name="edit_popup_hdiskon1" id="edit_popup_hdiskon1" value=""> 
-                    <input type="hidden" name="edit_popup_hdiskon2" id="edit_popup_hdiskon2" value="">
-                    <input type="hidden" name="edit_popup_hdiskon3" id="edit_popup_hdiskon3" value=""> 
-                    <div class="popup-pb-row">
-                        <label for="edit_popup_kodegd">Kode Gudang</label>
-                        <select id="edit_popup_kodegd" name="edit_popup_kodegd" required>
-                            <option value="">Pilih Gudang</option>
-                            <!-- Akan diisi via JavaScript -->
-                        </select>
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_kodebrg">Kode Barang</label>
-                        <input type="text" id="edit_popup_kodebrg" data-table="zstok" data-field="kodebrg" data-check="eksistensi" data-reset="edit_popup_namabrg" onblur="cekValidasi(this)" name="edit_popup_kodebrg" style="text-transform: uppercase;">
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_namabrg">Nama Barang</label>
-                        <input type="text" id="edit_popup_namabrg" data-table="zstok" data-field="namabrg" data-check="eksistensi" data-reset="edit_popup_kodebrg" onblur="cekValidasi(this)" name="edit_popup_namabrg" style="text-transform: uppercase;">
-                    </div>
 
-                    <div class="popup-pb-row">
-                        <label for="popup_jlh1">Jumlah 1</label>
-                        <input type="number" id="edit_popup_jlh1" name="edit_popup_jlh1" min="0">
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_satuan1">Satuan 1</label>
-                        <input type="text" id="edit_popup_satuan1" name="edit_popup_satuan1" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_jlh2">Jumlah 2</label>
-                        <input type="number" id="edit_popup_jlh2" name="edit_popup_jlh2" min="0" disabled>
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_satuan2">Satuan 2</label>
-                        <input type="text" id="edit_popup_satuan2" name="edit_popup_satuan2" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_jlh3">Jumlah 3</label>
-                        <input type="number" id="edit_popup_jlh3" name="edit_popup_jlh3" min="0" disabled>
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_satuan3">Satuan 3</label>
-                        <input type="text" id="edit_popup_satuan3" name="edit_popup_satuan3" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_harga">Harga</label>
-                        <input type="number" id="edit_popup_harga" name="edit_popup_harga" value="0">
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_disca">Disca</label>
-                        <input type="number" id="edit_popup_disca" name="edit_popup_disca" value="0">
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_discb">Discb</label>
-                        <input type="number" id="edit_popup_discb" name="edit_popup_discb" value="0">
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_discc">Discc</label>
-                        <input type="number" id="edit_popup_discc" name="edit_popup_discc" value="0">
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_discrp">Disc Rp</label>
-                        <input type="number" id="edit_popup_discrp" name="edit_popup_discrp" value="0">
-                    </div>
-                    <div class="popup-pb-row">
-                        <label for="popup_jumlah">Jumlah</label>
-                        <input type="number" id="edit_popup_jumlah" name="edit_popup_jumlah"required>
-                    </div>
-
-                    <div class="popup-pb-row" style="justify-content: flex-end; gap: 10px;">
-                        <button id="btnSaveItem" type="submit">Oke</button>
-                        <button id="btnCancelItem" type="button" onclick="tutupPopupEdit()">Batal</button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </main>
 
     <div id="toast" style="
@@ -444,6 +383,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
     </div>
     <script>
         let currentstat = null;
+        let currentMode = "input";
         let dataPenjualan = [];
         let indexToDelete = null;
         const kodeInput = document.getElementById('kode_kust');
@@ -474,28 +414,6 @@ while ($row = $supplierQuery->fetch_assoc()) {
         const popupHdiskon1 = document.getElementById('popup_hdiskon1');
         const popupHdiskon2 = document.getElementById('popup_hdiskon2');
         const popupHdiskon3= document.getElementById('popup_hdiskon3');
-
-        const isi1Edit       = document.getElementById('edit_popup_isi1');
-        const isi2Edit       = document.getElementById('edit_popup_isi2');
-        const kodebrgEdit    = document.getElementById('edit_popup_kodebrg');
-        const namabrgEdit    = document.getElementById('edit_popup_namabrg');
-        const kodegdEdit    = document.getElementById('edit_popup_kodegd');
-        const jlh1Edit       = document.getElementById('edit_popup_jlh1');
-        const satuan1Edit    = document.getElementById('edit_popup_satuan1');
-        const jlh2Edit       = document.getElementById('edit_popup_jlh2');
-        const satuan2Edit    = document.getElementById('edit_popup_satuan2');
-        const jlh3Edit       = document.getElementById('edit_popup_jlh3');
-        const satuan3Edit    = document.getElementById('edit_popup_satuan3');
-        const hargaEdit      = document.getElementById('edit_popup_harga');
-        const discaEdit      = document.getElementById('edit_popup_disca');
-        const discbEdit      = document.getElementById('edit_popup_discb');
-        const disccEdit      = document.getElementById('edit_popup_discc');
-        const discrpEdit     = document.getElementById('edit_popup_discrp');
-        const jumlahEdit     = document.getElementById('edit_popup_jumlah');
-        const hdiskon1Edit = document.getElementById('edit_popup_hdiskon1');
-        const hdiskon2Edit = document.getElementById('edit_popup_hdiskon2');
-        const hdiskon3Edit = document.getElementById('edit_popup_hdiskon3');
-        
 
         // Trigger cari saat tekan Enter
         [popupKodeInput, popupNamaInput].forEach(input => {
@@ -828,7 +746,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     <td>${item.satuan2 || ''}</td>
                     <td style="text-align: right;">${item.jlh3 || ''}</td>
                     <td>${item.satuan3 || ''}</td>
-                    <td style="text-align: right;">${item.harga}</td>
+                    <td style="text-align: right;">${parseInt(item.harga).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td style="text-align: right;">${item.disca}</td>
                     <td style="text-align: right;">${item.discb}</td>
                     <td style="text-align: right;">${item.discc}</td>
@@ -836,7 +754,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                     <td style="display: none; text-align: right;">${item.hdiscb}</td>
                     <td style="display: none; text-align: right;">${item.hdiscc}</td>
                     <td style="text-align: right;">${item.discrp}</td>
-                    <td style="text-align: right;">${item.jumlah}</td>
+                    <td style="text-align: right;">${parseInt(item.jumlah).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td style="display: none;" id="td-btn-${index}">
                         <button type="button" onclick="editItem(${index})">Edit</button>
                         <button type="button" onclick="hapusItem(${index})">Hapus</button>
@@ -850,78 +768,45 @@ while ($row = $supplierQuery->fetch_assoc()) {
             e.preventDefault();
 
             const item = {
-                isi1: parseInt(document.getElementById('popup_isi1').value),
-                isi2: parseInt(document.getElementById('popup_isi2').value),
-                kodebrg: document.getElementById('popup_kodebrg').value.trim().toUpperCase(),
-                namabrg: document.getElementById('popup_namabrg').value.trim().toUpperCase(),
-                kodegd: document.getElementById('popup_kodegd').value.trim().toUpperCase(),
-                jlh1: parseInt(document.getElementById('popup_jlh1').value),
-                satuan1: document.getElementById('popup_satuan1').value.trim(),
-                jlh2: parseInt(document.getElementById('popup_jlh2').value) || null,
-                satuan2: document.getElementById('popup_satuan2').value.trim() || null,
-                jlh3: parseInt(document.getElementById('popup_jlh3').value) || null,
-                satuan3: document.getElementById('popup_satuan3').value.trim() || null,
-                harga: parseFloat(document.getElementById('popup_harga').value),
-                disca: parseFloat(document.getElementById('popup_disca').value),
-                discb: parseFloat(document.getElementById('popup_discb').value),
-                discc: parseFloat(document.getElementById('popup_discc').value),
-                discrp: parseFloat(document.getElementById('popup_discrp').value),
-                jumlah: parseFloat(document.getElementById('popup_jumlah').value)
+                isi1: parseInt(popupIsi1.value) || 0,
+                isi2: parseInt(popupIsi2.value) || 0,
+                kodebrg: popupKodeInput.value.trim().toUpperCase(),
+                namabrg: popupNamaInput.value.trim().toUpperCase(),
+                kodegd: popupKodeGd.value.trim().toUpperCase(),
+                jlh1: parseInt(popupJlh1.value) || 0,
+                satuan1: popupSatuan1.value.trim(),
+                jlh2: parseInt(popupJlh2.value) || null,
+                satuan2: popupSatuan2.value.trim() || null,
+                jlh3: parseInt(popupJlh3.value) || null,
+                satuan3: popupSatuan3.value.trim() || null,
+                harga: parseFloat(popupHarga.value) || 0,
+                disca: parseFloat(popupDisca.value) || 0,
+                discb: parseFloat(popupDiscb.value) || 0,
+                discc: parseFloat(popupDiscc.value) || 0,
+                discrp: parseFloat(popupDiscrp.value) || 0,
+                hdisca: parseFloat(popupHdiskon1.value) || 0,
+                hdiscb: parseFloat(popupHdiskon2.value) || 0,
+                hdiscc: parseFloat(popupHdiskon3.value) || 0,
+                jumlah: parseFloat(popupJumlah.value) || 0
             };
 
-            // Tambah atau update
-            if (formDetailPenjualan.dataset.editingIndex) {
-                dataPenjualan[formDetailPenjualan.dataset.editingIndex] = item;
-                delete formDetailPenjualan.dataset.editingIndex;
+            if (currentMode === "edit" && this.dataset.editingIndex !== undefined) {
+                // UPDATE item
+                const idx = parseInt(this.dataset.editingIndex, 10);
+                dataPenjualan[idx] = item;
+                tutupPopup();
+                showToast('Item berhasil diupdate!');
             } else {
+                // TAMBAH item baru
                 dataPenjualan.push(item);
-                hitungSubtotalDariArray();
+                showToast('Item berhasil disimpan!');
             }
 
+            hitungSubtotalDariArrayJual();
             renderTabelPenjualan();
             resetitem();
-            showToast('Item berhasil disimpan!');
-        });
-
-        document.getElementById('formDetailPenjualanEdit').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const item = {
-                isi1: parseInt(document.getElementById('edit_popup_isi1').value),
-                isi2: parseInt(document.getElementById('edit_popup_isi2').value),
-                kodebrg: document.getElementById('edit_popup_kodebrg').value.trim().toUpperCase(),
-                namabrg: document.getElementById('edit_popup_namabrg').value.trim().toUpperCase(),
-                kodegd: document.getElementById('edit_popup_kodegd').value.trim().toUpperCase(),
-                jlh1: parseInt(document.getElementById('edit_popup_jlh1').value),
-                satuan1: document.getElementById('edit_popup_satuan1').value.trim(),
-                jlh2: parseInt(document.getElementById('edit_popup_jlh2').value) || null,
-                satuan2: document.getElementById('edit_popup_satuan2').value.trim() || null,
-                jlh3: parseInt(document.getElementById('edit_popup_jlh3').value) || null,
-                satuan3: document.getElementById('edit_popup_satuan3').value.trim() || null,
-                harga: parseFloat(document.getElementById('edit_popup_harga').value),
-                disca: parseFloat(document.getElementById('edit_popup_disca').value),
-                discb: parseFloat(document.getElementById('edit_popup_discb').value),
-                discc: parseFloat(document.getElementById('edit_popup_discc').value),
-                discrp: parseFloat(document.getElementById('edit_popup_discrp').value),
-                jumlah: parseFloat(document.getElementById('edit_popup_jumlah').value)
-            };
-
-            const editIndex = formDetailPenjualanEdit.dataset.editingIndex;
-            if (editIndex !== undefined && editIndex !== null) {
-                dataPenjualan[editIndex] = item;
-                delete formDetailPenjualanEdit.dataset.editingIndex;
-                renderTabelPenjualan();
-                hitungSubtotalDariArray();
-                showToast('Item berhasil diperbarui!');
-            }
-
-            // Tutup popup edit
-            document.getElementById('popupFormEdit').style.display = 'none';
-            document.getElementById('thAksi').style.display = '';
-            const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
-            allTdAksi.forEach(td => {
-                td.style.display = '';
-            });
+            currentMode = "input";
+            delete this.dataset.editingIndex;
         });
 
         function resetitem() {
@@ -936,43 +821,47 @@ while ($row = $supplierQuery->fetch_assoc()) {
         }
 
         function editItem(index) {
+            currentMode = "edit";
             const item = dataPenjualan[index];
-            isi1Edit.value     = item.isi1;
-            isi2Edit.value     = item.isi2;
-            kodebrgEdit.value  = item.kodebrg;
-            namabrgEdit.value  = item.namabrg;
-            kodegdEdit.value   = item.kodegd;
-            jlh1Edit.value     = item.jlh1;
-            satuan1Edit.value  = item.satuan1;
-            jlh2Edit.value     = item.jlh2 || '';
-            satuan2Edit.value  = item.satuan2 || '';
-            jlh3Edit.value     = item.jlh3 || '';
-            satuan3Edit.value  = item.satuan3 || '';
-            hargaEdit.value    = item.harga;
-            discaEdit.value    = item.disca;
-            discbEdit.value    = item.discb;
-            disccEdit.value    = item.discc;
-            discrpEdit.value   = item.discrp;
-            jumlahEdit.value   = item.jumlah;
+            popupIsi1.value       = item.isi1;
+            popupIsi2.value       = item.isi2;
+            popupKodeInput.value  = item.kodebrg;
+            popupNamaInput.value  = item.namabrg;
+            popupKodeGd.value     = item.kodegd;
+            popupJlh1.value       = item.jlh1;
+            popupSatuan1.value    = item.satuan1;
+            popupJlh2.value       = item.jlh2 || '';
+            popupSatuan2.value    = item.satuan2 || '';
+            popupJlh3.value       = item.jlh3 || '';
+            popupSatuan3.value    = item.satuan3 || '';
+            popupHarga.value      = item.harga;
+            popupDisca.value      = item.disca;
+            popupDiscb.value      = item.discb;
+            popupDiscc.value      = item.discc;
+            popupDiscrp.value     = item.discrp;
+            popupHdiskon1.value   = item.hdisca;
+            popupHdiskon2.value   = item.hdiscb;
+            popupHdiskon3.value   = item.hdiscc;
+            popupJumlah.value     = item.jumlah;
 
-            if (isi1Edit.value > 1) {
-                jlh2Edit.disabled = false;
-                if (isi2Edit.value > 1) {
-                    jlh3Edit.disabled = false;
+            if (popupIsi1.value > 1) {
+                popupJlh2.disabled = false;
+                if (popupIsi2.value > 1) {
+                    popupJlh3.disabled = false;
                 } else {
-                    jlh3Edit.disabled = true;
+                    popupJlh3.disabled = true;
                 }
             } else {
-                jlh2Edit.disabled = true;
-                jlh3Edit.disabled = true;
+                popupJlh2.disabled = true;
+                popupJlh3.disabled = true;
             }
 
             // Simpan index
-            const formEdit = document.getElementById('formDetailPenjualanEdit');
+            const formEdit = document.getElementById('formDetailPenjualan');
             formEdit.dataset.editingIndex = index;
 
             // Tampilkan popup edit
-            document.getElementById('popupFormEdit').style.display = 'flex';
+            document.getElementById('popupForm').style.display = 'flex';
         }
 
         function hapusItem(index) {
@@ -986,7 +875,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             if (ya && indexToDelete !== null) {
                 dataPenjualan.splice(indexToDelete, 1);
                 renderTabelPenjualan();
-                hitungSubtotalDariArray();
+                hitungSubtotalDariArrayJual();
                 document.getElementById('thAksi').style.display = '';
                 const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
                 allTdAksi.forEach(td => {
@@ -1000,108 +889,25 @@ while ($row = $supplierQuery->fetch_assoc()) {
         const inputFields = [
             'popup_jlh1', 'popup_jlh2', 'popup_jlh3',
             'popup_harga', 'popup_disca', 'popup_discb',
-            'popup_discc', 'popup_discrp', 'popup_satuan2', 'popup_satuan3',
-            'edit_popup_jlh1', 'edit_popup_jlh2', 'edit_popup_jlh3',
-            'edit_popup_harga', 'edit_popup_disca', 'edit_popup_discb',
-            'edit_popup_discc', 'edit_popup_discrp', 'edit_popup_satuan2', 'edit_popup_satuan3'
+            'popup_discc', 'popup_discrp', 'popup_satuan2', 'popup_satuan3'
         ];
 
         inputFields.forEach(id => {
-            document.getElementById(id).addEventListener('input', hitungJumlahPenjualan);
-            document.getElementById(id).addEventListener('input', hitungJumlahPenjualanEdit);
-        });
-
-        function hitungJumlahPenjualan() {
-            let jlh1 = parseFloat(popupJlh1.value) || 0;
-            let jlh2 = parseFloat(popupJlh2.value) || 0;
-            let jlh3 = parseFloat(popupJlh3.value) || 0;
-            let harga = parseFloat(popupHarga.value) || 0;
-
-            let isi1 = parseFloat(popupIsi1.value) || 0;
-            let isi2 = parseFloat(popupIsi2.value) || 0;
-
-            let disca = parseFloat(popupDisca.value) || 0;
-            let discb = parseFloat(popupDiscb.value) || 0;
-            let discc = parseFloat(popupDiscc.value) || 0;
-            let discrp = parseFloat(popupDiscrp.value) || 0;
-
-            let hasil1 = jlh1 * harga;
-            let hasil2 = (jlh2 > 0 && isi1 > 0) ? (harga / isi1) * jlh2 : 0;
-            let hasil3 = (jlh3 > 0 && isi1 > 0 && isi2 > 0) ? (harga / (isi1 * isi2)) * jlh3 : 0;
-
-            let smntarajlmh = hasil1 + hasil2 + hasil3;
-
-            let afterDisca = smntarajlmh * disca / 100;
-            let smntaradis1 = smntarajlmh - afterDisca;
-
-            let afterDiscb = smntaradis1 * discb / 100;
-            let smntaradis2 = smntaradis1 - afterDiscb;
-
-            let afterDiscc = smntaradis2 * discc / 100;
-            let smntaradis3 = smntaradis2 - afterDiscc;
-
-            let finalJumlah = smntaradis3 - discrp;
-
-            popupJumlah.value = Math.round(finalJumlah);
-        }
-
-        function hitungJumlahPenjualanEdit() {
-            let jlh1 = parseFloat(jlh1Edit.value) || 0;
-            let jlh2 = parseFloat(jlh2Edit.value) || 0;
-            let jlh3 = parseFloat(jlh3Edit.value) || 0;
-            let harga = parseFloat(hargaEdit.value) || 0;
-
-            let isi1 = parseFloat(isi1Edit.value) || 0;
-            let isi2 = parseFloat(isi2Edit.value) || 0;
-
-            let disca = parseFloat(discaEdit.value) || 0;
-            let discb = parseFloat(discbEdit.value) || 0;
-            let discc = parseFloat(disccEdit.value) || 0;
-            let discrp = parseFloat(discrpEdit.value) || 0;
-
-            let hasil1 = jlh1 * harga;
-            let hasil2 = (jlh2 > 0 && isi1 > 0) ? (harga / isi1) * jlh2 : 0;
-            let hasil3 = (jlh3 > 0 && isi1 > 0 && isi2 > 0) ? (harga / (isi1 * isi2)) * jlh3 : 0;
-
-            let smntarajlmh = hasil1 + hasil2 + hasil3;
-
-            let afterDisca = smntarajlmh * disca / 100;
-            let smntaradis1 = smntarajlmh - afterDisca;
-
-            let afterDiscb = smntaradis1 * discb / 100;
-            let smntaradis2 = smntaradis1 - afterDiscb;
-
-            let afterDiscc = smntaradis2 * discc / 100;
-            let smntaradis3 = smntaradis2 - afterDiscc;
-
-            let finalJumlah = smntaradis3 - discrp;
-
-            jumlahEdit.value = Math.round(finalJumlah);
-            if (indexEdit !== undefined && dataPenjualan[indexEdit]) {
-                dataPenjualan[indexEdit].jumlah = Math.round(finalJumlah);
-            }
-
-            hitungSubtotalDariArray();
-        }
-
-        document.getElementById('lain_lain').addEventListener('input', function() {
-            hitungSubtotalDariArray();
-        });
-
-        function hitungSubtotalDariArray() {
-            let subtotal = 0;
-            dataPenjualan.forEach(item => {
-                subtotal += parseFloat(item.jumlah) || 0;
+            document.getElementById(id).addEventListener('input', () => {
+                hitungJumlahPenjualan(currentMode);
             });
+        });
 
-            let ppn = subtotal * 11 / 100;
-            let lainLain = parseFloat(document.getElementById('lain_lain').value) || 0;
-            let totaljmlh = subtotal + ppn + lainLain;
+        const hitungFields = [
+            'diskon1', 'diskon2', 'diskon3',
+            'ppn', 'lain_lain'
+        ];
 
-            document.getElementById('subtotal').value = Math.round(subtotal);
-            document.getElementById('ppn').value = Math.round(ppn);
-            document.getElementById('totaljmlh').value = Math.round(totaljmlh);
-        }
+        hitungFields.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                hitungSubtotalDariArrayJual();
+            });
+        });
 
         function initializeFormButtons() {
             currentstat = null;
@@ -1234,28 +1040,17 @@ while ($row = $supplierQuery->fetch_assoc()) {
             popupJlh3.disabled = true;
         }
 
-        function tutupPopupEdit() {
-            document.getElementById('formDetailPenjualanEdit').reset();
-            delete formDetailPenjualan.dataset.editingIndex;
-            document.getElementById('popupFormEdit').style.display = 'none';
-            jlh2Edit.disabled = true;
-            jlh3Edit.disabled = true;
-        }
-
         function isiDropdownGudang() {
             fetch('getgudang.php')
                 .then(response => response.json())
                 .then(data => {
                     const dropdownTambah = document.getElementById('popup_kodegd');
-                    const dropdownEdit = document.getElementById('edit_popup_kodegd');
 
                     data.forEach(gd => {
                         const teksTampil = `${gd.kodegd} - ${gd.namagd}`;
                         const optTambah = new Option(teksTampil, gd.kodegd);
-                        const optEdit = new Option(teksTampil, gd.kodegd);
 
                         dropdownTambah.add(optTambah);
-                        dropdownEdit.add(optEdit);
                     });
                 })
                 .catch(error => console.error('Gagal ambil data gudang:', error));
@@ -1280,7 +1075,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             if (saved.dataPenjualan) {
                 dataPenjualan = saved.dataPenjualan;
                 renderTabelPenjualan();
-                hitungSubtotalDariArray();
+                hitungSubtotalDariArrayJual();
             }
 
             // Pulihkan status tombol/form berdasarkan currentstat

@@ -293,25 +293,26 @@
                             <td>${item.namabrg}</td>
                             <td style="text-align: right;">${qty}</td>
                             <td style="text-align: right;">${disc}</td>
-                            <td style="text-align: right;">${parseInt(item.discrp).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td style="text-align: right;">${parseInt(item.harga).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td style="text-align: right;">${parseInt(jumlah).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td style="text-align: right;">${parseFloat(item.discrp).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td style="text-align: right;">${parseFloat(item.harga).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td style="text-align: right;">${parseFloat(jumlah).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         `;
                         tbody.appendChild(tr);
                     });
 
-                    let totalhasil = subtotal - (parseFloat(h.hdisk1) || 0) - (parseFloat(h.hdisk2) || 0) - (parseFloat(h.hdisk3) || 0) + (parseFloat(h.hrgppn) || 0);
-                    let lain = (parseFloat(h.totaljmlh) || 0) - totalhasil;
-                    const ppn = h.prsnppn;
-                    const hppn = h.hrgppn;
-                    const diskon1 = h.disk1;
-                    const hdiskon1 = h.hdisk1;
-                    const diskon2 = h.disk2;
-                    const hdiskon2 = h.hdisk2;
-                    const diskon3 = h.disk3;
+                    const ppn = parseFloat(h.prsnppn);
+                    const hppn = parseFloat(h.hrgppn);
+                    const diskon1 = parseFloat(h.disk1);
+                    const hdiskon1 = parseFloat(h.hdisk1);
+                    const diskon2 = parseFloat(h.disk2);
+                    const hdiskon2 = parseFloat(h.hdisk2);
+                    const diskon3 = parseFloat(h.disk3);
                     
-                    const hdiskon3 = h.hdisk3;
-                    const total = h.totaljmlh;
+                    const hdiskon3 = parseFloat(h.hdisk3);
+                    const total = parseFloat(h.totaljmlh);
+
+                    let totalhasil = subtotal - hdiskon1 - hdiskon2 - hdiskon3 + hppn;
+                    let lain = h.totaljmlh - totalhasil; // langsung dari DB, bukan subtotal hitungan ulang
 
                     if (parseFloat(ppn) === 0 && parseFloat(hppn) === 0) {
                         document.getElementById('ppn').parentElement.style.display = 'none';
