@@ -2,11 +2,9 @@
 session_start();
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
-/*$suppliers = [];
-$supplierQuery = $conn->query("SELECT kodekust, namasls, alamat FROM zsales ORDER BY kodekust");
-while ($row = $supplierQuery->fetch_assoc()) {
-    $suppliers[] = $row;
-}*/
+$q = mysqli_query($conn, "SELECT qppn FROM zconfig LIMIT 1");
+$data = mysqli_fetch_assoc($q);
+$default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -136,19 +134,19 @@ while ($row = $supplierQuery->fetch_assoc()) {
 
                     <div class="form-pj-col">
                         <label for="diskon1">Diskon 1</label>
-                        <input type="text" id="diskon1" name="diskon1" style="text-align: right;" class="veryshort-input">
+                        <input type="text" id="diskon1" name="diskon1" style="text-align: right;" value="0" class="veryshort-input">
                         <input type="text" id="hdiskon1" name="hdiskon1" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pj-col">
                         <label for="diskon2">Diskon 2</label>
-                        <input type="text" id="diskon2" name="diskon2" style="text-align: right;" class="veryshort-input">
+                        <input type="text" id="diskon2" name="diskon2" style="text-align: right;" value="0" class="veryshort-input">
                         <input type="text" id="hdiskon2" name="hdiskon2" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pj-col">
                         <label for="diskon3">Diskon 3</label>
-                        <input type="text" id="diskon3" name="diskon3" style="text-align: right;" class="veryshort-input">
+                        <input type="text" id="diskon3" name="diskon3" style="text-align: right;" value="0" class="veryshort-input">
                         <input type="text" id="hdiskon3" name="hdiskon3" style="text-align: right;" class="lesshort-input">
                     </div>
 
@@ -1085,7 +1083,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             });
             dataPenjualan = [];
             renderTabelPenjualan();
-            localStorage.removeItem('formPenjualanState');
+            localStorage.removeItem('formPenjualanInput');
         }
 
         document.getElementById('btnTambahItem').addEventListener('click', () => {
@@ -1120,7 +1118,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
         document.addEventListener('DOMContentLoaded', isiDropdownGudang);
 
         window.addEventListener('DOMContentLoaded', () => {
-            const saved = JSON.parse(localStorage.getItem('formPenjualanState') || '{}');
+            const saved = JSON.parse(localStorage.getItem('formPenjualanInput') || '{}');
             const form = document.getElementById('formPenjualan');
 
             currentstat = saved.currentstat || null;
@@ -1153,6 +1151,11 @@ while ($row = $supplierQuery->fetch_assoc()) {
             document.getElementById('btnTambahItem').disabled = (noNota === '');
         });
 
+        function parseIDNumber(str) {
+            if (!str) return 0;
+            return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
+        }
+
         document.getElementById('btnSave').addEventListener('click', () => {
             const data = {
                 nonota: document.getElementById('no_nota').value,
@@ -1160,7 +1163,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
                 kodekust: document.getElementById('kode_kust').value,
                 kodesls: document.getElementById('kode_sls').value,
                 jt_tempo: document.getElementById('jt_tempo').value,
-                totaljmlh: parseFloat(document.getElementById('totaljmlh').value) || 0,
+                totaljmlh: parseIDNumber(document.getElementById('totaljmlh').value) || 0,
                 detail: dataPenjualan // array yang sudah kamu simpan saat tambah item
             };
 
@@ -1175,7 +1178,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             .then(res => {
                 if (res.success) {
                     showToast('Data berhasil disimpan!');
-                    localStorage.removeItem('formPenjualanState');
+                    localStorage.removeItem('formPenjualanInput');
                     initializeFormButtons();
                 } else {
                     showToast('Gagal menyimpan: ' + res.message, '#dc3545');
@@ -1195,7 +1198,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             }
 
             // Buka halaman nota dalam tab baru
-            const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}`;
+            const url = `notaprintpnj.php?nonota=${encodeURIComponent(noNota)}`;
             window.open(url, '_blank');
         });
 
@@ -1232,7 +1235,7 @@ while ($row = $supplierQuery->fetch_assoc()) {
             formData['dataPenjualan'] = dataPenjualan;
 
             // Simpan ke localStorage
-            localStorage.setItem('formPenjualanState', JSON.stringify(formData));
+            localStorage.setItem('formPenjualanInput', JSON.stringify(formData));
         });
 
     </script>

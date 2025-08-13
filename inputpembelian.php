@@ -15,12 +15,12 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
     <script src="hitung.js"></script>
+    <script src="multitab.js"></script>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php include 'navbar.php'; ?>
-
     <main>
         <h2>Input Pembelian</h2>
         <div class="action-pb-bar" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
@@ -33,8 +33,10 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             </div>
             <button id="btnKembali" type="button" onclick="window.location.href='pembelian.php'">List Nota</button>
         </div>
-
         <form id="formPembelian" action="prosespembelian.php" method="POST">
+            <div id="tabBar" class="tab-bar">
+                <!-- Tab akan di-generate via JS -->
+            </div>
             <div id="form-pembelian-atas">
                 <div class="form-pb-row">
                     <div class="form-pb-col">
@@ -116,19 +118,19 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
 
                     <div class="form-pb-col">
                         <label for="diskon1">Diskon 1</label>
-                        <input type="text" id="diskon1" name="diskon1" style="text-align: right;" class="veryshort-input">
+                        <input type="text" id="diskon1" name="diskon1" style="text-align: right;" value="0" class="veryshort-input">
                         <input type="text" id="hdiskon1" name="hdiskon1" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pb-col">
                         <label for="diskon2">Diskon 2</label>
-                        <input type="text" id="diskon2" name="diskon2" style="text-align: right;" class="veryshort-input">
+                        <input type="text" id="diskon2" name="diskon2" style="text-align: right;" value="0" class="veryshort-input">
                         <input type="text" id="hdiskon2" name="hdiskon2" style="text-align: right;" class="lesshort-input">
                     </div>
 
                     <div class="form-pb-col">
                         <label for="diskon3">Diskon 3</label>
-                        <input type="text" id="diskon3" name="diskon3" style="text-align: right;" class="veryshort-input">
+                        <input type="text" id="diskon3" name="diskon3" style="text-align: right;" value="0" class="veryshort-input">
                         <input type="text" id="hdiskon3" name="hdiskon3" style="text-align: right;" class="lesshort-input">
                     </div>
 
@@ -550,7 +552,6 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('popupCariSupplier').style.display = 'none';
         }
 
-
         function renderTabelPembelian() {
             const tbody = document.querySelector('#tabelPembelian tbody');
             tbody.innerHTML = '';
@@ -777,6 +778,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('jt_tempo').disabled = true;
             document.getElementById('nama_sup').disabled = true;
             document.getElementById('kode_sup').disabled = true;
+            document.getElementById('alamat').disabled = true;
             document.getElementById('subtotal').disabled = true;
             document.getElementById('lain_lain').disabled = true;
             document.getElementById('diskon1').disabled = true;
@@ -815,6 +817,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('jt_tempo').disabled = false;
             document.getElementById('nama_sup').disabled = false;
             document.getElementById('kode_sup').disabled = false;
+            document.getElementById('alamat').disabled = true;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
             document.getElementById('diskon1').disabled = false;
@@ -834,6 +837,10 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             allTdAksi.forEach(td => {
                 td.style.display = '';
             });
+
+            if (currentTabIndex !== null && tabs[currentTabIndex]) {
+                tabs[currentTabIndex].formStatus = "tambah";
+            }
 
             dataPembelian = [];
             renderTabelPembelian();
@@ -887,9 +894,13 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             allTdAksi.forEach(td => {
                 td.style.display = '';
             });
+
+            if (currentTabIndex !== null && tabs[currentTabIndex]) {
+                tabs[currentTabIndex].formStatus = "default";
+            }
             dataPembelian = [];
             renderTabelPembelian();
-            localStorage.removeItem('formPembelianState');
+            localStorage.removeItem('formPembelianInput');
         }
 
         document.getElementById('btnTambahItem').addEventListener('click', () => {
@@ -925,7 +936,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         document.addEventListener('DOMContentLoaded', isiDropdownGudang);
 
         window.addEventListener('DOMContentLoaded', () => {
-            const saved = JSON.parse(localStorage.getItem('formPembelianState') || '{}');
+            const saved = JSON.parse(localStorage.getItem('formPembelianInput') || '{}');
             const form = document.getElementById('formPembelian');
 
             currentstat = saved.currentstat || null;
@@ -952,6 +963,27 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             }
         });
 
+        window.addEventListener('beforeunload', () => {
+            const form = document.getElementById('formPembelian');
+            const formData = {};
+
+            form.querySelectorAll('input, select, textarea, button').forEach(el => {
+                formData[el.id] = {
+                    value: el.value,
+                    disabled: el.disabled
+                };
+            });
+
+            // Simpan currentstat
+            formData['currentstat'] = currentstat;
+
+            // Simpan dataPembelian juga jika penting
+            formData['dataPembelian'] = dataPembelian;
+
+            // Simpan ke localStorage
+            localStorage.setItem('formPembelianInput', JSON.stringify(formData));
+        });
+
         // Enable btnTambahItem jika no_nota terisi
         document.getElementById('no_nota').addEventListener('input', function () {
             const noNota = this.value.trim();
@@ -963,6 +995,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
         }
 
+        /*
         document.getElementById('btnSave').addEventListener('click', () => {
             const data = {
                 no_nota: document.getElementById('no_nota').value,
@@ -992,7 +1025,61 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             .then(res => {
                 if (res.success) {
                     showToast('Data berhasil disimpan!');
-                    localStorage.removeItem('formPembelianState');
+                    localStorage.removeItem('formPembelianInput');
+                    initializeFormButtons();
+                } else {
+                    showToast('Gagal menyimpan: ' + res.message, '#dc3545');
+                }
+            })
+            .catch(err => {
+                showToast('Error: ' + err, '#dc3545');
+            });
+        });*/
+
+        // Tombol save
+        document.getElementById('btnSave').addEventListener('click', () => {
+            // Simpan kondisi form aktif ke memori
+            saveCurrentForm();
+
+            const activeTab = tabs[currentTabIndex];
+            if (!activeTab || !activeTab.formData) {
+                showToast('Tidak ada data untuk disimpan', '#dc3545');
+                return;
+            }
+
+            // 🔹 Bentuk ulang format seperti versi lama
+            const sendData = {
+                no_nota: activeTab.formData.no_nota?.value || "",
+                tanggal: activeTab.formData.tanggal?.value || "",
+                kode_sup: activeTab.formData.kode_sup?.value || "",
+                jt_tempo: activeTab.formData.jt_tempo?.value || "",
+                prsnppn: parseFloat(activeTab.formData.ppn?.value || 0),
+                hrgppn: parseIDNumber(activeTab.formData.hppn?.value || 0),
+                subtotal: parseIDNumber(activeTab.formData.subtotal?.value || 0),
+                totaljmlh: parseIDNumber(activeTab.formData.totaljmlh?.value || 0),
+                disk1: parseFloat(activeTab.formData.diskon1?.value || 0),
+                disk2: parseFloat(activeTab.formData.diskon2?.value || 0),
+                disk3: parseFloat(activeTab.formData.diskon3?.value || 0),
+                hdisk1: parseIDNumber(activeTab.formData.hdiskon1?.value || 0),
+                hdisk2: parseIDNumber(activeTab.formData.hdiskon2?.value || 0),
+                hdisk3: parseIDNumber(activeTab.formData.hdiskon3?.value || 0),
+                detail: activeTab.dataPembelian || []
+            };
+
+            // 🔹 Kirim data seperti dulu
+            fetch('prosessimpanpmb.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(sendData)
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    showToast('Data berhasil disimpan!');
+                    localStorage.removeItem('formPembelianTabs');
+                    if (currentTabIndex !== null && tabs[currentTabIndex]) {
+                        tabs[currentTabIndex].formStatus = "default";
+                    }
                     initializeFormButtons();
                 } else {
                     showToast('Gagal menyimpan: ' + res.message, '#dc3545');
@@ -1002,6 +1089,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 showToast('Error: ' + err, '#dc3545');
             });
         });
+
 
         document.getElementById('btnPrint').addEventListener('click', () => {
             const noNota = document.getElementById('no_nota').value;
@@ -1031,27 +1119,6 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 1500);
         }
-        window.addEventListener('beforeunload', () => {
-            const form = document.getElementById('formPembelian');
-            const formData = {};
-
-            form.querySelectorAll('input, select, textarea, button').forEach(el => {
-                formData[el.id] = {
-                    value: el.value,
-                    disabled: el.disabled
-                };
-            });
-
-            // Simpan currentstat
-            formData['currentstat'] = currentstat;
-
-            // Simpan dataPembelian juga jika penting
-            formData['dataPembelian'] = dataPembelian;
-
-            // Simpan ke localStorage
-            localStorage.setItem('formPembelianState', JSON.stringify(formData));
-        });
-
     </script>
 </body>
 </html>

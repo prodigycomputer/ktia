@@ -13,7 +13,7 @@
     $kodesls = strtoupper($data['kode_sls'] ?? '');
     $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
     $jt_tempo = $data['jt_tempo'] ?? '';
-    $totaljmlh = $data['totaljmlh'] ?? 0;
+    $totaljmlh = floatval($data['totaljmlh']) ?? 0;
     
 
     if (!$no_nota || !$tanggal || !$kodekust || !$kodesls || !$jt_tempo || empty($detail)) {

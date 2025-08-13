@@ -545,6 +545,39 @@
         width: 400px;
     }
 
+    .tab-bar {
+        display: flex;
+        border-bottom: 2px solid #ccc;
+        margin-bottom: 11px;
+        background: #f9f9f9;
+    }
+
+    .tab-bar button {
+        border: 1px;
+        padding: 4px 14px;
+        cursor: pointer;
+        margin-right: 3px;
+        border-radius: 4px 16px 0 0;
+        font-size: 12px;
+        position: relative;/* Biar nyambung ke form */
+    }
+
+    .tab-bar button.active {
+        background: rgb(91, 191, 221);
+        border-color: #ccc;
+        border-bottom: 2px solid white;
+        font-weight: bold;
+    }
+
+    .tab-bar button:hover:not(.active) {
+        background: #dfe4ea;
+    }
+
+    .tab-bar button span {
+        margin-left: 8px;
+        font-weight: bold;
+        cursor: pointer;
+    }
 
 /* Responsive Mobile */
 

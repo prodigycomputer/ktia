@@ -12,7 +12,7 @@ $kodekust = strtoupper($data['kodekust'] ?? '');
 $kodesls = strtoupper($data['kodesls'] ?? '');
 $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
 $tgljt = $data['jt_tempo'] ?? '';
-$totaljmlh = $data['totaljmlh'] ?? 0;
+$totaljmlh = floatval($data['totaljmlh']) ?? 0;
 
 
 if (!$nonota || !$tanggal || !$kodekust || !$kodesls || !$tgljt || !$kodegd || empty($detail)) {
