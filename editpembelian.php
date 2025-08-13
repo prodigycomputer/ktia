@@ -610,13 +610,13 @@
                         <td style="text-align: right;">${item.jlh3 || ''}</td>
                         <td>${item.satuan3 || ''}</td>
                         <td style="text-align: right;">${parseInt(item.harga).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                        <td style="text-align: right;">${item.disca}</td>
-                        <td style="text-align: right;">${item.discb}</td>
-                        <td style="text-align: right;">${item.discc}</td>
+                        <td style="text-align: right;">${parseInt(item.disca).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td style="text-align: right;">${parseInt(item.discb).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                        <td style="text-align: right;">${parseInt(item.discc).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         <td style="display: none; text-align: right;">${item.hdisca}</td>
                         <td style="display: none; text-align: right;">${item.hdiscb}</td>
                         <td style="display: none; text-align: right;">${item.hdiscc}</td>
-                        <td style="text-align: right;">${item.discrp}</td>
+                        <td style="text-align: right;">${parseInt(item.discrp).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         <td style="text-align: right;">${parseInt(item.jumlah).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         <td style="display: none;" id="td-btn-${index}">
                             <button type="button" onclick="editItem(${index})">Edit</button>
