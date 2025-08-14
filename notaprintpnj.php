@@ -37,20 +37,25 @@
             font-size: 12px;
         }
 
-        .form-kiri, .form-kanan {
+        .form-kiri, .form-tengah, .form-kanan {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
 
         .form-kiri {
-            width: 30%;
-            margin-right: 10px; /* Jarak ke kanan */
+            width: 34%;
+            margin-right: 5px; /* Jarak ke kanan */
+        }
+
+        .form-tengah {
+            width: 40%;
+            margin-left: 5px; /* Jarak ke kiri */
         }
 
         .form-kanan {
-            width: 60%;
-            margin-left: 10px; /* Jarak ke kiri */
+            width: 30%;
+            margin-left: 5px; /* Jarak ke kiri */
         }
 
 
@@ -205,21 +210,34 @@
                 </div>
             </div>
 
-            <div class="form-kanan">
+            <div class="form-tengah">
                 <div class="field">
-                    <label>Kode Supplier</label>
+                    <label>Kode Kustomer</label>
                     <label>:</label>
-                    <span id="kode_sup"></span>
+                    <span id="kode_kust"></span>
                 </div>
                 <div class="field">
-                    <label>Nama Supplier</label>
+                    <label>Nama Kustomer</label>
                     <label>:</label>
-                    <span id="nama_sup"></span>
+                    <span id="nama_kust"></span>
                 </div>
                 <div class="field">
                     <label>Alamat</label>
                     <label>:</label>
                     <span id="alamat"></span>
+                </div>
+            </div>
+
+            <div class="form-kanan">
+                <div class="field">
+                    <label>Kode Sales</label>
+                    <label>:</label>
+                    <span id="kode_sls"></span>
+                </div>
+                <div class="field">
+                    <label>Nama Sales</label>
+                    <label>:</label>
+                    <span id="nama_sls"></span>
                 </div>
             </div>
         </div>
@@ -276,8 +294,10 @@
                     document.getElementById('tanggal').textContent = h.tanggal;
                     document.getElementById('no_nota').textContent = h.no_nota;
                     document.getElementById('jt_tempo').textContent = h.jt_tempo;
-                    document.getElementById('kode_sup').textContent = h.kode_sup;
-                    document.getElementById('nama_sup').textContent = h.nama_sup;
+                    document.getElementById('kode_kust').textContent = h.kode_kust;
+                    document.getElementById('nama_kust').textContent = h.nama_kust;
+                    document.getElementById('kode_sls').textContent = h.kode_sls;
+                    document.getElementById('nama_sls').textContent = h.nama_sls;
                     document.getElementById('alamat').textContent = h.alamat;
                     let subtotal = 0;
                     const tbody = document.getElementById('table-detail');

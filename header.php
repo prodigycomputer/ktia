@@ -8,7 +8,16 @@
 
         <!-- Kanan: Judul Nota -->
         <div>
-            <h2 style="margin: 0; font-size: 22px;">Nota Pembelian</h2>
+            <?php
+            $filename = basename($_SERVER['PHP_SELF']); // nama file php yang sedang dibuka
+            if ($filename === 'notaprintpem.php') {
+                echo '<h2 style="margin: 0; font-size: 22px;">Nota Pembelian</h2>';
+            } elseif ($filename === 'notaprintpnj.php') {
+                echo '<h2 style="margin: 0; font-size: 22px;">Nota Penjualan</h2>';
+            } else {
+                echo '<h2 style="margin: 0; font-size: 22px;">Nota</h2>'; // default
+            }
+            ?>
         </div>
     </div>
     

@@ -1,5 +1,10 @@
 // Hitung.js
 
+function toNumberIDR(str) {
+    if (!str) return 0;
+    return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
+}
+
 function hitungJumlahPembelian(mode = "input") {
     // Ambil nilai dari form popup
     let jlh1 = parseFloat(document.getElementById('popup_jlh1').value) || 0;
@@ -53,7 +58,7 @@ function hitungSubtotalDariArrayBeli() {
     let dc2 = parseFloat(document.getElementById('diskon2').value) || 0;
     let dc3 = parseFloat(document.getElementById('diskon3').value) || 0;
     let persenppn = parseFloat(document.getElementById('ppn').value) || 0;
-    let lainLain = parseInt(document.getElementById('lain_lain').value) || 0;
+    let lainLain = toNumberIDR(document.getElementById('lain_lain').value) || 0;
 
     dataPembelian.forEach(item => {
         subtotal += parseFloat(item.jumlah) || 0;
@@ -166,7 +171,7 @@ function hitungSubtotalDariArrayJual() {
     let dc2 = parseFloat(document.getElementById('diskon2').value) || 0;
     let dc3 = parseFloat(document.getElementById('diskon3').value) || 0;
     let persenppn = parseFloat(document.getElementById('ppn').value) || 0;
-    let lainLain = parseInt(document.getElementById('lain_lain').value) || 0;
+    let lainLain = toNumberIDR(document.getElementById('lain_lain').value) || 0;
 
     dataPenjualan.forEach(item => {
         subtotal += parseFloat(item.jumlah) || 0;

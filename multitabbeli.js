@@ -1,32 +1,14 @@
-// ======== DETEKSI JENIS FORM ========
-let formType = '';
-let formId = '';
-let storageTabsKey = '';
-let storageActiveKey = '';
-let dataTransaksi = [];
 let tabs = [];
 let currentTabIndex = null;
 
+// ======== INIT SAAT HALAMAN DIMUAT ========
 window.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('formPembelian')) {
-        formType = 'Pembelian';
-    } else if (document.getElementById('formPenjualan')) {
-        formType = 'Penjualan';
-    } else {
-        console.error('Form Pembelian/Penjualan tidak ditemukan!');
-        return;
-    }
-
-    formId = `form${capitalize(formType)}`;
-    storageTabsKey = `form${capitalize(formType)}Tabs`;
-    storageActiveKey = `form${capitalize(formType)}ActiveTab`;
-
-    const savedTabs = JSON.parse(localStorage.getItem(storageTabsKey) || '[]');
-    const savedIndex = parseInt(localStorage.getItem(storageActiveKey) || '0', 10);
+    const savedTabs = JSON.parse(localStorage.getItem('formPembelianTabs') || '[]');
+    const savedIndex = parseInt(localStorage.getItem('formPembelianActiveTab') || '0', 10);
 
     if (savedTabs.length > 0) {
         tabs = savedTabs;
-        currentTabIndex = Math.min(savedIndex, tabs.length - 1);
+        currentTabIndex = Math.min(savedIndex, tabs.length - 1); // pastikan index valid
         loadFormFromTab();
         restoreStatusUI();
         renderTabs();
@@ -35,13 +17,13 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// ======== SIMPAN DATA SAAT REFRESH ========
+// ======== SIMPAN DATA SAAT REFRESH / CLOSE ========
 window.addEventListener('beforeunload', () => {
     saveCurrentForm();
     saveTabs();
 });
 
-// ======== SET STATUS TAB ========
+// ======== SET STATUS TAB AKTIF ========
 function setCurrentStatForActiveTab(stat) {
     currentstat = stat;
     if (currentTabIndex !== null && tabs[currentTabIndex]) {
@@ -52,24 +34,26 @@ function setCurrentStatForActiveTab(stat) {
 
 // ======== BUAT TAB BARU ========
 function createNewTab() {
-    if (currentTabIndex !== null) saveCurrentForm();
+    if (currentTabIndex !== null) {
+        saveCurrentForm(); // simpan tab lama dulu
+    }
 
     const newTab = {
         id: Date.now(),
         formData: {},
-        dataTransaksi: [],
+        dataPembelian: [],
         currentstat: null
     };
     tabs.push(newTab);
     currentTabIndex = tabs.length - 1;
-    localStorage.setItem(storageActiveKey, currentTabIndex);
+    localStorage.setItem('formPembelianActiveTab', currentTabIndex);
     saveTabs();
     renderTabs();
     clearForm();
     if (typeof initializeFormButtons === 'function') initializeFormButtons();
 }
 
-// ======== RENDER TABS ========
+// ======== RENDER TABS DI UI ========
 function renderTabs() {
     const tabBar = document.getElementById('tabBar');
     if (!tabBar) return;
@@ -79,10 +63,15 @@ function renderTabs() {
         const btn = document.createElement('button');
         btn.textContent = `Nota ${index + 1}`;
 
+        // Tambah class active untuk tab aktif
+        /*if (index === currentTabIndex) {
+            btn.classList.add('active');
+        }*/
+
         if (index === currentTabIndex) {
             btn.style.background = '#6badf3ff';
         } else if (tab.currentstat === 'tambah') {
-            btn.style.background = '#28a745';
+            btn.style.background = '#28a745'; // hijau untuk status tambah
         } else {
             btn.style.background = '#6c757d';
         }
@@ -107,17 +96,18 @@ function renderTabs() {
     tabBar.appendChild(addBtn);
 }
 
+
 // ======== PINDAH TAB ========
 function switchTab(index) {
     saveCurrentForm();
     currentTabIndex = index;
-    localStorage.setItem(storageActiveKey, index);
+    localStorage.setItem('formPembelianActiveTab', index);
     loadFormFromTab();
     restoreStatusUI();
     renderTabs();
 }
 
-// ======== RESTORE STATUS UI ========
+// ======== PULIHKAN STATUS UI SESUAI TAB ========
 function restoreStatusUI() {
     const tabData = tabs[currentTabIndex];
     currentstat = tabData.currentstat || null;
@@ -128,7 +118,7 @@ function restoreStatusUI() {
     }
 }
 
-// ======== LOAD FORM ========
+// ======== LOAD FORM DARI TAB ========
 function loadFormFromTab() {
     if (currentTabIndex === null) return;
     const tabData = tabs[currentTabIndex];
@@ -142,21 +132,15 @@ function loadFormFromTab() {
         }
     });
 
-    dataTransaksi = [...(tabData.dataTransaksi || [])];
-
-    if (formType === 'Pembelian') {
-        if (typeof renderTabelPembelian === 'function') renderTabelPembelian();
-        if (typeof hitungSubtotalDariArrayBeli === 'function') hitungSubtotalDariArrayBeli();
-    } else {
-        if (typeof renderTabelPenjualan === 'function') renderTabelPenjualan();
-        if (typeof hitungSubtotalDariArrayJual === 'function') hitungSubtotalDariArrayJual();
-    }
+    dataPembelian = [...(tabData.dataPembelian || [])];
+    renderTabelPembelian();
+    hitungSubtotalDariArrayBeli();
 }
 
-// ======== SAVE FORM ========
+// ======== SIMPAN FORM KE TAB AKTIF ========
 function saveCurrentForm() {
     if (currentTabIndex === null || !tabs[currentTabIndex]) return;
-    const form = document.getElementById(formId);
+    const form = document.getElementById('formPembelian');
     const formData = {};
     form.querySelectorAll('input, select, textarea, button').forEach(el => {
         if (el.id) {
@@ -165,14 +149,14 @@ function saveCurrentForm() {
     });
 
     tabs[currentTabIndex].formData = formData;
-    tabs[currentTabIndex].dataTransaksi = [...dataTransaksi];
+    tabs[currentTabIndex].dataPembelian = [...dataPembelian];
     tabs[currentTabIndex].currentstat = currentstat;
     saveTabs();
 }
 
-// ======== SIMPAN SEMUA TAB ========
+// ======== SIMPAN SEMUA TAB KE localStorage ========
 function saveTabs() {
-    localStorage.setItem(storageTabsKey, JSON.stringify(tabs));
+    localStorage.setItem('formPembelianTabs', JSON.stringify(tabs));
 }
 
 // ======== HAPUS TAB ========
@@ -180,11 +164,11 @@ function removeTab(index) {
     tabs.splice(index, 1);
     if (tabs.length === 0) {
         currentTabIndex = null;
-        localStorage.removeItem(storageActiveKey);
+        localStorage.removeItem('formPembelianActiveTab');
         clearForm();
     } else {
         currentTabIndex = Math.max(0, index - 1);
-        localStorage.setItem(storageActiveKey, currentTabIndex);
+        localStorage.setItem('formPembelianActiveTab', currentTabIndex);
         loadFormFromTab();
         restoreStatusUI();
     }
@@ -192,19 +176,14 @@ function removeTab(index) {
     renderTabs();
 }
 
-// ======== CLEAR FORM ========
+// ======== BERSIHKAN FORM ========
 function clearForm() {
-    const formElements = document.querySelectorAll(`#${formId} input, #${formId} select, #${formId} textarea`);
+    const formElements = document.querySelectorAll('#formPembelian input, #formPembelian select, #formPembelian textarea');
     formElements.forEach(el => {
         if (el.type !== 'button' && el.type !== 'submit') {
             el.value = '';
             el.disabled = false;
         }
     });
-    dataTransaksi = [];
-}
-
-// ======== HELPER ========
-function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    dataPembelian = [];
 }

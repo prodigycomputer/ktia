@@ -15,7 +15,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
     <script src="hitung.js"></script>
-    <script src="multitab.js"></script>
+    <script src="multitabbeli.js"></script>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -328,6 +328,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         </div>
     </div>
     <script>
+        //initMultiTab('Pembelian');
         let currentstat = null;
         let currentMode = "input";
         let dataPembelian = [];

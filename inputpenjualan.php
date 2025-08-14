@@ -15,6 +15,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
     <script src="hitung.js"></script>
+    <script src="multitabjual.js"></script>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -35,6 +36,9 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         </div>
 
         <form id="formPenjualan" action="prosespenjualan.php" method="POST">
+            <div id="tabBar" class="tab-bar">
+                <!-- Tab akan di-generate via JS -->
+            </div>
             <div id="form-penjualan-atas">
                 <div class="form-pj-row">
                     <div class="form-pj-col">
@@ -1024,6 +1028,10 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 td.style.display = '';
             });
 
+            if (currentTabIndex !== null && tabs[currentTabIndex]) {
+                tabs[currentTabIndex].formStatus = "tambah";
+            }
+
             dataPenjualan = [];
             renderTabelPenjualan();
         }
@@ -1081,12 +1089,16 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             allTdAksi.forEach(td => {
                 td.style.display = '';
             });
+            if (currentTabIndex !== null && tabs[currentTabIndex]) {
+                tabs[currentTabIndex].formStatus = "default";
+            }
             dataPenjualan = [];
             renderTabelPenjualan();
             localStorage.removeItem('formPenjualanInput');
         }
 
         document.getElementById('btnTambahItem').addEventListener('click', () => {
+            currentMode = "input";
             document.getElementById('popupForm').style.display = 'flex';
         });
 
@@ -1145,6 +1157,27 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             }
         });
 
+        window.addEventListener('beforeunload', () => {
+            const form = document.getElementById('formPenjualan');
+            const formData = {};
+
+            form.querySelectorAll('input, select, textarea, button').forEach(el => {
+                formData[el.id] = {
+                    value: el.value,
+                    disabled: el.disabled
+                };
+            });
+
+            // Simpan currentstat
+            formData['currentstat'] = currentstat;
+
+            // Simpan dataPenjualan juga jika penting
+            formData['dataPenjualan'] = dataPenjualan;
+
+            // Simpan ke localStorage
+            localStorage.setItem('formPenjualanInput', JSON.stringify(formData));
+        });
+
         // Enable btnTambahItem jika no_nota terisi
         document.getElementById('no_nota').addEventListener('input', function () {
             const noNota = this.value.trim();
@@ -1156,6 +1189,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
         }
 
+        /*
         document.getElementById('btnSave').addEventListener('click', () => {
             const data = {
                 nonota: document.getElementById('no_nota').value,
@@ -1187,6 +1221,62 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             .catch(err => {
                 showToast('Error: ' + err, '#dc3545');
             });
+        });*/
+
+        // Tombol save
+        document.getElementById('btnSave').addEventListener('click', () => {
+            // Simpan kondisi form aktif ke memori
+            saveCurrentForm();
+
+            const activeTab = tabs[currentTabIndex];
+            if (!activeTab || !activeTab.formData) {
+                showToast('Tidak ada data untuk disimpan', '#dc3545');
+                return;
+            }
+
+            // 🔹 Bentuk ulang format seperti versi lama                                                                                                                                                                                
+            const sendData = {
+                nonota: activeTab.formData.no_nota?.value || "",
+                tanggal: activeTab.formData.tanggal?.value || "",
+                kodekust: activeTab.formData.kode_kust?.value || "",
+                kodesls: activeTab.formData.kode_sls?.value || "",
+                jt_tempo: activeTab.formData.jt_tempo?.value || "",
+                prsnppn: parseFloat(activeTab.formData.ppn?.value || 0),
+                hrgppn: parseIDNumber(activeTab.formData.hppn?.value || 0),
+                subtotal: parseIDNumber(activeTab.formData.subtotal?.value || 0),
+                totaljmlh: parseIDNumber(activeTab.formData.totaljmlh?.value || 0),
+                disk1: parseFloat(activeTab.formData.diskon1?.value || 0),
+                disk2: parseFloat(activeTab.formData.diskon2?.value || 0),
+                disk3: parseFloat(activeTab.formData.diskon3?.value || 0),
+                hdisk1: parseIDNumber(activeTab.formData.hdiskon1?.value || 0),
+                hdisk2: parseIDNumber(activeTab.formData.hdiskon2?.value || 0),
+                hdisk3: parseIDNumber(activeTab.formData.hdiskon3?.value || 0),
+                detail: activeTab.dataPenjualan || []
+            };
+
+            // 🔹 Kirim data seperti dulu
+            fetch('prosessimpanpnj.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(sendData)
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    showToast('Data berhasil disimpan!');
+                    localStorage.removeItem('formPenjualanTabs');
+                    if (currentTabIndex !== null && tabs[currentTabIndex]) {
+                        tabs[currentTabIndex].formStatus = "default";
+                    }
+                    initializeFormButtons();
+                } else {
+                    console.log(sendData);
+                    showToast('Gagal menyimpan: ' + res.message, '#dc3545');
+                }
+            })
+            .catch(err => {
+                showToast('Error: ' + err, '#dc3545');
+            });
         });
 
         document.getElementById('btnPrint').addEventListener('click', () => {
@@ -1197,9 +1287,9 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 return;
             }
 
-            // Buka halaman nota dalam tab baru
-            const url = `notaprintpnj.php?nonota=${encodeURIComponent(noNota)}`;
-            window.open(url, '_blank');
+            // Buka halaman nota di tab yang sama
+            const url = `notaprintpnj.php?nonota=${encodeURIComponent(noNota)}&from=inputpenjualan.php`;
+            window.location.href = url;
         });
 
         function showToast(pesan, warna = '#28a745') {
@@ -1217,26 +1307,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 1500);
         }
-        window.addEventListener('beforeunload', () => {
-            const form = document.getElementById('formPenjualan');
-            const formData = {};
-
-            form.querySelectorAll('input, select, textarea, button').forEach(el => {
-                formData[el.id] = {
-                    value: el.value,
-                    disabled: el.disabled
-                };
-            });
-
-            // Simpan currentstat
-            formData['currentstat'] = currentstat;
-
-            // Simpan dataPenjualan juga jika penting
-            formData['dataPenjualan'] = dataPenjualan;
-
-            // Simpan ke localStorage
-            localStorage.setItem('formPenjualanInput', JSON.stringify(formData));
-        });
+        
 
     </script>
 </body>

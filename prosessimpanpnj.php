@@ -13,6 +13,14 @@ $kodesls = strtoupper($data['kodesls'] ?? '');
 $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
 $tgljt = $data['jt_tempo'] ?? '';
 $totaljmlh = floatval($data['totaljmlh']) ?? 0;
+$prsnppn = $data['prsnppn'] ?? 0;
+$hrgppn = floatval($data['hrgppn']) ?? 0;
+$disk1 = $data['disk1'] ?? 0;
+$hdisk1 = floatval($data['hdisk1']) ?? 0;
+$disk2 = $data['disk2'] ?? 0;
+$hdisk2 = floatval($data['hdisk2']) ?? 0;
+$disk3 = $data['disk3'] ?? 0;
+$hdisk3 = floatval($data['hdisk3']) ?? 0;
 
 
 if (!$nonota || !$tanggal || !$kodekust || !$kodesls || !$tgljt || !$kodegd || empty($detail)) {
@@ -31,8 +39,8 @@ $conn->begin_transaction();
 
 try {
     // Simpan ke zbeli (header) 
-    $stmt = $conn->prepare("INSERT INTO zjual (nonota, tgl, kodekust, kodesls, kodegd, nilai, tgltempo) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssds", $nonota, $tanggal, $kodekust, $kodesls, $kodegd, $totaljmlh, $tgljt);
+    $stmt = $conn->prepare("INSERT INTO zjual (nonota, tgl, kodekust, kodesls, kodegd, nilai, tgltempo, ppn, hppn, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssdsdddddddd", $nonota, $tanggal, $kodekust, $kodesls, $kodegd, $totaljmlh, $tgljt, $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3);
     $stmt->execute();
     $stmt->close();
 

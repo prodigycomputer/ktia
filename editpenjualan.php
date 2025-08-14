@@ -1126,6 +1126,14 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 kode_kust: document.getElementById('kode_kust').value,
                 kode_sls: document.getElementById('kode_sls').value,
                 jt_tempo: document.getElementById('jt_tempo').value,
+                prsnppn: parseFloat(document.getElementById('ppn').value) || 0,
+                hrgppn: parseIDNumber(document.getElementById('hppn').value) || 0,
+                disk1: parseFloat(document.getElementById('diskon1').value) || 0,
+                hdisk1: parseIDNumber(document.getElementById('hdiskon1').value) || 0,
+                disk2: parseFloat(document.getElementById('diskon2').value) || 0,
+                hdisk2: parseIDNumber(document.getElementById('hdiskon2').value) || 0,
+                disk3: parseFloat(document.getElementById('diskon3').value) || 0,
+                hdisk3: parseIDNumber(document.getElementById('hdiskon3').value) || 0,
                 totaljmlh: parseIDNumber(document.getElementById('totaljmlh').value) || 0,
                 detail: dataPenjualan // array yang sudah kamu simpan saat tambah item
             };
