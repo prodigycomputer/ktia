@@ -271,8 +271,11 @@ while ($g = $grupResult->fetch_assoc()) {
     </div>
 
     <script>
-
         let previousFormData = {};
+        let currentstat = null;
+        let inputSearch = null;
+        let searchBtn = document.getElementById('searchbtn')
+        let hargaData = []
 
         const kodeMerkInput = document.getElementById('kodemerek');
         const kodeGolInput = document.getElementById('kodegolongan');
@@ -354,8 +357,6 @@ while ($g = $grupResult->fetch_assoc()) {
         resetButtonStyles();
 
         }
-
-        let currentstat = null;
 
         function initializeTambah() {
             currentstat = 'tambah';
@@ -637,10 +638,6 @@ while ($g = $grupResult->fetch_assoc()) {
         }
 
         // panggil saat halaman dimuat
-        let inputSearch = null;
-        let searchBtn = document.getElementById('searchbtn')
-        let hargaData = []
-
         function handleInput(type) {
             const kodeInput = document.getElementById('searchKode');
             const namaInput = document.getElementById('searchNama');

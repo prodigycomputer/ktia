@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2025 at 11:45 AM
+-- Generation Time: Aug 16, 2025 at 11:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -67,7 +67,9 @@ INSERT INTO `zbeli` (`nonota`, `tgl`, `kodesup`, `kodegd`, `nilai`, `lunas`, `tg
 ('N001', '2025-08-12', 'S002', 'G01', 74393.9, 0, '2025-08-12', 11.00, 6381.38, 10.00, 7142.20, 5.00, 3213.99, 5.00, 3053.29),
 ('N003', '2025-08-12', 'S001', 'G01', 16781.27, 0, '2025-08-12', 11.00, 1662.02, 10.00, 2072.60, 10.00, 1865.34, 10.00, 1678.81),
 ('N002', '2025-08-13', 'S002', 'G01', 141567.79, 0, '2025-08-13', 11.00, 14029.24, 10.00, 17495.00, 10.00, 15745.50, 10.00, 14170.95),
-('N004', '2025-08-13', 'S001', 'G01', 240038.11, 0, '2025-08-13', 11.00, 23787.56, 5.00, 12611.20, 5.00, 11980.64, 5.00, 11381.61);
+('N004', '2025-08-13', 'S001', 'G01', 240038.11, 0, '2025-08-13', 11.00, 23787.56, 5.00, 12611.20, 5.00, 11980.64, 5.00, 11381.61),
+('NB001', '2025-08-14', 'S001', 'G01', 214097.14, 0, '2025-08-14', 11.00, 20225.84, 10.00, 25222.40, 10.00, 22700.16, 10.00, 20430.14),
+('NB002', '2025-08-14', 'S002', 'G01', 164620, 0, '2025-08-14', 11.00, 16313.69, 10.00, 20343.80, 10.00, 18309.42, 10.00, 16478.48);
 
 -- --------------------------------------------------------
 
@@ -143,7 +145,9 @@ INSERT INTO `zbelim` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `ha
 ('N001', 'LA12', 'G02', 1, 2, 3, 60000, 10, 62280, 10, 56052, 10, 50446.8, 10, 50437),
 ('N003', 'D01', 'G01', 1, 2, 0, 30000, 20, 28800, 10, 25920, 20, 20736, 10, 20726),
 ('N002', 'D01', 'G01', 1, 2, 0, 200000, 10, 216000, 10, 194400, 10, 174960, 10, 174950),
-('N004', 'LA12', 'G01', 1, 2, 3, 300000, 10, 311400, 10, 280260, 10, 252234, 10, 252224);
+('N004', 'LA12', 'G01', 1, 2, 3, 300000, 10, 311400, 10, 280260, 10, 252234, 10, 252224),
+('NB001', 'LA12', 'G01', 1, 2, 3, 300000, 10, 311400, 10, 280260, 10, 252234, 10, 252224),
+('NB002', 'LA12', 'G01', 1, 2, 3, 350000, 10, 363300, 20, 290640, 30, 203448, 10, 203438);
 
 -- --------------------------------------------------------
 
@@ -162,6 +166,24 @@ CREATE TABLE `zconfig` (
 
 INSERT INTO `zconfig` (`jmlharga`, `qppn`) VALUES
 (6, 11.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zgolongan`
+--
+
+CREATE TABLE `zgolongan` (
+  `kodegol` char(20) NOT NULL,
+  `namagol` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zgolongan`
+--
+
+INSERT INTO `zgolongan` (`kodegol`, `namagol`) VALUES
+('D01', 'GOLONGAN 1');
 
 -- --------------------------------------------------------
 
@@ -217,15 +239,27 @@ CREATE TABLE `zjual` (
   `kodegd` char(10) DEFAULT NULL,
   `nilai` double DEFAULT 0,
   `lunas` int(11) DEFAULT 0,
-  `tgltempo` date DEFAULT NULL
+  `tgltempo` date DEFAULT NULL,
+  `ppn` double(10,2) DEFAULT 0.00,
+  `hppn` double(10,2) DEFAULT 0.00,
+  `disc1` double(10,2) DEFAULT 0.00,
+  `hdisc1` double(10,2) DEFAULT 0.00,
+  `disc2` double(10,2) DEFAULT 0.00,
+  `hdisc2` double(10,2) DEFAULT 0.00,
+  `disc3` double(10,2) DEFAULT 0.00,
+  `hdisc3` double(10,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `zjual`
 --
 
-INSERT INTO `zjual` (`nonota`, `tgl`, `kodekust`, `kodesls`, `kodegd`, `nilai`, `lunas`, `tgltempo`) VALUES
-('CA001', '2025-08-13', 'C05', 'S02', 'G02', 65979, 0, '2025-08-13');
+INSERT INTO `zjual` (`nonota`, `tgl`, `kodekust`, `kodesls`, `kodegd`, `nilai`, `lunas`, `tgltempo`, `ppn`, `hppn`, `disc1`, `hdisc1`, `disc2`, `hdisc2`, `disc3`, `hdisc3`) VALUES
+('CA001', '2025-08-13', 'C05', 'S02', 'G02', 65979, 0, '2025-08-13', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('NJ001', '2025-08-14', 'C01', 'S02', 'G01', 64322.26, 0, '2025-08-14', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('NJ003', '2025-08-14', 'C02', 'S01', 'G01', 214097.14, 0, '2025-08-14', 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00),
+('NJ002', '2025-08-14', 'C02', 'S02', 'G01', 112044.52, 0, '2025-08-14', 0.00, 0.00, 10.00, 12610.70, 10.00, 11349.63, 10.00, 10214.67),
+('NJ004', '2025-08-14', 'C01', 'S02', 'G01', 42265.3, 0, '2025-08-14', 11.00, 3692.96, 1.00, 346.00, 1.00, 342.54, 1.00, 339.11);
 
 -- --------------------------------------------------------
 
@@ -257,7 +291,13 @@ CREATE TABLE `zjualm` (
 
 INSERT INTO `zjualm` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `harga`, `disca`, `hdisca`, `discb`, `hdiscb`, `discc`, `hdiscc`, `discrp`, `jumlah`) VALUES
 ('CA001', 'D01', 'G02', 1, 2, 0, 20000, 10, 21600, 20, 17280, 10, 15552, 10, 15542),
-('CA001', 'LA12', 'G01', 1, 2, 3, 60000, 10, 62280, 10, 56052, 10, 50446.8, 10, 50437);
+('CA001', 'LA12', 'G01', 1, 2, 3, 60000, 10, 62280, 10, 56052, 10, 50446.8, 10, 50437),
+('NJ001', 'LA12', 'G01', 1, 2, 3, 60000, 10, 62280, 10, 56052, 10, 50446.8, 10, 50437),
+('NJ003', 'LA12', 'G01', 1, 2, 3, 300000, 10, 311400, 10, 280260, 10, 252234, 10, 252224),
+('NJ002', 'LA12', 'G01', 1, 2, 3, 150000, 10, 155700, 10, 140130, 10, 126117, 10, 126107),
+('NJ002', 'LA12', 'G01', 1, 2, 3, 150000, 10, 155700, 10, 140130, 10, 126117, 10, 126107),
+('NJ002', 'LA12', 'G01', 1, 2, 3, 150000, 10, 155700, 10, 140130, 10, 126117, 10, 126107),
+('NJ004', 'LA12', 'G01', 1, 2, 3, 30000, 0, 34600, 0, 34600, 0, 34600, 0, 34600);
 
 -- --------------------------------------------------------
 
@@ -282,6 +322,24 @@ CREATE TABLE `zkustomer` (
 INSERT INTO `zkustomer` (`kodekust`, `namakust`, `alamat`, `kota`, `kodehrg`, `ktp`, `npwp`) VALUES
 ('C01', 'PT MEDIA INDAH', 'JL. MENTARI', 'PONTIANAK', '2', '3201021501010001', '12.345.678.9-012.345'),
 ('C02', 'PT ASIA JAYA ABADI', 'JL. SITAPANG', 'SINGKAWANG', '5', '3201021501010002', '12.345.678.9-013.345');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zmerek`
+--
+
+CREATE TABLE `zmerek` (
+  `kodemerk` char(20) NOT NULL,
+  `namamerk` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zmerek`
+--
+
+INSERT INTO `zmerek` (`kodemerk`, `namamerk`) VALUES
+('M01', 'INDOMIE');
 
 -- --------------------------------------------------------
 
@@ -314,6 +372,8 @@ INSERT INTO `zsales` (`kodesls`, `namasls`, `alamat`, `kota`, `ktp`, `npwp`) VAL
 
 CREATE TABLE `zstok` (
   `kodebrg` char(20) NOT NULL,
+  `kodemerk` char(20) DEFAULT NULL,
+  `kodegol` char(20) DEFAULT NULL,
   `kodegrup` char(10) DEFAULT NULL,
   `namabrg` varchar(50) NOT NULL,
   `satuan1` char(10) NOT NULL,
@@ -347,10 +407,10 @@ CREATE TABLE `zstok` (
 -- Dumping data for table `zstok`
 --
 
-INSERT INTO `zstok` (`kodebrg`, `kodegrup`, `namabrg`, `satuan1`, `satuan2`, `satuan3`, `isi1`, `isi2`, `hrgbeli`, `harga1`, `harga11`, `harga111`, `harga2`, `harga22`, `harga222`, `harga3`, `harga33`, `harga333`, `harga4`, `harga44`, `harga444`, `harga5`, `harga55`, `harga555`, `harga6`, `harga66`, `harga666`, `autoid`) VALUES
-('D01', 'A02', 'SUSU DANCOW BALITA MADU', 'DUS', 'KTK', '-', 10, 0, 20000, 100000, 10000, 1000, 200000, 20000, 2000, 300000, 30000, 3000, 400000, 40000, 4000, 500000, 50000, 5000, 600000, 60000, 6000, 1),
-('L01', 'A03', 'KERTAS KADO', 'LBR', '-', '-', 0, 0, 10000, 200000, 20000, 2000, 400000, 40000, 4000, 600000, 60000, 6000, 800000, 80000, 8000, 1000000, 100000, 10000, 1200000, 120000, 12000, 2),
-('LA12', 'A01', 'ROKOK LA 12 BATANG', 'DUS', 'SLOP', 'BKS', 15, 10, 30000, 300000, 30000, 3000, 600000, 60000, 6000, 900000, 90000, 9000, 1200000, 120000, 12000, 1500000, 150000, 15000, 1800000, 180000, 18000, 3);
+INSERT INTO `zstok` (`kodebrg`, `kodemerk`, `kodegol`, `kodegrup`, `namabrg`, `satuan1`, `satuan2`, `satuan3`, `isi1`, `isi2`, `hrgbeli`, `harga1`, `harga11`, `harga111`, `harga2`, `harga22`, `harga222`, `harga3`, `harga33`, `harga333`, `harga4`, `harga44`, `harga444`, `harga5`, `harga55`, `harga555`, `harga6`, `harga66`, `harga666`, `autoid`) VALUES
+('D01', NULL, NULL, 'A02', 'SUSU DANCOW BALITA MADU', 'DUS', 'KTK', '-', 10, 0, 20000, 100000, 10000, 1000, 200000, 20000, 2000, 300000, 30000, 3000, 400000, 40000, 4000, 500000, 50000, 5000, 600000, 60000, 6000, 1),
+('L01', NULL, NULL, 'A03', 'KERTAS KADO', 'LBR', '-', '-', 0, 0, 10000, 200000, 20000, 2000, 400000, 40000, 4000, 600000, 60000, 6000, 800000, 80000, 8000, 1000000, 100000, 10000, 1200000, 120000, 12000, 2),
+('LA12', NULL, NULL, 'A01', 'ROKOK LA 12 BATANG', 'DUS', 'SLOP', 'BKS', 15, 10, 30000, 300000, 30000, 3000, 600000, 60000, 6000, 900000, 90000, 9000, 1200000, 120000, 12000, 1500000, 150000, 15000, 1800000, 180000, 18000, 3);
 
 -- --------------------------------------------------------
 
@@ -405,6 +465,12 @@ ALTER TABLE `zbeli`
   ADD UNIQUE KEY `nonota` (`nonota`);
 
 --
+-- Indexes for table `zgolongan`
+--
+ALTER TABLE `zgolongan`
+  ADD PRIMARY KEY (`kodegol`);
+
+--
 -- Indexes for table `zgrup`
 --
 ALTER TABLE `zgrup`
@@ -427,6 +493,12 @@ ALTER TABLE `zjual`
 --
 ALTER TABLE `zkustomer`
   ADD PRIMARY KEY (`kodekust`);
+
+--
+-- Indexes for table `zmerek`
+--
+ALTER TABLE `zmerek`
+  ADD PRIMARY KEY (`kodemerk`);
 
 --
 -- Indexes for table `zsales`
