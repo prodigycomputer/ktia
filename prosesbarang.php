@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kodebrg       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodebrg'] ?? '')));
     $kodebrg_lama  = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodebrg_lama'] ?? $kodebrg)));
     $kodegrup      = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodegrup'] ?? '')));
+    $kodemerek     = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodemerek'] ?? '')));
+    $kodegolongan      = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodegolongan'] ?? '')));
     $namabrg       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['namabrg'] ?? '')));
     $satuan1       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan1'] ?? '-')));
     $satuan2       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['satuan2'] ?? '-')));
@@ -23,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hargabeli     = is_numeric($_POST['hargabeli'] ?? '') ? floatval($_POST['hargabeli']) : 0;
 
     // --- Validasi minimal wajib isi ---
-    if (!$kodebrg || !$namabrg || !$kodegrup) {
-        echo json_encode(['status' => 'error', 'message' => 'Kode, Nama, dan Grup wajib diisi']);
+    if (!$kodebrg || !$namabrg || !$kodegrup || !$kodemerek || !$kodegolongan) {
+        echo json_encode(['status' => 'error', 'message' => 'Kode, Nama, Merek, Golongan dan Grup wajib diisi']);
         exit;
     }
 
@@ -59,14 +61,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
             $query = "INSERT INTO zstok 
-                (kodebrg, kodegrup, namabrg, satuan1, satuan2, satuan3, isi1, isi2, hrgbeli$fieldHarga)
+                (kodebrg, kodemerk, kodegol, kodegrup, namabrg, satuan1, satuan2, satuan3, isi1, isi2, hrgbeli$fieldHarga)
                 VALUES 
-                ('$kodebrg', '$kodegrup', '$namabrg', '$satuan1', '$satuan2', '$satuan3', $isi1, $isi2, $hargabeli$valueHarga)";
+                ('$kodebrg', '$kodemerek', '$kodegolongan', '$kodegrup', '$namabrg', '$satuan1', '$satuan2', '$satuan3', $isi1, $isi2, $hargabeli$valueHarga)";
             break;
 
         case 'update':
             $query = "UPDATE zstok SET 
                 kodebrg = '$kodebrg',
+                kodemerk = '$kodemerek',
+                kodegol = '$kodegolongan',
                 kodegrup = '$kodegrup',
                 namabrg = '$namabrg',
                 satuan1 = '$satuan1',

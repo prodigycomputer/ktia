@@ -28,10 +28,10 @@ include 'koneksi.php';
     <input type="hidden" name="kodegrup_lama" id="kodegrup_lama" value="">
 
     <div class="form-atas">
-      <label for="kodegrup">Kode</label>
+      <label for="kodegrup">Kode Grup</label>
       <input type="text" name="kodegrup" id="kodegrup" class="long-input" required style="text-transform: uppercase;">
 
-      <label for="namagrup">Nama</label>
+      <label for="namagrup">Nama Grup</label>
       <input type="text" name="namagrup" id="namagrup" class="verylong-input" required style="text-transform: uppercase;">
     </div>
     <div style="margin-top:10px; display:flex; gap:8px;">
@@ -151,7 +151,7 @@ function initializeFormButtonsCancel() {
     document.getElementById('namagrup').value = previousFormData.namagrup;
     document.getElementById('btnTambah').disabled = true;
     document.getElementById('btnEdit').disabled = false;
-    document.getElementById('btnHapus').disabled = true;
+    document.getElementById('btnHapus').disabled = false;
     document.getElementById('btnCancel').disabled = false; 
     document.getElementById('btnSave').disabled = true;
 
@@ -388,7 +388,7 @@ function pilihGrup(data) {
     // Logika enable/disable berdasarkan isi1 dan isi2
     document.getElementById('btnTambah').disabled = true;
     document.getElementById('btnEdit').disabled = false;
-    document.getElementById('btnHapus').disabled = true;
+    document.getElementById('btnHapus').disabled = false;
     document.getElementById('btnCancel').disabled = false; 
 
     previousFormData = {

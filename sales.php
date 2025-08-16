@@ -185,7 +185,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('npwp').value = previousFormData.npwp;
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = false;
-            document.getElementById('btnHapus').disabled = true;
+            document.getElementById('btnHapus').disabled = false;
             document.getElementById('btnCancel').disabled = false; 
             document.getElementById('btnSave').disabled = true;
 
@@ -451,7 +451,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             // Logika enable/disable berdasarkan isi1 dan isi2
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = false;
-            document.getElementById('btnHapus').disabled = true;
+            document.getElementById('btnHapus').disabled = false;
             document.getElementById('btnCancel').disabled = false; 
 
             previousFormData = {

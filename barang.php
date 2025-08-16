@@ -12,7 +12,6 @@ while ($g = $grupResult->fetch_assoc()) {
     $kodegrupList[] = $g['kodegrup'];
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +42,12 @@ while ($g = $grupResult->fetch_assoc()) {
                 <input type="hidden" name="kodebrg_lama" id="kodebrg_lama" value=""> 
 
                 <div class="form-atas">
+                    <label for="kodemerek">Kode Merek</label>
+                    <input type="text" name="kodemerek" id="kodemerek" class="medium-input" required style="text-transform: uppercase;">
+
+                    <label for="kodegolongan">Kode Golongan</label>
+                    <input type="text" name="kodegolongan" id="kodegolongan" class="medium-input" required style="text-transform: uppercase;">
+
                     <label for="kodegrup">Kode Grup</label>
                     <input type="text" name="kodegrup" id="kodegrup" class="medium-input" required style="text-transform: uppercase;">
 
@@ -90,7 +95,68 @@ while ($g = $grupResult->fetch_assoc()) {
             <button id="btnCancel" type="button" onclick="cancelEdit()">Batal</button>
 
         </form>
+        <div id="popupCariGrup" class="popup-pb-cari" style="display: none;">
+            <div class="popup-pb-contentcari">
+                <h3>Pilih Sales</h3>
+                <table class="tabel-hasil" style="min-width: 700px;">
+                    <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyHasilGrup">
+                        <!-- hasil dari filter_barang.php -->
+                    </tbody>
+                </table>
+                <div style="text-align: right; margin-top: 10px;">
+                    <button type="button" onclick="tutupPopupGrup()">Tutup</button>
+                </div>
+            </div>
+        </div>
+        <div id="popupCariMerek" class="popup-pb-cari" style="display: none;">
+            <div class="popup-pb-contentcari">
+                <h3>Pilih Sales</h3>
+                <table class="tabel-hasil" style="min-width: 700px;">
+                    <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyHasilMerek">
+                        <!-- hasil dari filter_barang.php -->
+                    </tbody>
+                </table>
+                <div style="text-align: right; margin-top: 10px;">
+                    <button type="button" onclick="tutupPopupMerek()">Tutup</button>
+                </div>
+            </div>
+        </div>
+        <div id="popupCariGolongan" class="popup-pb-cari" style="display: none;">
+            <div class="popup-pb-contentcari">
+                <h3>Pilih Sales</h3>
+                <table class="tabel-hasil" style="min-width: 700px;">
+                    <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Nama</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyHasilGolongan">
+                        <!-- hasil dari filter_barang.php -->
+                    </tbody>
+                </table>
+                <div style="text-align: right; margin-top: 10px;">
+                    <button type="button" onclick="tutupPopupGolongan()">Tutup</button>
+                </div>
+            </div>
+        </div>
     </main>
+    
         <!-- Popup Pilih Data -->
     <div id="popupFilter" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
         <div id="popupContent" style="
@@ -119,18 +185,6 @@ while ($g = $grupResult->fetch_assoc()) {
                 </table>
             </div>
         </div>
-    </div>
-
-    <div id="popupGrup" style="display: none; position: absolute; border: 1px solid #ccc; background: #fff; z-index: 1000; max-height: 200px; overflow-y: auto;">
-        <table id="tabelGrup" style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr style="background: #f1f1f1;">
-                    <th>Kode Grup</th>
-                    <th>Nama Grup</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
     </div>
 
     <!-- ✅ POPUP HARGA -->
@@ -219,6 +273,11 @@ while ($g = $grupResult->fetch_assoc()) {
     <script>
 
         let previousFormData = {};
+
+        const kodeMerkInput = document.getElementById('kodemerek');
+        const kodeGolInput = document.getElementById('kodegolongan');
+        const kodeGrupInput = document.getElementById('kodegrup');
+
         function initializeFormButtons() {
             document.getElementById('btnTambah').disabled = false;
             document.getElementById('btnEdit').disabled = true;
@@ -227,6 +286,8 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('btnSave').disabled = true;
             document.getElementById('btnHarga').disabled = true;            
 
+            document.getElementById('kodemerek').disabled = true;
+            document.getElementById('kodegolongan').disabled = true;
             document.getElementById('kodegrup').disabled = true;
             document.getElementById('kodebrg').disabled = true;
             document.getElementById('namabrg').disabled = true;
@@ -249,11 +310,12 @@ while ($g = $grupResult->fetch_assoc()) {
 
         function initializeFormButtonsCancel() {
             currentstat = null;
-
             document.getElementById('kodebrg').value = previousFormData.kodebrg;
             document.getElementById('kodebrg_lama').value = previousFormData.kodebrg_lama;
             document.getElementById('namabrg').value = previousFormData.namabrg;
             document.getElementById('kodegrup').value = previousFormData.kodegrup;
+            document.getElementById('kodemerek').value = previousFormData.kodemerek;
+            document.getElementById('kodegolongan').value = previousFormData.kodegolongan;
             document.getElementById('satuan1').value = previousFormData.satuan1;
             document.getElementById('isi1').value = previousFormData.isi1;
             document.getElementById('satuan2').value = previousFormData.satuan2;
@@ -265,13 +327,15 @@ while ($g = $grupResult->fetch_assoc()) {
 
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = false;
-            document.getElementById('btnHapus').disabled = true;
+            document.getElementById('btnHapus').disabled = false;
             document.getElementById('btnCancel').disabled = false; 
             document.getElementById('btnSave').disabled = true;
 
             document.getElementById('kodebrg').disabled = true;
             document.getElementById('namabrg').disabled = true;
             document.getElementById('kodegrup').disabled = true;
+            document.getElementById('kodemerek').disabled = true;
+            document.getElementById('kodegolongan').disabled = true;
             document.getElementById('satuan1').disabled = true;
             document.getElementById('satuan2').disabled = true;
             document.getElementById('satuan3').disabled = true;
@@ -306,6 +370,8 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('btnSave').disabled = false;
             document.getElementById('btnHarga').disabled = false; 
 
+            document.getElementById('kodemerek').disabled = false;
+            document.getElementById('kodegolongan').disabled = false;
             document.getElementById('kodegrup').disabled = false;
             document.getElementById('kodebrg').disabled = false;
             document.getElementById('kodebrg').readOnly = false;
@@ -337,6 +403,8 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
 
+            document.getElementById('kodemerek').disabled = false;
+            document.getElementById('kodegolongan').disabled = false;
             document.getElementById('kodegrup').disabled = false;
             document.getElementById('kodebrg').disabled = false;
             document.getElementById('kodebrg').readOnly = false;
@@ -387,6 +455,186 @@ while ($g = $grupResult->fetch_assoc()) {
             document.getElementById('aksi').value = currentstat;
         }
 
+        //Search
+        [kodeMerkInput].forEach(input => {
+            const tipe = input.id === 'kodemerek' ? 'kode' : 'nama';
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value.trim();
+                    if (val) cariMerek(tipe, val);
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const val = this.value.trim();
+                if (val) cariMerek(tipe, val);
+            });
+        });
+
+        [kodeGolInput].forEach(input => {
+            const tipe = input.id === 'kodegolongan' ? 'kode' : 'nama';
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value.trim();
+                    if (val) cariGolongan(tipe, val);
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const val = this.value.trim();
+                if (val) cariGolongan(tipe, val);
+            });
+        });
+
+        [kodeGrupInput].forEach(input => {
+            const tipe = input.id === 'kodegrup' ? 'kode' : 'nama';
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value.trim();
+                    if (val) cariGrup(tipe, val);
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const val = this.value.trim();
+                if (val) cariGrup(tipe, val);
+            });
+        });
+
+        function cariMerek(mode, keyword) {
+            if (!keyword) return;
+
+            fetch('filter_itemmerek.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbodyHasilMerek');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                } else {
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.kodemerk}</td>
+                            <td>${item.namamerk}</td>
+                            <td><button type="button" onclick='pilihMerek(${JSON.stringify(item)})'>Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                document.getElementById('popupCariMerek').style.display = 'flex';
+            })
+            .catch(() => {
+                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            });
+        }
+
+        function cariGolongan(mode, keyword) {
+            if (!keyword) return;
+
+            fetch('filter_itemgolongan.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbodyHasilGolongan');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                } else {
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.kodegol}</td>
+                            <td>${item.namagol}</td>
+                            <td><button type="button" onclick='pilihGolongan(${JSON.stringify(item)})'>Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                document.getElementById('popupCariGolongan').style.display = 'flex';
+            })
+            .catch(() => {
+                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            });
+        }
+
+        function cariGrup(mode, keyword) {
+            if (!keyword) return;
+
+            fetch('filter_itemgrup.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbodyHasilGrup');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                } else {
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.kodegrup}</td>
+                            <td>${item.namagrup}</td>
+                            <td><button type="button" onclick='pilihGrup(${JSON.stringify(item)})'>Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                document.getElementById('popupCariGrup').style.display = 'flex';
+            })
+            .catch(() => {
+                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            });
+        }
+
+        function pilihMerek(item) {
+            kodeMerkInput.value = item.kodemerk;
+            tutupPopupMerek();
+        }
+
+        function pilihGolongan(item) {
+            kodeGolInput.value = item.kodegol;
+            tutupPopupGolongan();
+        }
+
+        function pilihGrup(item) {
+            kodeGrupInput.value = item.kodegrup;
+            tutupPopupGrup();
+        }
+
+        function tutupPopupMerek() {
+            document.getElementById('popupCariMerek').style.display = 'none';
+        }
+
+        function tutupPopupGolongan() {
+            document.getElementById('popupCariGolongan').style.display = 'none';
+        }
+
+        function tutupPopupGrup() {
+            document.getElementById('popupCariGrup').style.display = 'none';
+        }
 
         // panggil saat halaman dimuat
         let inputSearch = null;
@@ -558,7 +806,7 @@ while ($g = $grupResult->fetch_assoc()) {
             // Tombol state
             document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnEdit').disabled = false;
-            document.getElementById('btnHapus').disabled = true;
+            document.getElementById('btnHapus').disabled = false;
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnHarga').disabled = false;
 
@@ -751,6 +999,8 @@ while ($g = $grupResult->fetch_assoc()) {
                     kodebrg_lama: document.getElementById('kodebrg').value.trim(),
                     namabrg: document.getElementById('namabrg').value.trim(),
                     kodegrup: document.getElementById('kodegrup').value.trim(),
+                    kodemerek: document.getElementById('kodemerek').value.trim(),
+                    kodegolongan: document.getElementById('kodegolongan').value.trim(),
                     satuan1: document.getElementById('satuan1').value.trim(),
                     isi1: document.getElementById('isi1').value.trim(),
                     satuan2: document.getElementById('satuan2').value.trim(),

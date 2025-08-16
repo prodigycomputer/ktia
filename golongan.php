@@ -8,31 +8,31 @@ include 'koneksi.php';
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Data Gudang</title>
+  <title>Data Golongan</title>
   <link rel="stylesheet" href="navbar.css" />
   <link rel="stylesheet" href="form.css" />
 </head>
 <body>
 <?php include 'navbar.php'; ?>
 <main>
-  <h2>Data Gudang</h2>
+  <h2>Data Golongan</h2>
 
   <div class="search-bar">
-      <input type="text" id="searchKode" class="search-kode" placeholder="Kode Gudang" oninput="handleInput('kode')" style="text-transform: uppercase;">
-      <input type="text" id="searchNama" class="search-nama" placeholder="Nama Gudang" oninput="handleInput('nama')" style="text-transform: uppercase;">
+      <input type="text" id="searchKode" class="search-kode" placeholder="Kode Golongan" oninput="handleInput('kode')" style="text-transform: uppercase;">
+      <input type="text" id="searchNama" class="search-nama" placeholder="Nama Golongan" oninput="handleInput('nama')" style="text-transform: uppercase;">
       <button type="button" id="searchbtn" onclick="triggerSearch()">🔍 Cari</button>
   </div>
 
-  <form id="gudangForm" action="prosesgudang.php" enctype="multipart/form-data" onsubmit="return false;">
+  <form id="golonganForm" action="prosesgolongan.php" enctype="multipart/form-data" onsubmit="return false;">
     <input type="hidden" name="aksi" id="aksi" value="">
-    <input type="hidden" name="kodegudang_lama" id="kodegudang_lama" value="">
+    <input type="hidden" name="kodegolongan_lama" id="kodegolongan_lama" value="">
 
     <div class="form-atas">
-      <label for="kodegudang">Kode Gudang</label>
-      <input type="text" name="kodegudang" id="kodegudang" class="long-input" required style="text-transform: uppercase;">
+      <label for="kodegolongan">Kode Golongan</label>
+      <input type="text" name="kodegolongan" id="kodegolongan" class="long-input" required style="text-transform: uppercase;">
 
-      <label for="namagudang">Nama Gudang</label>
-      <input type="text" name="namagudang" id="namagudang" class="verylong-input" required style="text-transform: uppercase;">
+      <label for="namagolongan">Nama Golongan</label>
+      <input type="text" name="namagolongan" id="namagolongan" class="verylong-input" required style="text-transform: uppercase;">
     </div>
     <div style="margin-top:10px; display:flex; gap:8px;">
       <button id="btnSave" type="submit">Simpan</button>
@@ -130,8 +130,8 @@ include 'koneksi.php';
         document.getElementById('btnCancel').disabled = true;
         document.getElementById('btnSave').disabled = true;
 
-        document.getElementById('kodegudang').disabled = true;
-        document.getElementById('namagudang').disabled = true;
+        document.getElementById('kodegolongan').disabled = true;
+        document.getElementById('namagolongan').disabled = true;
 
         document.getElementById('searchKode').value = '';
         document.getElementById('searchNama').value = '';
@@ -147,16 +147,16 @@ include 'koneksi.php';
       function initializeFormButtonsCancel() {
           currentstat = null;
 
-          document.getElementById('kodegudang').value = previousFormData.kodegudang;
-          document.getElementById('namagudang').value = previousFormData.namagudang;
+          document.getElementById('kodegolongan').value = previousFormData.kodegolongan;
+          document.getElementById('namagolongan').value = previousFormData.namagolongan;
           document.getElementById('btnTambah').disabled = true;
           document.getElementById('btnEdit').disabled = false;
           document.getElementById('btnHapus').disabled = false;
           document.getElementById('btnCancel').disabled = false; 
           document.getElementById('btnSave').disabled = true;
 
-          document.getElementById('kodegudang').disabled = true;
-          document.getElementById('namagudang').disabled = true;
+          document.getElementById('kodegolongan').disabled = true;
+          document.getElementById('namagolongan').disabled = true;
 
           document.getElementById('searchKode').value = '';
           document.getElementById('searchNama').value = '';
@@ -172,7 +172,7 @@ include 'koneksi.php';
         currentstat = 'tambah';
         showToast('Kamu sedang menambah data...', '#ffc107');
 
-        document.getElementById('gudangForm').reset();
+        document.getElementById('golonganForm').reset();
 
         document.getElementById('btnTambah').disabled = true;
         document.getElementById('btnEdit').disabled = true;
@@ -180,9 +180,9 @@ include 'koneksi.php';
         document.getElementById('btnCancel').disabled = false;
         document.getElementById('btnSave').disabled = false;
 
-        document.getElementById('kodegudang').disabled = false;
-        document.getElementById('kodegudang').readOnly = false;
-        document.getElementById('namagudang').disabled = false;
+        document.getElementById('kodegolongan').disabled = false;
+        document.getElementById('kodegolongan').readOnly = false;
+        document.getElementById('namagolongan').disabled = false;
 
         document.getElementById('searchKode').disabled = true;
         document.getElementById('searchNama').disabled = true;
@@ -204,9 +204,9 @@ include 'koneksi.php';
         document.getElementById('btnCancel').disabled = false;
         document.getElementById('btnSave').disabled = false;
 
-        document.getElementById('kodegudang').disabled = false;
-        document.getElementById('kodegudang').readOnly = false;
-        document.getElementById('namagudang').disabled = false;
+        document.getElementById('kodegolongan').disabled = false;
+        document.getElementById('kodegolongan').readOnly = false;
+        document.getElementById('namagolongan').disabled = false;
 
         document.getElementById('searchKode').disabled = true;
         document.getElementById('searchNama').disabled = true;
@@ -228,19 +228,19 @@ include 'koneksi.php';
         namaInput.disabled = false;
         kodeInput.value = '';
         namaInput.value = '';
-        document.getElementById('kodegudang').readOnly = true;
+        document.getElementById('kodegolongan').readOnly = true;
         document.getElementById('searchbtn').disabled = false;
 
         if (currentstat === 'tambah' ) {
             initializeFormButtons();
-            document.getElementById('gudangForm').reset();
+            document.getElementById('golonganForm').reset();
             currentstat = null;
         } else if (currentstat === 'update') {
           initializeFormButtonsCancel();
           currentstat = null;
         } else if (currentstat === null) {
           initializeFormButtons();
-          document.getElementById('gudangForm').reset();
+          document.getElementById('golonganForm').reset();
         }
         resetButtonStyles();
       }
@@ -248,9 +248,9 @@ include 'koneksi.php';
       let previousFormData = {};
 
       previousFormData = {
-        kodegudang: document.getElementById('kodegudang').value,
-        namagudang: document.getElementById('namagudang').value,
-        kodegudang_lama: document.getElementById('kodegudang_lama').value
+        kodegolongan: document.getElementById('kodegolongan').value,
+        namagolongan: document.getElementById('namagolongan').value,
+        kodegolongan_lama: document.getElementById('kodegolongan_lama').value
       };
 
       function prepareSave() {
@@ -268,8 +268,8 @@ include 'koneksi.php';
           input.value = input.value.toUpperCase();
         });
       }
-      forceUppercase('kodegudang');
-      forceUppercase('namagudang');
+      forceUppercase('kodegolongan');
+      forceUppercase('namagolongan');
 
       let inputSearch = null;
       let searchBtn = document.getElementById('searchbtn')
@@ -307,7 +307,7 @@ include 'koneksi.php';
 
           if (!dataList || dataList.length === 0) return;
 
-          const fixedFields = ['kodegudang', 'namagudang'];
+          const fixedFields = ['kodegolongan', 'namagolongan'];
 
           // Header
           const headerRow = document.createElement('tr');
@@ -328,7 +328,7 @@ include 'koneksi.php';
               tr.style.cursor = 'pointer';
               tr.addEventListener('click', () => {
                   closeFilterPopup();
-                  pilihGudang(item);
+                  pilihGolongan(item);
               });
 
               [...fixedFields].forEach(field => {
@@ -363,7 +363,7 @@ include 'koneksi.php';
               return;
           }
 
-          fetch(`filter_gudang.php?keyword=${encodeURIComponent(keyword)}`)
+          fetch(`filter_golongan.php?keyword=${encodeURIComponent(keyword)}`)
               .then(response => response.json())
               .then(data => {
                   if (data.length === 0) {
@@ -380,10 +380,10 @@ include 'koneksi.php';
 
       }
 
-      function pilihGudang(data) {
-          document.getElementById('kodegudang').value = data.kodegudang;
-          document.getElementById('kodegudang_lama').value = data.kodegudang; 
-          document.getElementById('namagudang').value = data.namagudang;
+      function pilihGolongan(data) {
+          document.getElementById('kodegolongan').value = data.kodegolongan;
+          document.getElementById('kodegolongan_lama').value = data.kodegolongan; 
+          document.getElementById('namagolongan').value = data.namagolongan;
 
           // Logika enable/disable berdasarkan isi1 dan isi2
           document.getElementById('btnTambah').disabled = true;
@@ -392,9 +392,9 @@ include 'koneksi.php';
           document.getElementById('btnCancel').disabled = false; 
 
           previousFormData = {
-            kodegudang: data.kodegudang,
-            namagudang: data.namagudang,
-            kodegudang_lama: data.kodegudang
+            kodegolongan: data.kodegolongan,
+            namagolongan: data.namagolongan,
+            kodegolongan_lama: data.kodegolongan
           };
 
           document.getElementById('searchKode').value = '';
@@ -409,13 +409,13 @@ include 'koneksi.php';
 
       }
 
-      document.getElementById('gudangForm').addEventListener('submit', function (e) {
+      document.getElementById('golonganForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
         const formData = new FormData(this);
         formData.set('aksi', currentstat); // 'tambah', 'update', 'hapus'
 
-        fetch('prosesgudang.php', {
+        fetch('prosesgolongan.php', {
           method: 'POST',
           body: formData
         })
@@ -426,9 +426,9 @@ include 'koneksi.php';
 
             if (currentstat === 'tambah' || currentstat === 'update') {
             previousFormData = {
-              kodegudang: document.getElementById('kodegudang').value.trim(),
-              namagudang: document.getElementById('namagudang').value.trim(),
-              kodegudang_lama: document.getElementById('kodegudang').value.trim()
+              kodegolongan: document.getElementById('kodegolongan').value.trim(),
+              namagolongan: document.getElementById('namagolongan').value.trim(),
+              kodegolongan_lama: document.getElementById('kodegolongan').value.trim()
             };
 
             if (currentstat === 'tambah') {
@@ -441,7 +441,7 @@ include 'koneksi.php';
 
             // Kamu bisa isi ulang form dengan data sebelumnya kalau mau
           } else if (response.status === 'duplikat') {
-            showToast('Kode gudang sudah ada!', '#dc3545');
+            showToast('Kode golongan sudah ada!', '#dc3545');
           } else {
             showToast('Gagal menyimpan data!', '#dc3545');
           }
@@ -469,10 +469,10 @@ include 'koneksi.php';
           popup.style.display = 'none';
 
           if (setuju) {
-              const formData = new FormData(document.getElementById('gudangForm'));
+              const formData = new FormData(document.getElementById('golonganForm'));
               formData.set('aksi', 'hapus');
 
-              fetch('prosesgudang.php', {
+              fetch('prosesgolongan.php', {
                   method: 'POST',
                   body: formData
               })
@@ -481,7 +481,7 @@ include 'koneksi.php';
                   if (response.status === 'success') {
                       showToast('Data berhasil dihapus');
                       initializeFormButtons(); // reset tampilan
-                      document.getElementById('gudangForm').reset();
+                      document.getElementById('golonganForm').reset();
                   } else {
                       showToast('Gagal menghapus data!', '#dc3545');
                   }
