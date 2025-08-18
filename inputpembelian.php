@@ -74,6 +74,10 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                         <input type="text" id="alamat" name="alamat" class="long-input" style="text-transform: uppercase;" disabled>
                     </div>
                 </div>
+                <div class="form-pb-col">
+                    <label for="keterangan">Keterangan</label>
+                    <input type="text" id="keterangan" name="keterangan" class="long-input" style="text-transform: uppercase;" disabled>
+                </div>
             </div>
             <!-- FORM BAWAH: RINCIAN -->
             <div class="form-pembelian-tengah">
@@ -336,6 +340,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         const kodeInput = document.getElementById('kode_sup');
         const namaInput = document.getElementById('nama_sup');
         const alamatInput = document.getElementById('alamat');
+        const ketInput = document.getElementById('keterangan');
 
         const popupKodeInput = document.getElementById('popup_kodebrg');
         const popupNamaInput = document.getElementById('popup_namabrg');
@@ -780,6 +785,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('nama_sup').disabled = true;
             document.getElementById('kode_sup').disabled = true;
             document.getElementById('alamat').disabled = true;
+            document.getElementById('keterangan').disabled = true;
             document.getElementById('subtotal').disabled = true;
             document.getElementById('lain_lain').disabled = true;
             document.getElementById('diskon1').disabled = true;
@@ -819,6 +825,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('nama_sup').disabled = false;
             document.getElementById('kode_sup').disabled = false;
             document.getElementById('alamat').disabled = true;
+            document.getElementById('keterangan').disabled = false;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
             document.getElementById('diskon1').disabled = false;
@@ -857,6 +864,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('btnSave').disabled = false;
 
             document.getElementById('tanggal').disabled = false;
+            document.getElementById('keterangan').disabled = false;
             document.getElementById('no_nota').disabled = false;
             document.getElementById('jt_tempo').disabled = false;
             document.getElementById('nama_sup').disabled = false;
@@ -996,47 +1004,6 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
         }
 
-        /*
-        document.getElementById('btnSave').addEventListener('click', () => {
-            const data = {
-                no_nota: document.getElementById('no_nota').value,
-                tanggal: document.getElementById('tanggal').value,
-                kode_sup: document.getElementById('kode_sup').value,
-                jt_tempo: document.getElementById('jt_tempo').value,
-                prsnppn: parseFloat(document.getElementById('ppn').value) || 0,
-                hrgppn: parseIDNumber(document.getElementById('hppn').value) || 0,
-                disk1: parseFloat(document.getElementById('diskon1').value) || 0,
-                hdisk1: parseIDNumber(document.getElementById('hdiskon1').value) || 0,
-                disk2: parseFloat(document.getElementById('diskon2').value) || 0,
-                hdisk2: parseIDNumber(document.getElementById('hdiskon2').value) || 0,
-                disk3: parseFloat(document.getElementById('diskon3').value) || 0,
-                hdisk3: parseIDNumber(document.getElementById('hdiskon3').value) || 0,
-                totaljmlh: parseIDNumber(document.getElementById('totaljmlh').value) || 0,
-                detail: dataPembelian // array yang sudah kamu simpan saat tambah item
-            };
-
-            fetch('prosessimpanpmb.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    showToast('Data berhasil disimpan!');
-                    localStorage.removeItem('formPembelianInput');
-                    initializeFormButtons();
-                } else {
-                    showToast('Gagal menyimpan: ' + res.message, '#dc3545');
-                }
-            })
-            .catch(err => {
-                showToast('Error: ' + err, '#dc3545');
-            });
-        });*/
-
         // Tombol save
         document.getElementById('btnSave').addEventListener('click', () => {
             // Simpan kondisi form aktif ke memori
@@ -1054,6 +1021,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 tanggal: activeTab.formData.tanggal?.value || "",
                 kode_sup: activeTab.formData.kode_sup?.value || "",
                 jt_tempo: activeTab.formData.jt_tempo?.value || "",
+                ket: activeTab.formData.keterangan?.value || "",
                 prsnppn: parseFloat(activeTab.formData.ppn?.value || 0),
                 hrgppn: parseIDNumber(activeTab.formData.hppn?.value || 0),
                 subtotal: parseIDNumber(activeTab.formData.subtotal?.value || 0),

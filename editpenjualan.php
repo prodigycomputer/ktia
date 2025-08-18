@@ -86,6 +86,16 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                         <input type="text" id="alamat" name="alamat" class="long-input" style="text-transform: uppercase;" disabled>
                     </div>
                 </div>
+                <div class="form-pj-row">
+                    <div class="form-pj-col">
+                        <label for="kodehrg">Kode Harga</label>
+                        <input type="text" id="kodehrg" name="kodehrg" class="short-input" style="text-transform: uppercase;">
+                    </div>
+                </div>
+                <div class="form-pb-col">
+                    <label for="keterangan">Keterangan</label>
+                    <input type="text" id="keterangan" name="keterangan" class="long-input" style="text-transform: uppercase;">
+                </div>
             </div>
             <!-- FORM BAWAH: RINCIAN -->
             <div class="form-penjualan-tengah">
@@ -197,6 +207,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                             <th>Kode</th>
                             <th>Nama</th>
                             <th>Alamat</th>
+                            <th>Kode Harga</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -226,6 +237,26 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 </table>
                 <div style="text-align: right; margin-top: 10px;">
                     <button type="button" onclick="tutupPopupSales()">Tutup</button>
+                </div>
+            </div>
+        </div>
+        <div id="popupPilihHarga" class="popup-pb-cari" style="display:none;">
+            <div class="popup-pb-contentcari">
+                <h3>Pilih Harga</h3>
+                <table class="tabel-hasil" style="min-width: 300px;">
+                    <thead>
+                        <tr>
+                            <th>Tipe Harga</th>
+                            <th>Nominal</th>
+                            <th>Pilih</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyPilihanHarga">
+                        <!-- diisi via JS -->
+                    </tbody>
+                </table>
+                <div style="text-align: right; margin-top: 10px;">
+                    <button type="button" onclick="tutupPopupHarga()">Tutup</button>
                 </div>
             </div>
         </div>
@@ -382,6 +413,8 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                     document.getElementById('nama_sls').value = data.header.nama_sls;
                     document.getElementById('alamat').value = data.header.alamat;
                     document.getElementById('jt_tempo').value = data.header.jt_tempo;
+                    document.getElementById('kodehrg').value = data.header.kodehrg;
+                    document.getElementById('keterangan').value = data.header.keterangan;
                     document.getElementById('diskon1').value = data.header.disk1;
                     document.getElementById('hdiskon1').value = data.header.hdisk1;
                     document.getElementById('diskon2').value = data.header.disk2;
@@ -403,6 +436,8 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         const kodeInput = document.getElementById('kode_kust');
         const namaInput = document.getElementById('nama_kust');
         const alamatInput = document.getElementById('alamat');
+        const kodehrgInput = document.getElementById('kodehrg');
+        const ketInput = document.getElementById('keterangan');
 
         const kodeSlsInput = document.getElementById('kode_sls');
         const namaSlsInput = document.getElementById('nama_sls');
@@ -541,6 +576,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                             <td>${item.kodekust}</td>
                             <td>${item.namakust}</td>
                             <td>${item.alamat}</td>
+                            <td>${item.kodehrg}</td>
                             <td><button type="button" onclick='pilihKustomer(${JSON.stringify(item)})'>Pilih</button></td>
                         `;
                         tbody.appendChild(tr);
@@ -664,6 +700,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             kodeInput.value = item.kodekust;
             namaInput.value = item.namakust;
             alamatInput.value = item.alamat;
+            kodehrgInput.value = item.kodehrg;
             tutupPopupKustomer();
         }
 
@@ -684,6 +721,60 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         function tutupPopupSales() {
             document.getElementById('popupCariSales').style.display = 'none';
         }
+
+        function bukaPopupHarga(targetInputId) {
+            let kodehrg = document.getElementById("kodehrg").value.trim();
+            let kodebrg = document.getElementById(targetInputId.includes("edit") ? "edit_popup_kodebrg" : "popup_kodebrg").value.trim();
+
+            if (!kodehrg) {
+                showToast("Isi Kode Harga terlebih dahulu.", '#dc3545');
+                return;
+            }
+            if (!kodebrg) {
+                showToast("Isi Kode Barang terlebih dahulu.", '#dc3545');
+                return;
+            }
+
+            // Ambil data harga dari PHP
+            fetch(`get_harga_barang.php?kodebrg=${encodeURIComponent(kodebrg)}&kodehrg=${encodeURIComponent(kodehrg)}`)
+                .then(res => res.json())
+                .then(data => {
+                    let tbody = document.getElementById("tbodyPilihanHarga");
+                    tbody.innerHTML = "";
+                    data.forEach(item => {
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td>${item.label}</td>
+                            <td>${parseFloat(item.value).toLocaleString('id-ID')}</td>
+                            <td><button type="button" onclick="pilihHarga('${item.value}', '${targetInputId}')">Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                    document.getElementById("popupPilihHarga").style.display = "flex";
+                });
+        }
+
+        function tutupPopupHarga() {
+            document.getElementById("popupPilihHarga").style.display = "none";
+        }
+
+        function pilihHarga(val, targetInputId) {
+            document.getElementById(targetInputId).value = val;
+            tutupPopupHarga();
+        }
+
+        // Event listener saat tekan Enter di popup_harga atau edit_popup_harga
+        ["popup_harga"].forEach(id => {
+            let el = document.getElementById(id);
+            if (el) {
+                el.addEventListener("keydown", function(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        bukaPopupHarga(id);
+                    }
+                });
+            }
+        });
 
         function renderTabelPenjualan() {
             const tbody = document.querySelector('#tabelPenjualan tbody');
@@ -952,6 +1043,8 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('nama_sls').disabled = true;
             document.getElementById('kode_sls').disabled = true;
             document.getElementById('alamat').disabled = true;
+            document.getElementById('kodehrg').disabled = true;
+            document.getElementById('keterangan').disabled = true;
             document.getElementById('subtotal').disabled = true;
             document.getElementById('lain_lain').disabled = true;
             document.getElementById('diskon1').disabled = true;
@@ -992,6 +1085,8 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('nama_sls').disabled = false;
             document.getElementById('kode_sls').disabled = false;
             document.getElementById('alamat').disabled = false;
+            document.getElementById('kodehrg').disabled = false;
+            document.getElementById('keterangan').disabled = false;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
             document.getElementById('diskon1').disabled = false;
@@ -1020,6 +1115,8 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('nama_sls').disabled = false;
             document.getElementById('kode_sls').disabled = false;
             document.getElementById('alamat').disabled = false;
+            document.getElementById('kodehrg').disabled = false;
+            document.getElementById('keterangan').disabled = false;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
             document.getElementById('ppn').disabled = false;
@@ -1126,6 +1223,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 kode_kust: document.getElementById('kode_kust').value,
                 kode_sls: document.getElementById('kode_sls').value,
                 jt_tempo: document.getElementById('jt_tempo').value,
+                keterangan: document.getElementById('keterangan').value,
                 prsnppn: parseFloat(document.getElementById('ppn').value) || 0,
                 hrgppn: parseIDNumber(document.getElementById('hppn').value) || 0,
                 disk1: parseFloat(document.getElementById('diskon1').value) || 0,

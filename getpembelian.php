@@ -12,7 +12,7 @@ if (!$nonota) {
 
 // Ambil data header dari zbeli dan supplier
 $queryHeader = mysqli_query($conn, "
-    SELECT b.nonota, b.tgl, b.kodesup, b.kodegd, b.ppn, b.hppn, b.disc1, b.hdisc1, b.disc2, b.hdisc2, b.disc3, b.hdisc3, b.nilai, b.tgltempo, s.namasup, s.alamat
+    SELECT b.nonota, b.tgl, b.kodesup, b.kodegd, b.ket, b.ppn, b.hppn, b.disc1, b.hdisc1, b.disc2, b.hdisc2, b.disc3, b.hdisc3, b.nilai, b.tgltempo, s.namasup, s.alamat
     FROM zbeli b
     JOIN zsupplier s ON b.kodesup = s.kodesup
     WHERE b.nonota = '$nonota'
@@ -43,6 +43,7 @@ echo json_encode([
         'kode_sup' => $dataHeader['kodesup'],
         'nama_sup' => $dataHeader['namasup'],
         'alamat' => $dataHeader['alamat'],
+        'keterangan' => $dataHeader['ket'],
         'jt_tempo' => $dataHeader['tgltempo'],
         'prsnppn' => $dataHeader['ppn'],
         'hrgppn' => $dataHeader['hppn'],

@@ -4,15 +4,22 @@ include 'koneksi.php';
 $mode = $_POST['mode'] ?? '';
 $keyword = strtoupper(trim($_POST['keyword'] ?? ''));
 
-if (!$keyword || !in_array($mode, ['kode', 'nama'])) {
+if (!in_array($mode, ['kode', 'nama'])) {
     echo json_encode([]);
     exit;
 }
 
 $field = $mode === 'kode' ? 'kodesup' : 'namasup';
 
-$query = $conn->prepare("SELECT kodesup, namasup, alamat FROM zsupplier WHERE $field LIKE CONCAT('%', ?, '%') LIMIT 50");
-$query->bind_param("s", $keyword);
+if ($keyword === '' || $keyword === '*') {
+    // 🔹 Jika kosong atau bintang, ambil semua data
+    $query = $conn->prepare("SELECT kodesup, namasup, alamat FROM zsupplier ORDER BY $field LIMIT 50");
+} else {
+    // 🔹 Jika ada keyword, filter berdasarkan LIKE
+    $query = $conn->prepare("SELECT kodesup, namasup. alamat FROM zsupplier WHERE $field LIKE CONCAT('%', ?, '%') LIMIT 50");
+    $query->bind_param("s", $keyword);
+}
+
 $query->execute();
 $result = $query->get_result();
 

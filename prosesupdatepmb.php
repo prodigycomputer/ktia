@@ -12,6 +12,7 @@
     $kode_sup = strtoupper($data['kode_sup'] ?? '');
     $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
     $jt_tempo = $data['jt_tempo'] ?? '';
+    $ket = strtoupper($data['keterangan'] ?? '');
     $totaljmlh = floatval($data['totaljmlh']) ?? 0;
     $prsnppn = $data['prsnppn'] ?? 0;
     $hrgppn = floatval($data['hrgppn']) ?? 0;
@@ -44,11 +45,11 @@
         // Insert detail baru
         $stmtHeader = $conn->prepare("
             INSERT INTO zbeli 
-            (nonota, tgl, kodesup, kodegd, nilai, tgltempo, ppn, hppn, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (nonota, tgl, kodesup, kodegd, nilai, tgltempo, ket, ppn, hppn, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
 
-        $stmtHeader->bind_param("ssssdsdddddddd", $no_nota, $tanggal, $kode_sup, $kodegd, $totaljmlh, $jt_tempo, $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3);
+        $stmtHeader->bind_param("ssssdssdddddddd", $no_nota, $tanggal, $kode_sup, $kodegd, $totaljmlh, $jt_tempo, $ket, $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3);
         $stmtHeader->execute();
         $stmtHeader->close();
 

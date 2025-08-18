@@ -74,6 +74,10 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                         <input type="text" id="alamat" name="alamat" class="long-input" style="text-transform: uppercase;" disabled>
                     </div>
                 </div>
+                <div class="form-pb-col">
+                    <label for="keterangan">Keterangan</label>
+                    <input type="text" id="keterangan" name="keterangan" class="long-input" style="text-transform: uppercase;" disabled>
+                </div>
             </div>
             <!-- FORM BAWAH: RINCIAN -->
             <div class="form-pembelian-tengah">
@@ -347,6 +351,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                     document.getElementById('kode_sup').value = data.header.kode_sup;
                     document.getElementById('nama_sup').value = data.header.nama_sup;
                     document.getElementById('alamat').value = data.header.alamat;
+                    document.getElementById('keterangan').value = data.header.keterangan;
                     document.getElementById('jt_tempo').value = data.header.jt_tempo;
                     document.getElementById('ppn').value = data.header.prsnppn;
                     document.getElementById('hppn').value = data.header.hrgppn;
@@ -371,6 +376,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         const kodeInput = document.getElementById('kode_sup');
         const namaInput = document.getElementById('nama_sup');
         const alamatInput = document.getElementById('alamat');
+        const ketInput = document.getElementById('keterangan');
 
         const popupKodeInput = document.getElementById('popup_kodebrg');
         const popupNamaInput = document.getElementById('popup_namabrg');
@@ -849,6 +855,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             });
 
             document.getElementById('tanggal').disabled = true;
+            document.getElementById('keterangan').disabled = true;
             document.getElementById('no_nota').disabled = true;
             document.getElementById('jt_tempo').disabled = true;
             document.getElementById('nama_sup').disabled = true;
@@ -887,6 +894,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('btnPrint').disabled = true;
 
             document.getElementById('tanggal').disabled = false;
+            document.getElementById('keterangan').disabled = false;
             document.getElementById('no_nota').disabled = false;
             document.getElementById('jt_tempo').disabled = false;
             document.getElementById('nama_sup').disabled = false;
@@ -919,6 +927,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('btnTambahItem').disabled = false;
 
             document.getElementById('tanggal').disabled = false;
+            document.getElementById('keterangan').disabled = false;
             document.getElementById('no_nota').disabled = false;
             document.getElementById('jt_tempo').disabled = false;
             document.getElementById('nama_sup').disabled = false;
@@ -1024,6 +1033,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 tanggal: document.getElementById('tanggal').value,
                 kode_sup: document.getElementById('kode_sup').value,
                 jt_tempo: document.getElementById('jt_tempo').value,
+                keterangan: document.getElementById('keterangan').value,
                 prsnppn: parseFloat(document.getElementById('ppn').value) || 0,
                 hrgppn: parseIDNumber(document.getElementById('hppn').value) || 0,
                 disk1: parseFloat(document.getElementById('diskon1').value) || 0,

@@ -223,7 +223,6 @@
                 </div>
             </div>
         </div>
-
         <table>
             <thead>
                 <tr>
@@ -252,11 +251,6 @@
                 <label><strong>Total Jumlah :</strong></label>
                 <span id="totaljmlh" style="font-weight: bold;" class="span-besar"></span>
             </div>
-        </div>
-
-        <div class="action-buttons">
-            <button onclick="goBack()">← Kembali</button>
-            <button onclick="window.print()">🖨️ Print</button>
         </div>
 
         <script>
@@ -354,7 +348,10 @@
         </script>
     </div>
 
-
+    <div class="action-buttons">
+        <button onclick="goBack()">← Kembali</button>
+        <button onclick="window.print()">🖨️ Print</button>
+    </div>
 
 </body>
 </html>

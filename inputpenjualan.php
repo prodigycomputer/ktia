@@ -94,6 +94,10 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                         <input type="text" id="kodehrg" name="kodehrg" class="short-input" style="text-transform: uppercase;">
                     </div>
                 </div>
+                <div class="form-pb-col">
+                    <label for="keterangan">Keterangan</label>
+                    <input type="text" id="keterangan" name="keterangan" class="long-input" style="text-transform: uppercase;" disabled>
+                </div>
             </div>
             <!-- FORM BAWAH: RINCIAN -->
             <div class="form-penjualan-tengah">
@@ -398,6 +402,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         const namaInput = document.getElementById('nama_kust');
         const alamatInput = document.getElementById('alamat');
         const kodehrgInput = document.getElementById('kodehrg');
+        const ketInput = document.getElementById('keterangan');
 
         const kodeSlsInput = document.getElementById('kode_sls');
         const namaSlsInput = document.getElementById('nama_sls');
@@ -966,6 +971,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('nama_sls').disabled = true;
             document.getElementById('kode_sls').disabled = true;
             document.getElementById('alamat').disabled = true;
+            document.getElementById('keterangan').disabled = true;
             document.getElementById('subtotal').disabled = true;
             document.getElementById('lain_lain').disabled = true;
             document.getElementById('diskon1').disabled = true;
@@ -1008,6 +1014,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('nama_sls').disabled = false;
             document.getElementById('kode_sls').disabled = false;
             document.getElementById('alamat').disabled = false;
+            document.getElementById('keterangan').disabled = false;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
             document.getElementById('diskon1').disabled = false;
@@ -1054,6 +1061,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             document.getElementById('nama_sls').disabled = false;
             document.getElementById('kode_sls').disabled = false;
             document.getElementById('alamat').disabled = false;
+            document.getElementById('keterangan').disabled = false;
             document.getElementById('subtotal').disabled = false;
             document.getElementById('lain_lain').disabled = false;
             document.getElementById('diskon1').disabled = false;
@@ -1189,40 +1197,6 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
         }
 
-        /*
-        document.getElementById('btnSave').addEventListener('click', () => {
-            const data = {
-                nonota: document.getElementById('no_nota').value,
-                tanggal: document.getElementById('tanggal').value,
-                kodekust: document.getElementById('kode_kust').value,
-                kodesls: document.getElementById('kode_sls').value,
-                jt_tempo: document.getElementById('jt_tempo').value,
-                totaljmlh: parseIDNumber(document.getElementById('totaljmlh').value) || 0,
-                detail: dataPenjualan // array yang sudah kamu simpan saat tambah item
-            };
-
-            fetch('prosessimpanpnj.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    showToast('Data berhasil disimpan!');
-                    localStorage.removeItem('formPenjualanInput');
-                    initializeFormButtons();
-                } else {
-                    showToast('Gagal menyimpan: ' + res.message, '#dc3545');
-                }
-            })
-            .catch(err => {
-                showToast('Error: ' + err, '#dc3545');
-            });
-        });*/
-
         // Tombol save
         document.getElementById('btnSave').addEventListener('click', () => {
             // Simpan kondisi form aktif ke memori
@@ -1241,6 +1215,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 kodekust: activeTab.formData.kode_kust?.value || "",
                 kodesls: activeTab.formData.kode_sls?.value || "",
                 jt_tempo: activeTab.formData.jt_tempo?.value || "",
+                keterangan: activeTab.formData.keterangan?.value || "",
                 prsnppn: parseFloat(activeTab.formData.ppn?.value || 0),
                 hrgppn: parseIDNumber(activeTab.formData.hppn?.value || 0),
                 subtotal: parseIDNumber(activeTab.formData.subtotal?.value || 0),

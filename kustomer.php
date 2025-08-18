@@ -36,12 +36,6 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 <input type="hidden" name="kodekust_lama" id="kodekust_lama" value=""> 
 
                 <div class="form-atas">
-                    <label for="kodetipe">Kode Tipe</label>
-                    <input type="text" name="kodetipe" id="kodetipe" class="long-input" required style="text-transform: uppercase;">
-
-                    <label for="kodearea">Kode Area</label>
-                    <input type="text" name="kodearea" id="kodearea" class="long-input" required style="text-transform: uppercase;">
-
                     <label for="kodekust">Kode Kustomer</label>
                     <input type="text" name="kodekust" id="kodekust" class="long-input" required style="text-transform: uppercase;">
 
@@ -62,6 +56,12 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
                     <label for="npwp">NPWP</label>
                     <input type="text" name="npwp" id="npwp" class="lesslong-input" required style="text-transform: uppercase;">
+
+                    <label for="kodetipe">Kode Tipe</label>
+                    <input type="text" name="kodetipe" id="kodetipe" class="long-input" required style="text-transform: uppercase;">
+
+                    <label for="kodearea">Kode Area</label>
+                    <input type="text" name="kodearea" id="kodearea" class="long-input" required style="text-transform: uppercase;">
 
                     <label for="gambar">Gambar</label>
                     <div style="display: flex; gap: 5px; align-items: center;">
