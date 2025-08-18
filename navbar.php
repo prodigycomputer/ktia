@@ -1,7 +1,7 @@
 <!-- navbar.php -->
 <?php
 $current = basename($_SERVER['PHP_SELF']);
-$isFile = in_array($current, ['barang.php', 'supplier.php', 'kustomer.php', 'sales.php','gudang.php', 'group.php', 'merek.php', 'golongan.php']);
+$isFile = in_array($current, ['barang.php', 'supplier.php', 'area.php', 'tipe.php', 'kustomer.php', 'sales.php','gudang.php', 'group.php', 'merek.php', 'golongan.php']);
 $isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php', 'inputpembelian.php', 'editpembelian.php', 'inputpenjualan.php', 'editpenjualan.php']);
 $isLaporan = in_array($current, [
   'LaporanStok.php', 'LaporanPenjualan.php', 'LaporanSupplier.php',
@@ -28,6 +28,8 @@ $isLaporan = in_array($current, [
     <button class="dropdown-toggle <?= $isFile ? 'active-dropdown' : '' ?>" onclick="toggleDropdown('fileDropdown', this)">File ▾</button>
     <div class="dropdown-content <?= $isFile ? 'show' : '' ?>" id="fileDropdown">
         <a href="barang.php" class="<?= $current == 'barang.php' ? 'active-link' : '' ?>">Stok</a>
+        <a href="area.php" class="<?= $current == 'area.php' ? 'active-link' : '' ?>">Area</a>
+        <a href="tipe.php" class="<?= $current == 'tipe.php' ? 'active-link' : '' ?>">Tipe</a>
         <a href="kustomer.php" class="<?= $current == 'kustomer.php' ? 'active-link' : '' ?>">Kustomer</a>
         <a href="supplier.php" class="<?= $current == 'supplier.php' ? 'active-link' : '' ?>">Supplier</a>
         <a href="sales.php" class="<?= $current == 'sales.php' ? 'active-link' : '' ?>">Sales</a>

@@ -11,6 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $aksi = $_POST['aksi'] ?? '';
 
     // --- Ambil data dan sanitasi ---
+    $kodearea       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodearea'] ?? '')));
+    $kodetipe       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodetipe'] ?? '')));
     $kodekust       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodekust'] ?? '')));
     $kodekust_lama  = strtoupper(mysqli_real_escape_string($conn, trim($_POST['kodekust_lama'] ?? $kodekust)));
     $namakust       = strtoupper(mysqli_real_escape_string($conn, trim($_POST['namakust'] ?? '')));
@@ -21,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $npwp           = strtoupper(mysqli_real_escape_string($conn, trim($_POST['npwp'] ?? '-')));
 
     // --- Validasi wajib isi minimal ---
-    if (!$kodekust || !$namakust) {
-        echo json_encode(['status' => 'error', 'message' => 'Kode dan Nama pelanggan wajib diisi']);
+    if (!$kodearea || !$kodetipe || !$kodekust || !$namakust) {
+        echo json_encode(['status' => 'error', 'message' => 'Data wajib diisi']);
         exit;
     }
 
@@ -35,13 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
             $query = "INSERT INTO zkustomer 
-                (kodekust, namakust, alamat, kota, kodehrg, ktp, npwp) VALUES 
-                ('$kodekust', '$namakust', '$alamat', '$kota', '$kodehrg', '$ktp', '$npwp')";
+                (kodekust, kodear, kodetipe, namakust, alamat, kota, kodehrg, ktp, npwp) VALUES 
+                ('$kodekust', '$kodearea', '$kodetipe', '$namakust', '$alamat', '$kota', '$kodehrg', '$ktp', '$npwp')";
             break;
 
         case 'update':
             $query = "UPDATE zkustomer SET 
                 kodekust = '$kodekust',
+                kodear = '$kodearea',
+                kodetipe = '$kodetipe',
                 namakust = '$namakust',
                 alamat = '$alamat',
                 kota = '$kota',

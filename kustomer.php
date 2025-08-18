@@ -36,6 +36,12 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 <input type="hidden" name="kodekust_lama" id="kodekust_lama" value=""> 
 
                 <div class="form-atas">
+                    <label for="kodetipe">Kode Tipe</label>
+                    <input type="text" name="kodetipe" id="kodetipe" class="long-input" required style="text-transform: uppercase;">
+
+                    <label for="kodearea">Kode Area</label>
+                    <input type="text" name="kodearea" id="kodearea" class="long-input" required style="text-transform: uppercase;">
+
                     <label for="kodekust">Kode Kustomer</label>
                     <input type="text" name="kodekust" id="kodekust" class="long-input" required style="text-transform: uppercase;">
 
@@ -68,14 +74,52 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 <div class="form-bawah">
                 </div>
 
-            <button id="btnSave" type="submit">Simpan</button>
-            <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>
-            <button id="btnEdit" type="button" onclick="initializeUbah()">Ubah</button>
-            <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()">Hapus</button>
-            <button id="btnCancel" type="button" onclick="cancelEdit()">Batal</button>
-
-
-        </form>
+                <button id="btnSave" type="submit">Simpan</button>
+                <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>
+                <button id="btnEdit" type="button" onclick="initializeUbah()">Ubah</button>
+                <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()">Hapus</button>
+                <button id="btnCancel" type="button" onclick="cancelEdit()">Batal</button>
+            </form>
+            <div id="popupCariArea" class="popup-pb-cari" style="display: none;">
+                <div class="popup-pb-contentcari">
+                    <h3>Pilih Sales</h3>
+                    <table class="tabel-hasil" style="min-width: 700px;">
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Nama</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyHasilArea">
+                            <!-- hasil dari filter_barang.php -->
+                        </tbody>
+                    </table>
+                    <div style="text-align: right; margin-top: 10px;">
+                        <button type="button" onclick="tutupPopupArea()">Tutup</button>
+                    </div>
+                </div>
+            </div>
+            <div id="popupCariTipe" class="popup-pb-cari" style="display: none;">
+                <div class="popup-pb-contentcari">
+                    <h3>Pilih Sales</h3>
+                    <table class="tabel-hasil" style="min-width: 700px;">
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Nama</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyHasilTipe">
+                            <!-- hasil dari filter_barang.php -->
+                        </tbody>
+                    </table>
+                    <div style="text-align: right; margin-top: 10px;">
+                        <button type="button" onclick="tutupPopupTipe()">Tutup</button>
+                    </div>
+                </div>
+            </div>
     </main>
         <!-- Popup Pilih Data -->
     <div id="popupFilter" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:1000;">
@@ -152,6 +196,9 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         let previousFormData = {};
         const maxHarga = <?= $jmlharga ?>;
 
+        const kodeAreaInput = document.getElementById('kodearea');
+        const kodeTipeInput = document.getElementById('kodetipe');
+
         function initializeFormButtons() {
             document.getElementById('btnTambah').disabled = false;
             document.getElementById('btnEdit').disabled = true;
@@ -159,6 +206,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnCancel').disabled = true;
             document.getElementById('btnSave').disabled = true;      
 
+            document.getElementById('kodearea').disabled = true;
+            document.getElementById('kodetipe').disabled = true;
             document.getElementById('kodekust').disabled = true;
             document.getElementById('kodekust').readOnly = false;
             document.getElementById('namakust').disabled = true;
@@ -183,6 +232,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         function initializeFormButtonsCancel() {
             currentstat = null;
 
+            document.getElementById('kodearea').value = previousFormData.kodearea;
+            document.getElementById('kodetipe').value = previousFormData.kodetipe;
             document.getElementById('kodekust').value = previousFormData.kodekust;
             document.getElementById('namakust').value = previousFormData.namakust;
             document.getElementById('alamat').value = previousFormData.alamat;
@@ -196,6 +247,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnCancel').disabled = false; 
             document.getElementById('btnSave').disabled = true;
 
+            document.getElementById('kodearea').disabled = true;
+            document.getElementById('kodetipe').disabled = true;
             document.getElementById('kodekust').disabled = true;
             document.getElementById('namakust').disabled = true;
             document.getElementById('alamat').disabled = true;
@@ -214,6 +267,130 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
         resetButtonStyles();
 
+        }
+
+        [kodeAreaInput].forEach(input => {
+            const tipe = input.id === 'kodearea' ? 'kode' : 'nama';
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value.trim();
+                    if (val) cariArea(tipe, val);
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const val = this.value.trim();
+                if (val) cariArea(tipe, val);
+            });
+        });
+
+        [kodeTipeInput].forEach(input => {
+            const tipe = input.id === 'kodetipe' ? 'kode' : 'nama';
+
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = this.value.trim();
+                    if (val) cariTipe(tipe, val);
+                }
+            });
+
+            input.addEventListener('blur', function() {
+                const val = this.value.trim();
+                if (val) cariTipe(tipe, val);
+            });
+        });
+
+        function cariArea(mode, keyword) {
+            if (!keyword) return;
+
+            fetch('filter_itemarea.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbodyHasilArea');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                    document.getElementById('kodearea').value = '';
+                    document.getElementById('kodearea').focus();
+                } else {
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.kodear}</td>
+                            <td>${item.namaar}</td>
+                            <td><button type="button" onclick='pilihArea(${JSON.stringify(item)})'>Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                document.getElementById('popupCariArea').style.display = 'flex';
+            })
+            .catch(() => {
+                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            });
+        }
+
+        function cariTipe(mode, keyword) {
+            if (!keyword) return;
+
+            fetch('filter_itemtipe.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `mode=${mode}&keyword=${encodeURIComponent(keyword)}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('tbodyHasilTipe');
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                    document.getElementById('kodetipe').value = '';
+                    document.getElementById('kodetipe').focus();
+                } else {
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.kodetipe}</td>
+                            <td>${item.namatipe}</td>
+                            <td><button type="button" onclick='pilihTipe(${JSON.stringify(item)})'>Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                document.getElementById('popupCariTipe').style.display = 'flex';
+            })
+            .catch(() => {
+                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            });
+        }
+
+        function pilihArea(item) {
+            kodeAreaInput.value = item.kodear;
+            tutupPopupArea();
+        }
+
+        function pilihTipe(item) {
+            kodeTipeInput.value = item.kodetipe;
+            tutupPopupTipe();
+        }
+
+        function tutupPopupArea() {
+            document.getElementById('popupCariArea').style.display = 'none';
+        }
+
+        function tutupPopupTipe() {
+            document.getElementById('popupCariTipe').style.display = 'none';
         }
 
         document.getElementById('kodehrg').addEventListener('blur', function() {
@@ -240,6 +417,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
 
+            document.getElementById('kodearea').disabled = false;
+            document.getElementById('kodetipe').disabled = false;
             document.getElementById('kodekust').disabled = false;
             document.getElementById('kodekust').readOnly = false;
             document.getElementById('namakust').disabled = false;
@@ -272,6 +451,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnCancel').disabled = false;
             document.getElementById('btnSave').disabled = false;
 
+            document.getElementById('kodearea').disabled = false;
+            document.getElementById('kodetipe').disabled = false;
             document.getElementById('kodekust').disabled = false;
             document.getElementById('kodekust').readOnly = false;
             document.getElementById('namakust').disabled = false;
@@ -412,6 +593,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         }
 
         previousFormData = {
+            kodearea: document.getElementById('kodearea').value,
+            kodetipe: document.getElementById('kodetipe').value,
             kodekust: document.getElementById('kodekust').value,
             namakust: document.getElementById('namakust').value,
             kodekust_lama: document.getElementById('kodekust_lama').value,
@@ -423,6 +606,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         };
 
         function validateForm() {
+            const kodearea = document.getElementById('kodearea').value.trim();
+            const kodetipe = document.getElementById('kodetipe').value.trim();
             const kodekust = document.getElementById('kodekust').value.trim();
             const namakust = document.getElementById('namakust').value.trim();
             const alamat = document.getElementById('alamat').value.trim();
@@ -435,6 +620,14 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
             if (isNaN(kodehrgNum) || kodehrgNum < 1 || kodehrgNum > maxHarga) {
                 showToast(`Kode Harga harus antara 1 sampai ${maxHarga}`, '#dc3545');
+                return false;
+            }
+            if (!kodetipe) {
+                showToast('Kode Tipe wajib diisi!.', '#dc3545');
+                return false;
+            }
+            if (!kodearea) {
+                showToast('Kode Area wajib diisi!.', '#dc3545');
                 return false;
             }
             if (!kodekust) {
@@ -469,6 +662,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
         }
 
         function pilihKustomer(data) {
+            document.getElementById('kodearea').value = data.kodear;
+            document.getElementById('kodetipe').value = data.kodetipe;
             document.getElementById('kodekust').value = data.kodekust;
             document.getElementById('kodekust_lama').value = data.kodekust; 
             document.getElementById('namakust').value = data.namakust;
@@ -487,6 +682,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('btnCancel').disabled = false; 
 
             previousFormData = {
+                kodearea: data.kodear,
+                kodetipe: data.kodetipe,
                 kodekust: data.kodekust,
                 namakust: data.namakust,
                 kodekust_lama: data.kodekust,
@@ -520,6 +717,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             document.getElementById('kodekust').readOnly = true;
             document.getElementById('namakust').disabled = true;
             document.getElementById('searchbtn').disabled = false;
+            document.getElementById('kodearea').disabled = true;
+            document.getElementById('kodetipe').disabled = true;
             document.getElementById('alamat').disabled = true;
             document.getElementById('kota').disabled = true;
             document.getElementById('kodehrg').disabled = true;
@@ -588,6 +787,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
                 if (currentstat === 'tambah' || currentstat === 'update') {
                 previousFormData = {
                     kodekust: document.getElementById('kodekust').value.trim(),
+                    kodearea: document.getElementById('kodearea').value.trim(),
+                    kodetipe: document.getElementById('kodetipe').value.trim(),
                     namakust: document.getElementById('namakust').value.trim(),
                     kodekust_lama: document.getElementById('kodekust').value.trim(),
                     alamat: document.getElementById('alamat').value.trim(),
