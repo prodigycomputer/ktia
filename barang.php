@@ -6,12 +6,6 @@ $query = $conn->query("SELECT jmlharga FROM zconfig LIMIT 1");
 $row = $query ? $query->fetch_assoc() : null;
 $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
-$grupResult = $conn->query("SELECT kodegrup FROM zgrup ORDER BY LENGTH(kodegrup) DESC");
-$kodegrupList = [];
-while ($g = $grupResult->fetch_assoc()) {
-    $kodegrupList[] = $g['kodegrup'];
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -523,6 +517,8 @@ while ($g = $grupResult->fetch_assoc()) {
 
                 if (data.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                    document.getElementById('kodemerek').value = '';
+                    document.getElementById('kodemerek').focus();
                 } else {
                     data.forEach(item => {
                         const tr = document.createElement('tr');
@@ -557,6 +553,8 @@ while ($g = $grupResult->fetch_assoc()) {
 
                 if (data.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                    document.getElementById('kodegolongan').value = '';
+                    document.getElementById('kodegolongan').focus();
                 } else {
                     data.forEach(item => {
                         const tr = document.createElement('tr');
@@ -591,6 +589,8 @@ while ($g = $grupResult->fetch_assoc()) {
 
                 if (data.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                    document.getElementById('kodegrup').value = '';
+                    document.getElementById('kodegrup').focus();
                 } else {
                     data.forEach(item => {
                         const tr = document.createElement('tr');
@@ -753,6 +753,8 @@ while ($g = $grupResult->fetch_assoc()) {
             kodebrg: document.getElementById('kodebrg').value,
             kodebrg_lama: document.getElementById('kodebrg_lama').value,
             namabrg: document.getElementById('namabrg').value,
+            kodemerk: document.getElementById('kodemerek').value,
+            kodegol: document.getElementById('kodegolongan').value,
             kodegrup: document.getElementById('kodegrup').value,
             satuan1: document.getElementById('satuan1').value,
             isi1: document.getElementById('isi1').value,
@@ -765,25 +767,12 @@ while ($g = $grupResult->fetch_assoc()) {
 
 
         function pilihBarang(data) {
+            document.getElementById('kodemerek').value = data.kodemerk;
+            document.getElementById('kodegolongan').value = data.kodegol;
+            document.getElementById('kodegrup').value = data.kodegrup;
             document.getElementById('kodebrg').value = data.kodebrg;
             document.getElementById('kodebrg_lama').value = data.kodebrg; 
             document.getElementById('namabrg').value = data.namabrg;
-
-            // Ambil list kodegrup dari PHP
-            const kodegrupList = <?= json_encode($kodegrupList) ?>;
-            const kodebrg = data.kodebrg;
-            let finalKodeGrup = '';
-
-            // Cek apakah ada grup yang cocok sebagai awalan kodebrg
-            const matchedGrup = kodegrupList.find(grup => kodebrg.startsWith(grup));
-
-            if (matchedGrup) {
-                finalKodeGrup = matchedGrup; // pakai dari zgrup
-            } else {
-                finalKodeGrup = data.kodegrup || ''; // fallback ke data zstok
-            }
-
-            document.getElementById('kodegrup').value = finalKodeGrup;
 
             // Ambil dan simpan data harga
             hargaData = {};
@@ -812,6 +801,8 @@ while ($g = $grupResult->fetch_assoc()) {
                 kodebrg: data.kodebrg,
                 kodebrg_lama: data.kodebrg,
                 namabrg: data.namabrg,
+                kodemerk: data.kodemerk,
+                kodegol: data.kodegol,
                 kodegrup: finalKodeGrup,
                 satuan1: data.satuan1,
                 isi1: data.isi1,
@@ -866,6 +857,8 @@ while ($g = $grupResult->fetch_assoc()) {
         }
 
         function validateForm() {
+            const kodemerk = document.getElementById('kodemerk').value.trim();
+            const kodegol = document.getElementById('kodegol').value.trim();
             const kodegrup = document.getElementById('kodegrup').value.trim();
             const kodebrg = document.getElementById('kodebrg').value.trim();
             const namabrg = document.getElementById('namabrg').value.trim();
@@ -873,6 +866,14 @@ while ($g = $grupResult->fetch_assoc()) {
             const satuan2 = document.getElementById('satuan2');
             const satuan3 = document.getElementById('satuan3');
 
+            if (!kodemerk) {
+                showToast('Kode Merek wajib diisi!', '#dc3545');
+                return false;
+            }
+            if (!kodegol) {
+                showToast('Kode Golongan wajib diisi!', '#dc3545');
+                return false;
+            }
             if (!kodegrup) {
                 showToast('Kode Grup wajib diisi!', '#dc3545');
                 return false;
