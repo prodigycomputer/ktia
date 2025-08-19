@@ -1,8 +1,18 @@
+<?php
+include 'koneksi.php';
+
+// --- Ambil config max item per halaman ---
+$q = mysqli_query($conn, "SELECT qbrsjual FROM zconfig LIMIT 1");
+$row = mysqli_fetch_assoc($q);
+$maxPerPage = (int)$row['qbrsjual'];
+if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Cetak Nota </title>
+    <title>Cetak Nota</title>
     <script src="fungsi.js"></script>
     <style>
         html, body {
@@ -10,25 +20,22 @@
             padding: 0;
             font-family: Arial, sans-serif;
             font-size: 12px;
-            display: flex;
-            justify-content: center;
-            background-color: #eee; /* agar terlihat batas A5 */
+            background-color: #eee;
         }
 
         .container-a5 {
-            width: 794px; /* A5 landscape width */
-            height: 559px; /* A5 l*/
+            width: 210mm;   /* ukuran A5 landscape */
+            height: 148mm;
             background-color: #fff;
             margin: 20px auto;
-            padding: 30px;
+            padding: 10mm;  /* aman untuk printer */
             box-shadow: 0 0 5px rgba(0,0,0,0.2);
             box-sizing: border-box;
+            page-break-after: always;
         }
 
-        h2 {
-            margin-bottom: 10px;
-        }
-  
+        h2 { margin-bottom: 10px; }
+
         .form-header {
             display: flex;
             justify-content: space-between;
@@ -43,87 +50,77 @@
             gap: 2px;
         }
 
-        .form-kiri {
-            width: 34%;
-            margin-right: 5px; /* Jarak ke kanan */
-        }
+        .form-kiri { width: 30%; margin-right: 5px; }
+        .form-tengah {width: 40%; margin-left: 5px;}
+        .form-kanan { width: 30%; margin-left: 5px; }
 
-        .form-tengah {
-            width: 40%;
-            margin-left: 5px; /* Jarak ke kiri */
-        }
-
-        .form-kanan {
-            width: 30%;
-            margin-left: 5px; /* Jarak ke kiri */
-        }
-
-
-        .field {
-            display: flex;
-            align-items: center;
-        }
-
-        .field label:first-child {
-            width: 100px;
-            font-weight: bold;
-        }
-
-        .field label:nth-child(2) {
-            margin-right: 4px;
-            width: 10px;
-        }
-
-        .field span {
-            flex: 1;
-        
-            font-family: monospace;
-        }
+        .field { display: flex; align-items: center; }
+        .field label:first-child { width: 100px; font-weight: bold; }
+        .field label:nth-child(2) { margin-right: 4px; width: 10px; }
+        .field span { flex: 1; font-family: monospace; }
 
         .form-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        /* kiri: tanda tangan + perhatian */
+        .footer-kiri {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+        }
+
+        .box-perhatian {
+            border: 1px solid #000;
+            padding: 12px;
+            font-size: 12px;
+            font-style: italic;
+            text-align: center;
+            width: 80%;
+        }
+
+        .footer-ttd-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .footer-ttd-row .kolom-ttd {
+            width: 45%;
+            text-align: center;
+        }
+
+        /* kanan: perhitungan */
+        .footer-kanan {
+            width: 30%;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             gap: 4px;
             font-size: 12px;
         }
+        .footer-kanan div { display: flex; align-items: center; justify-content: flex-start; width: 100%; }
+        .footer-kanan label { flex: 1; text-align: right; }
+        .footer-kanan span { flex: none; text-align: right; padding: 1px 2px; font-family: monospace; }
 
-        .form-footer div {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
+        .span-kecil { width: 36px; }
+        .span-sedang { width: 90px; }
+        .span-besar  { width: 130px; }
 
-        .form-footer label {
-            flex: 1;
-            text-align: left;
-        }
-
-        .form-footer span {
-            flex: none;
-            text-align: right;
-            border: 1px #ccc;
-            padding: 2px 6px;
-            font-family: monospace;
-        }
-
-        .span-kecil { width: 30px; }
-        .span-sedang { width: 70px; }
-        .span-besar  { width: 112px; }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 3px;
-        }
-
+        table { border-collapse: collapse; width: 100%; margin-bottom: 3px; }
         th {
             border: 1px solid #aaa;
             padding: 3px;
             text-align: center;
             font-size: 12px;
         }
-
         td {
             border: 1px solid #aaa;
             padding: 3px;
@@ -133,18 +130,23 @@
 
         .action-buttons {
             display: flex;
-            justify-content: flex-start;
-            margin-top: 10px;
+            /* justify-content: flex-start; kalau mau kiri */
+            justify-content: center;   /*<-- kalau mau di tengah */
             gap: 10px;
+            margin: 10px auto;
+            padding: 10px;
+            max-width: 210mm;/* biar sejajar dengan container A5 */
+            position: sticky;
+            top: 0;
+            z-index: 999;
         }
-
         .action-buttons button {
-            padding: 8px 16px;
+            padding: 6px 14px;
             font-size: 12px;
             cursor: pointer;
         }
 
-        /* Optional: cetak tetap sesuai A5 */   
+        /* force print ke A5 landscape */
         @page {
             size: A5 landscape;
             margin: 0;
@@ -155,226 +157,210 @@
                 margin: 0;
                 padding: 0;
                 background: none;
-                width: 100%;
-                height: 100%;
+                width: 210mm;
+                height: 148mm;
             }
-
-            body * {
-                visibility: hidden;
-            }
-
-            .container-a5, .container-a5 * {
-                visibility: visible;
-            }
-
+            body * { visibility: hidden; }
+            .container-a5, .container-a5 * { visibility: visible; }
             .container-a5 {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100vw;
-                height: 100vh;
-                box-shadow: none;
+                position: relative;
                 margin: 0;
+                box-shadow: none;
                 padding: 10mm;
                 background: white;
                 box-sizing: border-box;
                 overflow: hidden;
             }
-            .action-buttons {
-                display: none;
-            }
+            .action-buttons { display: none; }
         }
-
     </style>
+
 </head>
 <body>
-    <div class="container-a5">
-        <?php include 'header.php'; ?>
 
-        <div class="form-header">
-            <div class="form-kiri">
-                <div class="field">
-                    <label>Tanggal</label>
-                    <label>:</label>
-                    <span id="tanggal"></span>
+<div class="action-buttons">
+    <button onclick="goBack()">← Kembali</button>
+    <button onclick="window.print()">🖨️ Print</button>
+</div>
+
+<div id="pages"></div>
+
+<script>
+    const noNota = new URLSearchParams(window.location.search).get('nonota');
+    const maxPerPage = <?php echo $maxPerPage; ?>;
+
+    fetch(`getpenjualan.php?nonota=${encodeURIComponent(noNota)}`)
+    .then(res => res.json())
+    .then(data => {
+        if (data.status !== 'success') {
+            alert('Data tidak ditemukan!');
+            return;
+        }
+
+        const h = data.header;
+        const d = data.detail;
+
+        // ==============================
+        // Hitung perhitungan seperti di form
+        // ==============================
+        let subtotal = 0;
+        d.forEach(item => {
+            subtotal += parseFloat(item.jumlah || 0);
+        });
+
+        let dc1 = parseFloat(h.disk1 || 0);
+        let dc2 = parseFloat(h.disk2 || 0);
+        let dc3 = parseFloat(h.disk3 || 0);
+        let persenppn = parseFloat(h.prsnppn || 0);
+        let totaljmlh = parseFloat(h.totaljmlh || 0);
+
+        let hrgdc1 = subtotal * dc1 / 100;
+        let smntarahrgdc1 = subtotal - hrgdc1;
+
+        let hrgdc2 = smntarahrgdc1 * dc2 / 100;
+        let smntarahrgdc2 = smntarahrgdc1 - hrgdc2;
+
+        let hrgdc3 = smntarahrgdc2 * dc3 / 100;
+        let smntarahrgdc3 = smntarahrgdc2 - hrgdc3;
+
+        let hrppn = smntarahrgdc3 * persenppn / 100;
+        let totalppn = smntarahrgdc3 + hrppn;
+
+        // 👉 lain-lain dihitung dari total akhir yg sudah disimpan
+        let lainlain = totaljmlh - totalppn;
+
+        // ==============================
+        // Buat halaman nota
+        // ==============================
+        const totalPages = Math.ceil(d.length / maxPerPage);
+        const pagesDiv = document.getElementById('pages');
+
+        for (let page = 0; page < totalPages; page++) {
+            const container = document.createElement('div');
+            container.className = 'container-a5';
+
+            const isLastPage = (page === totalPages - 1);
+
+            container.innerHTML = `
+                <?php include 'header.php'; ?>
+
+                <div class="form-header">
+                    <div class="form-kiri">
+                        <div class="field"><label>Tanggal</label><label>:</label><span>${h.tanggal}</span></div>
+                        <div class="field"><label>No Nota</label><label>:</label><span>${h.no_nota}</span></div>
+                        <div class="field"><label>Jatuh Tempo</label><label>:</label><span>${h.jt_tempo}</span></div>
+                    </div>
+                    <div class="form-tengah">
+                        <div class="field"><label>Kode Kustomer</label><label>:</label><span>${h.kode_kust}</span></div>
+                        <div class="field"><label>Nama Kustomer</label><label>:</label><span>${h.nama_kust}</span></div>
+                        <div class="field"><label>Alamat</label><label>:</label><span>${h.alamat}</span></div>
+                    </div>
+                    <div class="form-kanan">
+                        <div class="field"><label>Kode Sales</label><label>:</label><span>${h.kode_sls}</span></div>
+                        <div class="field"><label>Nama Sales</label><label>:</label><span>${h.nama_sls}</span></div>
+                    </div>
                 </div>
-                <div class="field">
-                    <label>No Nota</label>
-                    <label>:</label>
-                    <span id="no_nota"></span>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">Kode</th>
+                            <th style="width: 150px;">Nama brg</th>
+                            <th style="width: 80px;">QTY</th>
+                            <th style="width: 50px;">Disc %</th>
+                            <th style="width: 10px;">Disrp</th>
+                            <th style="width: 10px;">Harga</th>
+                            <th style="width: 10px;">Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                ${isLastPage ? `
+                <div class="form-footer">
+                    <!-- KIRI -->
+                    <div class="footer-kiri">
+                        <!-- Atas -->
+                        <div class="box-perhatian">
+                            ⚠️ Perhatian: Barang yang sudah dibeli tidak bisa ditukar / dikembalikan.
+                        </div>
+
+                        <!-- Bawah: kiri-kanan -->
+                        <div class="footer-ttd-row">
+                            <div class="kolom-ttd">
+                                <strong>Tanda Terima</strong>
+                                <br><br><br> <!-- ruang tanda tangan -->
+                                (______________)
+                            </div>
+                            <div class="kolom-ttd">
+                                <strong>Hormat Kami</strong>
+                                <br><br><br> <!-- ruang tanda tangan -->
+                                (______________)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KANAN -->
+                    <div class="footer-kanan">
+                        <div><label>Subtotal :</label><span class="span-besar">${subtotal.toLocaleString('id-ID',{minimumFractionDigits:2})}</span></div>
+                        <div><label>Diskon 1 :</label><span class="span-kecil">${dc1}%</span><span class="span-sedang">${hrgdc1.toLocaleString('id-ID',{minimumFractionDigits:2})}</span></div>
+                        <div><label>Diskon 2 :</label><span class="span-kecil">${dc2}%</span><span class="span-sedang">${hrgdc2.toLocaleString('id-ID',{minimumFractionDigits:2})}</span></div>
+                        <div><label>Diskon 3 :</label><span class="span-kecil">${dc3}%</span><span class="span-sedang">${hrgdc3.toLocaleString('id-ID',{minimumFractionDigits:2})}</span></div>
+                        <div><label>Lain-Lain :</label><span class="span-besar">${lainlain.toLocaleString('id-ID',{minimumFractionDigits:2})}</span></div>
+                        <div ${persenppn===0?'style="display:none"':''}>
+                            <label>PPN :</label><span class="span-kecil">${persenppn}%</span><span class="span-sedang">${hrppn.toLocaleString('id-ID',{minimumFractionDigits:2})}</span>
+                        </div>
+                        <div style="border-top: 1px solid #000; padding-top: 4px;">
+                            <label><strong>Total Jumlah :</strong></label>
+                            <span style="font-weight:bold;" class="span-besar">${totaljmlh.toLocaleString('id-ID',{minimumFractionDigits:2})}</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="field">
-                    <label>Jatuh Tempo</label>
-                    <label>:</label>
-                    <span id="jt_tempo"></span>
-                </div>
-            </div>
+                ` : ''}
+            `;
 
-            <div class="form-tengah">
-                <div class="field">
-                    <label>Kode Kustomer</label>
-                    <label>:</label>
-                    <span id="kode_kust"></span>
-                </div>
-                <div class="field">
-                    <label>Nama Kustomer</label>
-                    <label>:</label>
-                    <span id="nama_kust"></span>
-                </div>
-                <div class="field">
-                    <label>Alamat</label>
-                    <label>:</label>
-                    <span id="alamat"></span>
-                </div>
-            </div>
+            const tbody = container.querySelector('tbody');
+            const start = page * maxPerPage;
+            const end = start + maxPerPage;
+            const pageItems = d.slice(start, end);
 
-            <div class="form-kanan">
-                <div class="field">
-                    <label>Kode Sales</label>
-                    <label>:</label>
-                    <span id="kode_sls"></span>
-                </div>
-                <div class="field">
-                    <label>Nama Sales</label>
-                    <label>:</label>
-                    <span id="nama_sls"></span>
-                </div>
-            </div>
-        </div>
+            pageItems.forEach(item => {
+                const qty = tampilKuantitas(item);
+                const disc = tampilDiskon(item);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.kodebrg}</td>
+                    <td>${item.namabrg}</td>
+                    <td style="text-align:right;">${qty}</td>
+                    <td style="text-align:right;">${disc}</td>
+                    <td style="text-align:right;">${parseFloat(item.discrp).toLocaleString('id-ID',{minimumFractionDigits:2})}</td>
+                    <td style="text-align:right;">${parseFloat(item.harga).toLocaleString('id-ID',{minimumFractionDigits:2})}</td>
+                    <td style="text-align:right;">${parseFloat(item.jumlah).toLocaleString('id-ID',{minimumFractionDigits:2})}</td>
+                `;
+                tbody.appendChild(tr);
+            });
 
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 50px;">Kode brg</th>
-                    <th style="width: 150px;">Nama brg</th>
-                    <th style="width: 70px;">QTY</th>
-                    <th style="width: 70px;">Disc %</th>
-                    <th style="width: 10px;">Disrp</th>
-                    <th style="width: 10px;">Harga</th>
-                    <th style="width: 10px;">Jumlah</th>
-                </tr>
-            </thead>
-            <tbody id="table-detail">
-                <!-- diisi via JS -->
-            </tbody>
-        </table>
+            for (let i = pageItems.length; i < maxPerPage; i++) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td>`;
+                tbody.appendChild(tr);
+            }
 
-        <div class="form-footer">
-            <div><label>Subtotal :</label> <span id="subtotal" class="span-besar"></span></div>
-            <div><label>Diskon 1 :</label> <span id="diskon1" class="span-kecil"></span><span id="hdiskon1" class="span-sedang"></span></div>
-            <div><label>Diskon 2 :</label> <span id="diskon2" class="span-kecil"></span><span id="hdiskon2" class="span-sedang"></span></div>
-            <div><label>Diskon 3 :</label> <span id="diskon3" class="span-kecil"></span><span id="hdiskon3" class="span-sedang"></span></div>
-            <div><label>Lain-Lain :</label> <span id="lain" class="span-besar"></span></div>
-            <div><label>PPN :</label> <span id="ppn" class="span-kecil">></span><span id="hppn" class="span-sedang"></span></div>
-            <div style="border-top: 1px solid #000; padding-top: 4px;">
-                <label><strong>Total Jumlah :</strong></label>
-                <span id="totaljmlh" style="font-weight: bold;" class="span-besar"></span>
-            </div>
-        </div>
+            pagesDiv.appendChild(container);
+        }
 
-        <div class="action-buttons">
-            <button onclick="goBack()">← Kembali</button>
-            <button onclick="window.print()">🖨️ Print</button>
-        </div>
+        setTimeout(() => { window.print(); }, 300);
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Gagal mengambil data");
+    });
 
-        <script>
-            const noNota = new URLSearchParams(window.location.search).get('nonota');
-
-            fetch(`getpenjualan.php?nonota=${encodeURIComponent(noNota)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status !== 'success') {
-                        alert('Data tidak ditemukan!');
-                        return;
-                    }
-
-                    const h = data.header;
-                    const d = data.detail;
-
-                    document.getElementById('tanggal').textContent = h.tanggal;
-                    document.getElementById('no_nota').textContent = h.no_nota;
-                    document.getElementById('jt_tempo').textContent = h.jt_tempo;
-                    document.getElementById('kode_kust').textContent = h.kode_kust;
-                    document.getElementById('nama_kust').textContent = h.nama_kust;
-                    document.getElementById('kode_sls').textContent = h.kode_sls;
-                    document.getElementById('nama_sls').textContent = h.nama_sls;
-                    document.getElementById('alamat').textContent = h.alamat;
-                    let subtotal = 0;
-                    const tbody = document.getElementById('table-detail');
-                    d.forEach(item => {
-                        const qty = tampilKuantitas(item);
-                        const disc = tampilDiskon(item);
-                        const jumlah = parseFloat(item.jumlah) || 0;
-                        subtotal += jumlah;
-
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${item.kodebrg}</td>
-                            <td>${item.namabrg}</td>
-                            <td style="text-align: right;">${qty}</td>
-                            <td style="text-align: right;">${disc}</td>
-                            <td style="text-align: right;">${parseFloat(item.discrp).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td style="text-align: right;">${parseFloat(item.harga).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td style="text-align: right;">${parseFloat(jumlah).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
-
-                    const ppn = parseFloat(h.prsnppn);
-                    const hppn = parseFloat(h.hrgppn);
-                    const diskon1 = parseFloat(h.disk1);
-                    const hdiskon1 = parseFloat(h.hdisk1);
-                    const diskon2 = parseFloat(h.disk2);
-                    const hdiskon2 = parseFloat(h.hdisk2);
-                    const diskon3 = parseFloat(h.disk3);
-                    
-                    const hdiskon3 = parseFloat(h.hdisk3);
-                    const total = parseFloat(h.totaljmlh);
-
-                    let totalhasil = subtotal - hdiskon1 - hdiskon2 - hdiskon3 + hppn;
-                    let lain = h.totaljmlh - totalhasil; // langsung dari DB, bukan subtotal hitungan ulang
-
-                    if (parseFloat(ppn) === 0 && parseFloat(hppn) === 0) {
-                        document.getElementById('ppn').parentElement.style.display = 'none';
-                        document.getElementById('hppn').parentElement.style.display = 'none';
-                    }
-                    document.getElementById('subtotal').textContent = subtotal.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('ppn').textContent = ppn.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%' ;
-                    document.getElementById('hppn').textContent = hppn.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('lain').textContent = lain.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('diskon1').textContent = diskon1.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
-                    document.getElementById('hdiskon1').textContent = hdiskon1.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('diskon2').textContent = diskon2.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
-                    document.getElementById('hdiskon2').textContent = hdiskon2.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('diskon3').textContent = diskon3.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
-                    document.getElementById('hdiskon3').textContent = hdiskon3.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    document.getElementById('totaljmlh').textContent = total.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    
-
-
-
-                    // otomatis cetak
-                    setTimeout(() => {
-                        window.print();
-                    }, 200);
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert("Gagal mengambil data");
-                });
-
-                function goBack() {
-                    const from = new URLSearchParams(window.location.search).get('from');
-                    if (from) {
-                        window.location.href = from;
-                    } else {
-                        window.history.back();
-                    }
-                }
-        </script>
-    </div>
-
-
-
+    function goBack() {
+        const from = new URLSearchParams(window.location.search).get('from');
+        if (from) window.location.href = from;
+        else window.history.back();
+    }
+</script>
 </body>
 </html>
