@@ -25,12 +25,17 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
 
         .container-a5 {
             width: 210mm;   /* ukuran A5 landscape */
-            height: 148mm;
+            height: 138mm;
             background-color: #fff;
             margin: 20px auto;
             padding: 10mm;  /* aman untuk printer */
             box-shadow: 0 0 5px rgba(0,0,0,0.2);
             box-sizing: border-box;
+            /* HAPUS page-break-after di sini */
+        }
+
+        /* hanya halaman selain terakhir yg dipaksa pecah */
+        .container-a5:not(:last-child) {
             page-break-after: always;
         }
 
@@ -62,7 +67,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
         .form-footer {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 5px;
             font-size: 12px;
         }
 
