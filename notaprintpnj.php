@@ -94,7 +94,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
             display: flex;
             justify-content: space-between;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .footer-ttd-row .kolom-ttd {

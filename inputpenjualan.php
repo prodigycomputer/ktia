@@ -638,6 +638,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
 
         function pilihBarang(item) {
             document.getElementById('formDetailPenjualan').reset();
+            
             popupKodeInput.value = item.kodebrg;
             popupNamaInput.value = item.namabrg;
             popupSatuan1.value = item.satuan1;
