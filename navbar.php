@@ -2,7 +2,7 @@
 <?php
 $current = basename($_SERVER['PHP_SELF']);
 $isFile = in_array($current, ['barang.php', 'supplier.php', 'area.php', 'tipe.php', 'kustomer.php', 'sales.php','gudang.php', 'group.php', 'merek.php', 'golongan.php']);
-$isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php', 'inputpembelian.php', 'editpembelian.php', 'inputpenjualan.php', 'editpenjualan.php']);
+$isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php', 'inputpembelian.php', 'editpembelian.php', 'inputpenjualan.php', 'editpenjualan.php', 'mutasi.php']);
 $isLaporan = in_array($current, [
   'LaporanStok.php', 'LaporanPenjualan.php', 'LaporanSupplier.php',
   'LaporanPembelian.php', 'LaporanKustomer.php'
@@ -45,6 +45,7 @@ $isLaporan = in_array($current, [
     <div class="dropdown-content <?= $isTransaksi ? 'show' : '' ?>" id="transaksiDropdown">
         <a href="pembelian.php" class="<?= in_array($current, ['pembelian.php', 'inputpembelian.php', 'editpembelian.php']) ? 'active-link' : '' ?>">Pembelian</a>
         <a href="penjualan.php" class="<?= in_array($current, ['penjualan.php', 'inputpenjualan.php', 'editpenjualan.php']) ? 'active-link' : '' ?>">Penjualan</a>
+        <a href="mutasi.php" class="<?= $current == 'mutasi.php' ? 'active-link' : '' ?>">Mutasi Barang</a>
     </div>
     </div>
     
