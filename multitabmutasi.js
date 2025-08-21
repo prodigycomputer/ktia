@@ -134,7 +134,6 @@ function loadFormFromTab() {
 
     dataMutasi = [...(tabData.dataMutasi || [])];
     renderTabelMutasi();
-    hitungSubtotalDariArrayBeli();
 }
 
 // ======== SIMPAN FORM KE TAB AKTIF ========
