@@ -671,7 +671,7 @@ $nonota = $_GET['nonota'] ?? '';
             }
 
             // Pulihkan status form
-            if (saved.currentstat === 'tambah') {
+            if (saved.currentstat === 'update') {
                 laststat();
             } else {
                 initializeFormButtons();

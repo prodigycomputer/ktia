@@ -161,6 +161,11 @@ $nonota = $_GET['nonota'] ?? '';
                         <input type="number" id="popup_jlh3" name="popup_jlh3" style="text-align: right;" min="0" disabled>
                     </div>
 
+                    <div class="popup-pb-row">
+                        <label for="popup_satuan3">Satuan 3</label>
+                        <input type="text" id="popup_satuan3" name="popup_satuan3" disabled>
+                    </div>
+
                     <div class="popup-pb-row" style="justify-content: flex-end; gap: 10px;">
                         <button id="btnSaveItem" type="submit">Oke</button>
                         <button id="btnCancelItem" type="button" onclick="tutupPopup()">Batal</button>
