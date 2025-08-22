@@ -8,31 +8,31 @@ $nonota = $_GET['nonota'] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Mutasi</title>
+    <title>Input Penyesuaian</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
-
+    <script src="multitabpenyesuaian.js"></script>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php include 'navbar.php'; ?>
-
     <main>
-        <h2>Edit Mutasi</h2>
+        <h2>Input Penyesuaian</h2>
         <div class="action-pb-bar" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
             <div style="display: flex; gap: 8px;">
                 <button id="btnSave" type="submit">Simpan</button>
-                <button id="btnEdit" type="button" onclick="initializeEdit()">Edit</button>
-                <button id="btnHapus" type="button" >Hapus</button>    
+                <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>    
                 <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
                 <button id="btnPrint" type="button">Print</button>
+  
             </div>
-            <button id="btnKembali" type="button" onclick="window.location.href='mutasi.php'">Kembali</button>
+            <button id="btnKembali" type="button" onclick="window.location.href='penyesuaian.php'">List Nota</button>
         </div>
-
-        <form id="formMutasi" action="prosespembelian.php" method="POST">
-            <input type="hidden" name="no_nota_lama" id="no_nota_lama" />
+        <form id="formPenyesuaian" action="prosesmutasi.php" method="POST">
+            <div id="tabBar" class="tab-bar">
+                <!-- Tab akan di-generate via JS -->
+            </div>
             <div id="form-pembelian-atas">
 
                 <div class="form-pb-row">
@@ -51,17 +51,8 @@ $nonota = $_GET['nonota'] ?? '';
 
                 <div class="form-pb-row">
                     <div class="form-pb-col">
-                        <label for="kodegd1">Gudang Awal</label>
-                        <select id="kodegd1" name="kodegd1" class="short-input" style="text-transform: uppercase;" required>
-                            <option value="">Pilih Gudang</option>
-                            <!-- Akan diisi via JavaScript -->
-                        </select>
-                    </div>
-                </div>
-                <div class="form-pb-row">
-                    <div class="form-pb-col">
-                        <label for="kodegd2">Gudang Tujuan</label>
-                        <select id="kodegd2" name="kodegd2" class="short-input" style="text-transform: uppercase;" required>
+                        <label for="kodegd">Gudang</label>
+                        <select id="kodegd" name="kodegd" class="short-input" style="text-transform: uppercase;" required>
                             <option value="">Pilih Gudang</option>
                             <!-- Akan diisi via JavaScript -->
                         </select>
@@ -74,7 +65,7 @@ $nonota = $_GET['nonota'] ?? '';
                     <button id="btnTambahItem" type="button">+</button>
                 </div>
                 <div style="overflow-x: auto;">
-                    <table class="tabel-hasil" id="tabelMutasi" style="min-width: 1200px;">
+                    <table class="tabel-hasil" id="tabelPenyesuaian" style="min-width: 1200px;">
                         <thead>
                             <tr>
                                 <th style="min-width: 100px;">Kode brg</th>
@@ -85,6 +76,8 @@ $nonota = $_GET['nonota'] ?? '';
                                 <th style="min-width: 80px;">Satuan 2</th>
                                 <th style="min-width: 50px;">Jlh 3</th>
                                 <th style="min-width: 80px;">Satuan 3</th>
+                                <th style="min-width: 50px;">Qty</th>
+                                <th style="min-width: 80px;">Harga</th>
                                 <th style="min-width: 120px; display: none;" id="thAksi">Aksi</th>
                             </tr>
                         </thead>
@@ -93,9 +86,6 @@ $nonota = $_GET['nonota'] ?? '';
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <div id="form-pembelian-bawah">
             </div>
         </form>
         <div id="popupCariBarang" class="popup-pb-cari" style="display: none;">
@@ -123,11 +113,10 @@ $nonota = $_GET['nonota'] ?? '';
         </div>
         <div id="popupForm" class="popup-pb-overlay" style="display: none;">
             <div class="popup-pb-content">
-                <h3>Tambah Data Mutasi</h3>
-                <form id="formDetailMutasi">
+                <h3>List Data Barang</h3>
+                <form id="formDetailPenyesuaian">
                     <input type="hidden" name="popup_isi1" id="popup_isi1" value=""> 
-                    <input type="hidden" name="popup_isi2" id="popup_isi2" value="">
-
+                    <input type="hidden" name="popup_isi2" id="popup_isi2" value=""> 
                     <div class="popup-pb-row">
                         <label for="popup_kodebrg">Kode Barang</label>
                         <input type="text" id="popup_kodebrg" data-table="zstok" data-field="kodebrg" data-check="eksistensi" data-reset="popup_namabrg" onblur="cekValidasi(this)" name="popup_kodebrg" style="text-transform: uppercase;">
@@ -165,9 +154,19 @@ $nonota = $_GET['nonota'] ?? '';
                         <input type="text" id="popup_satuan3" name="popup_satuan3" disabled>
                     </div>
 
+                    <div class="popup-pb-row">
+                        <label for="popup_qty">Qty</label>
+                        <input type="number" id="popup_qty" name="popup_qty" style="text-align: right;" min="0">
+                    </div>
+
+                    <div class="popup-pb-row">
+                        <label for="popup_harga">Harga</label>
+                        <input type="number" id="popup_harga" name="popup_harga" style="text-align: right;" min="0">
+                    </div>
+
                     <div class="popup-pb-row" style="justify-content: flex-end; gap: 10px;">
                         <button id="btnSaveItem" type="submit">Oke</button>
-                        <button id="btnCancelItem" type="button" onclick="tutupPopup()">Batal</button>
+                        <button id="btnCancelItem" type="button" onclick="tutupPopup()">Tutup</button>
                     </div>
                 </form>
             </div>
@@ -213,36 +212,15 @@ $nonota = $_GET['nonota'] ?? '';
         </div>
     </div>
     <script>
+        //initMultiTab('Penyesuaian');
         let currentstat = null;
         let currentMode = "input";
-        let dataMutasi = [];
+        let dataPenyesuaian = [];
         let indexToDelete = null;
-        let hapusTipe = 'item';
-        function loadMutasi(nonota) {
-            const noNota = new URLSearchParams(window.location.search).get('nonota');
 
-            fetch(`getmutasi.php?nonota=${noNota}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    // Isi form header
-                    document.getElementById('tanggal').value = data.header.tanggal;
-                    document.getElementById('no_nota').value = data.header.no_nota;
-                    document.getElementById('no_nota_lama').value = data.header.no_nota;
-                    document.getElementById('kodegd1').value = data.header.kodegd1;
-                    document.getElementById('kodegd2').value = data.header.kodegd2;
-
-                    dataMutasi = data.detail;
-                    renderTabelMutasi();
-                } else {
-                    alert(data.message);
-                }
-            });
-        }
         const nonota = document.getElementById('no_nota');
         const tanggal = document.getElementById('tanggal');
-        const KodeGd1 = document.getElementById('kodegd1');
-        const KodeGd2 = document.getElementById('kodegd2');
+        const KodeGd = document.getElementById('kodegd');
 
         const popupKodeInput = document.getElementById('popup_kodebrg');
         const popupNamaInput = document.getElementById('popup_namabrg');
@@ -254,6 +232,8 @@ $nonota = $_GET['nonota'] ?? '';
         const popupJlh1 = document.getElementById('popup_jlh1');
         const popupJlh2 = document.getElementById('popup_jlh2');
         const popupJlh3 = document.getElementById('popup_jlh3');
+        const popupQty = document.getElementById('popup_qty');
+        const popupHarga = document.getElementById('popup_harga');
 
         // Trigger cari saat tekan Enter
         [popupKodeInput, popupNamaInput].forEach(input => {
@@ -297,7 +277,6 @@ $nonota = $_GET['nonota'] ?? '';
                             <td>${item.satuan1}</td>
                             <td>${item.satuan2}</td>
                             <td>${item.satuan3}</td>
-                            <td>${item.hrgbeli}</td>
                             <td><button type="button" onclick='pilihBarang(${JSON.stringify(item)})'>Pilih</button></td>
                         `;
                         tbody.appendChild(tr);
@@ -360,7 +339,7 @@ $nonota = $_GET['nonota'] ?? '';
         }
 
         function pilihBarang(item) {
-            document.getElementById('formDetailMutasi').reset();
+            document.getElementById('formDetailPenyesuaian').reset();
             popupKodeInput.value = item.kodebrg;
             popupNamaInput.value = item.namabrg;
             popupSatuan1.value = item.satuan1;
@@ -386,25 +365,26 @@ $nonota = $_GET['nonota'] ?? '';
             document.getElementById('popupCariBarang').style.display = 'none';
         }
 
-        function renderTabelMutasi() {
-            const tbody = document.querySelector('#tabelMutasi tbody');
+        function renderTabelPenyesuaian() {
+            const tbody = document.querySelector('#tabelPenyesuaian tbody');
             tbody.innerHTML = '';
 
-            dataMutasi.forEach((item, index) => {
+            dataPenyesuaian.forEach((item, index) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td style="display: none;">${item.isi1}</td>
                     <td style="display: none;">${item.isi2}</td>
                     <td>${item.kodebrg}</td>
                     <td>${item.namabrg}</td>
-                    <td style="display: none;">${item.kodegd1}</td>
-                    <td style="display: none;">${item.kodegd2}</td>
+                    <td style="display: none;">${item.kodegd}</td>
                     <td style="text-align: right;">${item.jlh1}</td>
                     <td>${item.satuan1}</td>
                     <td style="text-align: right;">${item.jlh2 || ''}</td>
                     <td>${item.satuan2 || ''}</td>
                     <td style="text-align: right;">${item.jlh3 || ''}</td>
                     <td>${item.satuan3 || ''}</td>
+                    <td style="text-align: right;">${item.qty || ''}</td>
+                    <td style="text-align: right;">${item.harga || ''}</td>
                     <td style="display: none;" id="td-btn-${index}">
                         <button type="button" onclick="editItem(${index})">Edit</button>
                         <button type="button" onclick="hapusItem(${index})">Hapus</button>
@@ -414,7 +394,7 @@ $nonota = $_GET['nonota'] ?? '';
             });
         }
 
-        document.getElementById('formDetailMutasi').addEventListener('submit', function (e) {
+        document.getElementById('formDetailPenyesuaian').addEventListener('submit', function (e) {
             e.preventDefault();
 
             const item = {
@@ -427,29 +407,31 @@ $nonota = $_GET['nonota'] ?? '';
                 jlh2: parseInt(popupJlh2.value) || null,
                 satuan2: popupSatuan2.value.trim() || null,
                 jlh3: parseInt(popupJlh3.value) || null,
-                satuan3: popupSatuan3.value.trim() || null
+                satuan3: popupSatuan3.value.trim() || null,
+                qty: parseInt(popupQty.value) || null,
+                harga: parseInt(popupHarga.value) || null
             };
 
             if (currentMode === "edit" && this.dataset.editingIndex !== undefined) {
                 // UPDATE item
                 const idx = parseInt(this.dataset.editingIndex, 10);
-                dataMutasi[idx] = item;
+                dataPenyesuaian[idx] = item;
                 tutupPopup();
                 showToast('Item berhasil diupdate!');
             } else {
                 // TAMBAH item baru
-                dataMutasi.push(item);
+                dataPenyesuaian.push(item);
                 showToast('Item berhasil disimpan!');
             }
 
-            renderTabelMutasi();
+            renderTabelPenyesuaian();
             resetitem();
             currentMode = "input";
             delete this.dataset.editingIndex;
         });
 
         function resetitem() {
-            document.getElementById('formDetailMutasi').reset();
+            document.getElementById('formDetailPenyesuaian').reset();
             document.getElementById('thAksi').style.display = '';
             const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
             allTdAksi.forEach(td => {
@@ -461,7 +443,7 @@ $nonota = $_GET['nonota'] ?? '';
 
         function editItem(index) {
             currentMode = "edit";
-            const item = dataMutasi[index];
+            const item = dataPenyesuaian[index];
             popupIsi1.value       = item.isi1;
             popupIsi2.value       = item.isi2;
             popupKodeInput.value  = item.kodebrg;
@@ -472,6 +454,8 @@ $nonota = $_GET['nonota'] ?? '';
             popupSatuan2.value    = item.satuan2 || '';
             popupJlh3.value       = item.jlh3 || '';
             popupSatuan3.value    = item.satuan3 || '';
+            popupQty.value       = item.qty || '';
+            popupHarga.value       = item.harga || '';
 
             if (popupIsi1.value > 1) {
                 popupJlh2.disabled = false;
@@ -486,7 +470,7 @@ $nonota = $_GET['nonota'] ?? '';
             }
 
             // Simpan index
-            const formEdit = document.getElementById('formDetailMutasi');
+            const formEdit = document.getElementById('formDetailPenyesuaian');
             formEdit.dataset.editingIndex = index;
 
             // Tampilkan popup edit
@@ -494,15 +478,6 @@ $nonota = $_GET['nonota'] ?? '';
         }
 
         function hapusItem(index) {
-            showPopupKonfirmasiHapus('item', index);
-        }
-
-        document.getElementById('btnHapus').addEventListener('click', () => {
-            showPopupKonfirmasiHapus('nota');
-        });
-
-        function showPopupKonfirmasiHapus(tipe, index = null) {
-            hapusTipe = tipe;
             indexToDelete = index;
             document.getElementById('popupConfirmHapus').style.display = 'block';
         }
@@ -510,132 +485,121 @@ $nonota = $_GET['nonota'] ?? '';
         // Fungsi ketika user klik "Ya" atau "Tidak"
         function konfirmasiHapus(ya) {
             document.getElementById('popupConfirmHapus').style.display = 'none';
-            
-            if (ya) {
-                if (hapusTipe === 'item' && indexToDelete !== null) {
-                    // Hapus satu item dari array
-                    dataMutasi.splice(indexToDelete, 1);
-                    renderTabelMutasi();
-                    document.getElementById('thAksi').style.display = '';
-                    const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
-                    allTdAksi.forEach(td => td.style.display = '');
-                    showToast('Item berhasil dihapus!', '#dc3545');
-                }
-
-                if (hapusTipe === 'nota') {
-                    const noNota = document.getElementById('no_nota').value;
-                    fetch(`proseshapusmut.php?nonota=${encodeURIComponent(noNota)}`, {
-                        method: 'GET'
-                    })
-                    .then(res => res.json())
-                    .then(response => {
-                        if (response.success) {
-                            showToast('Mutasi berhasil dihapus!', '#dc3545');
-                            // redirect atau reset halaman
-                            setTimeout(() => window.location.href = 'mutasi.php', 1000);
-                        } else {
-                            showToast('Gagal menghapus mutasi!', '#dc3545');
-                        }
-                    })
-                    .catch(() => showToast('Terjadi kesalahan server!', '#dc3545'));
-                }
+            if (ya && indexToDelete !== null) {
+                dataPenyesuaian.splice(indexToDelete, 1);
+                renderTabelPenyesuaian();
+                document.getElementById('thAksi').style.display = '';
+                const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
+                allTdAksi.forEach(td => {
+                    td.style.display = '';
+                });
+                showToast('Item berhasil dihapus!', '#dc3545');
             }
-
             indexToDelete = null;
-            hapusTipe = 'item';
-        }          
+        }
 
         function initializeFormButtons() {
             currentstat = null;
 
-            document.getElementById('btnEdit').disabled = false;
+            document.getElementById('btnTambah').disabled = false;
             document.getElementById('btnTambahItem').disabled = true;
             document.getElementById('btnCancel').disabled = true;
-            document.getElementById('btnHapus').disabled = false;
             document.getElementById('btnSave').disabled = true;
             document.getElementById('btnPrint').disabled = false;
 
+            document.getElementById('tanggal').disabled = true;
+            document.getElementById('no_nota').disabled = true;
+            document.getElementById('kodegd').disabled = true;
             document.getElementById('thAksi').style.display = 'none';
             const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
             allTdAksi.forEach(td => {
                 td.style.display = 'none';
             });
-
-            document.getElementById('tanggal').disabled = true;
-            document.getElementById('no_nota').disabled = true;
-            document.getElementById('kodegd1').disabled = true;
-            document.getElementById('kodegd2').disabled = true;
         }
         //initializeFormButtons();
-
-        function initializeEdit() {
-            currentstat = 'update';
+        function initializeTambah() {
+            currentstat = 'tambah';
             showToast('Kamu sedang menambah data...', '#ffc107');
 
-            // ✅ Tambahkan ini untuk menampilkan kolom Aksi
-            document.getElementById('thAksi').style.display = '';
-            const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
-            allTdAksi.forEach(td => {
-                td.style.display = '';
-            });
+            document.getElementById('formPenyesuaian').reset();
+            
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById("tanggal").value = today;
 
-            document.getElementById('btnEdit').disabled = true;
+            document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnCancel').disabled = false;
-            document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnSave').disabled = false;
-            document.getElementById('btnTambahItem').disabled = false;
             document.getElementById('btnPrint').disabled = true;
 
             document.getElementById('tanggal').disabled = false;
             document.getElementById('no_nota').disabled = false;
-            document.getElementById('kodegd1').disabled = false;
-            document.getElementById('kodegd2').disabled = false;
-        }
-
-        function laststat() {
+            document.getElementById('kodegd').disabled = false;
+            const nota = document.getElementById('no_nota').value.trim();
+            document.getElementById('btnTambahItem').disabled = (nota === '');
             document.getElementById('thAksi').style.display = '';
             const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
             allTdAksi.forEach(td => {
                 td.style.display = '';
             });
 
-            document.getElementById('btnEdit').disabled = true;
+            if (currentTabIndex !== null && tabs[currentTabIndex]) {
+                tabs[currentTabIndex].formStatus = "tambah";
+            }
+
+            dataPenyesuaian = [];
+            renderTabelPenyesuaian();
+        }
+
+        function laststat() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById("tanggal").value = today;
+
+            document.getElementById('btnTambah').disabled = true;
             document.getElementById('btnCancel').disabled = false;
-            document.getElementById('btnHapus').disabled = true;
             document.getElementById('btnSave').disabled = false;
-            document.getElementById('btnTambahItem').disabled = false;
 
             document.getElementById('tanggal').disabled = false;
             document.getElementById('no_nota').disabled = false;
-            document.getElementById('kodegd1').disabled = false;
-            document.getElementById('kodegd2').disabled = false;
+            document.getElementById('kodegd').disabled = false;
+            const nota = document.getElementById('no_nota').value.trim();
+            document.getElementById('btnTambahItem').disabled = (nota === '');
+            document.getElementById('thAksi').style.display = '';
+            const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
+            allTdAksi.forEach(td => {
+                td.style.display = '';
+            });
+
         }
 
         function cancelForm() {
             initializeFormButtons();
                 // Reset form
+            document.getElementById('formPenyesuaian').reset();
             // Set kembali tanggal dan jatuh tempo ke hari ini
             const today = new Date().toISOString().split('T')[0];
-            //document.getElementById("tanggal").value = today;
-            //document.getElementById("jt_tempo").value = today;
-
-            // ✅ Tambahkan ini untuk menampilkan kolom Aksi
-            document.getElementById('thAksi').style.display = 'none';
+            document.getElementById('thAksi').style.display = '';
             const allTdAksi = document.querySelectorAll('[id^="td-btn-"]');
             allTdAksi.forEach(td => {
-                td.style.display = 'none';
+                td.style.display = '';
             });
-            localStorage.removeItem('formMutasiEdit');
+
+            if (currentTabIndex !== null && tabs[currentTabIndex]) {
+                tabs[currentTabIndex].formStatus = "default";
+            }
+            dataPenyesuaian = [];
+            renderTabelPenyesuaian();
+            localStorage.removeItem('formPenyesuaianInput');
         }
 
         document.getElementById('btnTambahItem').addEventListener('click', () => {
+            currentMode = "input";
             document.getElementById('popupForm').style.display = 'flex';
         });
 
         // Tutup popup
         function tutupPopup() {
-            document.getElementById('formDetailMutasi').reset();
-            delete formDetailMutasi.dataset.editingIndex;
+            document.getElementById('formDetailPenyesuaian').reset();
+            delete formDetailPenyesuaian.dataset.editingIndex;
             document.getElementById('popupForm').style.display = 'none';
             popupJlh2.disabled = true;
             popupJlh3.disabled = true;
@@ -646,89 +610,78 @@ $nonota = $_GET['nonota'] ?? '';
                 const response = await fetch('getgudang.php');
                 const data = await response.json();
 
-                const dropdownTambah1 = document.getElementById('kodegd1');
-                const dropdownTambah2 = document.getElementById('kodegd2');
+                const dropdownTambah = document.getElementById('kodegd');
 
                 // Kosongkan dulu
-                dropdownTambah1.innerHTML = '<option value="">Pilih Gudang</option>';
-                dropdownTambah2.innerHTML = '<option value="">Pilih Gudang</option>';
+                dropdownTambah.innerHTML = '<option value="">Pilih Gudang</option>';
 
                 // Tambahkan opsi dari database
                 data.forEach(gd => {
                     const teksTampil = `${gd.kodegd} - ${gd.namagd}`;
-                    const opt1 = new Option(teksTampil, gd.kodegd);
-                    const opt2 = new Option(teksTampil, gd.kodegd);
-                    dropdownTambah1.add(opt1);
-                    dropdownTambah2.add(opt2);
+                    const opt = new Option(teksTampil, gd.kodegd);
+                    dropdownTambah.add(opt);
                 });
             } catch (err) {
                 console.error('Gagal mengambil data gudang:', err);
             }
         }
 
-        function setupGudangValidation() {
-            const gd1 = document.getElementById('kodegd1');
-            const gd2 = document.getElementById('kodegd2');
-
-            function cekDuplikat() {
-                if (gd1.value && gd2.value && gd1.value === gd2.value) {
-                    showToast('Gudang Awal dan Gudang Tujuan tidak boleh sama!', '#dc3545');
-                    gd2.value = ""; // reset gudang tujuan
-                    gd2.focus();
-                }
-            }
-
-            gd1.addEventListener('change', cekDuplikat);
-            gd2.addEventListener('change', cekDuplikat);
-        }
-
         // Panggil setelah dropdown selesai diisi
         document.addEventListener('DOMContentLoaded', () => {
             isiDropdownGudang();
-            setupGudangValidation();
         });
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // 1. Isi dropdown dulu baru load data
+            // Isi dropdown dulu
             await isiDropdownGudang();
-            setupGudangValidation();
 
-            const saved = JSON.parse(localStorage.getItem('formMutasiEdit') || '{}');
+            // Ambil data dari localStorage
+            const saved = JSON.parse(localStorage.getItem('formPenyesuaianInput') || '{}');
             currentstat = saved.currentstat || null;
 
-            // 2. Panggil loadMutasi hanya jika ada nonota
-            const noNota = new URLSearchParams(window.location.search).get('nonota');
-            if (noNota) {
-                await loadMutasi(noNota); // menunggu data mutasi selesai di-load
+            // Pulihkan semua field setelah dropdown terisi
+            Object.keys(saved).forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.value = saved[id].value || el.value;
+                    el.disabled = saved[id].disabled ?? false;
+                }
+            });
+
+            // Pulihkan data tabel jika ada
+            if (saved.dataPenyesuaian) {
+                dataPenyesuaian = saved.dataPenyesuaian;
+                renderTabelPenyesuaian();
             }
 
-            // 3. Pulihkan data form dari localStorage (hanya jika ada data)
-            if (Object.keys(saved).length > 0) {
-                Object.keys(saved).forEach(id => {
-                    if (id !== 'dataMutasi' && id !== 'currentstat') {
-                        const el = document.getElementById(id);
-                        if (el) {
-                            el.value = saved[id].value || el.value;
-                            el.disabled = saved[id].disabled ?? false;
-                        }
-                    }
-                });
-
-                // Pulihkan data tabel
-                if (saved.dataMutasi) {
-                    dataMutasi = saved.dataMutasi;
-                    renderTabelMutasi();
-                }
-
-                // Pulihkan status form
-                if (saved.currentstat === 'update') {
-                    laststat();
-                } else {
-                    initializeFormButtons();
-                }
+            // Pulihkan status form
+            if (saved.currentstat === 'tambah') {
+                laststat();
+            } else {
+                initializeFormButtons();
             }
         });
 
+        window.addEventListener('beforeunload', () => {
+            const form = document.getElementById('formPenyesuaian');
+            const formData = {};
+
+            form.querySelectorAll('input, select, option, textarea, button').forEach(el => {
+                formData[el.id] = {
+                    value: el.value,
+                    disabled: el.disabled
+                };
+            });
+
+            // Simpan currentstat
+            formData['currentstat'] = currentstat;
+
+            // Simpan dataPenyesuaian juga jika penting
+            formData['dataPenyesuaian'] = dataPenyesuaian;
+
+            // Simpan ke localStorage
+            localStorage.setItem('formPenyesuaianInput', JSON.stringify(formData));
+        });
 
         // Enable btnTambahItem jika no_nota terisi
         document.getElementById('no_nota').addEventListener('input', function () {
@@ -741,37 +694,51 @@ $nonota = $_GET['nonota'] ?? '';
             return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
         }
 
+        // Tombol save
         document.getElementById('btnSave').addEventListener('click', () => {
-            const data = {
-                no_nota: document.getElementById('no_nota').value,
-                no_nota_lama: document.getElementById('no_nota_lama').value,
-                tanggal: document.getElementById('tanggal').value,
-                kodegd1: document.getElementById('kodegd1').value,
-                kodegd2: document.getElementById('kodegd2').value,
-                detail: dataMutasi // array yang sudah kamu simpan saat tambah item
+            // Simpan kondisi form aktif ke memori
+            saveCurrentForm();
+
+            const activeTab = tabs[currentTabIndex];
+            if (!activeTab || !activeTab.formData) {
+                showToast('Tidak ada data untuk disimpan', '#dc3545');
+                return;
+            }
+
+            // 🔹 Bentuk ulang format seperti versi lama
+            const sendData = {
+                no_nota: activeTab.formData.no_nota?.value || "",
+                tanggal: activeTab.formData.tanggal?.value || "",
+                kodegd: activeTab.formData.kodegd?.value || "",
+                detail: activeTab.dataPenyesuaian || []
             };
 
-            fetch('prosesupdatemut.php', {
+            // 🔹 Kirim data seperti dulu
+            fetch('prosessimpanpeny.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(sendData)
             })
             .then(res => res.json())
             .then(res => {
                 if (res.success) {
                     showToast('Data berhasil disimpan!');
-                    localStorage.removeItem('formMutasiEdit');
+                    localStorage.removeItem('formPenyesuaianTabs');
+                    if (currentTabIndex !== null && tabs[currentTabIndex]) {
+                        tabs[currentTabIndex].formStatus = "default";
+                    }
                     initializeFormButtons();
                 } else {
+                    console.log(sendData);
                     showToast('Gagal menyimpan: ' + res.message, '#dc3545');
                 }
             })
             .catch(err => {
+                console.log(err);
                 showToast('Error: ' + err, '#dc3545');
             });
         });
+
 
         document.getElementById('btnPrint').addEventListener('click', () => {
             const noNota = document.getElementById('no_nota').value;
@@ -781,8 +748,8 @@ $nonota = $_GET['nonota'] ?? '';
                 return;
             }
 
-            // Buka halaman nota dalam tab baru
-            const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}&from=editmutasi.php`;
+            // Buka halaman nota di tab yang sama
+            const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}&from=inputmutasi.php`;
             window.location.href = url;
         });
 
@@ -801,26 +768,6 @@ $nonota = $_GET['nonota'] ?? '';
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 1500);
         }
-        window.addEventListener('beforeunload', () => {
-            const form = document.getElementById('formMutasi');
-            const formData = {};
-
-            form.querySelectorAll('input, select, option, textarea, button').forEach(el => {
-                formData[el.id] = {
-                    value: el.value,
-                    disabled: el.disabled
-                };
-            });
-
-            // Simpan currentstat
-            formData['currentstat'] = currentstat;
-
-            // Simpan dataMutasi juga jika penting
-            formData['dataMutasi'] = dataMutasi;
-
-            // Simpan ke localStorage
-            localStorage.setItem('formMutasiEdit', JSON.stringify(formData));
-        });
     </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <?php
 $current = basename($_SERVER['PHP_SELF']);
 $isFile = in_array($current, ['barang.php', 'supplier.php', 'area.php', 'tipe.php', 'kustomer.php', 'sales.php','gudang.php', 'group.php', 'merek.php', 'golongan.php']);
-$isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php', 'mutasi.php', 'inputpembelian.php', 'editpembelian.php', 'inputpenjualan.php', 'editpenjualan.php', 'inputmutasi.php', 'editmutasi.php']);
+$isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php', 'mutasi.php', 'penyesuaian.php', 'inputpembelian.php', 'editpembelian.php', 'inputpenjualan.php', 'editpenjualan.php', 'inputmutasi.php', 'editmutasi.php', 'inputpenyesuaian.php', 'editpenyesuaian.php']);
 $isLaporan = in_array($current, [
   'LaporanStok.php', 'LaporanPenjualan.php', 'LaporanSupplier.php',
   'LaporanPembelian.php', 'LaporanKustomer.php'
@@ -46,6 +46,7 @@ $isLaporan = in_array($current, [
         <a href="pembelian.php" class="<?= in_array($current, ['pembelian.php', 'inputpembelian.php', 'editpembelian.php']) ? 'active-link' : '' ?>">Pembelian</a>
         <a href="penjualan.php" class="<?= in_array($current, ['penjualan.php', 'inputpenjualan.php', 'editpenjualan.php']) ? 'active-link' : '' ?>">Penjualan</a>
         <a href="mutasi.php" class="<?= in_array($current, ['mutasi.php', 'inputmutasi.php', 'editmutasi.php']) ? 'active-link' : '' ?>">Mutasi Barang</a>
+        <a href="penyesuaian.php" class="<?= in_array($current, ['penyesuaian.php', 'inputpenyesuaian.php', 'editpenyesuaian.php']) ? 'active-link' : '' ?>">Penyesuaian</a>
     </div>
     </div>
     
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pembelianPages = ['pembelian.php', 'inputpembelian.php', 'editpembelian.php'];
     const penjualanPages = ['penjualan.php', 'inputpenjualan.php', 'editpenjualan.php'];
     const mutasiPages = ['mutasi.php', 'inputmutasi.php', 'editmutasi.php'];
+    const penyesuaianPages = ['penyesuaian.php', 'inputpenyesuaian.php', 'editpenyesuaian.php'];
 
 
     // Simpan halaman terakhir dari grup pembelian
@@ -135,6 +137,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (mutasiLink && last3Page && last3Page !== 'mutasi.php') {
         mutasiLink.setAttribute('href', last3Page);
+    }
+
+    if (penyesuaianPages.includes(current)) {
+        localStorage.setItem('lastPenyesuaianPage', current);
+    }
+
+    // Reset jika user kembali ke pembelian.php
+    if (current === 'penyesuaian.php') {
+        localStorage.removeItem('lastPenyesuaianPage');
+    }
+
+    // Ganti href dari link Pembelian
+    const penyesuaianLink = document.querySelector('a[href="penyesuaian.php"]');
+    const last4Page = localStorage.getItem('lastPenyesuaianPage');
+
+    if (penyesuaianLink && last4Page && last4Page !== 'penyesuaian.php') {
+        penyesuaianLink.setAttribute('href', last4Page);
     }
 }); 
 

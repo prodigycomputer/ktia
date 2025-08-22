@@ -106,7 +106,6 @@ $nonota = $_GET['nonota'] ?? '';
                             <th>Satuan 1</th>
                             <th>Satuan 2</th>
                             <th>Satuan 3</th>
-                            <th>Harga</th>
                             <th>Pilih</th>
                         </tr>
                     </thead>
@@ -671,7 +670,7 @@ $nonota = $_GET['nonota'] ?? '';
             }
 
             // Pulihkan status form
-            if (saved.currentstat === 'update') {
+            if (saved.currentstat === 'tambah') {
                 laststat();
             } else {
                 initializeFormButtons();
