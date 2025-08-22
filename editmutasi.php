@@ -218,27 +218,54 @@ $nonota = $_GET['nonota'] ?? '';
         let dataMutasi = [];
         let indexToDelete = null;
         let hapusTipe = 'item';
-        function loadMutasi(nonota) {
-            const noNota = new URLSearchParams(window.location.search).get('nonota');
+        async function loadMutasi(nonota) {
+            const noNota = nonota || new URLSearchParams(window.location.search).get('nonota');
 
-            fetch(`getmutasi.php?nonota=${noNota}`)
-            .then(res => res.json())
-            .then(data => {
+            try {
+                const res = await fetch(`getmutasi.php?nonota=${noNota}`);
+                const data = await res.json();
+
                 if (data.status === 'success') {
-                    // Isi form header
-                    document.getElementById('tanggal').value = data.header.tanggal;
-                    document.getElementById('no_nota').value = data.header.no_nota;
-                    document.getElementById('no_nota_lama').value = data.header.no_nota;
-                    document.getElementById('kodegd1').value = data.header.kodegd1;
-                    document.getElementById('kodegd2').value = data.header.kodegd2;
+                    // Ambil data localStorage kalau ada
+                    const saved = JSON.parse(localStorage.getItem('formMutasiEdit') || '{}');
 
+                    // Isi form header dari server, tapi utamakan data localStorage kalau ada
+                    setFieldValue('tanggal', data.header.tanggal, saved);
+                    setFieldValue('no_nota', data.header.no_nota, saved);
+                    setFieldValue('no_nota_lama', data.header.no_nota, saved);
+                    setFieldValue('kodegd1', data.header.kodegd1, saved);
+                    setFieldValue('kodegd2', data.header.kodegd2, saved);
+
+                    // Detail data
                     dataMutasi = data.detail;
+
+                    // Kalau localStorage punya versi detail, pakai itu
+                    if (saved.dataMutasi) {
+                        dataMutasi = saved.dataMutasi;
+                    }
+
                     renderTabelMutasi();
                 } else {
                     alert(data.message);
                 }
-            });
+            } catch (err) {
+                console.error('Gagal load mutasi:', err);
+            }
         }
+
+        // Fungsi bantu: kalau localStorage punya nilai, pakai itu, kalau tidak pakai default server
+        function setFieldValue(id, serverValue, saved) {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            if (saved[id] && saved[id].value !== undefined) {
+                el.value = saved[id].value; // pakai data localStorage
+                el.disabled = saved[id].disabled ?? false;
+            } else {
+                el.value = serverValue; // pakai data server
+            }
+        }
+
         const nonota = document.getElementById('no_nota');
         const tanggal = document.getElementById('tanggal');
         const KodeGd1 = document.getElementById('kodegd1');

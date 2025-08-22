@@ -221,26 +221,53 @@ $nonota = $_GET['nonota'] ?? '';
         let dataPenyesuaian = [];
         let indexToDelete = null;
         let hapusTipe = 'item';
-        function loadPenyesuaian(nonota) {
-            const noNota = new URLSearchParams(window.location.search).get('nonota');
+        async function loadPenyesuaian(nonota) {
+            const noNota = nonota || new URLSearchParams(window.location.search).get('nonota');
 
-            fetch(`getpenyesuaian.php?nonota=${noNota}`)
-            .then(res => res.json())
-            .then(data => {
+            try {
+                const res = await fetch(`getpenyesuaian.php?nonota=${noNota}`);
+                const data = await res.json();
+
                 if (data.status === 'success') {
-                    // Isi form header
-                    document.getElementById('tanggal').value = data.header.tanggal;
-                    document.getElementById('no_nota').value = data.header.no_nota;
-                    document.getElementById('no_nota_lama').value = data.header.no_nota;
-                    document.getElementById('kodegd').value = data.header.kodegd;
+                    // Ambil data localStorage kalau ada
+                    const saved = JSON.parse(localStorage.getItem('formPenyesuaianEdit') || '{}');
 
+                    // Isi form header dari server
+                    setFieldValue('tanggal', data.header.tanggal, saved);
+                    setFieldValue('no_nota', data.header.no_nota, saved);
+                    setFieldValue('no_nota_lama', data.header.no_nota, saved);
+                    setFieldValue('kodegd', data.header.kodegd, saved);
+
+                    // Detail data
                     dataPenyesuaian = data.detail;
+
+                    // Kalau localStorage punya versi detail, pakai itu
+                    if (saved.dataPenyesuaian) {
+                        dataPenyesuaian = saved.dataPenyesuaian;
+                    }
+
                     renderTabelPenyesuaian();
                 } else {
                     alert(data.message);
                 }
-            });
+            } catch (err) {
+                console.error('Gagal load penyesuaian:', err);
+            }
         }
+
+        // Fungsi bantu: kalau localStorage punya nilai, pakai itu, kalau tidak pakai default server
+        function setFieldValue(id, serverValue, saved) {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            if (saved[id] && saved[id].value !== undefined) {
+                el.value = saved[id].value; // pakai data localStorage
+                el.disabled = saved[id].disabled ?? false;
+            } else {
+                el.value = serverValue; // pakai data server
+            }
+        }
+
         const nonota = document.getElementById('no_nota');
         const tanggal = document.getElementById('tanggal');
         const KodeGd = document.getElementById('kodegd');
@@ -782,7 +809,6 @@ $nonota = $_GET['nonota'] ?? '';
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 1500);
         }
-        
         window.addEventListener('beforeunload', () => {
             const form = document.getElementById('formPenyesuaian');
             const formData = {};
