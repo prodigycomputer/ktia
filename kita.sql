@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2025 at 11:36 AM
+-- Generation Time: Aug 23, 2025 at 12:03 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -398,7 +398,9 @@ CREATE TABLE `zmutasi` (
 --
 
 INSERT INTO `zmutasi` (`nonota`, `tgl`, `kodegd1`, `kodegd2`) VALUES
-('MUT01', '2025-08-22', 'G01', 'G03');
+('NG01', '2025-08-21', 'G01', 'G03'),
+('NOG', '2025-08-21', 'G01', 'G03'),
+('MUT01', '2025-08-21', 'G02', 'G01');
 
 -- --------------------------------------------------------
 
@@ -421,7 +423,9 @@ CREATE TABLE `zmutasim` (
 --
 
 INSERT INTO `zmutasim` (`nonota`, `kodebrg`, `kodegd1`, `kodegd2`, `jlh1`, `jlh2`, `jlh3`) VALUES
-('MUT01', 'D01', 'G01', 'G03', 1, 2, 0);
+('NG01', 'D01', 'G01', 'G03', 1, 2, 0),
+('NOG', 'D01', 'G01', 'G03', 1, 2, 0),
+('MUT01', 'D01', 'G02', 'G01', 1, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -440,7 +444,8 @@ CREATE TABLE `zpenyesuaian` (
 --
 
 INSERT INTO `zpenyesuaian` (`nonota`, `tgl`, `kodegd`) VALUES
-('TST1', '2025-08-22', 'G01');
+('TST1', '2025-08-22', 'G01'),
+('TST2', '2025-08-22', 'G02');
 
 -- --------------------------------------------------------
 
@@ -464,7 +469,8 @@ CREATE TABLE `zpenyesuaianm` (
 --
 
 INSERT INTO `zpenyesuaianm` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `qty`, `harga`) VALUES
-('TST1', 'L01', 'G01', 1, 0, 0, 2, 100000);
+('TST1', 'L01', 'G01', 1, 0, 0, 2, 100000),
+('TST2', 'LA12', 'G02', 1, 2, 3, 10, 10000);
 
 -- --------------------------------------------------------
 
@@ -589,15 +595,17 @@ INSERT INTO `ztipe` (`kodetipe`, `namatipe`) VALUES
 CREATE TABLE `zusers` (
   `kodeuser` char(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `kunci` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `zusers`
 --
 
-INSERT INTO `zusers` (`kodeuser`, `username`, `password`) VALUES
-('USR00000000', 'ADMINTEST', 'admintest');
+INSERT INTO `zusers` (`kodeuser`, `username`, `kunci`) VALUES
+('USER01', 'PEDRO', 'PEDRO01'),
+('USER02', 'LEO', 'LEO01'),
+('USR0', 'ADMINTEST', 'ADMINTEST');
 
 --
 -- Indexes for dumped tables
