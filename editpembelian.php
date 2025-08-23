@@ -364,8 +364,10 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                     document.getElementById('totaljmlh').value = data.header.totaljmlh;
 
                     dataPembelian = data.detail;
+                    
                     loadPerhitunganBeli();
                     renderTabelPembelian();
+                    if (callback) callback();
                 } else {
                     alert(data.message);
                 }
@@ -878,6 +880,10 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         function initializeEdit() {
             currentstat = 'update';
             showToast('Kamu sedang menambah data...', '#ffc107');
+            const saved = JSON.parse(localStorage.getItem('formPembelianEdit') || '{}');
+            saved.currentstat = 'update';
+            localStorage.setItem('formPembelianEdit', JSON.stringify(saved));
+            laststat();
 
             // ✅ Tambahkan ini untuk menampilkan kolom Aksi
             document.getElementById('thAksi').style.display = '';
@@ -969,49 +975,70 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             popupJlh3.disabled = true;
         }
 
-        function isiDropdownGudang() {
-            fetch('getgudang.php')
-                .then(response => response.json())
-                .then(data => {
-                    const dropdownTambah = document.getElementById('popup_kodegd');
+        async function isiDropdownGudang() {
+            try {
+                const response = await fetch('getgudang.php');
+                const data = await response.json();
 
-                    data.forEach(gd => {
-                        const teksTampil = `${gd.kodegd} - ${gd.namagd}`;
-                        const optTambah = new Option(teksTampil, gd.kodegd);
+                const dropdownTambah = document.getElementById('popup_kodegd');
 
-                        dropdownTambah.add(optTambah);
-                    });
-                })
-                .catch(error => console.error('Gagal ambil data gudang:', error));
+                // Kosongkan dulu
+                dropdownTambah.innerHTML = '<option value="">Pilih Gudang</option>';
+
+                // Tambahkan opsi dari database
+                data.forEach(gd => {
+                    const teksTampil = `${gd.kodegd} - ${gd.namagd}`;
+                    const opt = new Option(teksTampil, gd.kodegd);
+                    dropdownTambah.add(opt);
+                });
+            } catch (err) {
+                console.error('Gagal mengambil data gudang:', err);
+            }
         }
+        // Panggil setelah dropdown selesai diisi
+        document.addEventListener('DOMContentLoaded', () => {
+            isiDropdownGudang();
+        });
 
-        document.addEventListener('DOMContentLoaded', isiDropdownGudang);
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Isi dropdown dulu baru load data
+            await isiDropdownGudang();
 
-        window.addEventListener('DOMContentLoaded', () => {
             const saved = JSON.parse(localStorage.getItem('formPembelianEdit') || '{}');
-            const form = document.getElementById('formPembelian');
-
             currentstat = saved.currentstat || null;
 
-            Object.keys(saved).forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.value = saved[id].value;
-                    el.disabled = saved[id].disabled;
-                }
-            });
-
-            if (saved.dataPembelian) {
-                dataPembelian = saved.dataPembelian;
-                renderTabelPembelian();
-                hitungSubtotalDariArrayBeli();
+            // 2. Panggil loadPembelian hanya jika ada nonota
+            const noNota = new URLSearchParams(window.location.search).get('nonota');
+            if (noNota) {
+                await loadPembelian(noNota, () => {
+                    if (currentstat === 'update') laststat();
+                }); // menunggu data penyesuaian selesai di-load
             }
 
-            // Pulihkan status tombol/form berdasarkan currentstat
-            if (saved.currentstat === 'update') {
-                laststat();
-            } else {
-                initializeFormButtons();
+            // 3. Pulihkan data form dari localStorage (hanya jika ada data)
+            if (Object.keys(saved).length > 0) {
+                Object.keys(saved).forEach(id => {
+                    if (id !== 'dataPembelian' && id !== 'currentstat' && id !== 'currentmode') {
+                        const el = document.getElementById(id);
+                        if (el) {
+                            el.value = saved[id].value || el.value;
+                            el.disabled = saved[id].disabled ?? false;
+                        }
+                    }
+                });
+
+                // Pulihkan data tabel
+                if (saved.dataPembelian) {
+                    dataPembelian = saved.dataPembelian;
+                    renderTabelPembelian();
+                }
+
+                // Pulihkan status form
+                if (saved.currentstat === 'update') {
+                    laststat();
+                } else {
+                    initializeFormButtons();
+                }
             }
         });
 
@@ -1100,7 +1127,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             const form = document.getElementById('formPembelian');
             const formData = {};
 
-            form.querySelectorAll('input, select, textarea, button').forEach(el => {
+            form.querySelectorAll('input, select, option, textarea, button').forEach(el => {
                 formData[el.id] = {
                     value: el.value,
                     disabled: el.disabled

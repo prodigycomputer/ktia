@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2025 at 11:37 AM
+-- Generation Time: Aug 22, 2025 at 11:36 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -393,6 +393,13 @@ CREATE TABLE `zmutasi` (
   `kodegd2` char(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `zmutasi`
+--
+
+INSERT INTO `zmutasi` (`nonota`, `tgl`, `kodegd1`, `kodegd2`) VALUES
+('MUT01', '2025-08-22', 'G01', 'G03');
+
 -- --------------------------------------------------------
 
 --
@@ -408,6 +415,56 @@ CREATE TABLE `zmutasim` (
   `jlh2` double DEFAULT 0,
   `jlh3` double DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zmutasim`
+--
+
+INSERT INTO `zmutasim` (`nonota`, `kodebrg`, `kodegd1`, `kodegd2`, `jlh1`, `jlh2`, `jlh3`) VALUES
+('MUT01', 'D01', 'G01', 'G03', 1, 2, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zpenyesuaian`
+--
+
+CREATE TABLE `zpenyesuaian` (
+  `nonota` char(30) DEFAULT NULL,
+  `tgl` date DEFAULT NULL,
+  `kodegd` char(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zpenyesuaian`
+--
+
+INSERT INTO `zpenyesuaian` (`nonota`, `tgl`, `kodegd`) VALUES
+('TST1', '2025-08-22', 'G01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zpenyesuaianm`
+--
+
+CREATE TABLE `zpenyesuaianm` (
+  `nonota` char(30) DEFAULT NULL,
+  `kodebrg` char(20) DEFAULT NULL,
+  `kodegd` char(10) NOT NULL,
+  `jlh1` double DEFAULT 0,
+  `jlh2` double DEFAULT 0,
+  `jlh3` double DEFAULT 0,
+  `qty` double DEFAULT 0,
+  `harga` double DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zpenyesuaianm`
+--
+
+INSERT INTO `zpenyesuaianm` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `qty`, `harga`) VALUES
+('TST1', 'L01', 'G01', 1, 0, 0, 2, 100000);
 
 -- --------------------------------------------------------
 

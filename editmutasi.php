@@ -233,7 +233,10 @@ $nonota = $_GET['nonota'] ?? '';
                     document.getElementById('kodegd2').value = data.header.kodegd2;
 
                     dataMutasi = data.detail;
+                    
                     renderTabelMutasi();
+
+                    if (callback) callback();
                 } else {
                     alert(data.message);
                 }
@@ -571,6 +574,10 @@ $nonota = $_GET['nonota'] ?? '';
         function initializeEdit() {
             currentstat = 'update';
             showToast('Kamu sedang menambah data...', '#ffc107');
+            const saved = JSON.parse(localStorage.getItem('formMutasiEdit') || '{}');
+            saved.currentstat = 'update';
+            localStorage.setItem('formMutasiEdit', JSON.stringify(saved));
+            laststat();
 
             // ✅ Tambahkan ini untuk menampilkan kolom Aksi
             document.getElementById('thAksi').style.display = '';
@@ -699,7 +706,9 @@ $nonota = $_GET['nonota'] ?? '';
             // 2. Panggil loadMutasi hanya jika ada nonota
             const noNota = new URLSearchParams(window.location.search).get('nonota');
             if (noNota) {
-                await loadMutasi(noNota); // menunggu data mutasi selesai di-load
+                await loadMutasi(noNota, () => {
+                    if (currentstat === 'update') laststat();
+                });
             }
 
             // 3. Pulihkan data form dari localStorage (hanya jika ada data)

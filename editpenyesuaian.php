@@ -235,7 +235,10 @@ $nonota = $_GET['nonota'] ?? '';
                     document.getElementById('kodegd').value = data.header.kodegd;
 
                     dataPenyesuaian = data.detail;
+                    
                     renderTabelPenyesuaian();
+
+                    if (callback) callback();
                 } else {
                     alert(data.message);
                 }
@@ -578,6 +581,10 @@ $nonota = $_GET['nonota'] ?? '';
         function initializeEdit() {
             currentstat = 'update';
             showToast('Kamu sedang menambah data...', '#ffc107');
+            const saved = JSON.parse(localStorage.getItem('formPenyesuaianEdit') || '{}');
+            saved.currentstat = 'update';
+            localStorage.setItem('formPenyesuaianEdit', JSON.stringify(saved));
+            laststat();
 
             // ✅ Tambahkan ini untuk menampilkan kolom Aksi
             document.getElementById('thAksi').style.display = '';
@@ -681,7 +688,9 @@ $nonota = $_GET['nonota'] ?? '';
             // 2. Panggil loadPenyesuaian hanya jika ada nonota
             const noNota = new URLSearchParams(window.location.search).get('nonota');
             if (noNota) {
-                await loadPenyesuaian(noNota); // menunggu data penyesuaian selesai di-load
+                await loadPenyesuaian(noNota, () => {
+                if (currentstat === 'update') laststat();
+            }); // menunggu data penyesuaian selesai di-load
             }
 
             // 3. Pulihkan data form dari localStorage (hanya jika ada data)
