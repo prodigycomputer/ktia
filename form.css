@@ -781,6 +781,43 @@
     background-color: #f5f5f5;
     }
 
+        /* Styling tabel */
+    #tabelUser {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 13px;
+    }
+    #tabelUser th, #tabelUser td {
+        border: 1px solid #ddd;
+        padding: 6px 8px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    #tabelUser th {
+        background: #f4f4f4;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    /* Styling dropdown agar flat */
+    #tabelUser select {
+        width: 100%;
+        padding: 4px;
+        border: none;
+        background: #e9ecef;
+        font-size: 13px;
+        text-align: center;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+    }
+
+    /* Hover effect row */
+    #tabelUser tr:hover {
+        background: #f9f9f9;
+    }
+
     @media (max-width: 768px) {
         .hamburger {
             display: inline-block;

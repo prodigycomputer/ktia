@@ -1,7 +1,7 @@
 <!-- navbar.php -->
 <?php
 $current = basename($_SERVER['PHP_SELF']);
-$isFile = in_array($current, ['barang.php', 'supplier.php', 'area.php', 'tipe.php', 'kustomer.php', 'sales.php','gudang.php', 'group.php', 'merek.php', 'golongan.php', 'regisakun.php']);
+$isFile = in_array($current, ['barang.php', 'supplier.php', 'area.php', 'tipe.php', 'kustomer.php', 'sales.php','gudang.php', 'group.php', 'merek.php', 'golongan.php', 'regisakun.php', 'pengaturanakun.php']);
 $isTransaksi = in_array($current, ['pembelian.php', 'penjualan.php', 'mutasi.php', 'penyesuaian.php', 'inputpembelian.php', 'editpembelian.php', 'inputpenjualan.php', 'editpenjualan.php', 'inputmutasi.php', 'editmutasi.php', 'inputpenyesuaian.php', 'editpenyesuaian.php']);
 $isLaporan = in_array($current, [
   'LaporanStok.php', 'LaporanPenjualan.php', 'LaporanSupplier.php',
@@ -38,6 +38,7 @@ $isLaporan = in_array($current, [
         <a href="golongan.php" class="<?= $current == 'golongan.php' ? 'active-link' : '' ?>">Golongan</a>
         <a href="group.php" class="<?= $current == 'group.php' ? 'active-link' : '' ?>">Grup</a>
         <a href="regisakun.php" class="<?= $current == 'regisakun.php' ? 'active-link' : '' ?>">Regis Akun</a>
+        <a href="pengaturanakun.php" class="<?= $current == 'pengaturanakun.php' ? 'active-link' : '' ?>">Pengaturan Akun</a>
     </div>
     </div>
 
