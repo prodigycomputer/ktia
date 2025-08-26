@@ -21,7 +21,7 @@ if (!$query) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Data Mutasi</title>
+    <title>Data Penyesuaian</title>
     <link rel="stylesheet" href="navbar.css" />
     <link rel="stylesheet" href="form.css" />
 </head>
@@ -31,7 +31,7 @@ if (!$query) {
     <?php include 'navbar.php'; ?>
 
     <main>
-        <h2>Data Mutasi</h2>
+        <h2>Data Penyesuaian</h2>
 
         <div class="action-bar">
             <button type="button" class="action-btn tambah" onclick="window.location.href='inputpenyesuaian.php'">Tambah</button>

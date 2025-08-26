@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2025 at 12:03 PM
+-- Generation Time: Aug 26, 2025 at 05:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -365,6 +365,54 @@ INSERT INTO `zkustomer` (`kodekust`, `kodear`, `kodetipe`, `namakust`, `alamat`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `zmenu`
+--
+
+CREATE TABLE `zmenu` (
+  `idmenu` char(20) NOT NULL,
+  `mainmenu` varchar(50) NOT NULL,
+  `submenu` varchar(50) NOT NULL,
+  `urutan` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zmenu`
+--
+
+INSERT INTO `zmenu` (`idmenu`, `mainmenu`, `submenu`, `urutan`) VALUES
+('M001', '', 'dashboard.php', 1),
+('M002', 'FILE', 'barang.php', 2),
+('M003', 'FILE', 'area.php', 3),
+('M004', 'FILE', 'tipe.php', 4),
+('M005', 'FILE', 'kustomer.php', 5),
+('M006', 'FILE', 'supplier.php', 6),
+('M007', 'FILE', 'sales.php', 7),
+('M008', 'FILE', 'gudang.php', 8),
+('M009', 'FILE', 'merek.php', 9),
+('M010', 'FILE', 'golongan.php', 10),
+('M011', 'FILE', 'group.php', 11),
+('M012', 'FILE', 'regisakun.php', 12),
+('M013', 'FILE', 'pengaturanakun.php', 13),
+('M014', 'TRANSAKSI', 'pembelian.php', 14),
+('M015', 'TRANSAKSI', 'inputpembelian.php', 15),
+('M016', 'TRANSAKSI', 'editpembelian.php', 16),
+('M017', 'TRANSAKSI', 'penjualan.php', 17),
+('M018', 'TRANSAKSI', 'inputpenjualan.php', 18),
+('M019', 'TRANSAKSI', 'editpenjualan.php', 19),
+('M020', 'TRANSAKSI', 'mutasi.php', 20),
+('M021', 'TRANSAKSI', 'inputmutasi.php', 21),
+('M022', 'TRANSAKSI', 'editmutasi.php', 22),
+('M023', 'TRANSAKSI', 'penyesuaian.php', 23),
+('M024', 'TRANSAKSI', 'inputpenyesuaian.php', 24),
+('M025', 'TRANSAKSI', 'editpenyesuaian.php', 25),
+('M026', 'LAPORAN', 'LaporanKustomer.php', 26),
+('M027', 'LAPORAN', 'LaporanSupplier.php', 27),
+('M028', 'LAPORAN', 'LaporanPembelian.php', 28),
+('M029', 'LAPORAN', 'LaporanPenjualan.php', 29);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `zmerek`
 --
 
@@ -603,9 +651,9 @@ CREATE TABLE `zusers` (
 --
 
 INSERT INTO `zusers` (`kodeuser`, `username`, `kunci`) VALUES
+('USER00', 'ADMINTEST', 'ADMINTEST'),
 ('USER01', 'PEDRO', 'PEDRO01'),
-('USER02', 'LEO', 'LEO01'),
-('USR0', 'ADMINTEST', 'ADMINTEST');
+('USER02', 'LEO', 'LEO01');
 
 --
 -- Indexes for dumped tables
@@ -652,6 +700,12 @@ ALTER TABLE `zjual`
 --
 ALTER TABLE `zkustomer`
   ADD PRIMARY KEY (`kodekust`);
+
+--
+-- Indexes for table `zmenu`
+--
+ALTER TABLE `zmenu`
+  ADD PRIMARY KEY (`idmenu`);
 
 --
 -- Indexes for table `zmerek`
