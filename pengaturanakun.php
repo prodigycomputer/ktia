@@ -23,7 +23,7 @@ include 'koneksi.php';
       <button type="button" id="searchbtn" onclick="triggerSearch()">🔍 Cari</button>
   </div>
 
-  <form id="userForm" action="prosesuser.php" enctype="multipart/form-data" onsubmit="return false;">
+  <form id="userForm" enctype="multipart/form-data" onsubmit="return false;">
     <input type="hidden" name="aksi" id="aksi" value="">
     <div class="form-atas">
       <label for="kodeuser">Kode User</label>
@@ -34,7 +34,7 @@ include 'koneksi.php';
     </div>
     <div class="form-penjualan-tengah">
         <div style="margin-top:10px; display:flex; gap:8px;">
-            <button id="btnSave" type="submit">Simpan</button>
+            <button id="btnSave" type="button">Simpan</button>
         </div>
         <div style="overflow-x: auto;">
             <table class="tabel-hasil" id="tabelUser" style="min-width: 1200px;">
@@ -45,7 +45,7 @@ include 'koneksi.php';
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- isi dari popupitempenjualan-->
+                    <!-- Data forms dimuat dari JS -->
                 </tbody>
             </table>
         </div>
@@ -67,16 +67,13 @@ include 'koneksi.php';
         max-height:80vh; 
         overflow:auto;
     ">
-
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
         <h3 style="font-size:14px; margin:0;">Hasil Pencarian</h3>
         <span onclick="closeFilterPopup()" style="cursor:pointer; font-weight:bold; font-size:16px; color:#666;">&times;</span>
         </div>
-
         <div style="max-height: 60vh; overflow: auto; border: 1px solid #ccc;">
             <table style="min-width: 800px; border-collapse: collapse; font-size: 12px;">
-                <thead style="background:#f2f2f2;">
-                </thead>
+                <thead style="background:#f2f2f2;"></thead>
                 <tbody id="popupList"></tbody>
             </table>
         </div>
@@ -95,9 +92,8 @@ include 'koneksi.php';
   z-index: 1000;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 "></div>
-<script>
-let currentstat = null;
 
+<script>
 function showToast(message, color = '#28a745') {
   const toast = document.getElementById('toast');
   toast.textContent = message;
@@ -106,38 +102,17 @@ function showToast(message, color = '#28a745') {
   setTimeout(() => toast.style.display = 'none', 2000);
 }
 
-function forceUppercase(id) {
-  const input = document.getElementById(id);
-  input.addEventListener('input', () => {
-    input.value = input.value.toUpperCase();
-  });
-}
-forceUppercase('kodeuser');
-forceUppercase('namauser');
-
 let inputSearch = null;
-let searchBtn = document.getElementById('searchbtn')
-
 function handleInput(type) {
     const kodeInput = document.getElementById('searchKode');
     const namaInput = document.getElementById('searchNama');
 
     if (type === 'kode') {
-        if (kodeInput.value.trim() !== '') {
-            namaInput.disabled = true;
-            inputSearch = kodeInput;
-        } else {
-            namaInput.disabled = false;
-            inputSearch = null;
-        }
+        namaInput.disabled = kodeInput.value.trim() !== '';
+        inputSearch = kodeInput.value.trim() !== '' ? kodeInput : null;
     } else {
-        if (namaInput.value.trim() !== '') {
-            kodeInput.disabled = true;
-            inputSearch = namaInput;
-        } else {
-            kodeInput.disabled = false;
-            inputSearch = null;
-        }
+        kodeInput.disabled = namaInput.value.trim() !== '';
+        inputSearch = namaInput.value.trim() !== '' ? namaInput : null;
     }
 }
 
@@ -147,26 +122,21 @@ function showFilterPopup(dataList) {
 
     const table = list.closest('table');
     const thead = table.querySelector('thead');
-    thead.innerHTML = ''; // Kosongkan
+    thead.innerHTML = '';
 
     if (!dataList || dataList.length === 0) return;
 
-    const fixedFields = ['kodeuser', 'namauser'];
-
-    // Header
     const headerRow = document.createElement('tr');
-    [...fixedFields].forEach(field => {
+    ['kodeuser', 'namauser'].forEach(field => {
         const th = document.createElement('th');
         th.textContent = field.toUpperCase();
         th.style.padding = '4px';
         th.style.border = '1px solid #ccc';
         th.style.background = '#f9f9f9';
-        th.style.fontSize = '12px';
         headerRow.appendChild(th);
     });
     thead.appendChild(headerRow);
 
-    // Data
     dataList.forEach(item => {
         const tr = document.createElement('tr');
         tr.style.cursor = 'pointer';
@@ -174,16 +144,13 @@ function showFilterPopup(dataList) {
             closeFilterPopup();
             pilihUser(item);
         });
-
-        [...fixedFields].forEach(field => {
+        ['kodeuser', 'namauser'].forEach(field => {
             const td = document.createElement('td');
             td.textContent = item[field] || '';
             td.style.padding = '4px';
             td.style.border = '1px solid #ccc';
-            td.style.fontSize = '14px';
             tr.appendChild(td);
         });
-
         list.appendChild(tr);
     });
 
@@ -199,61 +166,45 @@ function triggerSearch() {
         showToast('Isi kode atau nama terlebih dahulu!', '#dc3545');
         return;
     }
-
     const keyword = inputSearch.value.trim().toUpperCase();
     if (!keyword) {
         showToast('Kolom pencarian tidak boleh kosong!', '#dc3545');
         return;
     }
-
     fetch(`filter_user.php?keyword=${encodeURIComponent(keyword)}`)
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
             if (data.length === 0) {
                 showToast('Data tidak ada!', '#dc3545');
-                return;
-            }
-
-            if (data.length === 1) {
-                showFilterPopup(data);
             } else {
-                showFilterPopup(data); // tampilkan pilihan
+                showFilterPopup(data);
             }
-        })
-
+        });
 }
 
 function pilihUser(data) {
     document.getElementById('kodeuser').value = data.kodeuser;
     document.getElementById('namauser').value = data.namauser;
-    // Logika enable/disable berdasarkan isi1 dan isi2
-
-    previousFormData = {
-      kodeuser: data.kodeuser,
-      namauser: data.namauser,
-    };
-
-    document.getElementById('searchKode').value = '';
-    document.getElementById('searchNama').value = '';
-    document.getElementById('searchKode').disabled = false;
-    document.getElementById('searchNama').disabled = false;
-    document.getElementById('searchbtn').disabled = false;
-    inputSearch = null;
-    dropdown.style.display = 'none';
     closeFilterPopup();
 }
 
+// List forms & DB fields
 const formsList = [
-  "Stok", "Area", "Tipe", "Kustomer", "Supplier", "Sales", "Gudang", "Merek", "Golongan", "Grup",
-  "Regis Akun", "Pengaturan Akun", "Pembelian", "Penjualan", "Mutasi Barang", "Penyesuaian",
-  "Laporan Stok", "Laporan Kustomer", "Laporan Supplier", "Laporan Pembelian", "Laporan Penjualan"
+  "Stok","Area","Tipe","Kustomer","Supplier","Sales","Gudang","Merek","Golongan","Grup",
+  "Regis Akun","Pengaturan Akun","Pembelian","Penjualan","Mutasi Barang","Penyesuaian",
+  "Laporan Stok","Laporan Kustomer","Laporan Supplier","Laporan Pembelian","Laporan Penjualan"
+];
+const dbFields = [
+  "sstok","sarea","stipe","skust","ssupp","ssales","sgudang",
+  "smerek","sgol","sgrup","sregakun","spakun","sbeli","sjual",
+  "smutasi","spenyesuaian","slstok","slkust","slsup","slbeli","sljual"
 ];
 
+// Load forms ke tabel
 function loadFormsTable() {
   const tbody = document.querySelector("#tabelUser tbody");
   tbody.innerHTML = "";
-
-  formsList.forEach(formName => {
+  formsList.forEach((formName, i) => {
     const tr = document.createElement("tr");
 
     // Nama Form
@@ -261,21 +212,67 @@ function loadFormsTable() {
     tdForm.textContent = formName;
     tr.appendChild(tdForm);
 
-    // Pilih Status (Dropdown)
+    // Dropdown + hidden input
     const tdSelect = document.createElement("td");
     const select = document.createElement("select");
     select.innerHTML = `
       <option value="1">Bisa</option>
       <option value="0">Tidak Bisa</option>
     `;
+    select.setAttribute("data-field", dbFields[i]);
+
+    // Hidden input untuk simpan value dropdown
+    const hidden = document.createElement("input");
+    hidden.type = "hidden";
+    hidden.name = dbFields[i];
+    hidden.value = "1"; // default "Bisa"
     tdSelect.appendChild(select);
+    tdSelect.appendChild(hidden);
     tr.appendChild(tdSelect);
+
+    // Update hidden setiap kali dropdown berubah
+    select.addEventListener("change", () => {
+      hidden.value = select.value;
+    });
 
     tbody.appendChild(tr);
   });
 }
-
 document.addEventListener("DOMContentLoaded", loadFormsTable);
+
+// Tombol Simpan -> ambil data dari hidden inputs
+document.getElementById("btnSave").addEventListener("click", () => {
+  const kodeuser = document.getElementById("kodeuser").value;
+  if (!kodeuser) {
+    showToast("Pilih user dulu!", "#dc3545");
+    return;
+  }
+
+  const data = { kodeuser };
+  const hiddenInputs = document.querySelectorAll("#tabelUser input[type=hidden]");
+  hiddenInputs.forEach(inp => {
+    data[inp.name] = inp.value;
+  });
+
+  fetch("prosesaturuser.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(res => {
+    if (res.status === "ok") {
+      showToast("Data berhasil disimpan!");
+    } else {
+      showToast("Gagal menyimpan!", "#dc3545");
+      console.log(res);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    showToast("Error koneksi!", "#dc3545");
+  });
+});
 </script>
 <script src="notif.js"></script>
 </body>
