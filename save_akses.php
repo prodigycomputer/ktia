@@ -1,23 +1,33 @@
 <?php
 include 'koneksi.php';
-$kodeuser = $_GET['kodeuser'] ?? '';
-$akses = $_POST['akses'] ?? [];
 
-// Ambil semua idmenu
-$menus = mysqli_query($conn, "SELECT idmenu FROM zmenu");
+$data = json_decode(file_get_contents("php://input"), true);
 
-// Simpan semua menu, kalau tidak dicentang → 0
-while($m = mysqli_fetch_assoc($menus)){
-    $idmenu = $m['idmenu'];
-    $val = isset($akses[$idmenu]) ? 1 : 0;
-    $cek = mysqli_query($conn, "SELECT * FROM zakses WHERE kodeuser='$kodeuser' AND idmenu='$idmenu'");
-    if(mysqli_num_rows($cek) > 0){
-        mysqli_query($conn, "UPDATE zakses SET akses='$val' WHERE kodeuser='$kodeuser' AND idmenu='$idmenu'");
-    } else {
-        mysqli_query($conn, "INSERT INTO zakses (kodeuser, idmenu, akses) VALUES ('$kodeuser','$idmenu','$val')");
-    }
+$kodeuser = $data['kodeuser'] ?? '';
+$akses = $data['akses'] ?? [];
+
+if ($kodeuser == '' || empty($akses)) {
+    echo json_encode(['status' => 'error', 'message' => 'Data tidak valid']);
+    exit;
 }
 
-// Kirim pesan balik, bukan redirect
-echo "Perubahan disimpan!";
-?>
+// Hapus data lama
+$conn->query("DELETE FROM zakses WHERE kodeuser = '$kodeuser'");
+
+// Insert data baru
+$stmt = $conn->prepare("INSERT INTO zakses (kodeuser, idmenu, tambah, ubah, hapus) VALUES (?, ?, ?, ?, ?)");
+
+foreach ($akses as $row) {
+    $idmenu = $row['idmenu'];
+    $tambah = $row['tambah'];
+    $ubah = $row['ubah'];
+    $hapus = $row['hapus'];
+
+    $stmt->bind_param("ssiii", $kodeuser, $idmenu, $tambah, $ubah, $hapus);
+    $stmt->execute();
+}
+
+$stmt->close();
+$conn->close();
+
+echo json_encode(['status' => 'success']);

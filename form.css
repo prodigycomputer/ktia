@@ -136,6 +136,13 @@
         background-color: #596a77;
     }
 
+    #btnAkses {
+        background-color: #dca235;
+    }
+    #btnAkses:hover {
+        background-color: #ebb248;
+    }
+
     /* CSS untuk overlay popup */
     .popup-pb-cari {
         position: fixed;

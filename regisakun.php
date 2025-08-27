@@ -46,6 +46,7 @@ include 'koneksi.php';
       <button id="btnEdit" type="button" onclick="initializeUbah()">Ubah</button>
       <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()">Hapus</button>
       <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
+      <button id="btnAkses" type="button">Akses</button>
     </div>
   </form>
 </main>
@@ -78,6 +79,49 @@ include 'koneksi.php';
         </div>
     </div>
 </div>
+
+<!-- Popup Hak Akses -->
+<div id="popupAkses" style="
+    display: none;
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 1002;
+">
+    <div style="
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        width: 90%;
+        max-width: 850px;
+        max-height: 80vh;
+        overflow: auto;
+    ">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+            <h3>Atur Hak Akses</h3>
+            <span style="cursor:pointer;font-size:18px;font-weight:bold;color:#666;" onclick="closeAksesPopup()">&times;</span>
+        </div>
+        <div style="margin-top:15px;text-align:left;">
+            <button onclick="saveAkses()" style="padding:6px 14px;background:#007bff;color:white;border:none;border-radius:4px;">Simpan</button>
+        </div>
+        <table style="width:100%;border-collapse:collapse;margin-top:10px;font-size:13px;">
+            <thead style="background:#f2f2f2;">
+                <tr>
+                    <th style="border:1px solid #ddd;padding:5px;">Nama Form</th>
+                    <th style="border:1px solid #ddd;padding:5px;">Tambah</th>
+                    <th style="border:1px solid #ddd;padding:5px;">Ubah</th>
+                    <th style="border:1px solid #ddd;padding:5px;">Hapus</th>
+                </tr>
+            </thead>
+            <tbody id="aksesList"></tbody>
+        </table>
+    </div>
+</div>
+
 
 <div id="toast" style="
   display: none;
@@ -118,6 +162,24 @@ include 'koneksi.php';
 </div>
 <script>
 let currentstat = null;
+let tempAkses = [];
+
+function saveAkses() {
+    const data = [];
+    document.querySelectorAll('#aksesList tr').forEach(tr => {
+        const idmenu = tr.querySelector('.tambah').dataset.id;
+        data.push({
+            idmenu,
+            tambah: tr.querySelector('.tambah').checked ? 1 : 0,
+            ubah: tr.querySelector('.ubah').checked ? 1 : 0,
+            hapus: tr.querySelector('.hapus').checked ? 1 : 0
+        });
+    });
+
+    tempAkses = data; // simpan sementara
+    showToast('Akses tersimpan sementara. Klik Simpan di form utama untuk final.', '#17a2b8');
+    closeAksesPopup();
+}
 
 function showToast(message, color = '#28a745') {
   const toast = document.getElementById('toast');
@@ -135,6 +197,7 @@ function initializeFormButtons() {
   document.getElementById('btnHapus').disabled = true;
   document.getElementById('btnCancel').disabled = true;
   document.getElementById('btnSave').disabled = true;
+  document.getElementById('btnAkses').disabled = true;
 
   document.getElementById('kodeuser').disabled = true;
   document.getElementById('namauser').disabled = true;
@@ -165,6 +228,8 @@ function initializeFormButtonsCancel() {
     document.getElementById('btnHapus').disabled = false;
     document.getElementById('btnCancel').disabled = false; 
     document.getElementById('btnSave').disabled = true;
+    document.getElementById('btnAkses').disabled = true;
+
 
     document.getElementById('kodeuser').disabled = true;
     document.getElementById('namauser').disabled = true;
@@ -192,6 +257,8 @@ function initializeTambah() {
   document.getElementById('btnHapus').disabled = true;
   document.getElementById('btnCancel').disabled = false;
   document.getElementById('btnSave').disabled = false;
+  document.getElementById('btnAkses').disabled = false;
+
 
   document.getElementById('kodeuser').disabled = false;
   document.getElementById('kodeuser').readOnly = false;
@@ -218,6 +285,8 @@ function initializeUbah() {
   document.getElementById('btnHapus').disabled = false;
   document.getElementById('btnCancel').disabled = false;
   document.getElementById('btnSave').disabled = false;
+  document.getElementById('btnAkses').disabled = false;
+
 
   document.getElementById('kodeuser').disabled = false;
   document.getElementById('kodeuser').readOnly = false;
@@ -439,15 +508,17 @@ document.getElementById('userForm').addEventListener('submit', function (e) {
   const password = document.getElementById('passworduser').value.trim();
   const confirm = document.getElementById('konfirmpass').value.trim();
 
-  // Cek apakah password dan konfirmasi sama
   if (password !== confirm) {
     showToast('Konfirmasi password tidak sama!', '#dc3545');
     document.getElementById('konfirmpass').focus();
-    return; // hentikan submit
+    return;
   }
 
   const formData = new FormData(this);
-  formData.set('aksi', currentstat); // 'tambah', 'update', 'hapus'
+  formData.set('aksi', currentstat);
+  
+  // kirim akses ke server sebagai JSON
+  formData.append('akses', JSON.stringify(tempAkses));
 
   fetch('prosesuser.php', {
     method: 'POST',
@@ -457,32 +528,71 @@ document.getElementById('userForm').addEventListener('submit', function (e) {
   .then(response => {
     if (response.status === 'success') {
       showToast(`Data berhasil ${response.aksi === 'tambah' ? 'ditambahkan' : response.aksi === 'update' ? 'diupdate' : 'dihapus'}`);
-
-      if (currentstat === 'tambah' || currentstat === 'update') {
-        previousFormData = {
-          kodeuser: document.getElementById('kodeuser').value.trim(),
-          namauser: document.getElementById('namauser').value.trim(),
-          kodeuser_lama: document.getElementById('kodeuser').value.trim(),
-          passworduser: password
-        };
-
-        if (currentstat === 'tambah') {
-          initializeFormButtons();
-        } else {
-          initializeFormButtonsCancel();
-        }
+      if (currentstat === 'tambah') {
+        initializeFormButtons();
+      } else {
+        initializeFormButtonsCancel();
       }
-    } else if (response.status === 'duplikat') {
-      showToast('Kode user sudah ada!', '#dc3545');
+      tempAkses = []; // reset setelah tersimpan
     } else {
       showToast('Gagal menyimpan data!', '#dc3545');
     }
   })
-  .catch(err => {
-    console.error(err);
-    showToast('Gagal koneksi ke server!', '#dc3545');
-  });
+  .catch(() => showToast('Gagal koneksi ke server!', '#dc3545'));
 });
+
+document.getElementById('btnAkses').addEventListener('click', function () {
+    const kode = document.getElementById('kodeuser').value.trim();
+    if (!kode) {
+        showToast('Pilih user dulu!', '#dc3545');
+        return;
+    }
+
+    fetch(`get_akses.php?kodeuser=${kode}`)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('aksesList');
+            tbody.innerHTML = '';
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="border:1px solid #ddd;padding:5px;">${row.submenu}</td>
+                    <td style="border:1px solid #ddd;padding:5px;text-align:center;">
+                        <input type="checkbox" class="tambah" data-id="${row.idmenu}" ${row.tambah==1?'checked':''}>
+                    </td>
+                    <td style="border:1px solid #ddd;padding:5px;text-align:center;">
+                        <input type="checkbox" class="ubah" data-id="${row.idmenu}" ${row.ubah==1?'checked':''}>
+                    </td>
+                    <td style="border:1px solid #ddd;padding:5px;text-align:center;">
+                        <input type="checkbox" class="hapus" data-id="${row.idmenu}" ${row.hapus==1?'checked':''}>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Aturan: jika tambah=0, ubah+hapus ikut 0
+            tbody.querySelectorAll('.tambah').forEach(chk => {
+                chk.addEventListener('change', function() {
+                    const id = this.dataset.id;
+                    const ubah = document.querySelector(`.ubah[data-id="${id}"]`);
+                    const hapus = document.querySelector(`.hapus[data-id="${id}"]`);
+                    if (!this.checked) {
+                        ubah.checked = false;
+                        hapus.checked = false;
+                    }
+                });
+            });
+
+            // Jika ubah=0, hapus bebas
+            // Jika hapus=0, ubah bebas -> tidak ada aturan tambahan
+            document.getElementById('popupAkses').style.display = 'block';
+        });
+});
+
+function closeAksesPopup() {
+    document.getElementById('popupAkses').style.display = 'none';
+}
+
 
 function setActiveButtonStyle(button) {
     button.style.backgroundColor = 'white';
