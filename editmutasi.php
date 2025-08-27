@@ -1,7 +1,26 @@
 <?php
-session_start();
+
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
+
+$kodeuser  = $_SESSION['kodeuser'] ?? '';
+$current   = basename($_SERVER['PHP_SELF']); // tetap pakai .php karena DB pakai .php
+
+$sqlAkses = "SELECT 
+                IFNULL(a.ubah,0) AS ubah, 
+                IFNULL(a.hapus,0) AS hapus
+             FROM zmenu m
+             LEFT JOIN zakses a 
+                ON m.idmenu = a.idmenu 
+               AND a.kodeuser = '$kodeuser'
+             WHERE m.submenu = '$current'";
+
+$result = mysqli_query($conn, $sqlAkses);
+$akses = mysqli_fetch_assoc($result) ?? ['ubah' => 0, 'hapus' => 0];
+
+$canEdit   = (int)$akses['ubah'];
+$canDelete = (int)$akses['hapus'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +42,8 @@ $nonota = $_GET['nonota'] ?? '';
         <div class="action-pb-bar" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
             <div style="display: flex; gap: 8px;">
                 <button id="btnSave" type="submit">Simpan</button>
-                <button id="btnEdit" type="button" onclick="initializeEdit()">Edit</button>
-                <button id="btnHapus" type="button" >Hapus</button>    
+                <button id="btnEdit" type="button" onclick="initializeEdit()" <?= $canEdit ? '' : 'disabled' ?>>Edit</button>
+                <button id="btnHapus" type="button" <?= $canDelete ? '' : 'disabled' ?>>Hapus</button>    
                 <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
                 <button id="btnPrint" type="button">Print</button>
             </div>
@@ -500,7 +519,13 @@ $nonota = $_GET['nonota'] ?? '';
             showPopupKonfirmasiHapus('item', index);
         }
 
+        const canDelete = <?= $canDelete ?>;
+
         document.getElementById('btnHapus').addEventListener('click', () => {
+            if (canDelete === 0) {
+                showToast('Anda tidak punya akses hapus!', '#dc3545');
+                return;
+            }
             showPopupKonfirmasiHapus('nota');
         });
 
@@ -572,6 +597,10 @@ $nonota = $_GET['nonota'] ?? '';
         //initializeFormButtons();
 
         function initializeEdit() {
+            if (<?= $canEdit ?> === 0) {
+                showToast('Anda tidak punya akses edit!', '#dc3545');
+                return;
+            }
             currentstat = 'update';
             showToast('Kamu sedang menambah data...', '#ffc107');
             const saved = JSON.parse(localStorage.getItem('formMutasiEdit') || '{}');

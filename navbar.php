@@ -1,9 +1,16 @@
 <?php
+session_start();
 include 'koneksi.php';
-$current = basename($_SERVER['PHP_SELF']);
 
-// Ambil menu dari DB
-$sql = "SELECT mainmenu, submenu FROM zmenu ORDER BY urutan";
+$current = basename($_SERVER['PHP_SELF']);
+$kodeuser = $_SESSION['kodeuser'] ?? '';
+
+// Ambil menu berdasarkan hak akses user
+$sql = "SELECT m.idmenu, m.mainmenu, m.submenu, m.urutan 
+        FROM zmenu m
+        JOIN zakses a ON m.idmenu = a.idmenu
+        WHERE a.kodeuser = '$kodeuser' AND a.tambah = 1
+        ORDER BY m.urutan";
 $result = mysqli_query($conn, $sql);
 
 $menus = [];
@@ -74,18 +81,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const current = window.location.pathname.split("/").pop();
 
     // Cari semua link transaksi dari menu
-    document.querySelectorAll('#TRANSAKSI_Dropdown a').forEach(link => {
-        const main = link.getAttribute('href');
-        const prefix = main.replace('.php','');
-        const related = Array.from(document.querySelectorAll('#TRANSAKSI_Dropdown a'))
-            .map(a => a.getAttribute('href'))
-            .filter(a => a.includes(prefix));
+    const transaksiDropdown = document.querySelector('#TRANSAKSI_Dropdown');
+    if (transaksiDropdown) {
+        transaksiDropdown.querySelectorAll('a').forEach(link => {
+            const main = link.getAttribute('href');
+            const prefix = main.replace('.php','');
+            const related = Array.from(transaksiDropdown.querySelectorAll('a'))
+                .map(a => a.getAttribute('href'))
+                .filter(a => a.includes(prefix));
 
-        if (related.includes(current)) localStorage.setItem('last_'+prefix, current);
-        if (current === main) localStorage.removeItem('last_'+prefix);
+            if (related.includes(current)) localStorage.setItem('last_'+prefix, current);
+            if (current === main) localStorage.removeItem('last_'+prefix);
 
-        const lastPage = localStorage.getItem('last_'+prefix);
-        if (lastPage && lastPage !== main) link.setAttribute('href', lastPage);
-    });
+            const lastPage = localStorage.getItem('last_'+prefix);
+            if (lastPage && lastPage !== main) link.setAttribute('href', lastPage);
+        });
+    }
 });
 </script>

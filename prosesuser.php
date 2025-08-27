@@ -42,8 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
 
             case 'hapus':
-                mysqli_query($conn, "DELETE FROM zakses WHERE kodeuser = '$kodeuser'");
-                $query = "DELETE FROM zusers WHERE kodeuser = '$kodeuser'";
+                // Hapus semua akses berdasarkan kodeuser_lama agar aman
+                mysqli_query($conn, "DELETE FROM zakses WHERE kodeuser = '$kodeuser_lama'");
+                
+                // Hapus user dari zusers
+                $query = "DELETE FROM zusers WHERE kodeuser = '$kodeuser_lama'";
                 break;
 
             default:

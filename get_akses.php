@@ -12,7 +12,6 @@ $sql = "SELECT m.idmenu,
         LEFT JOIN zakses a ON m.idmenu = a.idmenu AND a.kodeuser = '$kode'
         ORDER BY m.urutan";
 
-
 $result = $conn->query($sql);
 $data = [];
 
@@ -24,6 +23,11 @@ while ($row = $result->fetch_assoc()) {
         'ubah' => (int)$row['ubah'],
         'hapus' => (int)$row['hapus']
     ];
+}
+
+// Hapus data pertama (Dashboard) sebelum dikirim
+if (!empty($data)) {
+    $data = array_slice($data, 1);
 }
 
 header('Content-Type: application/json');

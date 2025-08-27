@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
 $q = mysqli_query($conn, "SELECT qppn FROM zconfig LIMIT 1");

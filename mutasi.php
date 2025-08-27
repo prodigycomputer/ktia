@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include 'koneksi.php';
 
 // Query data mutasi awal

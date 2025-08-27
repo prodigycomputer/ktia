@@ -1,6 +1,9 @@
 <?php
-session_start();
+
 include 'koneksi.php';
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -274,7 +277,7 @@ function initializeTambah() {
 
   resetButtonStyles();
   setActiveButtonStyle(document.getElementById('btnTambah'));
-}
+}   
 
 function initializeUbah() {
   currentstat = 'update';
@@ -477,7 +480,7 @@ function pilihUser(data) {
     document.getElementById('passworduser').value = data.passworduser;
     document.getElementById('konfirmpass').value = data.passworduser;
     // Logika enable/disable berdasarkan isi1 dan isi2
-    document.getElementById('btnTambah').disabled = true;
+    document.getElementById('btnTambah').disabled = true;   
     document.getElementById('btnEdit').disabled = false;
     document.getElementById('btnHapus').disabled = false;
     document.getElementById('btnCancel').disabled = false; 
@@ -496,7 +499,6 @@ function pilihUser(data) {
     document.getElementById('searchNama').disabled = false;
     document.getElementById('searchbtn').disabled = false;
     inputSearch = null;
-    dropdown.style.display = 'none';
     closeFilterPopup();
 
 
@@ -611,6 +613,7 @@ function konfirmasiHapus(setuju) {
     if (setuju) {
         const formData = new FormData(document.getElementById('userForm'));
         formData.set('aksi', 'hapus');
+        formData.set('kodeuser_lama', document.getElementById('kodeuser_lama').value);
 
         fetch('prosesuser.php', {
             method: 'POST',
@@ -623,6 +626,7 @@ function konfirmasiHapus(setuju) {
                 initializeFormButtons(); // reset tampilan
                 document.getElementById('userForm').reset();
             } else {
+                console.log(formData);
                 showToast('Gagal menghapus data!', '#dc3545');
             }
         })

@@ -1,6 +1,25 @@
 <?php
-session_start();
+
 include 'koneksi.php';
+
+$kodeuser  = $_SESSION['kodeuser'] ?? '';
+$current   = basename($_SERVER['PHP_SELF']); // tetap pakai .php karena DB pakai .php
+
+$sqlAkses = "SELECT 
+                IFNULL(a.ubah,0) AS ubah, 
+                IFNULL(a.hapus,0) AS hapus
+             FROM zmenu m
+             LEFT JOIN zakses a 
+                ON m.idmenu = a.idmenu 
+               AND a.kodeuser = '$kodeuser'
+             WHERE m.submenu = '$current'";
+
+$result = mysqli_query($conn, $sqlAkses);
+$akses = mysqli_fetch_assoc($result) ?? ['ubah' => 0, 'hapus' => 0];
+
+$canEdit   = (int)$akses['ubah'];
+$canDelete = (int)$akses['hapus'];
+
 ?>
 
 <!DOCTYPE html>
@@ -37,8 +56,8 @@ include 'koneksi.php';
     <div style="margin-top:10px; display:flex; gap:8px;">
       <button id="btnSave" type="submit">Simpan</button>
       <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>
-      <button id="btnEdit" type="button" onclick="initializeUbah()">Ubah</button>
-      <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()">Hapus</button>
+      <button id="btnEdit" type="button" onclick="initializeUbah()" <?= $canEdit ? '' : 'disabled' ?>>Ubah</button>
+      <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()" <?= $canDelete ? '' : 'disabled' ?>>Hapus</button>
       <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
     </div>
   </form>
@@ -195,6 +214,10 @@ include 'koneksi.php';
       }
 
       function initializeUbah() {
+        if (<?= $canEdit ?> === 0) {
+          showToast('Anda tidak punya akses edit!', '#dc3545');
+          return;
+        }
         currentstat = 'update';
         showToast('Kamu sedang mengubah data...', '#ffc107');
 
@@ -461,7 +484,11 @@ include 'koneksi.php';
       }
 
       function tampilkanKonfirmasiHapus() {
-          document.getElementById('popupConfirmHapus').style.display = 'block';
+        if (<?= $canDelete ?> === 0) {
+          showToast('Anda tidak punya akses hapus!', '#dc3545');
+          return;
+        }
+        document.getElementById('popupConfirmHapus').style.display = 'block';
       }
 
       function konfirmasiHapus(setuju) {
