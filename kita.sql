@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2025 at 05:54 AM
+-- Generation Time: Aug 28, 2025 at 10:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,110 @@ SET time_zone = "+00:00";
 --
 -- Database: `kita`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zakses`
+--
+
+CREATE TABLE `zakses` (
+  `kodeuser` char(11) NOT NULL,
+  `idmenu` varchar(10) NOT NULL,
+  `tambah` int(1) NOT NULL DEFAULT 1,
+  `ubah` int(1) DEFAULT 1,
+  `hapus` int(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zakses`
+--
+
+INSERT INTO `zakses` (`kodeuser`, `idmenu`, `tambah`, `ubah`, `hapus`) VALUES
+('USER00', 'M002', 1, 1, 1),
+('USER00', 'M003', 1, 1, 1),
+('USER00', 'M004', 1, 1, 1),
+('USER00', 'M005', 1, 1, 1),
+('USER00', 'M006', 1, 1, 1),
+('USER00', 'M007', 1, 1, 1),
+('USER00', 'M008', 1, 1, 1),
+('USER00', 'M009', 1, 1, 1),
+('USER00', 'M030', 1, 1, 1),
+('USER00', 'M010', 1, 1, 1),
+('USER00', 'M011', 1, 1, 1),
+('USER00', 'M012', 1, 1, 1),
+('USER00', 'M014', 1, 1, 1),
+('USER00', 'M015', 1, 1, 1),
+('USER00', 'M016', 1, 1, 1),
+('USER00', 'M017', 1, 1, 1),
+('USER00', 'M018', 1, 1, 1),
+('USER00', 'M019', 1, 1, 1),
+('USER00', 'M020', 1, 1, 1),
+('USER00', 'M021', 1, 1, 1),
+('USER00', 'M022', 1, 1, 1),
+('USER00', 'M023', 1, 1, 1),
+('USER00', 'M024', 1, 1, 1),
+('USER00', 'M025', 1, 1, 1),
+('USER00', 'M026', 1, 1, 1),
+('USER00', 'M027', 1, 1, 1),
+('USER00', 'M028', 1, 1, 1),
+('USER00', 'M029', 1, 1, 1),
+('USER01', 'M002', 1, 1, 1),
+('USER01', 'M003', 1, 0, 0),
+('USER01', 'M004', 1, 0, 0),
+('USER01', 'M005', 1, 1, 0),
+('USER01', 'M006', 1, 0, 0),
+('USER01', 'M007', 1, 0, 0),
+('USER01', 'M008', 1, 0, 0),
+('USER01', 'M009', 1, 0, 0),
+('USER01', 'M030', 0, 0, 0),
+('USER01', 'M010', 1, 0, 0),
+('USER01', 'M011', 1, 1, 1),
+('USER01', 'M012', 1, 1, 1),
+('USER01', 'M014', 1, 1, 1),
+('USER01', 'M015', 1, 1, 1),
+('USER01', 'M016', 1, 0, 1),
+('USER01', 'M017', 1, 1, 1),
+('USER01', 'M018', 1, 1, 1),
+('USER01', 'M019', 1, 1, 1),
+('USER01', 'M020', 0, 0, 0),
+('USER01', 'M021', 1, 1, 1),
+('USER01', 'M022', 1, 1, 1),
+('USER01', 'M023', 0, 0, 0),
+('USER01', 'M024', 1, 1, 1),
+('USER01', 'M025', 1, 1, 1),
+('USER01', 'M026', 0, 0, 0),
+('USER01', 'M027', 0, 0, 0),
+('USER01', 'M028', 0, 0, 0),
+('USER01', 'M029', 0, 0, 0),
+('USER02', 'M002', 1, 0, 0),
+('USER02', 'M003', 1, 0, 0),
+('USER02', 'M004', 1, 0, 0),
+('USER02', 'M005', 1, 0, 0),
+('USER02', 'M006', 1, 0, 0),
+('USER02', 'M007', 1, 0, 0),
+('USER02', 'M008', 1, 0, 0),
+('USER02', 'M009', 1, 0, 0),
+('USER02', 'M030', 0, 0, 0),
+('USER02', 'M010', 1, 0, 0),
+('USER02', 'M011', 1, 0, 0),
+('USER02', 'M012', 1, 1, 1),
+('USER02', 'M014', 1, 1, 1),
+('USER02', 'M015', 0, 0, 0),
+('USER02', 'M016', 1, 1, 0),
+('USER02', 'M017', 1, 1, 1),
+('USER02', 'M018', 0, 0, 0),
+('USER02', 'M019', 1, 1, 0),
+('USER02', 'M020', 1, 1, 1),
+('USER02', 'M021', 0, 0, 0),
+('USER02', 'M022', 1, 1, 1),
+('USER02', 'M023', 1, 1, 0),
+('USER02', 'M024', 0, 0, 0),
+('USER02', 'M025', 1, 1, 0),
+('USER02', 'M026', 1, 1, 1),
+('USER02', 'M027', 1, 1, 1),
+('USER02', 'M028', 1, 1, 1),
+('USER02', 'M029', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -380,35 +484,35 @@ CREATE TABLE `zmenu` (
 --
 
 INSERT INTO `zmenu` (`idmenu`, `mainmenu`, `submenu`, `urutan`) VALUES
-('M001', '', 'dashboard.php', 1),
-('M002', 'FILE', 'barang.php', 2),
-('M003', 'FILE', 'area.php', 3),
-('M004', 'FILE', 'tipe.php', 4),
-('M005', 'FILE', 'kustomer.php', 5),
-('M006', 'FILE', 'supplier.php', 6),
-('M007', 'FILE', 'sales.php', 7),
-('M008', 'FILE', 'gudang.php', 8),
-('M009', 'FILE', 'merek.php', 9),
-('M010', 'FILE', 'golongan.php', 10),
-('M011', 'FILE', 'group.php', 11),
-('M012', 'FILE', 'regisakun.php', 12),
-('M013', 'FILE', 'pengaturanakun.php', 13),
-('M014', 'TRANSAKSI', 'pembelian.php', 14),
-('M015', 'TRANSAKSI', 'inputpembelian.php', 15),
-('M016', 'TRANSAKSI', 'editpembelian.php', 16),
-('M017', 'TRANSAKSI', 'penjualan.php', 17),
-('M018', 'TRANSAKSI', 'inputpenjualan.php', 18),
-('M019', 'TRANSAKSI', 'editpenjualan.php', 19),
-('M020', 'TRANSAKSI', 'mutasi.php', 20),
-('M021', 'TRANSAKSI', 'inputmutasi.php', 21),
-('M022', 'TRANSAKSI', 'editmutasi.php', 22),
-('M023', 'TRANSAKSI', 'penyesuaian.php', 23),
-('M024', 'TRANSAKSI', 'inputpenyesuaian.php', 24),
-('M025', 'TRANSAKSI', 'editpenyesuaian.php', 25),
-('M026', 'LAPORAN', 'LaporanKustomer.php', 26),
-('M027', 'LAPORAN', 'LaporanSupplier.php', 27),
-('M028', 'LAPORAN', 'LaporanPembelian.php', 28),
-('M029', 'LAPORAN', 'LaporanPenjualan.php', 29);
+('M001', '', 'dashboard.php', 100),
+('M002', 'FILE', 'barang.php', 200),
+('M003', 'FILE', 'area.php', 300),
+('M004', 'FILE', 'tipe.php', 400),
+('M005', 'FILE', 'kustomer.php', 500),
+('M006', 'FILE', 'supplier.php', 600),
+('M007', 'FILE', 'sales.php', 700),
+('M008', 'FILE', 'gudang.php', 800),
+('M009', 'FILE', 'merek.php', 900),
+('M010', 'FILE', 'golongan.php', 1000),
+('M011', 'FILE', 'group.php', 1100),
+('M012', 'FILE', 'regisakun.php', 1200),
+('M014', 'TRANSAKSI', 'pembelian.php', 1400),
+('M015', 'TRANSAKSI', 'inputpembelian.php', 1500),
+('M016', 'TRANSAKSI', 'editpembelian.php', 1600),
+('M017', 'TRANSAKSI', 'penjualan.php', 1700),
+('M018', 'TRANSAKSI', 'inputpenjualan.php', 1800),
+('M019', 'TRANSAKSI', 'editpenjualan.php', 1900),
+('M020', 'TRANSAKSI', 'mutasi.php', 2000),
+('M021', 'TRANSAKSI', 'inputmutasi.php', 2100),
+('M022', 'TRANSAKSI', 'editmutasi.php', 2200),
+('M023', 'TRANSAKSI', 'penyesuaian.php', 2300),
+('M024', 'TRANSAKSI', 'inputpenyesuaian.php', 2400),
+('M025', 'TRANSAKSI', 'editpenyesuaian.php', 2500),
+('M026', 'LAPORAN', 'LaporanKustomer.php', 2600),
+('M027', 'LAPORAN', 'LaporanSupplier.php', 2700),
+('M028', 'LAPORAN', 'LaporanPembelian.php', 2800),
+('M029', 'LAPORAN', 'LaporanPenjualan.php', 2900),
+('M030', 'FILE', 'test.php', 910);
 
 -- --------------------------------------------------------
 
@@ -523,6 +627,45 @@ INSERT INTO `zpenyesuaianm` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `zsaldo`
+--
+
+CREATE TABLE `zsaldo` (
+  `kodest` char(18) DEFAULT NULL,
+  `kodegd` char(10) DEFAULT NULL,
+  `awal1` decimal(10,0) DEFAULT 0,
+  `awal2` decimal(10,0) DEFAULT 0,
+  `masuk1` decimal(10,0) DEFAULT 0,
+  `masuk2` decimal(10,0) DEFAULT 0,
+  `keluar1` decimal(10,0) DEFAULT 0,
+  `keluar2` decimal(10,0) DEFAULT 0,
+  `sisa1` decimal(10,0) DEFAULT 0,
+  `sisa2` decimal(10,0) DEFAULT 0,
+  `sisa3` decimal(10,0) DEFAULT 0,
+  `sisa` decimal(10,0) DEFAULT 0,
+  `qty` decimal(10,0) DEFAULT 0,
+  `qty1` decimal(10,0) DEFAULT 0,
+  `autoid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zsaldo`
+--
+
+INSERT INTO `zsaldo` (`kodest`, `kodegd`, `awal1`, `awal2`, `masuk1`, `masuk2`, `keluar1`, `keluar2`, `sisa1`, `sisa2`, `sisa3`, `sisa`, `qty`, `qty1`, `autoid`) VALUES
+('D01', 'G01', 0, 0, 0, 0, 0, 0, 100, 20, 1, 0, 0, 0, 1),
+('L01', 'G01', 0, 0, 0, 0, 0, 0, 50, 40, 2, 0, 0, 0, 2),
+('LA12', 'G01', 0, 0, 0, 0, 0, 0, 33, 60, 3, 0, 0, 0, 3),
+('D01', 'G02', 0, 0, 0, 0, 0, 0, 30, 120, 4, 0, 0, 0, 4),
+('L01', 'G02', 0, 0, 0, 0, 0, 0, 24, 150, 5, 0, 0, 0, 5),
+('LA12', 'G02', 0, 0, 0, 0, 0, 0, 20, 180, 6, 0, 0, 0, 6),
+('D01', 'G03', 0, 0, 0, 0, 0, 0, 1, 35, 7, 0, 0, 0, 7),
+('L01', 'G03', 0, 0, 0, 0, 0, 0, 1, 40, 8, 0, 0, 0, 8),
+('LA12', 'G03', 0, 0, 0, 0, 0, 0, 1, 45, 9, 0, 0, 0, 9);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `zsales`
 --
 
@@ -589,8 +732,7 @@ CREATE TABLE `zstok` (
 INSERT INTO `zstok` (`kodebrg`, `kodemerk`, `kodegol`, `kodegrup`, `namabrg`, `satuan1`, `satuan2`, `satuan3`, `isi1`, `isi2`, `hrgbeli`, `harga1`, `harga11`, `harga111`, `harga2`, `harga22`, `harga222`, `harga3`, `harga33`, `harga333`, `harga4`, `harga44`, `harga444`, `harga5`, `harga55`, `harga555`, `harga6`, `harga66`, `harga666`, `autoid`) VALUES
 ('D01', 'M01', 'GOL01', 'A02', 'SUSU DANCOW BALITA MADU', 'DUS', 'KTK', '-', 10, 0, 20000, 100000, 10000, 1000, 200000, 20000, 2000, 300000, 30000, 3000, 400000, 40000, 4000, 500000, 50000, 5000, 600000, 60000, 6000, 1),
 ('L01', NULL, NULL, 'A03', 'KERTAS KADO', 'LBR', '-', '-', 0, 0, 10000, 200000, 20000, 2000, 400000, 40000, 4000, 600000, 60000, 6000, 800000, 80000, 8000, 1000000, 100000, 10000, 1200000, 120000, 12000, 2),
-('LA12', NULL, NULL, 'A01', 'ROKOK LA 12 BATANG', 'DUS', 'SLOP', 'BKS', 15, 10, 30000, 300000, 30000, 3000, 600000, 60000, 6000, 900000, 90000, 9000, 1200000, 120000, 12000, 1500000, 150000, 15000, 1800000, 180000, 18000, 3),
-('BUK01', 'M01', 'GOL01', 'A01', 'BOX SIDU', 'DUS', 'KTK', '-', 2, 1, 35000, 1000, 10000, 0, 2000, 20000, 0, 3000, 30000, 0, 4000, 40000, 0, 5000, 50000, 0, 6000, 60000, 0, 4);
+('LA12', NULL, NULL, 'A01', 'ROKOK LA 12 BATANG', 'DUS', 'SLOP', 'BKS', 15, 10, 30000, 300000, 30000, 3000, 600000, 60000, 6000, 900000, 90000, 9000, 1200000, 120000, 12000, 1500000, 150000, 15000, 1800000, 180000, 18000, 3);
 
 -- --------------------------------------------------------
 
@@ -652,18 +794,12 @@ CREATE TABLE `zusers` (
 
 INSERT INTO `zusers` (`kodeuser`, `username`, `kunci`) VALUES
 ('USER00', 'ADMINTEST', 'ADMINTEST'),
-('USER01', 'PEDRO', 'PEDRO01'),
-('USER02', 'LEO', 'LEO01');
+('USER01', 'USER1', 'USER1'),
+('USER02', 'USER2', 'USER2');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `zarea`
---
-ALTER TABLE `zarea`
-  ADD PRIMARY KEY (`kodear`);
 
 --
 -- Indexes for table `zbeli`
@@ -714,6 +850,12 @@ ALTER TABLE `zmerek`
   ADD PRIMARY KEY (`kodemerk`);
 
 --
+-- Indexes for table `zsaldo`
+--
+ALTER TABLE `zsaldo`
+  ADD PRIMARY KEY (`autoid`);
+
+--
 -- Indexes for table `zsales`
 --
 ALTER TABLE `zsales`
@@ -747,6 +889,12 @@ ALTER TABLE `zusers`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `zsaldo`
+--
+ALTER TABLE `zsaldo`
+  MODIFY `autoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `zstok`

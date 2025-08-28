@@ -227,9 +227,25 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                     </div>
 
                     <div class="popup-pb-row">
+                        <label for="popup_sisa1">Sisa 1</label>
+                        <input type="number" id="popup_sisa1" name="popup_sisa1" style="text-align: right;" min="0">
+                    </div>
+
+                    <div class="popup-pb-row">
+                        <label for="popup_sisa2">Sisa 2</label>
+                        <input type="number" id="popup_sisa2" name="popup_sisa2" style="text-align: right;" min="0">
+                    </div>
+
+                    <div class="popup-pb-row">
+                        <label for="popup_sisa3">Sisa 3</label>
+                        <input type="number" id="popup_sisa3" name="popup_sisa3" style="text-align: right;" min="0">
+                    </div>
+
+                    <div class="popup-pb-row">
                         <label for="popup_jlh1">Jumlah 1</label>
                         <input type="number" id="popup_jlh1" name="popup_jlh1" style="text-align: right;" min="0">
                     </div>
+                    
                     <div class="popup-pb-row">
                         <label for="popup_satuan1">Satuan 1</label>
                         <input type="text" id="popup_satuan1" name="popup_satuan1" disabled>
@@ -768,6 +784,21 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 let num = parseFloat(el.value.replace(/\./g, '').replace(',', '.')) || 0;
                 el.value = formatNumberID(num);
             });
+        }
+
+        popupKodeGd.addEventListener('change', getSisa);
+        popupKodeInput.addEventListener('input', getSisa); 
+
+        function getSisa() {
+            if(popupKodeGd.value && popupKodeInput.value) {
+                fetch(`get_sisa.php?kodegd=${popupKodeGd.value}&kodest=${popupKodeInput.value}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('popup_sisa1').value = data.sisa1;
+                    document.getElementById('popup_sisa2').value = data.sisa2;
+                    document.getElementById('popup_sisa3').value = data.sisa3;
+                });
+            }
         }
 
         function initializeFormButtons() {

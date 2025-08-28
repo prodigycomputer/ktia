@@ -33,7 +33,7 @@ $nonota = $_GET['nonota'] ?? '';
             <div style="display: flex; gap: 8px;">
                 <button id="btnSave" type="submit">Simpan</button>
                 <button id="btnEdit" type="button" onclick="initializeEdit()">Edit</button>
-                <button id=">Hapus</button>    
+                <button id="btnHapus" type="button">Hapus</button>    
                 <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
                 <button id="btnPrint" type="button">Print</button>
             </div>
