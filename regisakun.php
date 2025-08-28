@@ -2,8 +2,6 @@
 
 include 'koneksi.php';
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +14,15 @@ include 'koneksi.php';
   <link rel="stylesheet" href="form.css" />
 </head>
 <body>
-<?php include 'navbar.php'; ?>
+<?php 
+include 'navbar.php'; 
+
+$current = basename($_SERVER['PHP_SELF']);
+
+$akses = $_SESSION['aksesSemua'][$current] ?? ['ubah'=>0,'hapus'=>0];
+
+$hakUbah   = $akses['ubah'];
+$hakHapus  = $akses['hapus'];?>
 <main>
   <h2>Regis Akun</h2>
 
@@ -167,6 +173,21 @@ include 'koneksi.php';
 let currentstat = null;
 let tempAkses = [];
 
+const hakUbah  = <?php echo $hakUbah; ?>;
+const hakHapus = <?php echo $hakHapus; ?>;
+
+function cekAkses(aksi) {
+    if (aksi === 'ubah' && hakUbah === 0) {
+        showToast("Anda tidak bisa mengakses Edit!", "#dc3545");
+        return false;
+    }
+    if (aksi === 'hapus' && hakHapus === 0) {
+        showToast("Anda tidak bisa mengakses Hapus!", "#dc3545");
+        return false;
+    }
+    return true;
+}
+
 function saveAkses() {
     const data = [];
     document.querySelectorAll('#aksesList tr').forEach(tr => {
@@ -280,6 +301,7 @@ function initializeTambah() {
 }   
 
 function initializeUbah() {
+  if (!cekAkses('ubah')) return;
   currentstat = 'update';
   showToast('Kamu sedang mengubah data...', '#ffc107');
 
@@ -603,6 +625,7 @@ function setActiveButtonStyle(button) {
 }
 
 function tampilkanKonfirmasiHapus() {
+    if (!cekAkses('hapus')) return;
     document.getElementById('popupConfirmHapus').style.display = 'block';
 }
 

@@ -1,23 +1,7 @@
 <?php
 
 include 'koneksi.php';
-$kodeuser  = $_SESSION['kodeuser'] ?? '';
-$current   = basename($_SERVER['PHP_SELF']); // tetap pakai .php karena DB pakai .php
 
-$sqlAkses = "SELECT 
-                IFNULL(a.ubah,0) AS ubah, 
-                IFNULL(a.hapus,0) AS hapus
-             FROM zmenu m
-             LEFT JOIN zakses a 
-                ON m.idmenu = a.idmenu 
-               AND a.kodeuser = '$kodeuser'
-             WHERE m.submenu = '$current'";
-
-$result = mysqli_query($conn, $sqlAkses);
-$akses = mysqli_fetch_assoc($result) ?? ['ubah' => 0, 'hapus' => 0];
-
-$canEdit   = (int)$akses['ubah'];
-$canDelete = (int)$akses['hapus'];
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +14,15 @@ $canDelete = (int)$akses['hapus'];
   <link rel="stylesheet" href="form.css" />
 </head>
 <body>
-<?php include 'navbar.php'; ?>
+<?php 
+include 'navbar.php'; 
+
+$current = basename($_SERVER['PHP_SELF']);
+
+$akses = $_SESSION['aksesSemua'][$current] ?? ['ubah'=>0,'hapus'=>0];
+
+$hakUbah   = $akses['ubah'];
+$hakHapus  = $akses['hapus'];?>
 <main>
   <h2>Data Gudang</h2>
 
@@ -54,8 +46,8 @@ $canDelete = (int)$akses['hapus'];
     <div style="margin-top:10px; display:flex; gap:8px;">
       <button id="btnSave" type="submit">Simpan</button>
       <button id="btnTambah" type="button" onclick="initializeTambah()">Tambah</button>
-      <button id="btnEdit" type="button" onclick="initializeUbah()" <?= $canEdit ? '' : 'disabled' ?>>Ubah</button>
-      <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()" <?= $canDelete ? '' : 'disabled' ?>>Hapus</button>
+      <button id="btnEdit" type="button" onclick="initializeUbah()" >Ubah</button>
+      <button id="btnHapus" type="button" onclick="tampilkanKonfirmasiHapus()" >Hapus</button>
       <button id="btnCancel" type="button" onclick="cancelForm()">Batal</button>
     </div>
   </form>
@@ -129,6 +121,21 @@ $canDelete = (int)$akses['hapus'];
 </div>
 <script>
       let currentstat = null;
+
+      const hakUbah  = <?php echo $hakUbah; ?>;
+      const hakHapus = <?php echo $hakHapus; ?>;
+
+      function cekAkses(aksi) {
+          if (aksi === 'ubah' && hakUbah === 0) {
+              showToast("Anda tidak bisa mengakses Edit!", "#dc3545");
+              return false;
+          }
+          if (aksi === 'hapus' && hakHapus === 0) {
+              showToast("Anda tidak bisa mengakses Hapus!", "#dc3545");
+              return false;
+          }
+          return true;
+      }
 
       function showToast(message, color = '#28a745') {
         const toast = document.getElementById('toast');
@@ -212,10 +219,7 @@ $canDelete = (int)$akses['hapus'];
       }
 
       function initializeUbah() {
-        if (<?= $canEdit ?> === 0) {
-          showToast('Anda tidak punya akses edit!', '#dc3545');
-          return;
-        }
+        if (!cekAkses('ubah')) return;
         currentstat = 'update';
         showToast('Kamu sedang mengubah data...', '#ffc107');
 
@@ -482,10 +486,7 @@ $canDelete = (int)$akses['hapus'];
       }
 
       function tampilkanKonfirmasiHapus() {
-        if (<?= $canDelete ?> === 0) {
-          showToast('Anda tidak punya akses hapus!', '#dc3545');
-          return;
-        }
+        if (!cekAkses('hapus')) return;
         document.getElementById('popupConfirmHapus').style.display = 'block';
       }
 

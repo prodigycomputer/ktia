@@ -6,18 +6,27 @@ $current = basename($_SERVER['PHP_SELF']);
 $kodeuser = $_SESSION['kodeuser'] ?? '';
 
 // Ambil menu berdasarkan hak akses user
-$sql = "SELECT m.idmenu, m.mainmenu, m.submenu, m.urutan 
+$sql = "SELECT m.idmenu, m.mainmenu, m.submenu, m.urutan, a.ubah, a.hapus 
         FROM zmenu m
         JOIN zakses a ON m.idmenu = a.idmenu
-        WHERE a.kodeuser = '$kodeuser' AND a.tambah = 1
+        WHERE a.kodeuser = '$kodeuser'
         ORDER BY m.urutan";
 $result = mysqli_query($conn, $sql);
 
 $menus = [];
+$aksesSemua = [];
+
 while ($row = mysqli_fetch_assoc($result)) {
     $main = $row['mainmenu'] ?: 'DASHBOARD';
     $menus[$main][] = $row['submenu'];
+
+    $aksesSemua[$row['submenu']] = [
+        'ubah'   => (int)$row['ubah'],
+        'hapus'  => (int)$row['hapus']
+    ];
 }
+
+$_SESSION['aksesSemua'] = $aksesSemua;
 
 function isActiveDropdown($submenus, $current) {
     return in_array($current, $submenus) ? 'active-dropdown' : '';
