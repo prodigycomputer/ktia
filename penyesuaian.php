@@ -28,7 +28,14 @@ if (!$query) {
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-    <?php include 'navbar.php'; ?>
+    <?php 
+    include 'navbar.php'; 
+
+    $aksesInput = $_SESSION['aksesSemua']['inputpenyesuaian.php'] ?? ['tambah'=>0];
+    $aksesEdit  = $_SESSION['aksesSemua']['editpenyesuaian.php'] ?? ['tambah'=>0];
+
+    $hakTambah = $aksesInput['tambah'];
+    $hakUbah   = $aksesEdit['tambah'];?>
 
     <main>
         <h2>Data Penyesuaian</h2>
@@ -70,6 +77,16 @@ if (!$query) {
     </main>
 
     <script>
+    const hakTambah = <?php echo $hakTambah; ?>;
+    const hakUbah   = <?php echo $hakUbah; ?>;
+
+    function cekAkses() {
+        if (hakTambah == 1) {
+            window.location.href = 'inputpenyesuaian.php';
+        } else {
+            showToast("Anda tidak memiliki hak akses untuk Tambah!", "#dc3545");
+        }
+    }
     function triggerSearch() {
         const noNota = document.getElementById('inputNoNota').value.trim();
         const tgl = document.getElementById('inputTgl').value;
@@ -111,7 +128,11 @@ if (!$query) {
     }
 
     function tampilkanKonfirmasiEdit(nonota) {
-        window.location.href = 'editpenyesuaian.php?nonota=' + encodeURIComponent(nonota);
+        if (hakUbah == 1) {
+            window.location.href = 'editpenyesuaian.php?nonota=' + encodeURIComponent(nonota);
+        } else {
+            showToast("Anda tidak memiliki hak akses untuk Edit!", "#dc3545");
+        };
     }
 
     function showToast(pesan, warna = '#28a745') {

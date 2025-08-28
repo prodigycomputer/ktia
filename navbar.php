@@ -6,10 +6,10 @@ $current = basename($_SERVER['PHP_SELF']);
 $kodeuser = $_SESSION['kodeuser'] ?? '';
 
 // Ambil menu berdasarkan hak akses user
-$sql = "SELECT m.idmenu, m.mainmenu, m.submenu, m.urutan, a.ubah, a.hapus 
+$sql = "SELECT m.idmenu, m.mainmenu, m.submenu, m.urutan, a.tambah, a.ubah, a.hapus 
         FROM zmenu m
         JOIN zakses a ON m.idmenu = a.idmenu
-        WHERE a.kodeuser = '$kodeuser'
+        WHERE a.kodeuser = '$kodeuser' AND a.tambah = 1
         ORDER BY m.urutan";
 $result = mysqli_query($conn, $sql);
 
@@ -21,6 +21,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $menus[$main][] = $row['submenu'];
 
     $aksesSemua[$row['submenu']] = [
+        'tambah'   => (int)$row['tambah'],
         'ubah'   => (int)$row['ubah'],
         'hapus'  => (int)$row['hapus']
     ];

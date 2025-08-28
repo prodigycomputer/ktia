@@ -28,7 +28,14 @@ $query = mysqli_query($conn, "
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-    <?php include 'navbar.php'; ?>
+    <?php 
+    include 'navbar.php'; 
+
+    $aksesInput = $_SESSION['aksesSemua']['inputpenjualan.php'] ?? ['tambah'=>0];
+    $aksesEdit  = $_SESSION['aksesSemua']['editpenjualan.php'] ?? ['tambah'=>0];
+
+    $hakTambah = $aksesInput['tambah'];
+    $hakUbah   = $aksesEdit['tambah'];?>
 
     <main>
         <h2>Data Penjualan</h2>
@@ -160,6 +167,17 @@ $query = mysqli_query($conn, "
     </div>
 
     <script>
+
+        const hakTambah = <?php echo $hakTambah; ?>;
+        const hakUbah   = <?php echo $hakUbah; ?>;
+
+        function cekAkses() {
+            if (hakTambah == 1) {
+                window.location.href = 'inputpenjualan.php';
+            } else {
+                showToast("Anda tidak memiliki hak akses untuk Tambah!", "#dc3545");
+            }
+        }
 
         const kodekustInput = document.getElementById('inputKodekust');
         const namakustInput = document.getElementById('inputNamakust');
@@ -337,7 +355,11 @@ $query = mysqli_query($conn, "
         }
 
         function tampilkanKonfirmasiEdit(nonota) {
-            window.location.href = 'editpenjualan.php?nonota=' + encodeURIComponent(nonota);
+            if (hakUbah == 1) {
+                window.location.href = 'editpenjualan.php?nonota=' + encodeURIComponent(nonota);
+            } else {
+                showToast("Anda tidak memiliki hak akses untuk Edit!", "#dc3545");
+            };
         }
 
 

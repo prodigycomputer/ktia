@@ -25,13 +25,20 @@ $query = mysqli_query($conn, "
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-    <?php include 'navbar.php'; ?>
+    <?php 
+    include 'navbar.php'; 
+
+    $aksesInput = $_SESSION['aksesSemua']['inputpembelian.php'] ?? ['tambah'=>0];
+    $aksesEdit  = $_SESSION['aksesSemua']['editpembelian.php'] ?? ['tambah'=>0];
+
+    $hakTambah = $aksesInput['tambah'];
+    $hakUbah   = $aksesEdit['tambah'];?>
 
     <main>
         <h2>Data Pembelian</h2>
 
         <div class="action-bar">
-            <button type="button" name="btnTambah" id="btnTambah" class="action-btn tambah" onclick="window.location.href='inputpembelian.php'">Tambah</button>
+            <button type="button" name="btnTambah" id="btnTambah" class="action-btn tambah" onclick="cekAkses()">Tambah</button>
 
             <input type="text" name="noNota" id="inputNoNota" placeholder="No Nota" style="text-transform: uppercase;">
 
@@ -104,6 +111,16 @@ $query = mysqli_query($conn, "
     </div>
 
     <script>
+        const hakTambah = <?php echo $hakTambah; ?>;
+        const hakUbah   = <?php echo $hakUbah; ?>;
+
+        function cekAkses() {
+            if (hakTambah == 1) {
+                window.location.href = 'inputpembelian.php';
+            } else {
+                showToast("Anda tidak memiliki hak akses untuk Tambah!", "#dc3545");
+            }
+        }
         const kodeInput = document.getElementById('inputKodesup');
         const namaInput = document.getElementById('inputNamasup');
 
@@ -217,7 +234,11 @@ $query = mysqli_query($conn, "
         }
 
         function tampilkanKonfirmasiEdit(nonota) {
-            window.location.href = 'editpembelian.php?nonota=' + encodeURIComponent(nonota);
+            if (hakUbah == 1) {
+                window.location.href = 'editpembelian.php?nonota=' + encodeURIComponent(nonota);
+            } else {
+                showToast("Anda tidak memiliki hak akses untuk Edit!", "#dc3545");
+            };
         }
 
 

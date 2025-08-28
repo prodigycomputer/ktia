@@ -33,13 +33,20 @@ if (!$query) {
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-    <?php include 'navbar.php'; ?>
+    <?php 
+    include 'navbar.php'; 
+
+    $aksesInput = $_SESSION['aksesSemua']['inputmutasi.php'] ?? ['tambah'=>0];
+    $aksesEdit  = $_SESSION['aksesSemua']['editmutasi.php'] ?? ['tambah'=>0];
+
+    $hakTambah = $aksesInput['tambah'];
+    $hakUbah   = $aksesEdit['tambah'];?>
 
     <main>
         <h2>Data Mutasi</h2>
 
         <div class="action-bar">
-            <button type="button" class="action-btn tambah" onclick="window.location.href='inputmutasi.php'">Tambah</button>
+            <button type="button" class="action-btn tambah" onclick="cekAkses()">Tambah</button>
 
             <input type="text" id="inputNoNota" placeholder="No Nota" style="text-transform: uppercase;">
             <input type="date" id="inputTgl">
@@ -82,6 +89,17 @@ if (!$query) {
     </main>
 
     <script>
+    const hakTambah = <?php echo $hakTambah; ?>;
+    const hakUbah   = <?php echo $hakUbah; ?>;
+
+    function cekAkses() {
+        if (hakTambah == 1) {
+            window.location.href = 'inputmutasi.php';
+        } else {
+            showToast("Anda tidak memiliki hak akses untuk Tambah!", "#dc3545");
+        }
+    }
+
     function triggerSearch() {
         const noNota = document.getElementById('inputNoNota').value.trim();
         const tgl = document.getElementById('inputTgl').value;
@@ -126,7 +144,11 @@ if (!$query) {
     }
 
     function tampilkanKonfirmasiEdit(nonota) {
-        window.location.href = 'editmutasi.php?nonota=' + encodeURIComponent(nonota);
+        if (hakUbah == 1) {
+            window.location.href = 'editmutasi.php?nonota=' + encodeURIComponent(nonota);
+        } else {
+            showToast("Anda tidak memiliki hak akses untuk Edit!", "#dc3545");
+        }
     }
 
     function showToast(pesan, warna = '#28a745') {
