@@ -459,7 +459,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 tbody.innerHTML = '';
 
                 if (data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Data tidak ditemukan!</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">Data tidak ditemukan!</td></tr>';
                 } else {
                     data.forEach(item => {
                         const tr = document.createElement('tr');
@@ -476,7 +476,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 document.getElementById('popupCariSupplier').style.display = 'flex';
             })
             .catch(() => {
-                showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+                showToast('Terjadi kesalahan saat mencari supplier', '#dc3545');
             });
         }
 

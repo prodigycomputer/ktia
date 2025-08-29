@@ -11,6 +11,7 @@ $tanggal = $data['tanggal'] ?? '';
 $kodekust = strtoupper($data['kodekust'] ?? '');
 $kodesls = strtoupper($data['kodesls'] ?? '');
 $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
+$kodebrg = isset($detail[0]['kodebrg']) ? strtoupper($detail[0]['kodebrg']) : '';
 $tgljt = $data['jt_tempo'] ?? '';
 $ket = strtoupper($data['keterangan'] ?? '');
 $totaljmlh = floatval($data['totaljmlh']) ?? 0;
@@ -41,6 +42,11 @@ $conn->begin_transaction();
 try {
     $stmt = $conn->prepare("INSERT INTO zjual (nonota, tgl, kodekust, kodesls, kodegd, nilai, tgltempo, ket, ppn, hppn, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssdssdddddddd", $nonota, $tanggal, $kodekust, $kodesls, $kodegd, $totaljmlh, $tgljt, $ket, $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3);
+    $stmt->execute();
+    $stmt->close();
+
+    $stmt = $conn->prepare("INSERT INTO zsaldo (kodebrg, kodegd) VALUES (?, ?)");
+    $stmt->bind_param("ss", $kodebrg, $kodegd);
     $stmt->execute();
     $stmt->close();
 

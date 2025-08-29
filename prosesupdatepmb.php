@@ -11,6 +11,7 @@
     $tanggal = $data['tanggal'] ?? '';
     $kode_sup = strtoupper($data['kode_sup'] ?? '');
     $kodegd = isset($detail[0]['kodegd']) ? strtoupper($detail[0]['kodegd']) : '';
+    $kodebrg = isset($detail[0]['kodebrg']) ? strtoupper($detail[0]['kodebrg']) : '';
     $jt_tempo = $data['jt_tempo'] ?? '';
     $ket = strtoupper($data['keterangan'] ?? '');
     $totaljmlh = floatval($data['totaljmlh']) ?? 0;
