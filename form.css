@@ -217,7 +217,6 @@
     button:disabled {
         background-color: #ccc !important;
         color: #666 !important;
-        cursor: not-allowed !important;
     }
 
     .form-atas {
@@ -314,7 +313,6 @@
     .popup-pb-row input:disabled {
         background-color: #f0f0f0; /* abu-abu muda */
         color: #555;               /* warna teks sedikit redup */
-        cursor: not-allowed;
     }
 
     .form-pb-col select {

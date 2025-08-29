@@ -229,6 +229,23 @@ function loadPerhitunganJual() {
     document.getElementById('totaljmlh').value = parseFloat(totaljmlh).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
+function getSisa() {
+    if (popupKodeGd.value && popupKodeInput.value) {
+        fetch(`get_sisa.php?kodegd=${popupKodeGd.value}&kodebrg=${popupKodeInput.value}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('popup_sisa1').value = data.sisa1;
+            document.getElementById('popup_sisa2').value = data.sisa2;
+            document.getElementById('popup_sisa3').value = data.sisa3;
+
+            // Jika semua sisa 0, tampilkan toast
+            if (data.sisa1 == 0 && data.sisa2 == 0 && data.sisa3 == 0) {
+                showToast("Stok Habis");
+            }
+        });
+    }
+}
+
 
 
 

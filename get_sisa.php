@@ -2,20 +2,23 @@
 include 'koneksi.php';
 
 $kodegd = $_GET['kodegd'] ?? '';
-$kodest = $_GET['kodest'] ?? '';
+$kodebrg = $_GET['kodebrg'] ?? '';
 
-$sql = "SELECT sisa1, sisa2, sisa3 
+// Query dengan filter gudang dan barang
+$sql = "SELECT zsaldo.sisa1, zstok.satuan1, zsaldo.sisa2, zstok.satuan2, zsaldo.sisa3, zstok.satuan3 
         FROM zsaldo 
-        WHERE kodegd = '$kodegd' AND kodest = '$kodest'
+        JOIN zstok ON zsaldo.kodebrg = zstok.kodebrg
+        WHERE zsaldo.kodegd = '$kodegd' AND zsaldo.kodebrg = '$kodebrg'
         LIMIT 1";
-$result = mysqli_query($conn, $sql);
 
+$result = mysqli_query($conn, $sql);
 $data = mysqli_fetch_assoc($result);
+
 if ($data) {
     echo json_encode([
-        'sisa1' => $data['sisa1'],
-        'sisa2' => $data['sisa2'],
-        'sisa3' => $data['sisa3']
+        'sisa1' => (float)$data['sisa1'],
+        'sisa2' => (float)$data['sisa2'],
+        'sisa3' => (float)$data['sisa3']
     ]);
 } else {
     echo json_encode([

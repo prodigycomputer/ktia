@@ -289,17 +289,17 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
 
                     <div class="popup-pb-row">
                         <label for="popup_sisa1">Sisa 1</label>
-                        <input type="number" id="popup_sisa1" name="popup_sisa1" style="text-align: right;" min="0">
+                        <input type="number" id="popup_sisa1" name="popup_sisa1" style="text-align: right;" min="0" disabled>
                     </div>
 
                     <div class="popup-pb-row">
                         <label for="popup_sisa2">Sisa 2</label>
-                        <input type="number" id="popup_sisa2" name="popup_sisa2" style="text-align: right;" min="0">
+                        <input type="number" id="popup_sisa2" name="popup_sisa2" style="text-align: right;" min="0" disabled>
                     </div>
 
                     <div class="popup-pb-row">
                         <label for="popup_sisa3">Sisa 3</label>
-                        <input type="number" id="popup_sisa3" name="popup_sisa3" style="text-align: right;" min="0">
+                        <input type="number" id="popup_sisa3" name="popup_sisa3" style="text-align: right;" min="0" disabled>
                     </div>
 
                     <div class="popup-pb-row">
@@ -971,18 +971,6 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
 
         popupKodeGd.addEventListener('change', getSisa);
         popupKodeInput.addEventListener('input', getSisa); 
-
-        function getSisa() {
-            if(popupKodeGd.value && popupKodeInput.value) {
-                fetch(`get_sisa.php?kodegd=${popupKodeGd.value}&kodest=${popupKodeInput.value}`)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('popup_sisa1').value = data.sisa1;
-                    document.getElementById('popup_sisa2').value = data.sisa2;
-                    document.getElementById('popup_sisa3').value = data.sisa3;
-                });
-            }
-        }
 
         function initializeFormButtons() {
             currentstat = null;
