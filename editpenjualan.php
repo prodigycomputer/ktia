@@ -277,7 +277,10 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                     <input type="hidden" name="popup_isi2" id="popup_isi2" value="">
                     <input type="hidden" name="popup_hdiskon1" id="popup_hdiskon1" value=""> 
                     <input type="hidden" name="popup_hdiskon2" id="popup_hdiskon2" value="">
-                    <input type="hidden" name="popup_hdiskon3" id="popup_hdiskon3" value="">  
+                    <input type="hidden" name="popup_hdiskon3" id="popup_hdiskon3" value="">
+                    <input type="hidden" name="popup_sisa1" id="popup_sisa1" value="">
+                    <input type="hidden" name="popup_sisa2" id="popup_sisa2" value="">
+                    <input type="hidden" name="popup_sisa3" id="popup_sisa3" value="">  
                     <div class="popup-pb-row">
                         <label for="popup_kodegd">Kode Gudang</label>
                         <select id="popup_kodegd" name="popup_kodegd" required>
@@ -295,18 +298,8 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                     </div>
 
                     <div class="popup-pb-row">
-                        <label for="popup_sisa1">Sisa 1</label>
-                        <input type="number" id="popup_sisa1" name="popup_sisa1" style="text-align: right;" min="0" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_sisa2">Sisa 2</label>
-                        <input type="number" id="popup_sisa2" name="popup_sisa2" style="text-align: right;" min="0" disabled>
-                    </div>
-
-                    <div class="popup-pb-row">
-                        <label for="popup_sisa3">Sisa 3</label>
-                        <input type="number" id="popup_sisa3" name="popup_sisa3" style="text-align: right;" min="0" disabled>
+                        <label for="popup_sisa">Sisa Stok</label>
+                        <input type="text" id="popup_sisa" name="popup_sisa" disabled>
                     </div>
 
                     <div class="popup-pb-row">
@@ -679,6 +672,8 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
 
             input.dataset.prev = value;
 
+            if (value === '*') return;
+
             fetch(`cekduplikat.php?table=${table}&field=${field}&value=${encodeURIComponent(value)}`)
                 .then(res => res.json())
                 .then(data => {
@@ -714,7 +709,6 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
         }
 
         function pilihBarang(item) {
-            document.getElementById('formDetailPenjualan').reset();
             popupKodeInput.value = item.kodebrg;
             popupNamaInput.value = item.namabrg;
             popupSatuan1.value = item.satuan1;
@@ -1061,8 +1055,12 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             });
         }
 
+        popupJlh1.addEventListener('input', updatePopupSisa);
+        popupJlh2.addEventListener('input', updatePopupSisa);
+        popupJlh3.addEventListener('input', updatePopupSisa);
+
+        popupKodeInput.addEventListener('change', getSisa);
         popupKodeGd.addEventListener('change', getSisa);
-        popupKodeInput.addEventListener('input', getSisa); 
 
         function initializeFormButtons() {
             currentstat = null;
