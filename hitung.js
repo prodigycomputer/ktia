@@ -242,17 +242,27 @@ async function getSisa() {
     if (!kodegd || !kodebrg) return;
 
     try {
-        const response = await fetch(`get_sisa.php?kodegd=${kodegd}&kodebrg=${kodebrg}`);
-        sisaData = await response.json();
+        const response = await fetch(`get_sisa.php?kodegd=${encodeURIComponent(kodegd)}&kodebrg=${encodeURIComponent(kodebrg)}`);
+        const data = await response.json();
 
-        console.log("Data sisa dari server:", sisaData);
+        console.log("Data sisa dari server:", data);
 
-        // Tampilkan ke input popup_sisa1/2/3
-        document.getElementById('popup_sisa1').value = sisaData.sisa1 || 0;
-        document.getElementById('popup_sisa2').value = sisaData.sisa2 || 0;
-        document.getElementById('popup_sisa3').value = sisaData.sisa3 || 0;
+        // Simpan ke variabel global
+        sisaData = {
+            sisa1: data.sisa1 ?? 0,
+            sisa2: data.sisa2 ?? 0,
+            sisa3: data.sisa3 ?? 0,
+            satuan1: data.satuan1 ?? '',
+            satuan2: data.satuan2 ?? '',
+            satuan3: data.satuan3 ?? ''
+        };
 
-        // Update ringkasan & cek stok habis
+        // Update input sesuai data asli
+        document.getElementById('popup_sisa1').value = sisaData.sisa1;
+        document.getElementById('popup_sisa2').value = sisaData.sisa2;
+        document.getElementById('popup_sisa3').value = sisaData.sisa3;
+
+        // Tampilkan ringkasan
         updatePopupSisa();
     } catch (error) {
         console.error('Error ambil data sisa:', error);
@@ -260,33 +270,30 @@ async function getSisa() {
 }
 
 function updatePopupSisa() {
-    const sisa1 = parseFloat(document.getElementById('popup_sisa1').value) || 0;
-    const sisa2 = parseFloat(document.getElementById('popup_sisa2').value) || 0;
-    const sisa3 = parseFloat(document.getElementById('popup_sisa3').value) || 0;
-
-    const jlh1 = parseFloat(document.getElementById('popup_jlh1').value) || 0; 
-    const jlh2 = parseFloat(document.getElementById('popup_jlh2').value) || 0; 
-    const jlh3 = parseFloat(document.getElementById('popup_jlh3').value) || 0;
-
     let sisaText = [];
+    const isValidSatuan = (satuan) => satuan && satuan.trim() !== '-';
 
-    if (jlh1 > 0) sisaText.push(`${sisa1} ${sisaData.satuan1}`);
-    if (jlh2 > 0) sisaText.push(`${sisa2} ${sisaData.satuan2}`);
-    if (jlh3 > 0) sisaText.push(`${sisa3} ${sisaData.satuan3}`);
-
-    // Jika ada stok kosong → tampilkan notifikasi
-    if (sisa1 === 0 || sisa2 === 0 || sisa3 === 0) {
-        showToast("Stock Habis");
+    // Pakai data dari sisaData langsung
+    if (sisaData.sisa1 > 0 && isValidSatuan(sisaData.satuan1)) {
+        sisaText.push(`${sisaData.sisa1} ${sisaData.satuan1}`);
+    }
+    if (sisaData.sisa2 > 0 && isValidSatuan(sisaData.satuan2)) {
+        sisaText.push(`${sisaData.sisa2} ${sisaData.satuan2}`);
+    }
+    if (sisaData.sisa3 > 0 && isValidSatuan(sisaData.satuan3)) {
+        sisaText.push(`${sisaData.sisa3} ${sisaData.satuan3}`);
     }
 
-    // Ringkasan di popup_sisa
-    document.getElementById('popup_sisa').value = sisaText.join(', ');
+    if (sisaText.length === 0) {
+        document.getElementById('popup_sisa').value = "Stock Habis";
+    } else {
+        document.getElementById('popup_sisa').value = sisaText.join(', ');
+    }
 }
 
-// Contoh fungsi showToast
-function showToast(pesan) {
-    alert(pesan); // Bisa diganti SweetAlert/Bootstrap toast
-}
+
+
+
 
 
 

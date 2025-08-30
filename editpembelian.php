@@ -237,7 +237,7 @@ $nonota = $_GET['nonota'] ?? '';
 
                     <div class="popup-pb-row">
                         <label for="popup_sisa">Sisa Stok</label>
-                        <input type="text" id="popup_sisa" name="popup_sisa" disabled>
+                        <input type="text" id="popup_sisa" name="popup_sisa" style="background-color: #e94141ff; color: #fffafaff; "  disabled>
                     </div>
 
                     <div class="popup-pb-row">
@@ -430,37 +430,52 @@ $nonota = $_GET['nonota'] ?? '';
         }
 
         // Trigger cari saat tekan Enter
+        let triggerBarang = null;   // untuk barang
+        let triggerSupplier = null; // untuk supplier
+
+        // Trigger cari saat tekan Enter
         [popupKodeInput, popupNamaInput].forEach(input => {
             const tipe = input.id === 'popup_kodebrg' ? 'kode' : 'nama';
 
-            input.addEventListener('keypress', function(e) {
+            input.addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                    triggerBarang = "keypress"; // tandai dari keypress
                     const val = this.value.trim();
                     if (val) cariBarang(tipe, val);
                 }
             });
 
-            input.addEventListener('blur', function() {
+            input.addEventListener('blur', function () {
+                // hanya jalan jika sebelumnya tidak dari keypress
+                if (triggerBarang === "keypress") return;
                 const val = this.value.trim();
-                if (val) cariBarang(tipe, val);
+                if (val) {
+                    triggerBarang = "blur"; // tandai dari blur
+                    cariBarang(tipe, val);
+                }
             });
         });
 
         [kodeInput, namaInput].forEach(input => {
             const tipe = input.id === 'kode_sup' ? 'kode' : 'nama';
 
-            input.addEventListener('keypress', function(e) {
+            input.addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                    triggerSupplier = "keypress";
                     const val = this.value.trim();
                     if (val) cariSupplier(tipe, val);
                 }
             });
 
-            input.addEventListener('blur', function() {
+            input.addEventListener('blur', function () {
+                if (triggerSupplier === "keypress") return;
                 const val = this.value.trim();
-                if (val) cariSupplier(tipe, val);
+                if (val) {
+                    triggerSupplier = "blur";
+                    cariSupplier(tipe, val);
+                }
             });
         });
 
@@ -499,6 +514,10 @@ $nonota = $_GET['nonota'] ?? '';
             })
             .catch(() => {
                 showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            })
+            .finally(() => {
+                // reset supaya event berikutnya normal
+                setTimeout(() => triggerBarang = null, 200);
             });
         }
 
@@ -534,6 +553,10 @@ $nonota = $_GET['nonota'] ?? '';
             })
             .catch(() => {
                 showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            })
+            .finally(() => {
+                // reset supaya event berikutnya normal
+                setTimeout(() => triggerBarang = null, 200);
             });
         }
 
@@ -544,14 +567,18 @@ $nonota = $_GET['nonota'] ?? '';
             const checkType = input.dataset.check; // 'duplikat' atau 'eksistensi'
             const resetTargets = input.dataset.reset ? input.dataset.reset.split(',') : [];
 
-            if (!value || !table || !field || !checkType) return;
+            // 🔹 Jika kosong atau *, langsung keluar supaya tidak validasi
+            if (!value || value === '*') {
+                input.dataset.prev = value; // simpan supaya tidak terus-terusan validasi saat blur
+                return;
+            }
+
+            if (!table || !field || !checkType) return;
 
             const prevValue = input.dataset.prev || '';
             if (value.toLowerCase() === prevValue.toLowerCase()) return;
 
-            input.dataset.prev = value;
-
-            if (value === '*') return;
+            input.dataset.prev = value; // simpan nilai terakhir
 
             fetch(`cekduplikat.php?table=${table}&field=${field}&value=${encodeURIComponent(value)}`)
                 .then(res => res.json())
@@ -607,6 +634,7 @@ $nonota = $_GET['nonota'] ?? '';
                 popupJlh2.disabled = true;
                 popupJlh3.disabled = true;
             }
+            getSisa();
             tutupPopupBarang();
         }
 
@@ -757,7 +785,7 @@ $nonota = $_GET['nonota'] ?? '';
             // Simpan index
             const formEdit = document.getElementById('formDetailPembelian');
             formEdit.dataset.editingIndex = index;
-
+            getSisa();
             // Tampilkan popup edit
             document.getElementById('popupForm').style.display = 'flex';
         }
@@ -870,10 +898,6 @@ $nonota = $_GET['nonota'] ?? '';
                 el.value = formatNumberID(num);
             });
         }
-        
-        popupJlh1.addEventListener('input', updatePopupSisa);
-        popupJlh2.addEventListener('input', updatePopupSisa);
-        popupJlh3.addEventListener('input', updatePopupSisa);
 
         popupKodeInput.addEventListener('change', getSisa);
         popupKodeGd.addEventListener('change', getSisa);

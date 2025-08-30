@@ -1,8 +1,8 @@
 <?php
 include 'koneksi.php';
 
-$kodegd = $_GET['kodegd'] ?? '';
-$kodebrg = $_GET['kodebrg'] ?? '';
+$kodegd = mysqli_real_escape_string($conn, $_GET['kodegd'] ?? '');
+$kodebrg = mysqli_real_escape_string($conn, $_GET['kodebrg'] ?? '');
 
 // Query dengan filter gudang dan barang
 $sql = "SELECT 

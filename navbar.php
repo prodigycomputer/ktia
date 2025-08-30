@@ -21,7 +21,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $menus[$main][] = $row['submenu'];
 
     $aksesSemua[$row['submenu']] = [
-        'tambah'   => (int)$row['tambah'],
+        'tambah' => (int)$row['tambah'],
         'ubah'   => (int)$row['ubah'],
         'hapus'  => (int)$row['hapus']
     ];
@@ -56,18 +56,18 @@ function isActiveLink($page, $current) {
                      id="<?= $mainmenu ?>Dropdown">
                     <?php 
                     if ($mainmenu == 'TRANSAKSI') {
-                        // Grup otomatis berdasarkan nama file sebelum "input" / "edit"
+                        // Group berdasarkan menu utama (pembelian, penjualan, dll.)
                         $groups = [];
                         foreach ($submenus as $submenu) {
-                            $base = preg_replace('/^(input|edit)/', '', $submenu); 
+                            $base = preg_replace('/^(input|edit)/', '', str_replace('.php','',$submenu));
                             $groups[$base][] = $submenu;
                         }
 
                         foreach ($groups as $base => $pages) {
-                            $utama = $base; // file utama tanpa prefix
-                            $active = in_array($current, $pages) ? 'active-link' : '';
-                            $label = ucfirst(str_replace('.php','',$utama));
-                            echo "<a href='$utama' class='$active'>$label</a>";
+                            $utama = $base . '.php'; // menu utama default
+                            $active = in_array($current, $pages) ? 'active-link' : (isActiveLink($utama,$current));
+                            $label = ucfirst($base);
+                            echo "<a href='$utama' data-pages='".json_encode($pages)."' class='$active transaksi-link'>$label</a>";
                         }
                     } else {
                         foreach ($submenus as $submenu) {
@@ -87,25 +87,25 @@ function isActiveLink($page, $current) {
 function toggleDropdown(id) {
     document.getElementById(id).classList.toggle('show');
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     const current = window.location.pathname.split("/").pop();
 
-    // Cari semua link transaksi dari menu
-    const transaksiDropdown = document.querySelector('#TRANSAKSI_Dropdown');
-    if (transaksiDropdown) {
-        transaksiDropdown.querySelectorAll('a').forEach(link => {
-            const main = link.getAttribute('href');
-            const prefix = main.replace('.php','');
-            const related = Array.from(transaksiDropdown.querySelectorAll('a'))
-                .map(a => a.getAttribute('href'))
-                .filter(a => a.includes(prefix));
+    // Cek semua link transaksi
+    document.querySelectorAll('.transaksi-link').forEach(link => {
+        const main = link.getAttribute('href');      // contoh: pembelian.php
+        const pages = JSON.parse(link.dataset.pages); // semua halaman terkait
 
-            if (related.includes(current)) localStorage.setItem('last_'+prefix, current);
-            if (current === main) localStorage.removeItem('last_'+prefix);
+        // Jika halaman sekarang adalah salah satu dari pages, simpan di localStorage
+        if (pages.includes(current)) {
+            localStorage.setItem('last_'+main, current);
+        }
 
-            const lastPage = localStorage.getItem('last_'+prefix);
-            if (lastPage && lastPage !== main) link.setAttribute('href', lastPage);
-        });
-    }
+        // Cek halaman terakhir yang tersimpan
+        const lastPage = localStorage.getItem('last_'+main);
+        if (lastPage && lastPage !== main) {
+            link.setAttribute('href', lastPage); // arahkan ke halaman terakhir
+        }
+    });
 });
 </script>

@@ -299,7 +299,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
 
                     <div class="popup-pb-row">
                         <label for="popup_sisa">Sisa Stok</label>
-                        <input type="text" id="popup_sisa" name="popup_sisa" disabled>
+                        <input type="text" id="popup_sisa" name="popup_sisa" style="background-color: #e94141ff; color: #fffafaff; " disabled>
                     </div>
 
                     <div class="popup-pb-row">
@@ -498,21 +498,31 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             return true;
         }
 
+        let triggerBarang = null;   // untuk barang
+        let triggerKustomer = null; // untuk supplier
+        let triggerSales = null; // untuk supplier
+
         // Trigger cari saat tekan Enter
         [popupKodeInput, popupNamaInput].forEach(input => {
             const tipe = input.id === 'popup_kodebrg' ? 'kode' : 'nama';
 
-            input.addEventListener('keypress', function(e) {
+            input.addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                    triggerBarang = "keypress"; // tandai dari keypress
                     const val = this.value.trim();
                     if (val) cariBarang(tipe, val);
                 }
             });
 
-            input.addEventListener('blur', function() {
+            input.addEventListener('blur', function () {
+                // hanya jalan jika sebelumnya tidak dari keypress
+                if (triggerBarang === "keypress") return;
                 const val = this.value.trim();
-                if (val) cariBarang(tipe, val);
+                if (val) {
+                    triggerBarang = "blur"; // tandai dari blur
+                    cariBarang(tipe, val);
+                }
             });
         });
 
@@ -522,14 +532,20 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             input.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                    triggerKustomer = "keypress";
                     const val = this.value.trim();
                     if (val) cariKustomer(tipe, val);
                 }
             });
 
-            input.addEventListener('blur', function() {
+            input.addEventListener('blur', function () {
+                // hanya jalan jika sebelumnya tidak dari keypress
+                if (triggerKustomer=== "keypress") return;
                 const val = this.value.trim();
-                if (val) cariKustomer(tipe, val);
+                if (val) {
+                    triggerKustomer = "blur"; // tandai dari blur
+                    cariKustomer(tipe, val);
+                }
             });
         });
 
@@ -539,15 +555,21 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             input.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
+                    triggerSales = "keypress";
                     const val = this.value.trim();
                     if (val) cariSales(tipe, val);
                 }
             });
 
-            input.addEventListener('blur', function() {
+            input.addEventListener('blur', function () {
+                // hanya jalan jika sebelumnya tidak dari keypress
+                if (triggerSales=== "keypress") return;
                 const val = this.value.trim();
-                if (val) cariSales(tipe, val);
-            });
+                if (val) {
+                    triggerSales = "blur"; // tandai dari blur
+                    cariSales(tipe, val);
+                }
+            })
         });
 
         function cariBarang(mode, keyword) {
@@ -585,6 +607,9 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             })
             .catch(() => {
                 showToast('Terjadi kesalahan saat mencari barang', '#dc3545');
+            })
+            .finally(() => {
+                setTimeout(() => triggerBarang = null, 200);
             });
         }
 
@@ -621,6 +646,9 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             })
             .catch(() => {
                 showToast('Terjadi kesalahan saat mencari Kustomer', '#dc3545');
+            })
+            .finally(() => {
+                setTimeout(() => triggerKustomer = null, 200);
             });
         }
 
@@ -655,6 +683,9 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             })
             .catch(() => {
                 showToast('Terjadi kesalahan saat mencari sales', '#dc3545');
+            })
+            .finally(() => {
+                setTimeout(() => triggerSales = null, 200);
             });
         }
 
@@ -665,15 +696,19 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             const checkType = input.dataset.check; // 'duplikat' atau 'eksistensi'
             const resetTargets = input.dataset.reset ? input.dataset.reset.split(',') : [];
 
-            if (!value || !table || !field || !checkType) return;
+            // 🔹 Jika kosong atau *, langsung keluar supaya tidak validasi
+            if (!value || value === '*') {
+                input.dataset.prev = value; // simpan supaya tidak terus-terusan validasi saat blur
+                return;
+            }
+
+            if (!table || !field || !checkType) return;
 
             const prevValue = input.dataset.prev || '';
             if (value.toLowerCase() === prevValue.toLowerCase()) return;
 
-            input.dataset.prev = value;
-
-            if (value === '*') return;
-
+            input.dataset.prev = value; // simpan nilai terakhir
+            
             fetch(`cekduplikat.php?table=${table}&field=${field}&value=${encodeURIComponent(value)}`)
                 .then(res => res.json())
                 .then(data => {
@@ -728,6 +763,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 popupJlh2.disabled = true;
                 popupJlh3.disabled = true;
             }
+            getSisa();
             tutupPopupBarang();
         }
 
@@ -943,6 +979,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
             const formEdit = document.getElementById('formDetailPenjualan');
             formEdit.dataset.editingIndex = index;
 
+            getSisa();
             // Tampilkan popup edit
             document.getElementById('popupForm').style.display = 'flex';
         }
@@ -1054,10 +1091,6 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 el.value = formatNumberID(num);
             });
         }
-
-        popupJlh1.addEventListener('input', updatePopupSisa);
-        popupJlh2.addEventListener('input', updatePopupSisa);
-        popupJlh3.addEventListener('input', updatePopupSisa);
 
         popupKodeInput.addEventListener('change', getSisa);
         popupKodeGd.addEventListener('change', getSisa);
