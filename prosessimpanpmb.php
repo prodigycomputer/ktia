@@ -37,6 +37,13 @@ $cek->bind_result($jumlah);
 $cek->fetch();
 $cek->close();
 
+$cekSaldo = $conn->prepare("SELECT COUNT(*) FROM zsaldo WHERE kodebrg = ? AND kodegd = ?");
+$cekSaldo->bind_param("ss", $kodebrg, $kodegd);
+$cekSaldo->execute();
+$cekSaldo->bind_result($ada);
+$cekSaldo->fetch();
+$cekSaldo->close();
+
 $conn->begin_transaction();
 
 try {
@@ -46,10 +53,12 @@ try {
     $stmt->execute();
     $stmt->close();
 
-    $stmt = $conn->prepare("INSERT INTO zsaldo (kodebrg, kodegd) VALUES (?, ?)");
-    $stmt->bind_param("ss", $kodebrg, $kodegd);
-    $stmt->execute();
-    $stmt->close();
+    if ($ada == 0) {
+        $stmt = $conn->prepare("INSERT INTO zsaldo (kodebrg, kodegd) VALUES (?, ?)");
+        $stmt->bind_param("ss", $kodebrg, $kodegd);
+        $stmt->execute();
+        $stmt->close();
+    }
 
     // Simpan ke zbelim (detail)
     $stmt = $conn->prepare("

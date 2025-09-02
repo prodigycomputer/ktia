@@ -269,6 +269,74 @@ async function getSisa() {
     }
 }
 
+async function getSisaPeny() {
+    const kodegd = document.getElementById('kodegd').value;
+    const kodebrg = document.getElementById('popup_kodebrg').value;
+
+    if (!kodegd || !kodebrg) return;
+
+    try {
+        const response = await fetch(`get_sisa.php?kodegd=${encodeURIComponent(kodegd)}&kodebrg=${encodeURIComponent(kodebrg)}`);
+        const data = await response.json();
+
+        console.log("Data sisa dari server:", data);
+
+        // Simpan ke variabel global
+        sisaData = {
+            sisa1: data.sisa1 ?? 0,
+            sisa2: data.sisa2 ?? 0,
+            sisa3: data.sisa3 ?? 0,
+            satuan1: data.satuan1 ?? '',
+            satuan2: data.satuan2 ?? '',
+            satuan3: data.satuan3 ?? ''
+        };
+
+        // Update input sesuai data asli
+        document.getElementById('popup_sisa1').value = sisaData.sisa1;
+        document.getElementById('popup_sisa2').value = sisaData.sisa2;
+        document.getElementById('popup_sisa3').value = sisaData.sisa3;
+
+        // Tampilkan ringkasan
+        updatePopupSisa();
+    } catch (error) {
+        console.error('Error ambil data sisa:', error);
+    }
+}
+
+async function getSisaMuta() {
+    const kodegd = document.getElementById('kodegd2').value;
+    const kodebrg = document.getElementById('popup_kodebrg').value;
+
+    if (!kodegd || !kodebrg) return;
+
+    try {
+        const response = await fetch(`get_sisa.php?kodegd=${encodeURIComponent(kodegd)}&kodebrg=${encodeURIComponent(kodebrg)}`);
+        const data = await response.json();
+
+        console.log("Data sisa dari server:", data);
+
+        // Simpan ke variabel global
+        sisaData = {
+            sisa1: data.sisa1 ?? 0,
+            sisa2: data.sisa2 ?? 0,
+            sisa3: data.sisa3 ?? 0,
+            satuan1: data.satuan1 ?? '',
+            satuan2: data.satuan2 ?? '',
+            satuan3: data.satuan3 ?? ''
+        };
+
+        // Update input sesuai data asli
+        document.getElementById('popup_sisa1').value = sisaData.sisa1;
+        document.getElementById('popup_sisa2').value = sisaData.sisa2;
+        document.getElementById('popup_sisa3').value = sisaData.sisa3;
+
+        // Tampilkan ringkasan
+        updatePopupSisa();
+    } catch (error) {
+        console.error('Error ambil data sisa:', error);
+    }
+}
+
 function updatePopupSisa() {
     let sisaText = [];
     const isValidSatuan = (satuan) => satuan && satuan.trim() !== '-';

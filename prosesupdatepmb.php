@@ -30,6 +30,13 @@
         exit;
     }
 
+    $cekSaldo = $conn->prepare("SELECT COUNT(*) FROM zsaldo WHERE kodebrg = ? AND kodegd = ?");
+    $cekSaldo->bind_param("ss", $kodebrg, $kodegd);
+    $cekSaldo->execute();
+    $cekSaldo->bind_result($ada);
+    $cekSaldo->fetch();
+    $cekSaldo->close();
+
     try {
         $conn->begin_transaction();
 
@@ -53,6 +60,13 @@
         $stmtHeader->bind_param("ssssdssdddddddd", $no_nota, $tanggal, $kode_sup, $kodegd, $totaljmlh, $jt_tempo, $ket, $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3);
         $stmtHeader->execute();
         $stmtHeader->close();
+
+        if ($ada == 0) {
+            $stmt = $conn->prepare("INSERT INTO zsaldo (kodebrg, kodegd) VALUES (?, ?)");
+            $stmt->bind_param("ss", $kodebrg, $kodegd);
+            $stmt->execute();
+            $stmt->close();
+        }
 
         $stmt = $conn->prepare("
             INSERT INTO zbelim 

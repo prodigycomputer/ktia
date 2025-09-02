@@ -10,12 +10,20 @@
     $no_nota_lama = strtoupper($data['no_nota_lama'] ?? $no_nota);
     $tanggal = $data['tanggal'] ?? '';
     $kodegd = strtoupper($data['kodegd'] ?? '');
+    $kodebrg = isset($detail[0]['kodebrg']) ? strtoupper($detail[0]['kodebrg']) : '';
     
 
     if (!$no_nota || !$tanggal || !$kodegd || empty($detail)) {
         echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
         exit;
     }
+
+    $cekSaldo = $conn->prepare("SELECT COUNT(*) FROM zsaldo WHERE kodebrg = ? AND kodegd = ?");
+    $cekSaldo->bind_param("ss", $kodebrg, $kodegd);
+    $cekSaldo->execute();
+    $cekSaldo->bind_result($ada);
+    $cekSaldo->fetch();
+    $cekSaldo->close();
 
     try {
         $conn->begin_transaction();
@@ -40,6 +48,13 @@
         $stmtHeader->bind_param("sss", $no_nota, $tanggal, $kodegd);
         $stmtHeader->execute();
         $stmtHeader->close();
+
+        if ($ada == 0) {
+            $stmt = $conn->prepare("INSERT INTO zsaldo (kodebrg, kodegd) VALUES (?, ?)");
+            $stmt->bind_param("ss", $kodebrg, $kodegd);
+            $stmt->execute();
+            $stmt->close();
+        }
 
         $stmt = $conn->prepare("
             INSERT INTO zpenyesuaianm 

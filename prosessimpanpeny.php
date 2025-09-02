@@ -9,6 +9,7 @@ $detail = $data['detail'] ?? [];
 $no_nota = strtoupper($data['no_nota'] ?? '');
 $tanggal = $data['tanggal'] ?? '';
 $kodegd = strtoupper($data['kodegd'] ?? '');
+$kodebrg = isset($detail[0]['kodebrg']) ? strtoupper($detail[0]['kodebrg']) : '';
 
 
 if (!$no_nota || !$tanggal || !$kodegd || empty($detail)) {
@@ -23,6 +24,13 @@ $cek->bind_result($jumlah);
 $cek->fetch();
 $cek->close();
 
+$cekSaldo = $conn->prepare("SELECT COUNT(*) FROM zsaldo WHERE kodebrg = ? AND kodegd = ?");
+$cekSaldo->bind_param("ss", $kodebrg, $kodegd);
+$cekSaldo->execute();
+$cekSaldo->bind_result($ada);
+$cekSaldo->fetch();
+$cekSaldo->close();
+
 $conn->begin_transaction();
 
 try {
@@ -31,6 +39,13 @@ try {
     $stmt->bind_param("sss", $no_nota, $tanggal, $kodegd);
     $stmt->execute();
     $stmt->close();
+
+    if ($ada == 0) {
+        $stmt = $conn->prepare("INSERT INTO zsaldo (kodebrg, kodegd) VALUES (?, ?)");
+        $stmt->bind_param("ss", $kodebrg, $kodegd);
+        $stmt->execute();
+        $stmt->close();
+    }
 
     // Simpan ke zbelim (detail)
     $stmt = $conn->prepare("

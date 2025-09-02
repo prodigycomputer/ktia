@@ -13,6 +13,7 @@ $nonota = $_GET['nonota'] ?? '';
     <title>Edit Mutasi</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
+    <script src="hitung.js"></script>
 
 </head>
 <body>
@@ -137,6 +138,9 @@ $nonota = $_GET['nonota'] ?? '';
                 <form id="formDetailMutasi">
                     <input type="hidden" name="popup_isi1" id="popup_isi1" value=""> 
                     <input type="hidden" name="popup_isi2" id="popup_isi2" value="">
+                    <input type="hidden" name="popup_sisa1" id="popup_sisa1" value="">
+                    <input type="hidden" name="popup_sisa2" id="popup_sisa2" value="">
+                    <input type="hidden" name="popup_sisa3" id="popup_sisa3" value=""> 
 
                     <div class="popup-pb-row">
                         <label for="popup_kodebrg">Kode Barang</label>
@@ -145,6 +149,11 @@ $nonota = $_GET['nonota'] ?? '';
                     <div class="popup-pb-row">
                         <label for="popup_namabrg">Nama Barang</label>
                         <input type="text" id="popup_namabrg" data-table="zstok" data-field="namabrg" data-check="eksistensi" data-reset="popup_kodebrg" onblur="cekValidasi(this)" name="popup_namabrg" style="text-transform: uppercase;">
+                    </div>
+
+                    <div class="popup-pb-row">
+                        <label for="popup_sisa">Sisa Stok</label>
+                        <input type="text" id="popup_sisa" name="popup_sisa" style="background-color: #e94141ff; color: #ffffff;" disabled>
                     </div>
 
                     <div class="popup-pb-row">
@@ -407,6 +416,7 @@ $nonota = $_GET['nonota'] ?? '';
                 popupJlh2.disabled = true;
                 popupJlh3.disabled = true;
             }
+            getSisaMuta();
             tutupPopupBarang();
         }
 
@@ -518,6 +528,7 @@ $nonota = $_GET['nonota'] ?? '';
             formEdit.dataset.editingIndex = index;
 
             // Tampilkan popup edit
+            getSisaMuta();
             document.getElementById('popupForm').style.display = 'flex';
         }
 
