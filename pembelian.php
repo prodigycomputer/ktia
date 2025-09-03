@@ -1,4 +1,6 @@
 <?php
+session_start();
+$kodeuser = $_SESSION['kodeuser'] ?? '';
 
 include 'koneksi.php';
 
@@ -26,7 +28,7 @@ $query = mysqli_query($conn, "
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php 
-    include 'navbar.php'; 
+    include 'navbar.php';
 
     $aksesInput = $_SESSION['aksesSemua']['inputpembelian.php'] ?? ['tambah'=>0];
     $aksesEdit  = $_SESSION['aksesSemua']['editpembelian.php'] ?? ['tambah'=>0];
@@ -35,6 +37,8 @@ $query = mysqli_query($conn, "
     $hakUbah   = $aksesEdit['tambah'];?>
 
     <main>
+        <input type="hidden" name="kodeuser" value="<?= $kodeuser ?>">
+
         <h2>Data Pembelian</h2>
 
         <div class="action-bar">

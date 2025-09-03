@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$kodeuser = $_SESSION['kodeuser'] ?? '';
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
 
@@ -14,7 +15,7 @@ $nonota = $_GET['nonota'] ?? '';
     <link rel="stylesheet" href="form.css">
     <script src="hitung.js"></script>
 </head>
-<body>
+<body data-kodeuser="<?= $kodeuser ?>">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php 
@@ -1133,7 +1134,9 @@ $nonota = $_GET['nonota'] ?? '';
                 disk3: parseFloat(document.getElementById('diskon3').value) || 0,
                 hdisk3: parseIDNumber(document.getElementById('hdiskon3').value) || 0,
                 totaljmlh: parseIDNumber(document.getElementById('totaljmlh').value) || 0,
-                detail: dataPembelian // array yang sudah kamu simpan saat tambah item
+                detail: dataPembelian, // array yang sudah kamu simpan saat tambah item
+
+                operator: document.body.dataset.kodeuser || ""  
             };
 
             fetch('prosesupdatepmb.php', {
@@ -1150,6 +1153,7 @@ $nonota = $_GET['nonota'] ?? '';
                     localStorage.removeItem('formPembelianEdit');
                     initializeFormButtons();
                 } else {
+                    console.log(data);
                     showToast('Gagal menyimpan: ' + res.message, '#dc3545');
                 }
             })

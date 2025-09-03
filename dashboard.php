@@ -1,3 +1,9 @@
+<?php
+session_start();
+$kodeuser = $_SESSION['kodeuser'] ?? '';
+include 'koneksi.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +14,8 @@
     <link rel="stylesheet" href="form.css">
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
+    <?php 
+        
+        include 'navbar.php'; ?>
 </body>
 </html>

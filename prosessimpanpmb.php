@@ -22,6 +22,7 @@ $disk2 = $data['disk2'] ?? 0;
 $hdisk2 = floatval($data['hdisk2']) ?? 0;
 $disk3 = $data['disk3'] ?? 0;
 $hdisk3 = floatval($data['hdisk3']) ?? 0;
+$operator = $data['operator'] ?? '';
 
 
 
@@ -48,8 +49,16 @@ $conn->begin_transaction();
 
 try {
     // Simpan ke zbeli (header) 
-    $stmt = $conn->prepare("INSERT INTO zbeli (nonota, tgl, kodesup, kodegd, nilai, tgltempo, ket, ppn, hppn, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssdssdddddddd", $no_nota, $tanggal, $kode_sup, $kodegd, $totaljmlh, $tgljt, $ket, $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3);
+    $stmt = $conn->prepare("INSERT INTO zbeli 
+    (nonota, tgl, kodesup, kodegd, nilai, tgltempo, ket, ppn, hppn, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3, operator, logtime) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+
+    $stmt->bind_param(
+        "ssssdssdddddddds", 
+        $no_nota, $tanggal, $kode_sup, $kodegd, $totaljmlh, $tgljt, $ket, 
+        $prsnppn, $hrgppn, $disk1, $hdisk1, $disk2, $hdisk2, $disk3, $hdisk3, $operator
+    );
+    
     $stmt->execute();
     $stmt->close();
 
@@ -62,8 +71,8 @@ try {
 
     // Simpan ke zbelim (detail)
     $stmt = $conn->prepare("
-        INSERT INTO zbelim (nonota, kodebrg, kodegd, jlh1, jlh2, jlh3, harga, disca, discb, discc, discrp, jumlah, hdisca, hdiscb, hdiscc)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO zbelim (nonota, kodebrg, kodegd, jlh1, jlh2, jlh3, harga, disca, discb, discc, discrp, jumlah, hdisca, hdiscb, hdiscc, operator, logtime)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
     ");
 
     foreach ($detail as $item) {
@@ -83,7 +92,7 @@ try {
         $hdiscc = floatval($item['hdiscc'] ?? 0);
 
         $stmt->bind_param(
-            "sssiiiddddddddd",
+            "sssiiiddddddddds",
             $no_nota,
             $kodebrg,
             $kodegd,
@@ -98,7 +107,8 @@ try {
             $jumlah,
             $hdisca,
             $hdiscb,
-            $hdiscc
+            $hdiscc,
+            $operator
         );
         $stmt->execute();
     }

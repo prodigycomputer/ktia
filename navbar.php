@@ -1,5 +1,4 @@
 <?php
-session_start();
 include 'koneksi.php';
 
 $current = basename($_SERVER['PHP_SELF']);
