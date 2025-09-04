@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$kodeuser = $_SESSION['kodeuser'] ?? '';
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
 
@@ -15,7 +16,7 @@ $nonota = $_GET['nonota'] ?? '';
     <script src="hitung.js"></script>
 
 </head>
-<body>
+<body data-kodeuser="<?= $kodeuser ?>">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php 
@@ -356,6 +357,11 @@ $nonota = $_GET['nonota'] ?? '';
             const field = input.dataset.field;
             const checkType = input.dataset.check; // 'duplikat' atau 'eksistensi'
             const resetTargets = input.dataset.reset ? input.dataset.reset.split(',') : [];
+
+            if (!value || value === '*') {
+                input.dataset.prev = value; // simpan supaya tidak terus-terusan validasi saat blur
+                return;
+            }
 
             if (!value || !table || !field || !checkType) return;
 
@@ -775,7 +781,9 @@ $nonota = $_GET['nonota'] ?? '';
                 no_nota_lama: document.getElementById('no_nota_lama').value,
                 tanggal: document.getElementById('tanggal').value,
                 kodegd: document.getElementById('kodegd').value,
-                detail: dataPenyesuaian // array yang sudah kamu simpan saat tambah item
+                detail: dataPenyesuaian, // array yang sudah kamu simpan saat tambah item
+
+                operator: document.body.dataset.kodeuser || ""  
             };
 
             fetch('prosesupdatepeny.php', {

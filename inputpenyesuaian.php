@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$kodeuser = $_SESSION['kodeuser'] ?? '';
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
 ?>
@@ -14,7 +15,7 @@ $nonota = $_GET['nonota'] ?? '';
     <script src="multitabpenyesuaian.js"></script>
     <script src="hitung.js"></script>
 </head>
-<body>
+<body data-kodeuser="<?= $kodeuser ?>">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php include 'navbar.php'; ?>
@@ -305,6 +306,11 @@ $nonota = $_GET['nonota'] ?? '';
             const field = input.dataset.field;
             const checkType = input.dataset.check; // 'duplikat' atau 'eksistensi'
             const resetTargets = input.dataset.reset ? input.dataset.reset.split(',') : [];
+
+            if (!value || value === '*') {
+                input.dataset.prev = value; // simpan supaya tidak terus-terusan validasi saat blur
+                return;
+            }
 
             if (!value || !table || !field || !checkType) return;
 
@@ -722,7 +728,9 @@ $nonota = $_GET['nonota'] ?? '';
                 no_nota: activeTab.formData.no_nota?.value || "",
                 tanggal: activeTab.formData.tanggal?.value || "",
                 kodegd: activeTab.formData.kodegd?.value || "",
-                detail: activeTab.dataPenyesuaian || []
+                detail: activeTab.dataPenyesuaian || [],
+
+                operator: document.body.dataset.kodeuser || "" 
             };
 
             // 🔹 Kirim data seperti dulu

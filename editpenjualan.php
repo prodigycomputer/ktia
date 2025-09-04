@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$kodeuser = $_SESSION['kodeuser'] ?? '';
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
 $q = mysqli_query($conn, "SELECT qppn FROM zconfig LIMIT 1");
@@ -17,7 +18,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
     <link rel="stylesheet" href="form.css">
     <script src="hitung.js"></script>
 </head>
-<body>
+<body data-kodeuser="<?= $kodeuser ?>">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php 
@@ -1335,7 +1336,9 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 disk3: parseFloat(document.getElementById('diskon3').value) || 0,
                 hdisk3: parseIDNumber(document.getElementById('hdiskon3').value) || 0,
                 totaljmlh: parseIDNumber(document.getElementById('totaljmlh').value) || 0,
-                detail: dataPenjualan // array yang sudah kamu simpan saat tambah item
+                detail: dataPenjualan, // array yang sudah kamu simpan saat tambah item
+
+                operator: document.body.dataset.kodeuser || ""  
             };
 
             fetch('prosesupdatepnj.php', {

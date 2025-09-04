@@ -11,6 +11,7 @@ $tanggal = $data['tanggal'] ?? '';
 $kodegd1 = strtoupper($data['kodegd1'] ?? '');
 $kodegd2 = strtoupper($data['kodegd2'] ?? '');
 $kodebrg = isset($detail[0]['kodebrg']) ? strtoupper($detail[0]['kodebrg']) : '';
+$operator = $data['operator'] ?? '';
 
 
 if (!$no_nota || !$tanggal || !$kodegd1 || !$kodegd2 || empty($detail)) {
@@ -43,8 +44,8 @@ $conn->begin_transaction();
 
 try {
     // Simpan ke zbeli (header) 
-    $stmt = $conn->prepare("INSERT INTO zmutasi (nonota, tgl, kodegd1, kodegd2) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $no_nota, $tanggal, $kodegd1, $kodegd2);
+    $stmt = $conn->prepare("INSERT INTO zmutasi (nonota, tgl, kodegd1, kodegd2, operator, logtime) VALUES (?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("sssss", $no_nota, $tanggal, $kodegd1, $kodegd2, $operator);
     $stmt->execute();
     $stmt->close();
 
@@ -64,8 +65,8 @@ try {
 
     // Simpan ke zbelim (detail)
     $stmt = $conn->prepare("
-        INSERT INTO zmutasim (nonota, kodebrg, kodegd1, kodegd2, jlh1, jlh2, jlh3)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO zmutasim (nonota, kodebrg, kodegd1, kodegd2, jlh1, jlh2, jlh3, operator, logtime)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())
     ");
 
     foreach ($detail as $item) {
@@ -75,14 +76,15 @@ try {
         $jlh3    = intval($item['jlh3'] ?? 0);
 
         $stmt->bind_param(
-            "ssssiii",
+            "ssssiiis",
             $no_nota,
             $kodebrg,
             $kodegd1,
             $kodegd2,
             $jlh1,
             $jlh2,
-            $jlh3
+            $jlh3,
+            $operator
         );
         $stmt->execute();
     }

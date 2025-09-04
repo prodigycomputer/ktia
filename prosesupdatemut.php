@@ -12,6 +12,7 @@
     $kodegd1 = strtoupper($data['kodegd1'] ?? '');
     $kodegd2 = strtoupper($data['kodegd2'] ?? '');
     $kodebrg = isset($detail[0]['kodebrg']) ? strtoupper($detail[0]['kodebrg']) : '';
+    $operator = $data['operator'] ?? '';
     
 
     if (!$no_nota || !$tanggal || !$kodegd1 || !$kodegd2 || empty($detail)) {
@@ -36,6 +37,28 @@
     try {
         $conn->begin_transaction();
 
+        $oldData = [];
+        $result = $conn->prepare("SELECT kodebrg, kodegd1, kodegd2, jlh1, jlh2, jlh3, logtime, operator 
+                                FROM zmutasim WHERE nonota = ?");
+        $result->bind_param("s", $no_nota_lama);
+        $result->execute();
+        $res = $result->get_result();
+        while ($row = $res->fetch_assoc()) {
+            $key = $row['kodebrg'].'|'.$row['kodegd1'].'|'.$row['kodegd2'];
+            $oldData[$key] = $row;
+        }
+        $result->close();
+
+        $oldHeader = [];
+        $stmtOldHeader = $conn->prepare("SELECT operator, logtime FROM zmutasi WHERE nonota = ?");
+        $stmtOldHeader->bind_param("s", $no_nota_lama);
+        $stmtOldHeader->execute();
+        $resHeader = $stmtOldHeader->get_result();
+        if ($row = $resHeader->fetch_assoc()) {
+            $oldHeader = $row;
+        }
+        $stmtOldHeader->close();
+
         $hapusDetail = $conn->prepare("DELETE FROM zmutasim WHERE nonota = ?");
         $hapusDetail->bind_param("s", $no_nota_lama);
         $hapusDetail->execute();
@@ -45,15 +68,18 @@
         $hapusHeader->bind_param("s", $no_nota_lama);
         $hapusHeader->execute();
         $hapusHeader->close();
+
+        $operatorToSave = $oldHeader['operator'] ?? $operator;
+        $logtimeToSave  = $oldHeader['logtime'] ?? date('Y-m-d H:i:s');
         
         // Insert detail baru
         $stmtHeader = $conn->prepare("
             INSERT INTO zmutasi 
-            (nonota, tgl, kodegd1, kodegd2)
-            VALUES (?, ?, ?, ?)
+            (nonota, tgl, kodegd1, kodegd2, operator, logtime)
+            VALUES (?, ?, ?, ?, ?, ?)
         ");
 
-        $stmtHeader->bind_param("ssss", $no_nota, $tanggal, $kodegd1, $kodegd2);
+        $stmtHeader->bind_param("ssssss", $no_nota, $tanggal, $kodegd1, $kodegd2, $operatorToSave, $logtimeToSave);
         $stmtHeader->execute();
         $stmtHeader->close();
 
@@ -73,8 +99,8 @@
 
         $stmt = $conn->prepare("
             INSERT INTO zmutasim 
-            (nonota, kodebrg, kodegd1, kodegd2, jlh1, jlh2, jlh3)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (nonota, kodebrg, kodegd1, kodegd2, jlh1, jlh2, jlh3, operator, logtime)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
 
         foreach ($detail as $item) {
@@ -83,15 +109,31 @@
             $jlh2    = intval($item['jlh2'] ?? 0);
             $jlh3    = intval($item['jlh3'] ?? 0);
 
+            $key = $kodebrg.'|'.$kodegd1.'|'.$kodegd2;
+            $logtimeItem = date('Y-m-d H:i:s');
+            $operatorItem = $operator;
+
+            if (isset($oldData[$key])) {
+            $old = $oldData[$key];
+            if (
+                    $old['jlh1'] == $jlh1 && $old['jlh2'] == $jlh2 && $old['jlh3'] == $jlh3
+                ) {
+                    $logtimeItem = $old['logtime'];
+                    $operatorItem = $old['operator'];
+                }
+            }
+
             $stmt->bind_param(
-                "ssssiii",
+                "ssssiiiss",
                 $no_nota, // perbaikan: gunakan nonota baru
                 $kodebrg,
                 $kodegd1,
                 $kodegd2,
                 $jlh1,
                 $jlh2,
-                $jlh3
+                $jlh3,
+                $operatorItem, 
+                $logtimeItem
             );
             $stmt->execute();
         }

@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$kodeuser = $_SESSION['kodeuser'] ?? '';
 include 'koneksi.php';
 
 // Query data mutasi awal
@@ -43,6 +44,8 @@ if (!$query) {
     $hakUbah   = $aksesEdit['tambah'];?>
 
     <main>
+        <input type="hidden" name="kodeuser" value="<?= $kodeuser ?>">
+        
         <h2>Data Mutasi</h2>
 
         <div class="action-bar">

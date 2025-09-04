@@ -1,4 +1,6 @@
 <?php
+session_start();
+$kodeuser = $_SESSION['kodeuser'] ?? '';
 
 include 'koneksi.php';
 
@@ -38,6 +40,8 @@ $query = mysqli_query($conn, "
     $hakUbah   = $aksesEdit['tambah'];?>
 
     <main>
+        <input type="hidden" name="kodeuser" value="<?= $kodeuser ?>">
+        
         <h2>Data Penjualan</h2>
 
         <div class="action-bar">

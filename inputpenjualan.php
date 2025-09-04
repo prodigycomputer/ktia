@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$kodeuser = $_SESSION['kodeuser'] ?? '';
 include 'koneksi.php';
 $nonota = $_GET['nonota'] ?? '';
 $q = mysqli_query($conn, "SELECT qppn FROM zconfig LIMIT 1");
@@ -17,7 +18,7 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
     <script src="hitung.js"></script>
     <script src="multitabjual.js"></script>
 </head>
-<body>
+<body data-kodeuser="<?= $kodeuser ?>">
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php include 'navbar.php'; ?>
@@ -1275,7 +1276,9 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
                 hdisk1: parseIDNumber(activeTab.formData.hdiskon1?.value || 0),
                 hdisk2: parseIDNumber(activeTab.formData.hdiskon2?.value || 0),
                 hdisk3: parseIDNumber(activeTab.formData.hdiskon3?.value || 0),
-                detail: activeTab.dataPenjualan || []
+                detail: activeTab.dataPenjualan || [],
+
+                operator: document.body.dataset.kodeuser || ""  
             };
 
             // 🔹 Kirim data seperti dulu
