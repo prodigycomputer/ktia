@@ -18,7 +18,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
         html, body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Liberation Serif', sans-serif;
             font-size: 12px;
             background-color: #eee;
         }
@@ -61,7 +61,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
         .field { display: flex; align-items: center; }
         .field label:first-child { width: 100px; font-weight: bold; }
         .field label:nth-child(2) { margin-right: 4px; width: 10px; }
-        .field span { flex: 1; font-family: monospace; }
+        .field span { flex: 1;}
 
         .form-footer {
             display: flex;
@@ -81,7 +81,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
         }
 
         .box-perhatian {
-            border: 1px solid #000;
+            border: 1px solid;
             padding: 12px;
             font-size: 12px;
             font-style: italic;
@@ -103,7 +103,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
 
         /* kanan: perhitungan */
         .footer-kanan {
-            width: 30%;
+            width: 35%;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
@@ -112,7 +112,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
         }
         .footer-kanan div { display: flex; align-items: center; justify-content: flex-start; width: 100%; }
         .footer-kanan label { flex: 1; text-align: right; }
-        .footer-kanan span { flex: none; text-align: right; padding: 1px 2px; font-family: monospace; }
+        .footer-kanan span { flex: none; text-align: right; padding: 1px 2px; }
 
         .span-kecil { width: 36px; }
         .span-sedang { width: 90px; }
@@ -120,17 +120,23 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
 
         table { border-collapse: collapse; width: 100%; margin-bottom: 3px; }
         th {
-            border: 1px solid #aaa;
+            border: 1px solid;
             padding: 3px;
             text-align: center;
             font-size: 12px;
         }
         td {
-            border: 1px solid #aaa;
+            border: none; /* default tanpa border */
             padding: 3px;
             text-align: left;
             font-size: 11px;
         }
+
+        /* Kasih border bawah hanya di row terakhir */
+        tr:last-child td {
+            border-bottom: 1px solid black;
+        }
+
 
         .action-buttons {
             display: flex;
@@ -282,7 +288,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
                     <div class="footer-kiri">
                         <!-- Atas -->
                         <div class="box-perhatian">
-                            ⚠️ Perhatian: Barang yang sudah dibeli tidak bisa ditukar / dikembalikan.
+                            Perhatian: Barang yang sudah dibeli tidak bisa ditukar / dikembalikan.
                         </div>
 
                         <!-- Bawah: kiri-kanan -->
