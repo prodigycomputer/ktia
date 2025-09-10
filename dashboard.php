@@ -1,8 +1,5 @@
 <?php
-session_start();
-$kodeuser = $_SESSION['kodeuser'] ?? '';
-include 'koneksi.php';
-
+require_once 'init.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,8 +11,7 @@ include 'koneksi.php';
     <link rel="stylesheet" href="form.css">
 </head>
 <body>
-    <?php 
-        
+    <?php      
         include 'navbar.php'; ?>
 </body>
 </html>

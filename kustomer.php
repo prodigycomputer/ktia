@@ -1,7 +1,5 @@
 <?php
-session_start();
-$kodeuser = $_SESSION['kodeuser'] ?? '';
-include 'koneksi.php';
+require_once 'init.php';
 $query = $conn->query("SELECT jmlharga FROM zconfig LIMIT 1");
 $row = $query ? $query->fetch_assoc() : null;
 $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
@@ -21,14 +19,8 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php 
-    include 'navbar.php'; 
-
-    $current = basename($_SERVER['PHP_SELF']);
-
-    $akses = $_SESSION['aksesSemua'][$current] ?? ['ubah'=>0,'hapus'=>0];
-
-    $hakUbah   = $akses['ubah'];
-    $hakHapus  = $akses['hapus'];?>
+        require_once 'akses.php';
+    ?>
 
     <main>
         <h2>Data Kustomer</h2>

@@ -1,7 +1,5 @@
 <?php
-session_start();
-$kodeuser = $_SESSION['kodeuser'] ?? '';
-include 'koneksi.php';
+require_once 'init.php';
 $nonota = $_GET['nonota'] ?? '';
 
 ?>
@@ -20,14 +18,8 @@ $nonota = $_GET['nonota'] ?? '';
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php 
-    include 'navbar.php'; 
-
-    $current = basename($_SERVER['PHP_SELF']);
-
-    $akses = $_SESSION['aksesSemua'][$current] ?? ['ubah'=>0,'hapus'=>0];
-
-    $hakUbah   = $akses['ubah'];
-    $hakHapus  = $akses['hapus'];?>
+        require_once 'akses.php';
+    ?>
 
     <main>
         <h2>Edit Penyesuaian</h2>

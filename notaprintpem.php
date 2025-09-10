@@ -14,18 +14,20 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
     <meta charset="UTF-8">
     <title>Cetak Nota</title>
     <script src="fungsi.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         html, body {
             margin: 0;
             padding: 0;
-            font-family: 'Liberation Serif', sans-serif;
-            font-size: 12px;
+            font-family: 'Verdana';
+            font-size: 14px;
             background-color: #eee;
+            color: #000 !important;
         }
 
         .container-a5 {
-            width: 210mm;   /* ukuran A5 landscape */
-            height: 138mm;
+            width: 250mm;   /* ukuran A5 landscape */
+            height: 198mm;
             background-color: #fff;
             margin: 20px auto;
             padding: 10mm;  /* aman untuk printer */
@@ -46,7 +48,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
             justify-content: space-between;
             gap: 20px;
             margin-bottom: 5px;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .form-kiri, .form-kanan {
@@ -59,7 +61,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
         .form-kanan { width: 60%; margin-left: 10px; }
 
         .field { display: flex; align-items: center; }
-        .field label:first-child { width: 100px; font-weight: bold; }
+        .field label:first-child { width: 120px; font-weight: bold; }
         .field label:nth-child(2) { margin-right: 4px; width: 10px; }
         .field span { flex: 1;}
 
@@ -67,7 +69,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
             display: flex;
             justify-content: space-between;
             margin-top: 5px;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         /* kiri: tanda tangan + perhatian */
@@ -77,13 +79,13 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
             flex-direction: column;
             align-items: center;
             gap: 5px;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         .box-perhatian {
             border: 1px solid;
             padding: 12px;
-            font-size: 12px;
+            font-size: 14px;
             font-style: italic;
             text-align: center;
             width: 80%;
@@ -103,12 +105,12 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
 
         /* kanan: perhitungan */
         .footer-kanan {
-            width: 35%;
+            width: 30%;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             gap: 4px;
-            font-size: 12px;
+            font-size: 14px;
         }
         .footer-kanan div { display: flex; align-items: center; justify-content: flex-start; width: 100%; }
         .footer-kanan label { flex: 1; text-align: right; }
@@ -129,7 +131,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
             border: none; /* default tanpa border */
             padding: 3px;
             text-align: left;
-            font-size: 11px;
+            font-size: 14px;
         }
 
         /* Kasih border bawah hanya di row terakhir */
@@ -158,7 +160,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
 
         /* force print ke A5 landscape */
         @page {
-            size: A5 landscape;
+            size: landscape;
             margin: 0;
         }
 
@@ -168,7 +170,10 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
                 padding: 0;
                 background: none;
                 width: 210mm;
-                height: 148mm;
+                height: 198mm;
+            }
+            * {
+                color: #000 !important;   /* paksa semua teks jadi hitam */
             }
             body * { visibility: hidden; }
             .container-a5, .container-a5 * { visibility: visible; }
@@ -190,7 +195,8 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
 
 <div class="action-buttons">
     <button onclick="goBack()">← Kembali</button>
-    <button onclick="window.print()">🖨️ Print</button>
+    <button onclick="window.print()">🖨️ Print (HTML)</button>
+    <button onclick="printAsImage()">🖼️ Print (Gambar)</button>
 </div>
 
 <div id="pages"></div>
@@ -272,9 +278,9 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
                         <tr>
                             <th style="width: 20px;">Kode</th>
                             <th style="width: 150px;">Nama brg</th>
-                            <th style="width: 80px;">QTY</th>
-                            <th style="width: 50px;">Disc %</th>
-                            <th style="width: 10px;">Disrp</th>
+                            <th style="width: 120px;">QTY</th>
+                            <th style="width: 60px;">Disc %</th>
+                            <th style="width: 40px;">Disrp</th>
                             <th style="width: 10px;">Harga</th>
                             <th style="width: 10px;">Jumlah</th>
                         </tr>
@@ -361,6 +367,39 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
         console.error(err);
         alert("Gagal mengambil data");
     });
+
+    function printAsImage() {
+        const target = document.getElementById('pages'); // pastikan id benar
+        html2canvas(target, { scale: 2 }).then(canvas => {
+            const imgData = canvas.toDataURL("image/png");
+
+            // buka window baru
+            const win = window.open("", "_blank");
+            win.document.write(`
+            <html>
+            <head>
+                <title>Cetak Nota</title>
+                <style>
+                body, html { margin:0; padding:0; }
+                img { width:100%; height:auto; display:block; }
+                </style>
+            </head>
+            <body>
+                <img src="${imgData}">
+            </body>
+            </html>
+            `);
+            win.document.close();
+
+            // tunggu gambar load, baru print
+            win.onload = function() {
+            win.focus();
+            win.print();
+            // kalau mau langsung close setelah print:
+            // win.close();
+            };
+        });
+        }
 
     function goBack() {
         const from = new URLSearchParams(window.location.search).get('from');

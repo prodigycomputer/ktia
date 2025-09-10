@@ -1,7 +1,5 @@
 <?php
-session_start();
-$kodeuser = $_SESSION['kodeuser'] ?? '';
-include 'koneksi.php';
+require_once 'init.php';
 $nonota = $_GET['nonota'] ?? '';
 $q = mysqli_query($conn, "SELECT qppn FROM zconfig LIMIT 1");
 $data = mysqli_fetch_assoc($q);
@@ -22,14 +20,8 @@ $default_ppn = $data['qppn'] ?? 0; // fallback 0 jika tidak ada
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <?php 
-    include 'navbar.php'; 
-
-    $current = basename($_SERVER['PHP_SELF']);
-
-    $akses = $_SESSION['aksesSemua'][$current] ?? ['ubah'=>0,'hapus'=>0];
-
-    $hakUbah   = $akses['ubah'];
-    $hakHapus  = $akses['hapus'];?>
+        require_once 'akses.php';
+    ?>
 
     <main>
         <h2>Edit Penjualan</h2>

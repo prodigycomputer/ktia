@@ -1,8 +1,5 @@
 <?php
-session_start();
-$kodeuser = $_SESSION['kodeuser'] ?? '';
-
-include 'koneksi.php';
+require_once 'init.php';
 
 // Query data pembelian awal
 $query = mysqli_query($conn, "

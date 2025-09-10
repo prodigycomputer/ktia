@@ -1,7 +1,5 @@
 <?php
-session_start();
-$kodeuser = $_SESSION['kodeuser'] ?? '';
-include 'koneksi.php';
+require_once 'init.php';
 $nonota = $_GET['nonota'] ?? '';
 ?>
 <!DOCTYPE html>

@@ -1,11 +1,6 @@
 <?php
-session_start();
-$kodeuser = $_SESSION['kodeuser'] ?? '';
-include 'koneksi.php';
-// session_start() ada di sini, jadi tidak perlu dipanggil lagi
-
+require_once 'init.php';
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,15 +12,9 @@ include 'koneksi.php';
   <link rel="stylesheet" href="form.css" />
 </head>
 <body>
-<?php 
-include 'navbar.php'; 
-
-$current = basename($_SERVER['PHP_SELF']);
-
-$akses = $_SESSION['aksesSemua'][$current] ?? ['ubah'=>0,'hapus'=>0];
-
-$hakUbah   = $akses['ubah'];
-$hakHapus  = $akses['hapus'];?>
+<?php
+  require_once 'akses.php';
+?>
 <main>
   <h2>Data Area</h2>
 

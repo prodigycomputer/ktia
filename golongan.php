@@ -1,7 +1,5 @@
 <?php
-session_start();
-$kodeuser = $_SESSION['kodeuser'] ?? '';
-include 'koneksi.php';
+require_once 'init.php';
 ?>
 
 <!DOCTYPE html>
@@ -15,14 +13,8 @@ include 'koneksi.php';
 </head>
 <body>
 <?php 
-include 'navbar.php'; 
-
-$current = basename($_SERVER['PHP_SELF']);
-
-$akses = $_SESSION['aksesSemua'][$current] ?? ['ubah'=>0,'hapus'=>0];
-
-$hakUbah   = $akses['ubah'];
-$hakHapus  = $akses['hapus'];?>
+    require_once 'akses.php';
+?>
 <main>
   <h2>Data Golongan</h2>
 
