@@ -25,7 +25,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
 
         .container-a5 {
             width: 210mm;   /* ukuran A5 landscape */
-            height: 138mm;
+            height: 168mm;
             background-color: #fff;
             margin: 20px auto;
             padding: 10mm;  /* aman untuk printer */
@@ -168,7 +168,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
                 padding: 0;
                 background: none;
                 width: 210mm;
-                height: 148mm;
+                height: 168mm;
             }
             body * { visibility: hidden; }
             .container-a5, .container-a5 * { visibility: visible; }
