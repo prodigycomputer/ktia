@@ -809,7 +809,7 @@ $nonota = $_GET['nonota'] ?? '';
             }
 
             // Buka halaman nota dalam tab baru
-            const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}&from=editpenyesuaian.php`;
+            const url = `notaprintpeny.php?nonota=${encodeURIComponent(noNota)}&from=editpenyesuaian.php`;
             window.location.href = url;
         });
 

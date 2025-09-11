@@ -782,7 +782,7 @@ $nonota = $_GET['nonota'] ?? '';
             }
 
             // Buka halaman nota di tab yang sama
-            const url = `notaprintpem.php?nonota=${encodeURIComponent(noNota)}&from=inputmutasi.php`;
+            const url = `notaprintmut.php?nonota=${encodeURIComponent(noNota)}&from=inputmutasi.php`;
             window.location.href = url;
         });
 
