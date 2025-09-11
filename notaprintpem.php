@@ -19,16 +19,17 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
             margin: 0;
             padding: 0;
             font-family: 'Verdana';
+            font-weight: 20;
             font-size: 12px;
             background-color: #eee;
         }
 
         .container-a5 {
-            width: 210mm;   /* ukuran A5 landscape */
+            width: 230mm;   /* ukuran A5 landscape */
             height: 168mm;
             background-color: #fff;
             margin: 20px auto;
-            padding: 10mm;  /* aman untuk printer */
+            padding: 5mm;  /* aman untuk printer */
             box-shadow: 0 0 5px rgba(0,0,0,0.2);
             box-sizing: border-box;
             /* HAPUS page-break-after di sini */
@@ -59,7 +60,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
         .form-kanan { width: 60%; margin-left: 10px; }
 
         .field { display: flex; align-items: center; }
-        .field label:first-child { width: 100px; font-weight: bold; }
+        .field label:first-child { width: 100px;}
         .field label:nth-child(2) { margin-right: 4px; width: 10px; }
         .field span { flex: 1;}
 
@@ -129,7 +130,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
             border: none; /* default tanpa border */
             padding: 3px;
             text-align: left;
-            font-size: 10px;
+            font-size: 12px;
             white-space: nowrap;   /* Supaya teks tidak turun baris */
             overflow: hidden;      /* Sembunyikan teks yang kepanjangan */
             text-overflow: ellipsis; /* Tambah "..." kalau teks terpotong */
@@ -170,7 +171,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
                 margin: 0;
                 padding: 0;
                 background: none;
-                width: 210mm;
+                width: 230mm;
                 height: 168mm;
             }
             body * { visibility: hidden; }
@@ -321,7 +322,7 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
                         </div>
                         <div style="border-top: 1px solid #000; padding-top: 4px;">
                             <label><strong>Total Jumlah :</strong></label>
-                            <span style="font-weight:bold;" class="span-besar">${totaljmlh.toLocaleString('id-ID',{minimumFractionDigits:2})}</span>
+                            <span class="span-besar">${totaljmlh.toLocaleString('id-ID',{minimumFractionDigits:2})}</span>
                         </div>
                     </div>
                 </div>
