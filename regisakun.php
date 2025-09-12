@@ -11,6 +11,7 @@ require_once 'init.php';
   <title>Regis Akun</title>
   <link rel="stylesheet" href="navbar.css" />
   <link rel="stylesheet" href="form.css" />
+  <script src="button.js"></script>
 </head>
 <body>
 <?php 
@@ -163,7 +164,6 @@ require_once 'init.php';
     </div>
 </div>
 <script>
-let currentstat = null;
 let tempAkses = [];
 
 const hakUbah  = <?php echo $hakUbah; ?>;
@@ -205,6 +205,10 @@ function showToast(message, color = '#28a745') {
   toast.style.display = 'block';
   setTimeout(() => toast.style.display = 'none', 2000);
 }
+
+initializeFormButtons({
+    fields: ["kodeuser", "namauser", "passworduser", "konfirmpass"]
+});
 
 function initializeFormButtons() {
   currentstat = null;

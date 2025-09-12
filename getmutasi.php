@@ -11,10 +11,19 @@ if (!$nonota) {
 
 // Ambil data header dari zmutasi
 $queryHeader = mysqli_query($conn, "
-    SELECT l.nonota, l.tgl, l.kodegd1, l.kodegd2
+    SELECT 
+        l.nonota, 
+        l.tgl, 
+        l.kodegd1, 
+        g1.namagd AS namagd1,
+        l.kodegd2, 
+        g2.namagd AS namagd2
     FROM zmutasi l
+    LEFT JOIN zgudang g1 ON l.kodegd1 = g1.kodegd
+    LEFT JOIN zgudang g2 ON l.kodegd2 = g2.kodegd
     WHERE l.nonota = '$nonota'
 ");
+
 
 $dataHeader = mysqli_fetch_assoc($queryHeader);
 if (!$dataHeader) {
@@ -39,11 +48,14 @@ while ($row = mysqli_fetch_assoc($queryDetail)) {
 echo json_encode([
     'status' => 'success',
     'header' => [
-        'no_nota' => $dataHeader['nonota'],
-        'tanggal' => $dataHeader['tgl'],
-        'kodegd1' => $dataHeader['kodegd1'],
-        'kodegd2' => $dataHeader['kodegd2']
+        'no_nota'   => $dataHeader['nonota'],
+        'tanggal'   => $dataHeader['tgl'],
+        'kodegd1'   => $dataHeader['kodegd1'],
+        'namagd1'   => $dataHeader['namagd1'],
+        'kodegd2'   => $dataHeader['kodegd2'],
+        'namagd2'   => $dataHeader['namagd2']
     ],
     'detail' => $dataMutasi
 ]);
+
 ?>

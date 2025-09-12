@@ -10,6 +10,7 @@ require_once 'init.php';
   <title>Data Golongan</title>
   <link rel="stylesheet" href="navbar.css" />
   <link rel="stylesheet" href="form.css" />
+  <script src="button.js"></script>
 </head>
 <body>
 <?php 
@@ -112,7 +113,6 @@ require_once 'init.php';
     </div>
 </div>
 <script>
-      let currentstat = null;
 
       const hakUbah  = <?php echo $hakUbah; ?>;
       const hakHapus = <?php echo $hakHapus; ?>;
@@ -137,28 +137,10 @@ require_once 'init.php';
         setTimeout(() => toast.style.display = 'none', 2000);
       }
 
-      function initializeFormButtons() {
-        currentstat = null;
+      initializeFormButtons({
+        fields: ["kodegolongan", "namagolongan"]
+      });
 
-        document.getElementById('btnTambah').disabled = false;
-        document.getElementById('btnEdit').disabled = true;
-        document.getElementById('btnHapus').disabled = true;
-        document.getElementById('btnCancel').disabled = true;
-        document.getElementById('btnSave').disabled = true;
-
-        document.getElementById('kodegolongan').disabled = true;
-        document.getElementById('namagolongan').disabled = true;
-
-        document.getElementById('searchKode').value = '';
-        document.getElementById('searchNama').value = '';
-        document.getElementById('searchKode').disabled = false;
-        document.getElementById('searchNama').disabled = false;
-        document.getElementById('searchbtn').disabled = false;
-
-        resetButtonStyles();
-
-      }
-      initializeFormButtons();
 
       function initializeFormButtonsCancel() {
           currentstat = null;

@@ -14,6 +14,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
     <title>Data Barang</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
+    <script src="button.js"></script>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -266,7 +267,6 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
     <script>
         let previousFormData = {};
-        let currentstat = null;
         let inputSearch = null;
         let searchBtn = document.getElementById('searchbtn')
         let hargaData = []
@@ -290,35 +290,14 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             return true;
         }
 
-        function initializeFormButtons() {
-            document.getElementById('btnTambah').disabled = false;
-            document.getElementById('btnEdit').disabled = true;
-            document.getElementById('btnHapus').disabled = true;
-            document.getElementById('btnCancel').disabled = true;
-            document.getElementById('btnSave').disabled = true;
-            document.getElementById('btnHarga').disabled = true;            
-
-            document.getElementById('kodemerek').disabled = true;
-            document.getElementById('kodegolongan').disabled = true;
-            document.getElementById('kodegrup').disabled = true;
-            document.getElementById('kodebrg').disabled = true;
-            document.getElementById('namabrg').disabled = true;
-            document.getElementById('satuan1').disabled = true;
-            document.getElementById('isi1').disabled = true;
-            document.getElementById('satuan2').disabled = true;
-            document.getElementById('isi2').disabled = true;
-            document.getElementById('satuan3').disabled = true;
-            document.getElementById('hargabeli').disabled = true;
-            document.getElementById('gambar').disabled = true;
-            document.getElementById('upload').disabled = true;
-
-            document.getElementById('searchKode').value = '';
-            document.getElementById('searchNama').value = '';
-            document.getElementById('searchKode').disabled = false;
-            document.getElementById('searchNama').disabled = false;
-            document.getElementById('searchbtn').disabled = false;
-        }
-        initializeFormButtons();
+        initializeFormButtons({
+            extraButtons: ["btnHarga"],
+            fields: [
+                "kodemerek","kodegolongan","kodegrup","kodebrg","namabrg",
+                "satuan1","isi1","satuan2","isi2","satuan3",
+                "hargabeli","gambar","upload"
+            ]
+        });
 
         function initializeFormButtonsCancel() {
             currentstat = null;

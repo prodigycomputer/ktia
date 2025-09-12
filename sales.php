@@ -13,6 +13,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
     <title>Data Sales</title>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form.css">
+    <script src="button.js"></script>
 </head>
 <body>
     <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -161,32 +162,9 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
             return true;
         }
 
-        function initializeFormButtons() {
-            document.getElementById('btnTambah').disabled = false;
-            document.getElementById('btnEdit').disabled = true;
-            document.getElementById('btnHapus').disabled = true;
-            document.getElementById('btnCancel').disabled = true;
-            document.getElementById('btnSave').disabled = true;      
-
-            document.getElementById('kodesls').disabled = true;
-            document.getElementById('kodesls').readOnly = false;
-            document.getElementById('namasls').disabled = true;
-            document.getElementById('alamat').disabled = true;
-            document.getElementById('kota').disabled = true;
-            document.getElementById('ktp').disabled = true;
-            document.getElementById('npwp').disabled = true;
-            document.getElementById('gambar').disabled = true;
-            document.getElementById('upload').disabled = true;
-
-            document.getElementById('searchKode').value = '';
-            document.getElementById('searchNama').value = '';
-            document.getElementById('searchKode').disabled = false;
-            document.getElementById('searchNama').disabled = false;
-            document.getElementById('searchbtn').disabled = false;
-
-            resetButtonStyles();
-        }
-        initializeFormButtons();
+        initializeFormButtons({
+            fields: ["kodesls", "namasls","alamat","kota", "ktp","npwp","gambar","upload"]
+        });
 
         function initializeFormButtonsCancel() {
             currentstat = null;
@@ -222,7 +200,7 @@ $jmlharga = ($row && is_numeric($row['jmlharga'])) ? (int)$row['jmlharga'] : 0;
 
         }
 
-        let currentstat = null;
+        
 
         function initializeTambah() {
             currentstat = 'tambah';

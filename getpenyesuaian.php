@@ -11,8 +11,9 @@ if (!$nonota) {
 
 // Ambil data header dari zmutasi
 $queryHeader = mysqli_query($conn, "
-    SELECT p.nonota, p.tgl, p.kodegd
+    SELECT p.nonota, p.tgl, p.kodegd, g.namagd
     FROM zpenyesuaian p
+    JOIN zgudang g ON p.kodegd = g.kodegd
     WHERE p.nonota = '$nonota'
 ");
 
@@ -41,7 +42,8 @@ echo json_encode([
     'header' => [
         'no_nota' => $dataHeader['nonota'],
         'tanggal' => $dataHeader['tgl'],
-        'kodegd' => $dataHeader['kodegd']
+        'kodegd' => $dataHeader['kodegd'],
+        'namagd' => $dataHeader['namagd']
     ],
     'detail' => $dataPenyesuaian
 ]);

@@ -235,8 +235,8 @@ if ($maxPerPage <= 0) $maxPerPage = 10; // default kalau kosong
                         <div class="field"><label>No Nota</label><label>:</label><span>${h.no_nota}</span></div>
                     </div>
                     <div class="form-kanan">
-                        <div class="field"><label>Kode Gudang 1</label><label>:</label><span>${h.kodegd1}</span></div>
-                        <div class="field"><label>Kode Gudang 2</label><label>:</label><span>${h.kodegd2}</span></div>
+                        <div class="field"><label>Kode Gudang 1</label><label>:</label><span>${h.kodegd1} ${h.namagd1}</span></div>
+                        <div class="field"><label>Kode Gudang 2</label><label>:</label><span>${h.kodegd2} ${h.namagd2}</span></div>
                     </div>
                 </div>
 
