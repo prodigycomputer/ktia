@@ -355,6 +355,7 @@ Partial Class ItFPopup
         '
         'btnPopTUTUP
         '
+        Me.btnPopTUTUP.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnPopTUTUP.Location = New System.Drawing.Point(248, 380)
         Me.btnPopTUTUP.Name = "btnPopTUTUP"
         Me.btnPopTUTUP.Size = New System.Drawing.Size(55, 30)
@@ -364,6 +365,7 @@ Partial Class ItFPopup
         '
         'btnPopTAMBAH
         '
+        Me.btnPopTAMBAH.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnPopTAMBAH.Location = New System.Drawing.Point(187, 380)
         Me.btnPopTAMBAH.Name = "btnPopTAMBAH"
         Me.btnPopTAMBAH.Size = New System.Drawing.Size(55, 30)

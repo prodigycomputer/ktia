@@ -7,7 +7,6 @@ Public Class FPembelian
     Private TabLoadState As New Dictionary(Of Integer, Boolean)
     Private TabStatus As New Dictionary(Of Integer, String)
 
-
     Public Sub SetSupplier(ByVal kode As String, ByVal nama As String,
                        ByVal alamat As String, ByVal kota As String,
                        ByVal ktp As String, ByVal npwp As String)
@@ -190,6 +189,7 @@ Public Class FPembelian
 
             If MessageBox.Show("Hapus item ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 grid.Rows.Remove(grid.CurrentRow)
+                UpdateSubtotal(nomor)
             End If
 
         Catch ex As Exception
@@ -270,6 +270,30 @@ Public Class FPembelian
         tpmSLUNAS.Enabled = Not nonotaActive
     End Sub
 
+    ' ----------------- STATUS HELPERS -----------------
+    Private Sub SetTabStatus(ByVal nomor As Integer, ByVal status As String)
+        If TabStatus.ContainsKey(nomor) Then
+            TabStatus(nomor) = status
+        Else
+            TabStatus.Add(nomor, status)
+        End If
+
+        ' simpan juga di Tag TabPage (tidak mengubah Text)
+        For Each tp As TabPage In TabControl1.TabPages
+            If tp.Text = "Nota " & nomor Then
+                tp.Tag = status
+                Exit For
+            End If
+        Next
+    End Sub
+
+    Private Function GetTabStatus(ByVal nomor As Integer) As String
+        If TabStatus.ContainsKey(nomor) Then
+            Return TabStatus(nomor)
+        End If
+        Return String.Empty
+    End Function
+
     ' ================== REGISTER TAB ==================
     Private Sub RegisterTabControls(ByVal tab As TabPage, ByVal nomor As Integer)
         Dim dict As New Dictionary(Of String, Control)
@@ -286,6 +310,8 @@ Public Class FPembelian
         dict("tpmNPPN") = tab.Controls.Find("tpmNPPN", True)(0)
         dict("tpmAPPN") = tab.Controls.Find("tpmAPPN", True)(0)
         dict("tpmLAIN") = tab.Controls.Find("tpmLAIN", True)(0)
+
+        CType(dict("tpmAPPN"), TextBox).Text = "11"
 
         dict("tpmNDISK3") = tab.Controls.Find("tpmNDISK3", True)(0)
         dict("tpmADISK3") = tab.Controls.Find("tpmADISK3", True)(0)
@@ -307,12 +333,36 @@ Public Class FPembelian
 
         TabControls(nomor) = dict
 
+        ' === Tambahkan event subtotal otomatis ===
+        AddHandler grid.CellValueChanged, Sub(s, e)
+                                              UpdateSubtotal(nomor)
+                                          End Sub
+        AddHandler grid.RowsRemoved, Sub(s, e)
+                                         UpdateSubtotal(nomor)
+                                     End Sub
+        AddHandler grid.RowsAdded, Sub(s, e)
+                                       UpdateSubtotal(nomor)
+                                   End Sub
+
         ' Tambahkan event handler dinamis
         AddHandler CType(dict("tpmKDSUP"), TextBox).KeyDown, AddressOf tpmKDSUP_KeyDown
         AddHandler CType(dict("tpmNMSUP"), TextBox).KeyDown, AddressOf tpmNMSUP_KeyDown
 
+        AddHandler CType(dict("tpmADISK1"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
+        AddHandler CType(dict("tpmADISK2"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
+        AddHandler CType(dict("tpmADISK3"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
+        AddHandler CType(dict("tpmAPPN"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
+        AddHandler CType(dict("tpmLAIN"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
+
         ' Event tombol Add Item
         AddHandler CType(dict("btnADDITEM"), Button).Click, AddressOf btnADDITEM_Click
+
+        If TabStatus.ContainsKey(nomor) Then
+            TabStatus(nomor) = String.Empty
+        Else
+            TabStatus.Add(nomor, String.Empty)
+        End If
+        tab.Tag = String.Empty
     End Sub
 
     ' ================== CLONE CONTROL ==================
@@ -396,15 +446,18 @@ Public Class FPembelian
 
         For Each ctrl As Control In template.Controls
             newTab.Controls.Add(CloneControl(ctrl))
+            DisabledLoad()
         Next
 
         TabControl1.TabPages.Add(newTab)
         TabPagesList.Add(newTab)
         RegisterTabControls(newTab, nomor)
+        SetTabStatus(nomor, String.Empty)
         TabControl1.SelectedTab = newTab
         TabLoadState(nomor) = True
         TabButtonState(nomor) = True
         SetButtonState(Me, True)
+
     End Sub
 
     ' ================== HAPUS TAB ==================
@@ -432,109 +485,33 @@ Public Class FPembelian
             Dim aktifTab As TabPage = TabControl1.SelectedTab
             Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
             Dim dict = TabControls(nomor)
+            Dim status As String = GetTabStatus(nomor)
 
-            Dim tgl As String = CType(dict("tpmTANGGAL"), DateTimePicker).Value.ToString("yyyy-MM-dd")
-            Dim nonota As String = CType(dict("tpmNONOTA"), TextBox).Text.Trim()
-            Dim tempo As String = CType(dict("tpmTEMPO"), DateTimePicker).Value.ToString("yyyy-MM-dd")
-            Dim ket As String = CType(dict("tpmKET"), TextBox).Text.Trim()
-            Dim kodesup As String = CType(dict("tpmKDSUP"), TextBox).Text.Trim()
-            Dim namasup As String = CType(dict("tpmNMSUP"), TextBox).Text.Trim()
-            Dim alamat As String = CType(dict("tpmALAMAT"), TextBox).Text.Trim()
-            Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
-
-            ' --- Validasi input ---
-            If nonota = "" Then
-                MessageBox.Show("No Nota tidak boleh kosong!", "Warning")
-                Exit Sub
-            End If
-            If kodesup = "" Then
-                MessageBox.Show("Supplier belum dipilih!", "Warning")
-                Exit Sub
-            End If
-
-            ' --- Buka koneksi + mulai transaksi ---
-            BukaKoneksi()
-            Trans = Conn.BeginTransaction()
-
-            ' --- Simpan Header ---
-            Dim sql As String = "INSERT INTO zbeli (tgl, nonota, tgltempo, ket, kodesup, nilai, lunas) VALUES (?, ?, ?, ?, ?, 0, 0)"
-            Using Cmd As New OdbcCommand(sql, Conn, Trans)
-                Cmd.Parameters.AddWithValue("@tgl", tgl)
-                Cmd.Parameters.AddWithValue("@nonota", nonota)
-                Cmd.Parameters.AddWithValue("@tgltempo", tempo)
-                Cmd.Parameters.AddWithValue("@ket", ket)
-                Cmd.Parameters.AddWithValue("@kodesup", kodesup)
-                Cmd.ExecuteNonQuery()
-            End Using
-
-            ' --- Simpan Detail ---
-            For Each row As DataGridViewRow In grid.Rows
-                If row.IsNewRow Then Continue For
-
-                Dim kodebrg As String = If(row.Cells("KodeBrg").Value, "").ToString.Trim()
-                If kodebrg = "" Then Continue For ' skip baris kosong
-
-                Dim kodegd As String = If(row.Cells("KodeGudang").Value, "").ToString.Trim()
-                Dim jlh1 As Double = Val(If(row.Cells("Jlh1").Value, 0))
-                Dim jlh2 As Double = Val(If(row.Cells("Jlh2").Value, 0))
-                Dim jlh3 As Double = Val(If(row.Cells("Jlh3").Value, 0))
-                Dim harga As Double = Val(If(row.Cells("Harga").Value, 0))
-                Dim disca As Double = Val(If(row.Cells("Disca").Value, 0))
-                Dim discb As Double = Val(If(row.Cells("Discb").Value, 0))
-                Dim discc As Double = Val(If(row.Cells("Discc").Value, 0))
-                Dim discrp As Double = Val(If(row.Cells("DiscRp").Value, 0))
-                Dim jumlah As Double = Val(If(row.Cells("Jumlah").Value, 0))
-
-                Dim sqldet As String = "INSERT INTO zbelim " &
-                    "(nonota, kodebrg, kodegd, jlh1, jlh2, jlh3, harga, disca, hdisca, discb, hdiscb, discc, hdiscc, discrp, jumlah, operator) " &
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0, ?, 0, ?, ?, ?)"
-
-                Using CmdDet As New OdbcCommand(sqldet, Conn, Trans)
-                    CmdDet.Parameters.AddWithValue("@nonota", nonota)
-                    CmdDet.Parameters.AddWithValue("@kodebrg", kodebrg)
-                    CmdDet.Parameters.AddWithValue("@kodegd", kodegd)
-                    CmdDet.Parameters.AddWithValue("@jlh1", jlh1)
-                    CmdDet.Parameters.AddWithValue("@jlh2", jlh2)
-                    CmdDet.Parameters.AddWithValue("@jlh3", jlh3)
-                    CmdDet.Parameters.AddWithValue("@harga", harga)
-                    CmdDet.Parameters.AddWithValue("@disca", disca)
-                    CmdDet.Parameters.AddWithValue("@discb", discb)
-                    CmdDet.Parameters.AddWithValue("@discc", discc)
-                    CmdDet.Parameters.AddWithValue("@discrp", discrp)
-                    CmdDet.Parameters.AddWithValue("@jumlah", jumlah)
-                    CmdDet.Parameters.AddWithValue("@operator", Environment.UserName) ' isi operator (username Windows)
-                    CmdDet.ExecuteNonQuery()
-                End Using
-            Next
-
-            ' --- Commit transaksi ---
-            Trans.Commit()
-            Conn.Close()
+            MPemSimpan.SimpanPembelian(nomor, dict, status)
 
             MessageBox.Show("Data pembelian berhasil disimpan untuk " & aktifTab.Text, "Sukses")
+
             TabLoadState(nomor) = True
             TabButtonState(nomor) = True
             SetButtonState(Me, True)
             DisabledLoad()
 
         Catch ex As Exception
-            Try
-                If Trans IsNot Nothing Then
-                    Trans.Rollback() ' batalkan transaksi kalau error
-                End If
-                If Conn IsNot Nothing AndAlso Conn.State = ConnectionState.Open Then
-                    Conn.Close()
-                End If
-            Catch
-            End Try
-
-            MessageBox.Show("Gagal simpan data: " & ex.Message, "Error")
+            MessageBox.Show(ex.Message, "Error Simpan")
         End Try
-
     End Sub
+
 
     Private Sub btnTAMBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTAMBAH.Click
         Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
+
+        If Not TabControls.ContainsKey(nomor) Then
+            RegisterTabControls(TabControl1.SelectedTab, nomor)
+        End If
+
+        ' set status
+        SetTabStatus(nomor, "tambah")
+
         TabLoadState(nomor) = False
         TabButtonState(nomor) = False
         SetButtonState(Me, False)
@@ -543,6 +520,23 @@ Public Class FPembelian
 
     Private Sub btnUBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUBAH.Click
         Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
+
+        If Not TabControls.ContainsKey(nomor) Then
+            RegisterTabControls(TabControl1.SelectedTab, nomor)
+        End If
+
+        ' ambil kontrol tpmNONOTA dari tab aktif
+        Dim tpmNONOTA As TextBox = TryCast(TabControls(nomor)("tpmNONOTA"), TextBox)
+
+        ' cek apakah kosong
+        If tpmNONOTA Is Nothing OrElse String.IsNullOrWhiteSpace(tpmNONOTA.Text) Then
+            MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        ' set status
+        SetTabStatus(nomor, "ubah")
+
         TabLoadState(nomor) = False
         TabButtonState(nomor) = False
         SetButtonState(Me, False)
@@ -550,12 +544,40 @@ Public Class FPembelian
     End Sub
 
     Private Sub btnHAPUS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHAPUS.Click
-        Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
-        TabLoadState(nomor) = True
-        TabButtonState(nomor) = True
-        SetButtonState(Me, True)
-        DisabledLoad()
+        Try
+            Dim aktifTab As TabPage = TabControl1.SelectedTab
+            Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
+
+            If Not TabControls.ContainsKey(nomor) Then Exit Sub
+            Dim dict = TabControls(nomor)
+
+            Dim nonota As String = CType(dict("tpmNONOTA"), TextBox).Text.Trim()
+
+            If String.IsNullOrEmpty(nonota) Then
+                MessageBox.Show("Tidak ada nota yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Exit Sub
+            End If
+
+            If MessageBox.Show("Yakin hapus nota " & nonota & " ?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+                Exit Sub
+            End If
+
+            ' === Hapus data dari database (module) ===
+            HapusPembelian(nonota, dict)
+
+            ' === Update status tab setelah hapus ===
+            TabLoadState(nomor) = True
+            TabButtonState(nomor) = True
+            SetButtonState(Me, True)
+            DisabledLoad()
+
+            MessageBox.Show("Nota " & nonota & " berhasil dihapus.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error Hapus", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
+
 
     Private Sub btnBATAL_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBATAL.Click
         Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
@@ -564,6 +586,24 @@ Public Class FPembelian
         SetButtonState(Me, True)
         DisabledLoad()
     End Sub
+
+    Private Sub UpdateSubtotal(ByVal nomor As Integer)
+        If Not TabControls.ContainsKey(nomor) Then Exit Sub
+
+        Dim dict = TabControls(nomor)
+        Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
+        Dim subtotal As Decimal = 0
+
+        For Each row As DataGridViewRow In grid.Rows
+            If row.IsNewRow Then Continue For
+            If row.Cells("Jumlah").Value IsNot Nothing Then
+                subtotal += Val(row.Cells("Jumlah").Value)
+            End If
+        Next
+
+        CType(dict("tpmSUBTOTAL"), TextBox).Text = subtotal.ToString()
+    End Sub
+
 
     ' ================== ADD ITEM ==================
     Private Sub btnADDITEM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnADDITEM.Click
@@ -591,7 +631,6 @@ Public Class FPembelian
             MessageBox.Show("Gagal menambahkan item: " & ex.Message, "Error")
         End Try
     End Sub
-
 
     ' ================== KEYDOWN SUPPLIER ==================
     Private Sub tpmKDSUP_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs)
@@ -642,6 +681,14 @@ Public Class FPembelian
         f.Owner = Me
         f.Show()
         f.LoadDataBeli(nonota, tgl1, tgl2, namasup, status)
+
+        ' === Clear filter setelah pencarian ===
+        tpmSNONOTA.Clear()
+        tpmSNMSUP.Clear()
+        tpmSLUNAS.SelectedIndex = -1 ' reset pilihan
+        ' reset tanggal ke hari ini
+        dtpmTGL1.Value = DateTime.Today
+        dtpmTGL2.Value = DateTime.Today
     End Sub
 
     Private Sub tpmSLUNAS_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tpmSLUNAS.SelectedIndexChanged
@@ -665,19 +712,55 @@ Public Class FPembelian
     Private Sub TabControl1_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs) Handles TabControl1.SelectedIndexChanged
         If TabControl1.SelectedTab Is Nothing Then Exit Sub
 
-        Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
+        Dim nomor As Integer
+        If Not Integer.TryParse(TabControl1.SelectedTab.Text.Replace("Nota ", ""), nomor) Then Exit Sub
+
+        ' Pastikan ada entri pada dictionaries (jika belum, inisialisasi default)
+        If Not TabButtonState.ContainsKey(nomor) Then
+            TabButtonState(nomor) = True
+        End If
+        If Not TabLoadState.ContainsKey(nomor) Then
+            ' Asumsikan load state default = True (data sudah load / readonly)
+            TabLoadState(nomor) = True
+        End If
 
         ' === handle tombol ===
-        If TabButtonState.ContainsKey(nomor) Then
-            If TabLoadState(nomor) Then
-                DisabledLoad()
-            Else
-                EnabledLoad()
-            End If
-            SetButtonState(Me, TabButtonState(nomor))
+        If TabLoadState(nomor) Then
+            DisabledLoad()
         Else
-            TabButtonState(nomor) = True
-            SetButtonState(Me, True)
+            EnabledLoad()
         End If
+
+        SetButtonState(Me, TabButtonState(nomor))
+    End Sub
+
+
+    Private Sub HitungOtomatisTotal(ByVal nomor As Integer)
+        If Not TabControls.ContainsKey(nomor) Then Exit Sub
+        Dim dict = TabControls(nomor)
+
+        Dim subtotal As Decimal = Val(CType(dict("tpmSUBTOTAL"), TextBox).Text)
+        Dim adisk1 As Decimal = Val(CType(dict("tpmADISK1"), TextBox).Text)
+        Dim adisk2 As Decimal = Val(CType(dict("tpmADISK2"), TextBox).Text)
+        Dim adisk3 As Decimal = Val(CType(dict("tpmADISK3"), TextBox).Text)
+        Dim appn As Decimal = Val(CType(dict("tpmAPPN"), TextBox).Text)
+        Dim lain As Decimal = Val(CType(dict("tpmLAIN"), TextBox).Text)
+
+        Dim hasil = ModHitung.HitungSubtotalTotal(subtotal, adisk1, adisk2, adisk3, appn, lain)
+
+        CType(dict("tpmNDISK1"), TextBox).Text = hasil("hdisca").ToString()
+        CType(dict("tpmNDISK2"), TextBox).Text = hasil("hdiscb").ToString()
+        CType(dict("tpmNDISK3"), TextBox).Text = hasil("hdiscc").ToString()
+        CType(dict("tpmNPPN"), TextBox).Text = hasil("ppn").ToString()
+        CType(dict("tpmTOTAL"), TextBox).Text = hasil("total").ToString()
+    End Sub
+
+    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+        Handles tpmSUBTOTAL.KeyPress, tpmTOTAL.KeyPress, tpmADISK1.KeyPress,
+                tpmADISK2.KeyPress, tpmADISK3.KeyPress, tpmNDISK1.KeyPress,
+                tpmNDISK2.KeyPress, tpmNDISK3.KeyPress, tpmLAIN.KeyPress,
+                tpmAPPN.KeyPress, tpmNPPN.KeyPress
+
+        AngkaHelper.HanyaAngka(e)
     End Sub
 End Class
