@@ -228,6 +228,7 @@ Partial Class FPembelian
         Me.tpmAPPN.Name = "tpmAPPN"
         Me.tpmAPPN.Size = New System.Drawing.Size(50, 20)
         Me.tpmAPPN.TabIndex = 37
+        Me.tpmAPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmNDISK3
         '
@@ -242,6 +243,7 @@ Partial Class FPembelian
         Me.tpmADISK3.Name = "tpmADISK3"
         Me.tpmADISK3.Size = New System.Drawing.Size(50, 20)
         Me.tpmADISK3.TabIndex = 34
+        Me.tpmADISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmNDISK2
         '
@@ -256,6 +258,7 @@ Partial Class FPembelian
         Me.tpmADISK2.Name = "tpmADISK2"
         Me.tpmADISK2.Size = New System.Drawing.Size(50, 20)
         Me.tpmADISK2.TabIndex = 31
+        Me.tpmADISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmNDISK1
         '
@@ -270,6 +273,7 @@ Partial Class FPembelian
         Me.tpmADISK1.Name = "tpmADISK1"
         Me.tpmADISK1.Size = New System.Drawing.Size(50, 20)
         Me.tpmADISK1.TabIndex = 28
+        Me.tpmADISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmALAMAT
         '

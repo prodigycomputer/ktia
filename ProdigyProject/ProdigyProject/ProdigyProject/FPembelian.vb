@@ -1,4 +1,6 @@
-﻿Imports System.Data.Odbc
+﻿Imports CrystalDecisions.CrystalReports.Engine
+Imports CrystalDecisions.Windows.Forms
+Imports System.Data.Odbc
 
 Public Class FPembelian
     Private TabPagesList As New List(Of TabPage)
@@ -202,7 +204,7 @@ Public Class FPembelian
             BukaKoneksi()
 
             ' ================== HEADER ==================
-            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.ket, z.kodesup, s.namasup, s.alamat, z.nilai, z.lunas FROM zbeli z LEFT JOIN zsupplier s ON z.kodesup = s.kodesup WHERE z.nonota = ?"
+            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.ket, z.kodesup, s.namasup, s.alamat, z.nilai, z.lunas, z.disc1, z.hdisc1, z.disc2, z.hdisc2, z.disc3, z.hdisc3, z.ppn, z.hppn FROM zbeli z LEFT JOIN zsupplier s ON z.kodesup = s.kodesup WHERE z.nonota = ?"
             Using cmd As New OdbcCommand(sqlHead, Conn)
                 cmd.Parameters.AddWithValue("@nonota", nonota)
                 Rd = cmd.ExecuteReader()
@@ -218,6 +220,16 @@ Public Class FPembelian
                     CType(dict("tpmKDSUP"), TextBox).Text = Rd("kodesup").ToString()
                     CType(dict("tpmNMSUP"), TextBox).Text = Rd("namasup").ToString()
                     CType(dict("tpmALAMAT"), TextBox).Text = Rd("alamat").ToString()
+                    CType(dict("tpmTOTAL"), TextBox).Text = Rd("nilai").ToString()
+                    CType(dict("tpmADISK1"), TextBox).Text = Rd("disc1").ToString()
+                    CType(dict("tpmNDISK1"), TextBox).Text = Rd("hdisc1").ToString()
+                    CType(dict("tpmADISK2"), TextBox).Text = Rd("disc2").ToString()
+                    CType(dict("tpmNDISK2"), TextBox).Text = Rd("hdisc2").ToString()
+                    CType(dict("tpmADISK3"), TextBox).Text = Rd("disc3").ToString()
+                    CType(dict("tpmNDISK3"), TextBox).Text = Rd("hdisc3").ToString()
+                    CType(dict("tpmAPPN"), TextBox).Text = Rd("ppn").ToString()
+                    CType(dict("tpmNPPN"), TextBox).Text = Rd("hppn").ToString()
+
                 End If
                 Rd.Close()
             End Using
@@ -762,5 +774,28 @@ Public Class FPembelian
                 tpmAPPN.KeyPress, tpmNPPN.KeyPress
 
         AngkaHelper.HanyaAngka(e)
+    End Sub
+
+    Private Sub btnPRINT_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnPRINT.Click
+        Try
+            Dim aktifTab As TabPage = TabControl1.SelectedTab
+            Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
+            Dim dict = TabControls(nomor)
+
+            Dim nonota As String = CType(dict("tpmNONOTA"), TextBox).Text
+
+            If String.IsNullOrEmpty(nonota) Then
+                MessageBox.Show("Pilih nota yang akan dicetak!", "Info")
+                Exit Sub
+            End If
+
+            ' --- Buka form cetak ---
+            Dim f As New FCetak()
+            f.Param("nonota") = nonota
+            f.ShowDialog()
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal cetak nota: " & ex.Message, "Error")
+        End Try
     End Sub
 End Class

@@ -6,7 +6,23 @@ ProdigyProject
 </name>
 </assembly>
 <members>
-<member name="P:ProdigyProject.My.Resources.Resources.ResourceManager">
+<member name="T:ProdigyProject.NotaDt.NotaPembelianDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:ProdigyProject.NotaDt.NotaPembelianRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:ProdigyProject.NotaDt.NotaPembelianRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:ProdigyProject.NotaDt">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="P:ProdigyProject.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
 </summary>
