@@ -23,6 +23,7 @@ Module MPemSimpan
             Dim ndisk2 As Double = CType(dict("tpmNDISK2"), TextBox).Text.Trim()
             Dim adisk3 As Double = CType(dict("tpmADISK3"), TextBox).Text.Trim()
             Dim ndisk3 As Double = CType(dict("tpmNDISK3"), TextBox).Text.Trim()
+            Dim lain As Double = CType(dict("tpmLAIN"), TextBox).Text.Trim()
             Dim appn As Double = CType(dict("tpmAPPN"), TextBox).Text.Trim()
             Dim nppn As Double = CType(dict("tpmNPPN"), TextBox).Text.Trim()
             Dim total As Double = CType(dict("tpmTOTAL"), TextBox).Text.Trim()
@@ -54,8 +55,8 @@ Module MPemSimpan
             End If
 
             ' --- Simpan Header ---
-            Dim sql As String = "INSERT INTO zbeli (tgl, nonota, tgltempo, ket, kodesup, nilai, lunas, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3, ppn, hppn) " &
-                                "VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?)"
+            Dim sql As String = "INSERT INTO zbeli (tgl, nonota, tgltempo, ket, kodesup, nilai, lunas, disc1, hdisc1, disc2, hdisc2, disc3, hdisc3, ppn, hppn, lainnya) " &
+                                "VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             Using Cmd As New OdbcCommand(sql, Conn, Trans)
                 Cmd.Parameters.AddWithValue("@tgl", tgl)
                 Cmd.Parameters.AddWithValue("@nonota", nonota)
@@ -71,6 +72,7 @@ Module MPemSimpan
                 Cmd.Parameters.AddWithValue("@hdisc3", ndisk3)
                 Cmd.Parameters.AddWithValue("@ppn", appn)
                 Cmd.Parameters.AddWithValue("@hppn", nppn)
+                Cmd.Parameters.AddWithValue("@lainnya", lain)
                 Cmd.ExecuteNonQuery()
             End Using
 

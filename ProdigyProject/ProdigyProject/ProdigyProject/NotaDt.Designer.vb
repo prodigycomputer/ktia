@@ -329,9 +329,19 @@ Partial Public Class NotaDt
         
         Private columndisc3 As Global.System.Data.DataColumn
         
+        Private columnppn1 As Global.System.Data.DataColumn
+        
         Private columnppn As Global.System.Data.DataColumn
         
         Private columnnilai As Global.System.Data.DataColumn
+        
+        Private columnlainnya As Global.System.Data.DataColumn
+        
+        Private columnhdisc1 As Global.System.Data.DataColumn
+        
+        Private columnhdisc2 As Global.System.Data.DataColumn
+        
+        Private columnhdisc3 As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
@@ -554,6 +564,14 @@ Partial Public Class NotaDt
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property ppn1Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnppn1
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public ReadOnly Property ppnColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnppn
@@ -565,6 +583,38 @@ Partial Public Class NotaDt
         Public ReadOnly Property nilaiColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnnilai
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property lainnyaColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnlainnya
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property hdisc1Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnhdisc1
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property hdisc2Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnhdisc2
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public ReadOnly Property hdisc3Column() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnhdisc3
             End Get
         End Property
         
@@ -629,10 +679,15 @@ Partial Public Class NotaDt
                     ByVal disc1 As Double,  _
                     ByVal disc2 As Double,  _
                     ByVal disc3 As Double,  _
+                    ByVal ppn1 As Double,  _
                     ByVal ppn As Double,  _
-                    ByVal nilai As Double) As NotaPembelianRow
+                    ByVal nilai As Double,  _
+                    ByVal lainnya As Double,  _
+                    ByVal hdisc1 As Double,  _
+                    ByVal hdisc2 As Double,  _
+                    ByVal hdisc3 As Double) As NotaPembelianRow
             Dim rowNotaPembelianRow As NotaPembelianRow = CType(Me.NewRow,NotaPembelianRow)
-            Dim columnValuesArray() As Object = New Object() {namabrg, nonota, tgl, kodesup, tgltempo, kodebrg, jlh1, jlh2, jlh3, disca, discb, discc, discrp, jumlah, satuan1, satuan2, satuan3, harga, namasup, alamat, disc1, disc2, disc3, ppn, nilai}
+            Dim columnValuesArray() As Object = New Object() {namabrg, nonota, tgl, kodesup, tgltempo, kodebrg, jlh1, jlh2, jlh3, disca, discb, discc, discrp, jumlah, satuan1, satuan2, satuan3, harga, namasup, alamat, disc1, disc2, disc3, ppn1, ppn, nilai, lainnya, hdisc1, hdisc2, hdisc3}
             rowNotaPembelianRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowNotaPembelianRow)
             Return rowNotaPembelianRow
@@ -678,8 +733,13 @@ Partial Public Class NotaDt
             Me.columndisc1 = MyBase.Columns("disc1")
             Me.columndisc2 = MyBase.Columns("disc2")
             Me.columndisc3 = MyBase.Columns("disc3")
+            Me.columnppn1 = MyBase.Columns("ppn1")
             Me.columnppn = MyBase.Columns("ppn")
             Me.columnnilai = MyBase.Columns("nilai")
+            Me.columnlainnya = MyBase.Columns("lainnya")
+            Me.columnhdisc1 = MyBase.Columns("hdisc1")
+            Me.columnhdisc2 = MyBase.Columns("hdisc2")
+            Me.columnhdisc3 = MyBase.Columns("hdisc3")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -731,10 +791,20 @@ Partial Public Class NotaDt
             MyBase.Columns.Add(Me.columndisc2)
             Me.columndisc3 = New Global.System.Data.DataColumn("disc3", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columndisc3)
+            Me.columnppn1 = New Global.System.Data.DataColumn("ppn1", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnppn1)
             Me.columnppn = New Global.System.Data.DataColumn("ppn", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnppn)
             Me.columnnilai = New Global.System.Data.DataColumn("nilai", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnnilai)
+            Me.columnlainnya = New Global.System.Data.DataColumn("lainnya", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnlainnya)
+            Me.columnhdisc1 = New Global.System.Data.DataColumn("hdisc1", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnhdisc1)
+            Me.columnhdisc2 = New Global.System.Data.DataColumn("hdisc2", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnhdisc2)
+            Me.columnhdisc3 = New Global.System.Data.DataColumn("hdisc3", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnhdisc3)
             Me.columnjlh2.Caption = "jlh1"
             Me.columndiscc.Caption = "discb"
             Me.columndiscrp.Caption = "discb"
@@ -742,6 +812,8 @@ Partial Public Class NotaDt
             Me.columnsatuan2.Caption = "satuan3"
             Me.columnharga.Caption = "satuan3"
             Me.columnnamasup.Caption = "satuan3"
+            Me.columnppn1.Caption = "ppn"
+            Me.columnhdisc2.Caption = "hdisc1"
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1233,6 +1305,21 @@ Partial Public Class NotaDt
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property ppn1() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableNotaPembelian.ppn1Column),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'ppn1' in table 'NotaPembelian' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableNotaPembelian.ppn1Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Property ppn() As Double
             Get
                 Try 
@@ -1258,6 +1345,66 @@ Partial Public Class NotaDt
             End Get
             Set
                 Me(Me.tableNotaPembelian.nilaiColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property lainnya() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableNotaPembelian.lainnyaColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'lainnya' in table 'NotaPembelian' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableNotaPembelian.lainnyaColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property hdisc1() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableNotaPembelian.hdisc1Column),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'hdisc1' in table 'NotaPembelian' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableNotaPembelian.hdisc1Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property hdisc2() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableNotaPembelian.hdisc2Column),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'hdisc2' in table 'NotaPembelian' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableNotaPembelian.hdisc2Column) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Property hdisc3() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableNotaPembelian.hdisc3Column),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'hdisc3' in table 'NotaPembelian' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableNotaPembelian.hdisc3Column) = value
             End Set
         End Property
         
@@ -1539,6 +1686,18 @@ Partial Public Class NotaDt
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function Isppn1Null() As Boolean
+            Return Me.IsNull(Me.tableNotaPembelian.ppn1Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub Setppn1Null()
+            Me(Me.tableNotaPembelian.ppn1Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Function IsppnNull() As Boolean
             Return Me.IsNull(Me.tableNotaPembelian.ppnColumn)
         End Function
@@ -1559,6 +1718,54 @@ Partial Public Class NotaDt
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
         Public Sub SetnilaiNull()
             Me(Me.tableNotaPembelian.nilaiColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function IslainnyaNull() As Boolean
+            Return Me.IsNull(Me.tableNotaPembelian.lainnyaColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub SetlainnyaNull()
+            Me(Me.tableNotaPembelian.lainnyaColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function Ishdisc1Null() As Boolean
+            Return Me.IsNull(Me.tableNotaPembelian.hdisc1Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub Sethdisc1Null()
+            Me(Me.tableNotaPembelian.hdisc1Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function Ishdisc2Null() As Boolean
+            Return Me.IsNull(Me.tableNotaPembelian.hdisc2Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub Sethdisc2Null()
+            Me(Me.tableNotaPembelian.hdisc2Column) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Function Ishdisc3Null() As Boolean
+            Return Me.IsNull(Me.tableNotaPembelian.hdisc3Column)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
+        Public Sub Sethdisc3Null()
+            Me(Me.tableNotaPembelian.hdisc3Column) = Global.System.Convert.DBNull
         End Sub
     End Class
     

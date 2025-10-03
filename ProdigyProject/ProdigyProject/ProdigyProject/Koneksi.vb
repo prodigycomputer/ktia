@@ -10,7 +10,7 @@ Module Koneksi
     Public Sub BukaKoneksi()
         Try
             ' --- koneksi langsung tanpa DSN ---
-            Dim connStr As String = "Driver={MySQL ODBC 5.1 Driver};Server=localhost;Database=dbkita;User=root;Password=;Option=3;"
+            Dim connStr As String = "Driver={MySQL ODBC 5.1 Driver};Server=192.168.1.123;Database=dbkita;User=kita;Password=kita;Option=3;"
             Conn = New OdbcConnection(connStr)
 
             If Conn.State = ConnectionState.Closed Then

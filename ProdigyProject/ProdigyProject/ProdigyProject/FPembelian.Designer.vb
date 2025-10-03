@@ -200,6 +200,7 @@ Partial Class FPembelian
         Me.tpmTOTAL.Name = "tpmTOTAL"
         Me.tpmTOTAL.Size = New System.Drawing.Size(190, 20)
         Me.tpmTOTAL.TabIndex = 45
+        Me.tpmTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmSUBTOTAL
         '
@@ -207,6 +208,7 @@ Partial Class FPembelian
         Me.tpmSUBTOTAL.Name = "tpmSUBTOTAL"
         Me.tpmSUBTOTAL.Size = New System.Drawing.Size(190, 20)
         Me.tpmSUBTOTAL.TabIndex = 43
+        Me.tpmSUBTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmLAIN
         '
@@ -214,6 +216,7 @@ Partial Class FPembelian
         Me.tpmLAIN.Name = "tpmLAIN"
         Me.tpmLAIN.Size = New System.Drawing.Size(190, 20)
         Me.tpmLAIN.TabIndex = 40
+        Me.tpmLAIN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmNPPN
         '
@@ -221,6 +224,7 @@ Partial Class FPembelian
         Me.tpmNPPN.Name = "tpmNPPN"
         Me.tpmNPPN.Size = New System.Drawing.Size(138, 20)
         Me.tpmNPPN.TabIndex = 38
+        Me.tpmNPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmAPPN
         '
@@ -236,6 +240,7 @@ Partial Class FPembelian
         Me.tpmNDISK3.Name = "tpmNDISK3"
         Me.tpmNDISK3.Size = New System.Drawing.Size(138, 20)
         Me.tpmNDISK3.TabIndex = 35
+        Me.tpmNDISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmADISK3
         '
@@ -251,6 +256,7 @@ Partial Class FPembelian
         Me.tpmNDISK2.Name = "tpmNDISK2"
         Me.tpmNDISK2.Size = New System.Drawing.Size(138, 20)
         Me.tpmNDISK2.TabIndex = 32
+        Me.tpmNDISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmADISK2
         '
@@ -266,6 +272,7 @@ Partial Class FPembelian
         Me.tpmNDISK1.Name = "tpmNDISK1"
         Me.tpmNDISK1.Size = New System.Drawing.Size(138, 20)
         Me.tpmNDISK1.TabIndex = 29
+        Me.tpmNDISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmADISK1
         '

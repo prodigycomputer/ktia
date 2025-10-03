@@ -168,6 +168,7 @@
     <Compile Include="ModButton.vb" />
     <Compile Include="ModGridHelper.vb" />
     <Compile Include="ModHitung.vb" />
+    <Compile Include="ModNota.vb" />
     <Compile Include="MPemSimpan.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

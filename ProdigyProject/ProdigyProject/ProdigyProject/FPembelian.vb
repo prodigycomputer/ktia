@@ -204,7 +204,7 @@ Public Class FPembelian
             BukaKoneksi()
 
             ' ================== HEADER ==================
-            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.ket, z.kodesup, s.namasup, s.alamat, z.nilai, z.lunas, z.disc1, z.hdisc1, z.disc2, z.hdisc2, z.disc3, z.hdisc3, z.ppn, z.hppn FROM zbeli z LEFT JOIN zsupplier s ON z.kodesup = s.kodesup WHERE z.nonota = ?"
+            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.ket, z.kodesup, s.namasup, s.alamat, z.nilai, z.lunas, z.disc1, z.hdisc1, z.disc2, z.hdisc2, z.disc3, z.hdisc3, z.ppn, z.hppn, z.lainnya FROM zbeli z LEFT JOIN zsupplier s ON z.kodesup = s.kodesup WHERE z.nonota = ?"
             Using cmd As New OdbcCommand(sqlHead, Conn)
                 cmd.Parameters.AddWithValue("@nonota", nonota)
                 Rd = cmd.ExecuteReader()
@@ -229,7 +229,7 @@ Public Class FPembelian
                     CType(dict("tpmNDISK3"), TextBox).Text = Rd("hdisc3").ToString()
                     CType(dict("tpmAPPN"), TextBox).Text = Rd("ppn").ToString()
                     CType(dict("tpmNPPN"), TextBox).Text = Rd("hppn").ToString()
-
+                    CType(dict("tpmLAIN"), TextBox).Text = Rd("lainnya").ToString()
                 End If
                 Rd.Close()
             End Using
@@ -267,7 +267,6 @@ Public Class FPembelian
                 End While
                 Rd.Close()
                 End Using
-
             Conn.Close()
 
         Catch ex As Exception
@@ -360,11 +359,25 @@ Public Class FPembelian
         AddHandler CType(dict("tpmKDSUP"), TextBox).KeyDown, AddressOf tpmKDSUP_KeyDown
         AddHandler CType(dict("tpmNMSUP"), TextBox).KeyDown, AddressOf tpmNMSUP_KeyDown
 
-        AddHandler CType(dict("tpmADISK1"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
-        AddHandler CType(dict("tpmADISK2"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
-        AddHandler CType(dict("tpmADISK3"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
-        AddHandler CType(dict("tpmAPPN"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
-        AddHandler CType(dict("tpmLAIN"), TextBox).TextChanged, Sub() HitungOtomatisTotal(nomor)
+        Dim txtADISK1 As TextBox = CType(dict("tpmADISK1"), TextBox)
+        Dim txtADISK2 As TextBox = CType(dict("tpmADISK2"), TextBox)
+        Dim txtADISK3 As TextBox = CType(dict("tpmADISK3"), TextBox)
+        Dim txtAPPN As TextBox = CType(dict("tpmAPPN"), TextBox)
+        Dim txtLAIN As TextBox = CType(dict("tpmLAIN"), TextBox)
+
+        Dim allTextBoxes() As TextBox = {txtADISK1, txtADISK2, txtADISK3, txtAPPN, txtLAIN}
+
+        For Each tb As TextBox In allTextBoxes
+            ' Saat pindah field
+            AddHandler tb.Leave, Sub() HitungOtomatisTotal(nomor)
+
+            ' Saat Enter ditekan
+            AddHandler tb.KeyDown, Sub(sender As Object, e As KeyEventArgs)
+                                       If e.KeyCode = Keys.Enter Then
+                                           HitungOtomatisTotal(nomor)
+                                       End If
+                                   End Sub
+        Next
 
         ' Event tombol Add Item
         AddHandler CType(dict("btnADDITEM"), Button).Click, AddressOf btnADDITEM_Click
@@ -402,6 +415,15 @@ Public Class FPembelian
         ' --- TextBox kosong ---
         If TypeOf copy Is TextBox Then
             CType(copy, TextBox).Clear()
+        End If
+
+        ' --- Perbaikan TextAlign sesuai jenis kontrol ---
+        If TypeOf original Is Label Then
+            CType(copy, Label).TextAlign = CType(original, Label).TextAlign
+        ElseIf TypeOf original Is TextBox Then
+            CType(copy, TextBox).TextAlign = CType(original, TextBox).TextAlign
+        ElseIf TypeOf original Is Button Then
+            CType(copy, Button).TextAlign = CType(original, Button).TextAlign
         End If
 
         ' --- DateTimePicker reset ---
@@ -792,6 +814,7 @@ Public Class FPembelian
             ' --- Buka form cetak ---
             Dim f As New FCetak()
             f.Param("nonota") = nonota
+            f.Param("jenis") = "pembelian"
             f.ShowDialog()
 
         Catch ex As Exception
