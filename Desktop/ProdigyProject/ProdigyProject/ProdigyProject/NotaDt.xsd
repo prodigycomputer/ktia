@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NotaDt" targetNamespace="http://tempuri.org/NotaPem.xsd" xmlns:mstns="http://tempuri.org/NotaPem.xsd" xmlns="http://tempuri.org/NotaPem.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="NotaDt" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="NotaDt" msprop:Generator_UserDSName="NotaDt">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="NotaPembelian" msprop:Generator_TableClassName="NotaPembelianDataTable" msprop:Generator_TableVarName="tableNotaPembelian" msprop:Generator_TablePropName="NotaPembelian" msprop:Generator_RowDeletingName="NotaPembelianRowDeleting" msprop:Generator_RowChangingName="NotaPembelianRowChanging" msprop:Generator_RowEvHandlerName="NotaPembelianRowChangeEventHandler" msprop:Generator_RowDeletedName="NotaPembelianRowDeleted" msprop:Generator_UserTableName="NotaPembelian" msprop:Generator_RowChangedName="NotaPembelianRowChanged" msprop:Generator_RowEvArgName="NotaPembelianRowChangeEvent" msprop:Generator_RowClassName="NotaPembelianRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="namabrg" msprop:Generator_ColumnVarNameInTable="columnnamabrg" msprop:Generator_ColumnPropNameInRow="namabrg" msprop:Generator_ColumnPropNameInTable="namabrgColumn" msprop:Generator_UserColumnName="namabrg" type="xs:string" minOccurs="0" />
+              <xs:element name="nonota" msprop:Generator_ColumnVarNameInTable="columnnonota" msprop:Generator_ColumnPropNameInRow="nonota" msprop:Generator_ColumnPropNameInTable="nonotaColumn" msprop:Generator_UserColumnName="nonota" type="xs:string" minOccurs="0" />
+              <xs:element name="tgl" msprop:Generator_ColumnVarNameInTable="columntgl" msprop:Generator_ColumnPropNameInRow="tgl" msprop:Generator_ColumnPropNameInTable="tglColumn" msprop:Generator_UserColumnName="tgl" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="kodesup" msprop:Generator_ColumnVarNameInTable="columnkodesup" msprop:Generator_ColumnPropNameInRow="kodesup" msprop:Generator_ColumnPropNameInTable="kodesupColumn" msprop:Generator_UserColumnName="kodesup" type="xs:string" minOccurs="0" />
+              <xs:element name="tgltempo" msprop:Generator_ColumnVarNameInTable="columntgltempo" msprop:Generator_ColumnPropNameInRow="tgltempo" msprop:Generator_ColumnPropNameInTable="tgltempoColumn" msprop:Generator_UserColumnName="tgltempo" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="kodebrg" msprop:Generator_ColumnVarNameInTable="columnkodebrg" msprop:Generator_ColumnPropNameInRow="kodebrg" msprop:Generator_ColumnPropNameInTable="kodebrgColumn" msprop:Generator_UserColumnName="kodebrg" type="xs:string" minOccurs="0" />
+              <xs:element name="jlh1" msprop:Generator_ColumnVarNameInTable="columnjlh1" msprop:Generator_ColumnPropNameInRow="jlh1" msprop:Generator_ColumnPropNameInTable="jlh1Column" msprop:Generator_UserColumnName="jlh1" type="xs:double" minOccurs="0" />
+              <xs:element name="jlh2" msdata:Caption="jlh1" msprop:Generator_ColumnVarNameInTable="columnjlh2" msprop:Generator_ColumnPropNameInRow="jlh2" msprop:Generator_ColumnPropNameInTable="jlh2Column" msprop:Generator_UserColumnName="jlh2" type="xs:double" minOccurs="0" />
+              <xs:element name="jlh3" msprop:Generator_ColumnVarNameInTable="columnjlh3" msprop:Generator_ColumnPropNameInRow="jlh3" msprop:Generator_ColumnPropNameInTable="jlh3Column" msprop:Generator_UserColumnName="jlh3" type="xs:double" minOccurs="0" />
+              <xs:element name="disca" msprop:Generator_ColumnVarNameInTable="columndisca" msprop:Generator_ColumnPropNameInRow="disca" msprop:Generator_ColumnPropNameInTable="discaColumn" msprop:Generator_UserColumnName="disca" type="xs:double" minOccurs="0" />
+              <xs:element name="discb" msprop:Generator_ColumnVarNameInTable="columndiscb" msprop:Generator_ColumnPropNameInRow="discb" msprop:Generator_ColumnPropNameInTable="discbColumn" msprop:Generator_UserColumnName="discb" type="xs:double" minOccurs="0" />
+              <xs:element name="discc" msdata:Caption="discb" msprop:Generator_ColumnVarNameInTable="columndiscc" msprop:Generator_ColumnPropNameInRow="discc" msprop:Generator_ColumnPropNameInTable="disccColumn" msprop:Generator_UserColumnName="discc" type="xs:double" minOccurs="0" />
+              <xs:element name="discrp" msdata:Caption="discb" msprop:Generator_ColumnVarNameInTable="columndiscrp" msprop:Generator_ColumnPropNameInRow="discrp" msprop:Generator_ColumnPropNameInTable="discrpColumn" msprop:Generator_UserColumnName="discrp" type="xs:double" minOccurs="0" />
+              <xs:element name="jumlah" msprop:Generator_ColumnVarNameInTable="columnjumlah" msprop:Generator_ColumnPropNameInRow="jumlah" msprop:Generator_ColumnPropNameInTable="jumlahColumn" msprop:Generator_UserColumnName="jumlah" type="xs:double" minOccurs="0" />
+              <xs:element name="satuan1" msdata:Caption="satuan3" msprop:Generator_ColumnVarNameInTable="columnsatuan1" msprop:Generator_ColumnPropNameInRow="satuan1" msprop:Generator_ColumnPropNameInTable="satuan1Column" msprop:Generator_UserColumnName="satuan1" type="xs:string" minOccurs="0" />
+              <xs:element name="satuan2" msdata:Caption="satuan3" msprop:Generator_ColumnVarNameInTable="columnsatuan2" msprop:Generator_ColumnPropNameInRow="satuan2" msprop:Generator_ColumnPropNameInTable="satuan2Column" msprop:Generator_UserColumnName="satuan2" type="xs:string" minOccurs="0" />
+              <xs:element name="satuan3" msprop:Generator_ColumnVarNameInTable="columnsatuan3" msprop:Generator_ColumnPropNameInRow="satuan3" msprop:Generator_ColumnPropNameInTable="satuan3Column" msprop:Generator_UserColumnName="satuan3" type="xs:string" minOccurs="0" />
+              <xs:element name="harga" msdata:Caption="satuan3" msprop:Generator_ColumnVarNameInTable="columnharga" msprop:Generator_ColumnPropNameInRow="harga" msprop:Generator_ColumnPropNameInTable="hargaColumn" msprop:Generator_UserColumnName="harga" type="xs:double" minOccurs="0" />
+              <xs:element name="namasup" msdata:Caption="satuan3" msprop:Generator_ColumnVarNameInTable="columnnamasup" msprop:Generator_ColumnPropNameInRow="namasup" msprop:Generator_ColumnPropNameInTable="namasupColumn" msprop:Generator_UserColumnName="namasup" type="xs:string" minOccurs="0" />
+              <xs:element name="alamat" msprop:Generator_ColumnVarNameInTable="columnalamat" msprop:Generator_ColumnPropNameInRow="alamat" msprop:Generator_ColumnPropNameInTable="alamatColumn" msprop:Generator_UserColumnName="alamat" type="xs:string" minOccurs="0" />
+              <xs:element name="disc1" msprop:Generator_ColumnVarNameInTable="columndisc1" msprop:Generator_ColumnPropNameInRow="disc1" msprop:Generator_ColumnPropNameInTable="disc1Column" msprop:Generator_UserColumnName="disc1" type="xs:double" minOccurs="0" />
+              <xs:element name="disc2" msprop:Generator_ColumnVarNameInTable="columndisc2" msprop:Generator_ColumnPropNameInRow="disc2" msprop:Generator_ColumnPropNameInTable="disc2Column" msprop:Generator_UserColumnName="disc2" type="xs:double" minOccurs="0" />
+              <xs:element name="disc3" msprop:Generator_ColumnVarNameInTable="columndisc3" msprop:Generator_ColumnPropNameInRow="disc3" msprop:Generator_ColumnPropNameInTable="disc3Column" msprop:Generator_UserColumnName="disc3" type="xs:double" minOccurs="0" />
+              <xs:element name="ppn1" msdata:Caption="ppn" msprop:Generator_ColumnVarNameInTable="columnppn1" msprop:Generator_ColumnPropNameInRow="ppn1" msprop:Generator_ColumnPropNameInTable="ppn1Column" msprop:Generator_UserColumnName="ppn1" type="xs:double" minOccurs="0" />
+              <xs:element name="ppn" msprop:Generator_ColumnVarNameInTable="columnppn" msprop:Generator_ColumnPropNameInRow="ppn" msprop:Generator_ColumnPropNameInTable="ppnColumn" msprop:Generator_UserColumnName="ppn" type="xs:double" minOccurs="0" />
+              <xs:element name="nilai" msprop:Generator_ColumnVarNameInTable="columnnilai" msprop:Generator_ColumnPropNameInRow="nilai" msprop:Generator_ColumnPropNameInTable="nilaiColumn" msprop:Generator_UserColumnName="nilai" type="xs:double" minOccurs="0" />
+              <xs:element name="lainnya" msprop:Generator_ColumnVarNameInTable="columnlainnya" msprop:Generator_ColumnPropNameInRow="lainnya" msprop:Generator_ColumnPropNameInTable="lainnyaColumn" msprop:Generator_UserColumnName="lainnya" type="xs:double" minOccurs="0" />
+              <xs:element name="hdisc1" msprop:Generator_ColumnVarNameInTable="columnhdisc1" msprop:Generator_ColumnPropNameInRow="hdisc1" msprop:Generator_ColumnPropNameInTable="hdisc1Column" msprop:Generator_UserColumnName="hdisc1" type="xs:double" minOccurs="0" />
+              <xs:element name="hdisc2" msdata:Caption="hdisc1" msprop:Generator_ColumnVarNameInTable="columnhdisc2" msprop:Generator_ColumnPropNameInRow="hdisc2" msprop:Generator_ColumnPropNameInTable="hdisc2Column" msprop:Generator_UserColumnName="hdisc2" type="xs:double" minOccurs="0" />
+              <xs:element name="hdisc3" msprop:Generator_ColumnVarNameInTable="columnhdisc3" msprop:Generator_ColumnPropNameInRow="hdisc3" msprop:Generator_ColumnPropNameInTable="hdisc3Column" msprop:Generator_UserColumnName="hdisc3" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
