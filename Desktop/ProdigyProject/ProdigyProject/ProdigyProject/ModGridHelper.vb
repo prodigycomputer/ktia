@@ -254,7 +254,7 @@
     End Sub
 
     ' === Setup untuk Grid Pembelian (zbeli) ===
-    Public Sub SetupGridBeli(ByVal grid As DataGridView)
+    Public Sub SetupGridNOTA(ByVal grid As DataGridView)
         With grid
             .AllowUserToAddRows = False
             .AllowUserToDeleteRows = False
@@ -355,7 +355,7 @@
     End Sub
 
     ' === Setup untuk Grid Suppluer (zsupplier) ===
-    Public Sub SetupGridSupplier(ByVal grid As DataGridView)
+    Public Sub SetupGridSales(ByVal grid As DataGridView)
         With grid
             .AllowUserToAddRows = False
             .AllowUserToDeleteRows = False
@@ -368,10 +368,10 @@
             .Columns.Clear()
 
             ' === Kolom utama dari tabel zstok ===
-            .Columns.Add("kodesup", "Kode Supplier")
+            .Columns.Add("kodesls", "Kode Sales")
             .Columns("kodesup").Width = 120
 
-            .Columns.Add("namasup", "Nama Supplier")
+            .Columns.Add("namasls", "Nama Sales")
             .Columns("namasup").Width = 200
 
             .Columns.Add("alamat", "Alamat")

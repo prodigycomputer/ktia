@@ -29,13 +29,18 @@ Module ModNota
                 Case "penjualan"
                     ' --- query penjualan (isi sesuai tabel kamu)
                     sql =
-                        "SELECT zjual.nonota, zjual.tgl, zjual.kodecust, " &
-                        "zjualm.kodebrg, zjualm.jumlah, zjualm.harga, zstok.namabrg, " &
-                        "zcust.namacust, zcust.alamat " &
+                        "SELECT zstok.namabrg, zjual.nonota, zjual.tgl, zjual.kodekust, zjual.kodesls, " &
+                        "zjual.tgltempo, zjual.disc1, zjual.disc2, zjual.disc3, zjual.hdisc1, zjual.hdisc2, zjual.hdisc3, " &
+                        "zjual.ppn, zjual.hppn, zjual.lainnya, zjual.nilai, " &
+                        "zjualm.kodebrg, zjualm.jlh1, zjualm.jlh2, zjualm.jlh3, " &
+                        "zjualm.disca, zjualm.discb, zjualm.discc, zjualm.discrp, zjualm.jumlah, " &
+                        "zstok.satuan1, zstok.satuan2, zstok.satuan3, zjualm.harga, " &
+                        "zkustomer.namakust, zsales.namasls, zkustomer.alamat " &
                         "FROM ((dbkita.zjual zjual " &
                         "INNER JOIN dbkita.zjualm zjualm ON zjual.nonota=zjualm.nonota) " &
                         "LEFT JOIN dbkita.zstok zstok ON zjualm.kodebrg=zstok.kodebrg) " &
-                        "LEFT JOIN dbkita.zcust zcust ON zjual.kodecust=zcust.kodecust " &
+                        "LEFT JOIN dbkita.zkustomer zkustomer ON zjual.kodekust=zkustomer.kodekust " &
+                        "LEFT JOIN dbkita.zsales zsales ON zjual.kodesls=zsales.kodesls " &
                         "WHERE zjual.nonota='" & nonota & "'"
             End Select
 
@@ -55,8 +60,8 @@ Module ModNota
                 ' daftar kolom header yang selalu diisi
                 Dim headerCols As String() = {
                     "nonota", "tgl", "tgltempo",
-                    "kodesup", "kodekust",
-                    "namasup", "namakust", "alamat",
+                    "kodesup", "kodekust", "kodesls",
+                    "namasup", "namakust", "namasls", "alamat",
                     "disc1", "disc2", "disc3",
                     "hdisc1", "hdisc2", "hdisc3",
                     "ppn", "hppn", "lainnya", "nilai"

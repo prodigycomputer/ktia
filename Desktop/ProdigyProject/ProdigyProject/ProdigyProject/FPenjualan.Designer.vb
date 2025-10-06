@@ -39,6 +39,12 @@ Partial Class FPenjualan
         Me.btnTAMBAH = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.Nota1 = New System.Windows.Forms.TabPage()
+        Me.tpjKDHARGA = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.tpjKDSALES = New System.Windows.Forms.TextBox()
+        Me.tpjNMSALES = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
         Me.tpjTOTAL = New System.Windows.Forms.TextBox()
         Me.tpjSUBTOTAL = New System.Windows.Forms.TextBox()
         Me.tpjLAIN = New System.Windows.Forms.TextBox()
@@ -73,12 +79,6 @@ Partial Class FPenjualan
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.tpjKDSALES = New System.Windows.Forms.TextBox()
-        Me.tpjNMSALES = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.tpjKDHARGA = New System.Windows.Forms.TextBox()
-        Me.Label18 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.Nota1.SuspendLayout()
         CType(Me.grPENJUALAN, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -278,6 +278,60 @@ Partial Class FPenjualan
         Me.Nota1.Size = New System.Drawing.Size(1057, 526)
         Me.Nota1.TabIndex = 0
         Me.Nota1.Text = "Nota 1"
+        '
+        'tpjKDHARGA
+        '
+        Me.tpjKDHARGA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tpjKDHARGA.Location = New System.Drawing.Point(111, 77)
+        Me.tpjKDHARGA.Name = "tpjKDHARGA"
+        Me.tpjKDHARGA.Size = New System.Drawing.Size(138, 20)
+        Me.tpjKDHARGA.TabIndex = 50
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Location = New System.Drawing.Point(9, 80)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(73, 15)
+        Me.Label18.TabIndex = 51
+        Me.Label18.Text = "Kode Harga"
+        '
+        'tpjKDSALES
+        '
+        Me.tpjKDSALES.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tpjKDSALES.Location = New System.Drawing.Point(779, 5)
+        Me.tpjKDSALES.Name = "tpjKDSALES"
+        Me.tpjKDSALES.Size = New System.Drawing.Size(138, 20)
+        Me.tpjKDSALES.TabIndex = 49
+        '
+        'tpjNMSALES
+        '
+        Me.tpjNMSALES.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tpjNMSALES.Location = New System.Drawing.Point(779, 29)
+        Me.tpjNMSALES.Name = "tpjNMSALES"
+        Me.tpjNMSALES.Size = New System.Drawing.Size(270, 20)
+        Me.tpjNMSALES.TabIndex = 47
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Location = New System.Drawing.Point(677, 32)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(75, 15)
+        Me.Label16.TabIndex = 48
+        Me.Label16.Text = "Nama Sales"
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Location = New System.Drawing.Point(677, 8)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(70, 15)
+        Me.Label17.TabIndex = 46
+        Me.Label17.Text = "Kode Sales"
         '
         'tpjTOTAL
         '
@@ -579,60 +633,6 @@ Partial Class FPenjualan
         Me.Label1.Size = New System.Drawing.Size(52, 15)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Tanggal"
-        '
-        'tpjKDSALES
-        '
-        Me.tpjKDSALES.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tpjKDSALES.Location = New System.Drawing.Point(779, 5)
-        Me.tpjKDSALES.Name = "tpjKDSALES"
-        Me.tpjKDSALES.Size = New System.Drawing.Size(138, 20)
-        Me.tpjKDSALES.TabIndex = 49
-        '
-        'tpjNMSALES
-        '
-        Me.tpjNMSALES.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tpjNMSALES.Location = New System.Drawing.Point(779, 29)
-        Me.tpjNMSALES.Name = "tpjNMSALES"
-        Me.tpjNMSALES.Size = New System.Drawing.Size(270, 20)
-        Me.tpjNMSALES.TabIndex = 47
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(677, 32)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(75, 15)
-        Me.Label16.TabIndex = 48
-        Me.Label16.Text = "Nama Sales"
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(677, 8)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(70, 15)
-        Me.Label17.TabIndex = 46
-        Me.Label17.Text = "Kode Sales"
-        '
-        'tpjKDHARGA
-        '
-        Me.tpjKDHARGA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tpjKDHARGA.Location = New System.Drawing.Point(111, 77)
-        Me.tpjKDHARGA.Name = "tpjKDHARGA"
-        Me.tpjKDHARGA.Size = New System.Drawing.Size(138, 20)
-        Me.tpjKDHARGA.TabIndex = 50
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(9, 80)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(73, 15)
-        Me.Label18.TabIndex = 51
-        Me.Label18.Text = "Kode Harga"
         '
         'FPenjualan
         '

@@ -1,26 +1,26 @@
 ﻿Imports System.Data.Odbc
 
-Public Class ItDtPembelian
+Public Class ItDtPenjualan
 
-    Public Sub LoadDataBeli(Optional ByVal nonota As String = "",
+    Public Sub LoadDatajual(Optional ByVal nonota As String = "",
                         Optional ByVal tgl1 As String = "",
                         Optional ByVal tgl2 As String = "",
                         Optional ByVal namasup As String = "",
                         Optional ByVal status As String = "")
 
-        Dim sql As String = "SELECT zbeli.tgl, zbeli.nonota, zsupplier.namasup, zbeli.nilai, zbeli.lunas " &
-                            "FROM zbeli " &
-                            "LEFT JOIN zsupplier ON zbeli.kodesup = zsupplier.kodesup"
+        Dim sql As String = "SELECT zjual.tgl, zjual.nonota, zsupplier.namasup, zjual.nilai, zjual.lunas " &
+                            "FROM zjual " &
+                            "LEFT JOIN zsupplier ON zjual.kodesup = zsupplier.kodesup"
 
         Dim whereList As New List(Of String)
 
         ' --- filter berdasarkan nonota
         If nonota <> "" Then
-            whereList.Add("zbeli.nonota LIKE ?")
+            whereList.Add("zjual.nonota LIKE ?")
         Else
             ' --- filter tanggal
             If tgl1 <> "" AndAlso tgl2 <> "" Then
-                whereList.Add("zbeli.tgl BETWEEN ? AND ?")
+                whereList.Add("zjual.tgl BETWEEN ? AND ?")
             End If
 
             ' --- filter supplier
@@ -30,9 +30,9 @@ Public Class ItDtPembelian
 
             ' --- filter status lunas
             If status = "lunas" Then
-                whereList.Add("zbeli.lunas = 1")
+                whereList.Add("zjual.lunas = 1")
             ElseIf status = "belum" Then
-                whereList.Add("zbeli.lunas = 0")
+                whereList.Add("zjual.lunas = 0")
             End If
         End If
 
@@ -40,9 +40,9 @@ Public Class ItDtPembelian
             sql &= " WHERE " & String.Join(" AND ", whereList)
         End If
 
-        sql &= " ORDER BY zbeli.tgl DESC, zbeli.nonota DESC"
+        sql &= " ORDER BY zjual.tgl DESC, zjual.nonota DESC"
 
-        dgitmPEMBELIAN.Rows.Clear()
+        dgitmPENJUALAN.Rows.Clear()
 
         Try
             BukaKoneksi()
@@ -63,7 +63,7 @@ Public Class ItDtPembelian
 
             Rd = Cmd.ExecuteReader()
             While Rd.Read()
-                dgitmPEMBELIAN.Rows.Add(
+                dgitmPENJUALAN.Rows.Add(
                     Rd("tgl"),
                     Rd("nonota"),
                     If(IsDBNull(Rd("namasup")), "-", Rd("namasup")),
@@ -78,18 +78,18 @@ Public Class ItDtPembelian
         End Try
     End Sub
 
-    Private Sub DtPembelian_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub ItDtPenjualan_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
 
-        SetupGridNOTA(dgitmPEMBELIAN)
+        SetupGridNOTA(dgitmPENJUALAN)
     End Sub
 
-    Private Sub dgitmPEMBELIAN_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmPEMBELIAN.CellContentClick
+    Private Sub dgitmPENJUALAN_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmPENJUALAN.CellContentClick
         If e.RowIndex >= 0 Then
-            Dim nonota As String = dgitmPEMBELIAN.Rows(e.RowIndex).Cells("nonota").Value.ToString()
+            Dim nonota As String = dgitmPENJUALAN.Rows(e.RowIndex).Cells("nonota").Value.ToString()
 
-            Dim parentForm As FPembelian = TryCast(Me.Owner, FPembelian)
+            Dim parentForm As FPenjualan = TryCast(Me.Owner, FPenjualan)
             If parentForm IsNot Nothing Then
                 parentForm.LoadNota(nonota)
             End If

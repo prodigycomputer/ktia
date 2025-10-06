@@ -663,4 +663,124 @@ Public Class FPenjualan
             End If
         End If
     End Sub
+
+    Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
+        Dim f As New ItDtPenjualan()
+
+        Dim nonota As String = tpjSNONOTA.Text.Trim()
+        Dim tgl1 As String = dtpjTGL1.Value.ToString("yyyy-MM-dd")
+        Dim tgl2 As String = dtpjTGL2.Value.ToString("yyyy-MM-dd")
+        Dim namasup As String = tpjSNMSUP.Text.Trim()
+        Dim status As String = ""
+
+        ' Tentukan status lunas hanya jika nonota kosong
+        If nonota = "" Then
+            If tpjSLUNAS.SelectedIndex = 0 Then
+                status = "belum"
+            ElseIf tpjSLUNAS.SelectedIndex = 1 Then
+                status = "lunas"
+            End If
+        End If
+
+        ' Load data sesuai filter
+        f.Owner = Me
+        f.Show()
+        f.LoadDataJual(nonota, tgl1, tgl2, namasup, status)
+
+        ' === Clear filter setelah pencarian ===
+        tpjSNONOTA.Clear()
+        tpjSNMSUP.Clear()
+        tpjSLUNAS.SelectedIndex = -1 ' reset pilihan
+        ' reset tanggal ke hari ini
+        dtpjTGL1.Value = DateTime.Today
+        dtpjTGL2.Value = DateTime.Today
+    End Sub
+
+    Private Sub tpjSNONOTA_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tpjSNONOTA.TextChanged
+        If tpjSNONOTA.Text.Trim() <> "" Then
+            ' kalau nonota diisi, disable yang lain
+            SetFilterState(True)
+        Else
+            ' kalau nonota kosong, enable semua lagi
+            SetFilterState(False)
+        End If
+    End Sub
+
+    Private Sub TabControl1_SelectedIndexChanged(ByVal sender As Object, ByVal e As EventArgs) Handles TabControl1.SelectedIndexChanged
+        If TabControl1.SelectedTab Is Nothing Then Exit Sub
+
+        Dim nomor As Integer
+        If Not Integer.TryParse(TabControl1.SelectedTab.Text.Replace("Nota ", ""), nomor) Then Exit Sub
+
+        ' Pastikan ada entri pada dictionaries (jika belum, inisialisasi default)
+        If Not TabButtonState.ContainsKey(nomor) Then
+            TabButtonState(nomor) = True
+        End If
+        If Not TabLoadState.ContainsKey(nomor) Then
+            ' Asumsikan load state default = True (data sudah load / readonly)
+            TabLoadState(nomor) = True
+        End If
+
+        ' === handle tombol ===
+        If TabLoadState(nomor) Then
+            DisabledLoad()
+        Else
+            EnabledLoad()
+        End If
+
+        SetButtonState(Me, TabButtonState(nomor))
+    End Sub
+
+    Private Sub HitungOtomatisTotal(ByVal nomor As Integer)
+        If Not TabControls.ContainsKey(nomor) Then Exit Sub
+        Dim dict = TabControls(nomor)
+
+        Dim subtotal As Decimal = Val(CType(dict("tpjSUBTOTAL"), TextBox).Text)
+        Dim adisk1 As Decimal = Val(CType(dict("tpjADISK1"), TextBox).Text)
+        Dim adisk2 As Decimal = Val(CType(dict("tpjADISK2"), TextBox).Text)
+        Dim adisk3 As Decimal = Val(CType(dict("tpjADISK3"), TextBox).Text)
+        Dim appn As Decimal = Val(CType(dict("tpjAPPN"), TextBox).Text)
+        Dim lain As Decimal = Val(CType(dict("tpjLAIN"), TextBox).Text)
+
+        Dim hasil = ModHitung.HitungSubtotalTotal(subtotal, adisk1, adisk2, adisk3, appn, lain)
+
+        CType(dict("tpjNDISK1"), TextBox).Text = hasil("hdisca").ToString()
+        CType(dict("tpjNDISK2"), TextBox).Text = hasil("hdiscb").ToString()
+        CType(dict("tpjNDISK3"), TextBox).Text = hasil("hdiscc").ToString()
+        CType(dict("tpjNPPN"), TextBox).Text = hasil("ppn").ToString()
+        CType(dict("tpjTOTAL"), TextBox).Text = hasil("total").ToString()
+    End Sub
+
+    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+        Handles tpjSUBTOTAL.KeyPress, tpjTOTAL.KeyPress, tpjADISK1.KeyPress,
+                tpjADISK2.KeyPress, tpjADISK3.KeyPress, tpjNDISK1.KeyPress,
+                tpjNDISK2.KeyPress, tpjNDISK3.KeyPress, tpjLAIN.KeyPress,
+                tpjAPPN.KeyPress, tpjNPPN.KeyPress
+
+        AngkaHelper.HanyaAngka(e)
+    End Sub
+
+    Private Sub btnPRINT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPRINT.Click
+        Try
+            Dim aktifTab As TabPage = TabControl1.SelectedTab
+            Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
+            Dim dict = TabControls(nomor)
+
+            Dim nonota As String = CType(dict("tpjNONOTA"), TextBox).Text
+
+            If String.IsNullOrEmpty(nonota) Then
+                MessageBox.Show("Pilih nota yang akan dicetak!", "Info")
+                Exit Sub
+            End If
+
+            ' --- Buka form cetak ---
+            Dim f As New FCetak()
+            f.Param("nonota") = nonota
+            f.Param("jenis") = "penjualan"
+            f.ShowDialog()
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal cetak nota: " & ex.Message, "Error")
+        End Try
+    End Sub
 End Class

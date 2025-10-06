@@ -9,7 +9,7 @@ Public Class ItDtSales
             sql = "SELECT kodesls, namasls, alamat, kota, ktp, npwp FROM zsales ORDER BY kodesls"
         Else
             sql = "SELECT kodesls, namasls, alamat, kota, ktp, npwp " &
-                  "FROM zslsomer WHERE kodesls LIKE '%" & keyword & "%' OR namasls LIKE '%" & keyword & "%' ORDER BY kodesls"
+                  "FROM zsales WHERE kodesls LIKE '%" & keyword & "%' OR namasls LIKE '%" & keyword & "%' ORDER BY kodesls"
         End If
 
         dgitmSLS.Rows.Clear()

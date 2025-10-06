@@ -127,6 +127,12 @@
     <Compile Include="FPenjualan.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HeaderTemplate.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HeaderTemplate.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ItDtKustomer.Designer.vb">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </Compile>
@@ -156,6 +162,12 @@
       <DependentUpon>FPembelian.vb</DependentUpon>
     </Compile>
     <Compile Include="FPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtPenjualan.Designer.vb">
+      <DependentUpon>ItDtPenjualan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtPenjualan.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtSales.Designer.vb">
@@ -219,6 +231,12 @@
       <DependentUpon>NotaPembelian.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="NotaPenjualan.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaPenjualan.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FCetak.resx">
@@ -226,6 +244,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FPenjualan.resx">
       <DependentUpon>FPenjualan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeaderTemplate.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>HeaderTemplate.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
@@ -241,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FPembelian.resx">
       <DependentUpon>FPembelian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtPenjualan.resx">
+      <DependentUpon>ItDtPenjualan.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtSales.resx">
       <DependentUpon>ItDtSales.vb</DependentUpon>
@@ -263,6 +288,10 @@
     <EmbeddedResource Include="NotaPembelian.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>NotaPembelian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaPenjualan.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaPenjualan.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
