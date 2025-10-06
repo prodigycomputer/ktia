@@ -1,0 +1,875 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    }
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        height: 100vh;
+        background: #f6f8fb;
+        color: #333;
+    }
+    main {
+        padding: 1rem;
+        flex: 1;
+        overflow-y: auto;
+    }
+    h2 {
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+
+    form {
+        background: #fff;
+        padding: 12px;
+        border-radius: 6px;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Umumkan dulu gaya dasar semua tombol dalam form */
+    form button {
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease;
+        padding: 6px 12px;
+        font-size: 13px;
+        border-radius: 4px;
+    }
+
+    .action-pb-bar {
+        display: flex;
+        justify-content: space-between;
+        background: #fff;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 6px;
+        margin-top: 10px;
+        margin-bottom: 4px;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .action-pb-bar button {
+        padding: 6px 12px;
+        font-size: 13px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: white;
+    }
+
+    /* Tambah - Biru */
+    #btnSave {
+        background-color: #0099ff;
+    }
+    #btnSave:hover {
+        background-color: #0089d9;
+    }
+
+    #btnSaveItem {
+        background-color: #0099ff;
+    }
+    #btnSaveItem:hover {
+        background-color: #0089d9;
+    }
+
+
+    #btnTambah {
+        background-color: #30b850;
+    }
+    #btnTambah:hover {
+        background-color: #17b42c;
+    }
+
+    #btnTambahItem {
+        background-color: #30b850;
+    }
+    #btnTambahItem:hover {
+        background-color: #17b42c;
+    }
+
+    /* Edit - Kuning */
+    #btnEdit {
+        background-color: #ffc107;
+        color: #333;
+    }
+    #btnEdit:hover {
+        background-color: #e0a800;
+    }
+
+    /* Hapus - Merah */
+    #btnHapus {
+        background-color: #dc3545;
+    }
+    #btnHapus:hover {
+        background-color: #c82333;
+    }
+
+    /* Cancel - Abu gelap */
+    #btnCancel {
+        background-color: #6c757d;
+    }
+    #btnCancel:hover {
+        background-color: #5a6268;
+    }
+
+    #btnCancelItem {
+        background-color: #6c757d;
+    }
+    #btnCancelItem:hover {
+        background-color: #5a6268;
+    }
+
+    #btnKembali {
+        background-color: #35dcc0;
+    }
+    #btnKembali:hover {
+        background-color: #23c2c8;
+    }
+
+    #btnPrint {
+        background-color: #67849c;
+    }
+    #btnPrint:hover {
+        background-color: #596a77;
+    }
+
+    #btnAkses {
+        background-color: #dca235;
+    }
+    #btnAkses:hover {
+        background-color: #ebb248;
+    }
+
+    /* CSS untuk overlay popup */
+    .popup-pb-cari {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* semi transparan */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+    }
+
+    /* CSS untuk konten popup */
+    .popup-pb-contentcari {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 900px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    }
+
+    /* Tabel hasil */
+    .tabel-hasil {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .tabel-hasil th,
+    .tabel-hasil td {
+        border: 1px solid #ccc;
+        padding: 8px 10px;
+        text-align: left;
+    }
+
+    .tabel-hasil th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
+
+    /* Tombol Tutup */
+    .popup-pb-contentcari button {
+        padding: 6px 12px;
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .popup-pb-contentcari button:hover {
+        background-color: #c9302c;
+    }
+
+    .form-atas textarea.verylong-textarea {
+        width: 300px;           /* sama dengan input.verylong-input */
+        height: 50px;
+        font-size: 12px;
+        padding: 5px;
+        box-sizing: border-box;
+        resize: none;
+        text-align: left;           /* teks mulai dari kiri */
+        vertical-align: top;    /* teks mulai dari atas */
+    }
+
+    button:disabled {
+        background-color: #ccc !important;
+        color: #666 !important;
+    }
+
+    .form-atas {
+        display: grid;
+        grid-template-columns: 0.3fr 3fr;
+        gap: 4px 10px;
+        background: #fff;
+        padding: 12px;
+    }
+
+    .form-atas label {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .form-atas input {
+        padding: 4px;
+        font-size: 12px;
+        width: 100%;
+    }
+    .form-atas input.short-input { width: 80px; }
+    .form-atas input.medium-input { width: 120px; }
+    .form-atas input.long-input { width: 220px; }
+    .form-atas input.lesslong-input { width: 250px; }
+    .form-atas input.verylong-input { width: 300px; }
+    .form-atas button {
+        grid-column: span 2;
+        background-color: #0acf45ff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease;
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .form-bawah {
+        display: flex;
+        gap: 4px 60px;
+        background: #fff;
+        padding: 12px;
+        margin-top: -20px;
+    }
+
+    .popup-pb-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .popup-pb-content {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .popup-pb-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 2px;
+    }
+
+    .popup-pb-row select {
+        flex: 1;
+        padding: 4px 6px;
+        font-size: 13px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .popup-pb-row label {
+        flex-basis: 120px;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .popup-pb-row input {
+        flex: 1;
+        padding: 4px 6px;
+        font-size: 13px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    .popup-pb-row input:disabled {
+        background-color: #f0f0f0; /* abu-abu muda */
+        color: #555;               /* warna teks sedikit redup */
+    }
+
+    .form-pb-col select {
+        flex: 1;
+        padding: 4px 6px;
+        font-size: 13px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .harga-container {
+        display: grid;
+        grid-template-columns: 2.35fr 3fr;
+        gap: 4px 10px;
+        background: #fff;
+    }
+
+    .harga-container label {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .harga-container input {
+        padding: 4px;
+        font-size: 12px;
+        width: 100%;
+    }
+    
+    .harga-container input.short-input { width: 80px; }
+    .harga-container input.medium-input { width: 120px; }
+    .harga-container input.long-input { width: 220px; }
+    .harga-container input.lesslong-input { width: 250px; }
+    .harga-container input.verylong-input { width: 300px; }
+    a {
+        text-decoration: none;
+        color: #007bff;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    .no-data {
+        text-align: center;
+        padding: 20px;
+        color: #888;
+    }
+
+    .search-bar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .search-bar input {
+        padding: 4px 8px;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .search-input {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .search-kode {
+        width: 150px;
+    }
+
+    .search-nama {
+        width: 250px;
+    }
+
+    .search-group {
+        position: relative;
+    }
+
+    .input-group {
+        width: 350px;
+    }
+
+    #searchbtn {
+        padding: 3px 12px;
+        font-size: 12px;
+        border-radius: 4px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    #searchbtn:hover {
+        background-color: #218838;
+    }
+
+    #form-pembelian-atas {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    #form-pembelian-tengah {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    #form-pembelian-bawah {
+        display: flex;
+        justify-content: flex-end; /* dorong konten ke kanan */
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    #form-penjualan-atas {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    #form-penjualan-tengah {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    #form-penjualan-bawah {
+        display: flex;
+        justify-content: flex-end; /* dorong konten ke kanan */
+        background: #fff;
+        padding: 6px;
+        margin-bottom: 6px;
+    }
+
+    .form-pj-pos {
+        display: flex;
+        flex-direction: column; /* susun vertikal */
+        gap: 4px;
+        padding: 8px;
+        width: fit-content;
+    }
+
+    .form-pj-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-pj-col {
+        flex-basis: 30%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-pj-col label {
+        width: 110px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .form-pj-col input {
+        padding: 5px;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-pb-pos {
+        display: flex;
+        flex-direction: column; /* susun vertikal */
+        gap: 4px;
+        padding: 8px;
+        width: fit-content;
+    }
+
+    .form-pb-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-pb-col {
+        flex-basis: 30%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-pb-col label {
+        width: 110px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .form-pb-col input {
+        padding: 5px;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Ukuran input variatif */
+    .veryshort-input {
+        width: 50px;
+    }
+
+    .lesshort-input {
+        width: 120px;
+    }
+
+    .medshort-input {
+        width: 180px;
+    }
+
+    .medlesshort-input {
+        width: 220px;
+    }
+
+    .short-input {
+        width: 130px;
+    }
+
+    .medium-input {
+        width: 250px;
+    }
+
+    .long-input {
+        width: 400px;
+    }
+
+    .tab-bar {
+        display: flex;
+        border-bottom: 2px solid #ccc;
+        margin-bottom: 11px;
+        background: #f9f9f9;
+    }
+
+    .tab-bar button {
+        border: 1px;
+        padding: 4px 14px;
+        cursor: pointer;
+        margin-right: 3px;
+        border-radius: 4px 16px 0 0;
+        font-size: 12px;
+        position: relative;/* Biar nyambung ke form */
+    }
+
+    .tab-bar button.active {
+        background: rgb(91, 191, 221);
+        border-color: #ccc;
+        border-bottom: 2px solid white;
+        font-weight: bold;
+    }
+
+    .tab-bar button:hover:not(.active) {
+        background: #dfe4ea;
+    }
+
+    .tab-bar button span {
+        margin-left: 8px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+/* Responsive Mobile */
+
+    .hamburger {
+        display: none;
+        font-size: 20px;
+        background-color: #ffffff;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 4px 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        cursor: pointer;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(0,0,0,0.3);
+        z-index: 1000;
+    }
+
+    .sidebar {
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.active {
+        left: 0 !important;
+    }
+
+    .overlay.active {
+        display: block;
+    }
+
+    .action-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 12px;
+        margin-bottom: 4px;
+        background-color: #fff;
+        padding: 10px 12px;
+        border-radius: 6px;
+    }
+
+    .action-bar input[type="text"],
+    .action-bar input[type="date"],
+    .action-bar select {
+        padding: 5px 8px;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        min-width: 120px;
+    }
+
+    .action-bar input[type="text"]::placeholder {
+        font-size: 11px;
+        color: #aaa;
+    }
+
+    .action-bar span {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    /* Tombol khusus dalam action-bar */
+    .action-bar .action-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    /* Tambah - Hijau */
+    .action-bar .action-btn.tambah {
+        background-color: #30b850;
+    }
+    .action-bar .action-btn.tambah:hover {
+        background-color: #17b42c;
+    }
+
+    /* Cari - Hijau tua */
+    .action-bar .action-btn.cari {
+        background-color: #28a745;
+    }
+    .action-bar .action-btn.cari:hover {
+        background-color: #218838;
+    }
+
+    #textview {
+        width: 100%;
+        max-height: 200px; /* Batas maksimal tinggi */
+        font-family: monospace;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+
+    /* === TABEL HASIL SIMPEL === */
+    .tabel-hasil {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1em;
+        font-size: 12px;
+        border: 1px solid #ccc;
+    }
+
+    .tabel-hasil th,
+    .tabel-hasil td {
+        padding: 6px 8px;
+        border: 1px solid #ccc;
+        text-align: left;
+        background-color: #fff;
+    }
+
+    .tabel-hasil th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* === TOMBOL KECIL === */
+    .tabel-hasil button {
+        padding: 3px 8px;
+        margin-right: 4px;
+        font-size: 11px;
+        border: 1px solid #bbb;
+        background-color: #f9f9f9;
+        color: #333;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .tabel-hasil button:hover {
+        background-color: #e0e0e0;
+    }
+
+    .dropdown-result {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 999;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    font-size: 12px;
+    display: none;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .dropdown-result div {
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    }
+
+    .dropdown-result div:hover {
+    background-color: #f5f5f5;
+    }
+
+    .dropdown-barang {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 999;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 300px;
+    font-size: 12px;
+    display: none;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .dropdown-barang div {
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    }
+
+    .dropdown-barang     div:hover {
+    background-color: #f5f5f5;
+    }
+
+        /* Styling tabel */
+    #tabelUser {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 13px;
+    }
+    #tabelUser th, #tabelUser td {
+        border: 1px solid #ddd;
+        padding: 6px 8px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    #tabelUser th {
+        background: #f4f4f4;
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    /* Styling dropdown agar flat */
+    #tabelUser select {
+        width: 100%;
+        padding: 4px;
+        border: none;
+        background: #e9ecef;
+        font-size: 13px;
+        text-align: center;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+    }
+
+    /* Hover effect row */
+    #tabelUser tr:hover {
+        background: #f9f9f9;
+    }
+
+    @media (max-width: 768px) {
+        .hamburger {
+            display: inline-block;
+            margin-left: 0px;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            height: 100%;
+            width: 220px;
+            background: #2c3e50;
+            z-index: 1100;
+            padding-top: 60px;
+        }
+
+        main {
+            padding-top: 20px;
+        }
+
+        .form-atas,
+        .form-bawah,
+        .harga-container,
+        .search-bar-horizontal {
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .form-atas input,
+        .harga-container input {
+            width: 100% !important;
+        }
+
+        #btnTambah, #btnEdit, #btnHapus {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        #hargaInputsContainer {
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        #hargaInputsContainer > div {
+            width: 48%;
+        }
+    }
