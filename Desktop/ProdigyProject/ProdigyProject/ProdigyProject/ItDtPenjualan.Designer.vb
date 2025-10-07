@@ -43,6 +43,7 @@ Partial Class ItDtPenjualan
         Me.Controls.Add(Me.dgitmPENJUALAN)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "ItDtPenjualan"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "DtPenjualan"
         CType(Me.dgitmPENJUALAN, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

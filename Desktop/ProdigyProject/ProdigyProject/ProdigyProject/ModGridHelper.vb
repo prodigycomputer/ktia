@@ -254,7 +254,7 @@
     End Sub
 
     ' === Setup untuk Grid Pembelian (zbeli) ===
-    Public Sub SetupGridNOTA(ByVal grid As DataGridView)
+    Public Sub SetupGridBeli(ByVal grid As DataGridView)
         With grid
             .AllowUserToAddRows = False
             .AllowUserToDeleteRows = False
@@ -275,6 +275,42 @@
 
             .Columns.Add("namasup", "Supplier")
             .Columns("namasup").Width = 200
+
+            .Columns.Add("nilai", "Nilai")
+            .Columns("nilai").Width = 150
+            .Columns("nilai").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("nilai").DefaultCellStyle.Format = "N0"
+
+            .Columns.Add("lunas", "Lunas")
+            .Columns("lunas").Width = 150
+        End With
+    End Sub
+
+    ' === Setup untuk Grid Pembelian (zbeli) ===
+    Public Sub SetupGridJual(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False   ' <<< baris tidak bisa di-resize
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+            .Columns.Clear()
+
+            ' === Definisi Kolom ===
+            .Columns.Add("tgl", "Tanggal")
+            .Columns("tgl").Width = 150
+
+            .Columns.Add("nonota", "No Nota")
+            .Columns("nonota").Width = 193
+
+            .Columns.Add("namakust", "Kustomer")
+            .Columns("namakust").Width = 100
+
+            .Columns.Add("namasls", "Sales")
+            .Columns("namasls").Width = 100
 
             .Columns.Add("nilai", "Nilai")
             .Columns("nilai").Width = 150
@@ -369,10 +405,10 @@
 
             ' === Kolom utama dari tabel zstok ===
             .Columns.Add("kodesls", "Kode Sales")
-            .Columns("kodesup").Width = 120
+            .Columns("kodesls").Width = 120
 
             .Columns.Add("namasls", "Nama Sales")
-            .Columns("namasup").Width = 200
+            .Columns("namasls").Width = 200
 
             .Columns.Add("alamat", "Alamat")
             .Columns("alamat").Width = 100

@@ -364,7 +364,7 @@ Partial Public Class NotaDt
         
         Private columndisc3 As Global.System.Data.DataColumn
         
-        Private columnppn1 As Global.System.Data.DataColumn
+        Private columnhppn As Global.System.Data.DataColumn
         
         Private columnppn As Global.System.Data.DataColumn
         
@@ -599,9 +599,9 @@ Partial Public Class NotaDt
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property ppn1Column() As Global.System.Data.DataColumn
+        Public ReadOnly Property hppnColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnppn1
+                Return Me.columnhppn
             End Get
         End Property
         
@@ -714,7 +714,7 @@ Partial Public Class NotaDt
                     ByVal disc1 As Double,  _
                     ByVal disc2 As Double,  _
                     ByVal disc3 As Double,  _
-                    ByVal ppn1 As Double,  _
+                    ByVal hppn As Double,  _
                     ByVal ppn As Double,  _
                     ByVal nilai As Double,  _
                     ByVal lainnya As Double,  _
@@ -722,7 +722,7 @@ Partial Public Class NotaDt
                     ByVal hdisc2 As Double,  _
                     ByVal hdisc3 As Double) As NotaPembelianRow
             Dim rowNotaPembelianRow As NotaPembelianRow = CType(Me.NewRow,NotaPembelianRow)
-            Dim columnValuesArray() As Object = New Object() {namabrg, nonota, tgl, kodesup, tgltempo, kodebrg, jlh1, jlh2, jlh3, disca, discb, discc, discrp, jumlah, satuan1, satuan2, satuan3, harga, namasup, alamat, disc1, disc2, disc3, ppn1, ppn, nilai, lainnya, hdisc1, hdisc2, hdisc3}
+            Dim columnValuesArray() As Object = New Object() {namabrg, nonota, tgl, kodesup, tgltempo, kodebrg, jlh1, jlh2, jlh3, disca, discb, discc, discrp, jumlah, satuan1, satuan2, satuan3, harga, namasup, alamat, disc1, disc2, disc3, hppn, ppn, nilai, lainnya, hdisc1, hdisc2, hdisc3}
             rowNotaPembelianRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowNotaPembelianRow)
             Return rowNotaPembelianRow
@@ -768,7 +768,7 @@ Partial Public Class NotaDt
             Me.columndisc1 = MyBase.Columns("disc1")
             Me.columndisc2 = MyBase.Columns("disc2")
             Me.columndisc3 = MyBase.Columns("disc3")
-            Me.columnppn1 = MyBase.Columns("ppn1")
+            Me.columnhppn = MyBase.Columns("hppn")
             Me.columnppn = MyBase.Columns("ppn")
             Me.columnnilai = MyBase.Columns("nilai")
             Me.columnlainnya = MyBase.Columns("lainnya")
@@ -826,8 +826,8 @@ Partial Public Class NotaDt
             MyBase.Columns.Add(Me.columndisc2)
             Me.columndisc3 = New Global.System.Data.DataColumn("disc3", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columndisc3)
-            Me.columnppn1 = New Global.System.Data.DataColumn("ppn1", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnppn1)
+            Me.columnhppn = New Global.System.Data.DataColumn("hppn", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnhppn)
             Me.columnppn = New Global.System.Data.DataColumn("ppn", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnppn)
             Me.columnnilai = New Global.System.Data.DataColumn("nilai", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
@@ -847,7 +847,7 @@ Partial Public Class NotaDt
             Me.columnsatuan2.Caption = "satuan3"
             Me.columnharga.Caption = "satuan3"
             Me.columnnamasup.Caption = "satuan3"
-            Me.columnppn1.Caption = "ppn"
+            Me.columnhppn.Caption = "ppn"
             Me.columnhdisc2.Caption = "hdisc1"
         End Sub
         
@@ -1036,7 +1036,7 @@ Partial Public Class NotaDt
         
         Private columndisc3 As Global.System.Data.DataColumn
         
-        Private columnppn1 As Global.System.Data.DataColumn
+        Private columnhppn As Global.System.Data.DataColumn
         
         Private columnppn As Global.System.Data.DataColumn
         
@@ -1287,9 +1287,9 @@ Partial Public Class NotaDt
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public ReadOnly Property ppn1Column() As Global.System.Data.DataColumn
+        Public ReadOnly Property hppnColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnppn1
+                Return Me.columnhppn
             End Get
         End Property
         
@@ -1404,7 +1404,7 @@ Partial Public Class NotaDt
                     ByVal disc1 As Double,  _
                     ByVal disc2 As Double,  _
                     ByVal disc3 As Double,  _
-                    ByVal ppn1 As Double,  _
+                    ByVal hppn As Double,  _
                     ByVal ppn As Double,  _
                     ByVal nilai As Double,  _
                     ByVal lainnya As Double,  _
@@ -1412,7 +1412,7 @@ Partial Public Class NotaDt
                     ByVal hdisc2 As Double,  _
                     ByVal hdisc3 As Double) As NotaPenjualanRow
             Dim rowNotaPenjualanRow As NotaPenjualanRow = CType(Me.NewRow,NotaPenjualanRow)
-            Dim columnValuesArray() As Object = New Object() {namabrg, nonota, tgl, kodesls, kodekust, tgltempo, kodebrg, jlh1, jlh2, jlh3, disca, discb, discc, discrp, jumlah, satuan1, satuan2, satuan3, harga, namasls, namakust, alamat, disc1, disc2, disc3, ppn1, ppn, nilai, lainnya, hdisc1, hdisc2, hdisc3}
+            Dim columnValuesArray() As Object = New Object() {namabrg, nonota, tgl, kodesls, kodekust, tgltempo, kodebrg, jlh1, jlh2, jlh3, disca, discb, discc, discrp, jumlah, satuan1, satuan2, satuan3, harga, namasls, namakust, alamat, disc1, disc2, disc3, hppn, ppn, nilai, lainnya, hdisc1, hdisc2, hdisc3}
             rowNotaPenjualanRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowNotaPenjualanRow)
             Return rowNotaPenjualanRow
@@ -1460,7 +1460,7 @@ Partial Public Class NotaDt
             Me.columndisc1 = MyBase.Columns("disc1")
             Me.columndisc2 = MyBase.Columns("disc2")
             Me.columndisc3 = MyBase.Columns("disc3")
-            Me.columnppn1 = MyBase.Columns("ppn1")
+            Me.columnhppn = MyBase.Columns("hppn")
             Me.columnppn = MyBase.Columns("ppn")
             Me.columnnilai = MyBase.Columns("nilai")
             Me.columnlainnya = MyBase.Columns("lainnya")
@@ -1522,8 +1522,8 @@ Partial Public Class NotaDt
             MyBase.Columns.Add(Me.columndisc2)
             Me.columndisc3 = New Global.System.Data.DataColumn("disc3", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columndisc3)
-            Me.columnppn1 = New Global.System.Data.DataColumn("ppn1", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnppn1)
+            Me.columnhppn = New Global.System.Data.DataColumn("hppn", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnhppn)
             Me.columnppn = New Global.System.Data.DataColumn("ppn", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnppn)
             Me.columnnilai = New Global.System.Data.DataColumn("nilai", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
@@ -1546,7 +1546,7 @@ Partial Public Class NotaDt
             Me.columnharga.Caption = "satuan3"
             Me.columnnamasls.Caption = "satuan3"
             Me.columnnamakust.Caption = "satuan3"
-            Me.columnppn1.Caption = "ppn"
+            Me.columnhppn.Caption = "ppn"
             Me.columnhdisc2.Caption = "hdisc1"
         End Sub
         
@@ -2039,16 +2039,16 @@ Partial Public Class NotaDt
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property ppn1() As Double
+        Public Property hppn() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableNotaPembelian.ppn1Column),Double)
+                    Return CType(Me(Me.tableNotaPembelian.hppnColumn),Double)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'ppn1' in table 'NotaPembelian' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'hppn' in table 'NotaPembelian' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableNotaPembelian.ppn1Column) = value
+                Me(Me.tableNotaPembelian.hppnColumn) = value
             End Set
         End Property
         
@@ -2420,14 +2420,14 @@ Partial Public Class NotaDt
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function Isppn1Null() As Boolean
-            Return Me.IsNull(Me.tableNotaPembelian.ppn1Column)
+        Public Function IshppnNull() As Boolean
+            Return Me.IsNull(Me.tableNotaPembelian.hppnColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub Setppn1Null()
-            Me(Me.tableNotaPembelian.ppn1Column) = Global.System.Convert.DBNull
+        Public Sub SethppnNull()
+            Me(Me.tableNotaPembelian.hppnColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2895,16 +2895,16 @@ Partial Public Class NotaDt
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Property ppn1() As Double
+        Public Property hppn() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableNotaPenjualan.ppn1Column),Double)
+                    Return CType(Me(Me.tableNotaPenjualan.hppnColumn),Double)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'ppn1' in table 'NotaPenjualan' is DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'hppn' in table 'NotaPenjualan' is DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableNotaPenjualan.ppn1Column) = value
+                Me(Me.tableNotaPenjualan.hppnColumn) = value
             End Set
         End Property
         
@@ -3300,14 +3300,14 @@ Partial Public Class NotaDt
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Function Isppn1Null() As Boolean
-            Return Me.IsNull(Me.tableNotaPenjualan.ppn1Column)
+        Public Function IshppnNull() As Boolean
+            Return Me.IsNull(Me.tableNotaPenjualan.hppnColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")>  _
-        Public Sub Setppn1Null()
-            Me(Me.tableNotaPenjualan.ppn1Column) = Global.System.Convert.DBNull
+        Public Sub SethppnNull()
+            Me(Me.tableNotaPenjualan.hppnColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _

@@ -410,6 +410,7 @@ Partial Class ItFPopup
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.cbPopGudang)
         Me.Controls.Add(Me.Label13)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "ItFPopup"

@@ -56,7 +56,7 @@ Partial Class FDashboard
         '
         Me.smExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.smExit.Name = "smExit"
-        Me.smExit.Size = New System.Drawing.Size(152, 22)
+        Me.smExit.Size = New System.Drawing.Size(92, 22)
         Me.smExit.Text = "Exit"
         '
         'mTransaksi
@@ -70,25 +70,25 @@ Partial Class FDashboard
         'smPembelian
         '
         Me.smPembelian.Name = "smPembelian"
-        Me.smPembelian.Size = New System.Drawing.Size(152, 22)
+        Me.smPembelian.Size = New System.Drawing.Size(140, 22)
         Me.smPembelian.Text = "Pembelian"
         '
         'smPenjualan
         '
         Me.smPenjualan.Name = "smPenjualan"
-        Me.smPenjualan.Size = New System.Drawing.Size(152, 22)
+        Me.smPenjualan.Size = New System.Drawing.Size(140, 22)
         Me.smPenjualan.Text = "Penjualan"
         '
         'smMutasi
         '
         Me.smMutasi.Name = "smMutasi"
-        Me.smMutasi.Size = New System.Drawing.Size(152, 22)
+        Me.smMutasi.Size = New System.Drawing.Size(140, 22)
         Me.smMutasi.Text = "Mutasi"
         '
         'smPenyesuaian
         '
         Me.smPenyesuaian.Name = "smPenyesuaian"
-        Me.smPenyesuaian.Size = New System.Drawing.Size(152, 22)
+        Me.smPenyesuaian.Size = New System.Drawing.Size(140, 22)
         Me.smPenyesuaian.Text = "Penyesuaian"
         '
         'mLaporan
@@ -102,7 +102,7 @@ Partial Class FDashboard
         'smLaporan
         '
         Me.smLaporan.Name = "smLaporan"
-        Me.smLaporan.Size = New System.Drawing.Size(152, 22)
+        Me.smLaporan.Size = New System.Drawing.Size(117, 22)
         Me.smLaporan.Text = "Laporan"
         '
         'FDashboard
@@ -111,6 +111,7 @@ Partial Class FDashboard
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1066, 497)
         Me.Controls.Add(Me.hMenu)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.IsMdiContainer = True
         Me.Name = "FDashboard"
         Me.Text = "Prodigy"

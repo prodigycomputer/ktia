@@ -23,11 +23,23 @@ ProdigyProject
 	<summary>
 Represents the strongly named DataTable class.
 </summary>
+</member><member name="T:ProdigyProject.NotaDt.NotaPenjualanDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
 </member><member name="T:ProdigyProject.NotaDt.NotaPembelianRow">
 	<summary>
 Represents strongly named DataRow class.
 </summary>
+</member><member name="T:ProdigyProject.NotaDt.NotaPenjualanRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
 </member><member name="T:ProdigyProject.NotaDt.NotaPembelianRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:ProdigyProject.NotaDt.NotaPenjualanRowChangeEvent">
 	<summary>
 Row event argument class
 </summary>

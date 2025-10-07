@@ -5,12 +5,14 @@ Public Class ItDtPenjualan
     Public Sub LoadDatajual(Optional ByVal nonota As String = "",
                         Optional ByVal tgl1 As String = "",
                         Optional ByVal tgl2 As String = "",
-                        Optional ByVal namasup As String = "",
+                        Optional ByVal namakust As String = "",
+                        Optional ByVal namasls As String = "",
                         Optional ByVal status As String = "")
 
-        Dim sql As String = "SELECT zjual.tgl, zjual.nonota, zsupplier.namasup, zjual.nilai, zjual.lunas " &
+        Dim sql As String = "SELECT zjual.tgl, zjual.nonota, zkustomer.namakust, zsales.namasls, zjual.nilai, zjual.lunas " &
                             "FROM zjual " &
-                            "LEFT JOIN zsupplier ON zjual.kodesup = zsupplier.kodesup"
+                            "LEFT JOIN zkustomer ON zjual.kodekust = zkustomer.kodekust " &
+                            "LEFT JOIN zsales ON zjual.kodesls = zsales.kodesls"
 
         Dim whereList As New List(Of String)
 
@@ -24,8 +26,12 @@ Public Class ItDtPenjualan
             End If
 
             ' --- filter supplier
-            If namasup <> "" Then
-                whereList.Add("zsupplier.namasup LIKE ?")
+            If namakust <> "" Then
+                whereList.Add("zkustomer.namakust LIKE ?")
+            End If
+
+            If namasls <> "" Then
+                whereList.Add("zsales.namasls LIKE ?")
             End If
 
             ' --- filter status lunas
@@ -56,8 +62,11 @@ Public Class ItDtPenjualan
                     Cmd.Parameters.AddWithValue("", tgl1)
                     Cmd.Parameters.AddWithValue("", tgl2)
                 End If
-                If namasup <> "" Then
-                    Cmd.Parameters.AddWithValue("", "%" & namasup & "%")
+                If namakust <> "" Then
+                    Cmd.Parameters.AddWithValue("", "%" & namakust & "%")
+                End If
+                If namasls <> "" Then
+                    Cmd.Parameters.AddWithValue("", "%" & namasls & "%")
                 End If
             End If
 
@@ -66,7 +75,8 @@ Public Class ItDtPenjualan
                 dgitmPENJUALAN.Rows.Add(
                     Rd("tgl"),
                     Rd("nonota"),
-                    If(IsDBNull(Rd("namasup")), "-", Rd("namasup")),
+                    If(IsDBNull(Rd("namakust")), "-", Rd("namakust")),
+                    If(IsDBNull(Rd("namasls")), "-", Rd("namasls")),
                     Rd("nilai"),
                     Rd("lunas")
                 )
@@ -82,7 +92,7 @@ Public Class ItDtPenjualan
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
 
-        SetupGridNOTA(dgitmPENJUALAN)
+        SetupGridJual(dgitmPENJUALAN)
     End Sub
 
     Private Sub dgitmPENJUALAN_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmPENJUALAN.CellContentClick

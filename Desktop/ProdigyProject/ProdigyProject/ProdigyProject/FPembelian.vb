@@ -31,7 +31,6 @@ Public Class FPembelian
 
     ' ================== FORM LOAD ==================
     Private Sub FPembelian_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
-        Me.FormBorderStyle = FormBorderStyle.FixedSingle
         ' isi dropdown lunas
         tpmSLUNAS.Items.Clear()
         tpmSLUNAS.Items.Add(New With {.Value = 0, .Text = "Belum Lunas"})

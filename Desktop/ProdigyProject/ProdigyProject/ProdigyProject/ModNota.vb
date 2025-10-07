@@ -36,10 +36,10 @@ Module ModNota
                         "zjualm.disca, zjualm.discb, zjualm.discc, zjualm.discrp, zjualm.jumlah, " &
                         "zstok.satuan1, zstok.satuan2, zstok.satuan3, zjualm.harga, " &
                         "zkustomer.namakust, zsales.namasls, zkustomer.alamat " &
-                        "FROM ((dbkita.zjual zjual " &
+                        "FROM (((dbkita.zjual zjual " &
                         "INNER JOIN dbkita.zjualm zjualm ON zjual.nonota=zjualm.nonota) " &
                         "LEFT JOIN dbkita.zstok zstok ON zjualm.kodebrg=zstok.kodebrg) " &
-                        "LEFT JOIN dbkita.zkustomer zkustomer ON zjual.kodekust=zkustomer.kodekust " &
+                        "LEFT JOIN dbkita.zkustomer zkustomer ON zjual.kodekust=zkustomer.kodekust) " &
                         "LEFT JOIN dbkita.zsales zsales ON zjual.kodesls=zsales.kodesls " &
                         "WHERE zjual.nonota='" & nonota & "'"
             End Select
@@ -54,7 +54,7 @@ Module ModNota
             End If
 
             ' --- Jika ingin tambahkan padding row minimal 10 ---
-            If dt.Rows.Count < 10 Then
+            If dt.Rows.Count < 9 Then
                 Dim header As DataRow = dt.Rows(0)
 
                 ' daftar kolom header yang selalu diisi
@@ -67,7 +67,7 @@ Module ModNota
                     "ppn", "hppn", "lainnya", "nilai"
                 }
 
-                For i As Integer = 1 To (10 - dt.Rows.Count)
+                For i As Integer = 1 To (9 - dt.Rows.Count)
                     Dim row As DataRow = dt.NewRow()
 
                     ' loop semua kolom di DataTable
@@ -85,10 +85,17 @@ Module ModNota
                 Next
             End If
 
-
             ' Buat dataset
             Dim ds As New NotaDt()
-            ds.Tables(0).Merge(dt)
+
+            Select Case jenis.ToLower()
+                Case "pembelian"
+                    ds.Tables("NotaPembelian").Merge(dt)
+
+                Case "penjualan"
+                    ds.Tables("NotaPenjualan").Merge(dt)
+            End Select
+
 
             ' Pilih report sesuai jenis
             Dim rpt As New ReportDocument()

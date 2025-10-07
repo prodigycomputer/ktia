@@ -16,7 +16,6 @@ Module MPenSimpan
             Dim namakust As String = CType(dict("tpjNMKUST"), TextBox).Text.Trim()
             Dim kodesls As String = CType(dict("tpjKDSALES"), TextBox).Text.Trim()
             Dim namasls As String = CType(dict("tpjNMSALES"), TextBox).Text.Trim()
-            Dim kodehrg As String = CType(dict("tpjKDHARGA"), TextBox).Text.Trim()
             Dim alamat As String = CType(dict("tpjALAMAT"), TextBox).Text.Trim()
             Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
 

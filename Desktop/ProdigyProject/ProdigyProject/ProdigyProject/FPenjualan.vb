@@ -106,7 +106,7 @@ Public Class FPenjualan
         tpjSNONOTA.Enabled = True
         dtpjTGL1.Enabled = True
         dtpjTGL2.Enabled = True
-        tpjSNMSUP.Enabled = True
+        tpjSNMKUST.Enabled = True
         tpjSLUNAS.Enabled = True
 
         CType(dict("btnADDITEM"), Button).Enabled = False
@@ -145,7 +145,7 @@ Public Class FPenjualan
         tpjSNONOTA.Enabled = False
         dtpjTGL1.Enabled = False
         dtpjTGL2.Enabled = False
-        tpjSNMSUP.Enabled = False
+        tpjSNMKUST.Enabled = False
         tpjSLUNAS.Enabled = False
 
         CType(dict("btnADDITEM"), Button).Enabled = True
@@ -240,7 +240,6 @@ Public Class FPenjualan
                     CType(dict("tpjNMKUST"), TextBox).Text = Rd("namakust").ToString()
                     CType(dict("tpjKDSALES"), TextBox).Text = Rd("kodesls").ToString()
                     CType(dict("tpjNMSALES"), TextBox).Text = Rd("namasls").ToString()
-                    CType(dict("tpjKDHARGA"), TextBox).Text = Rd("kodehrg").ToString()
                     CType(dict("tpjALAMAT"), TextBox).Text = Rd("alamat").ToString()
                     CType(dict("tpjTOTAL"), TextBox).Text = Rd("nilai").ToString()
                     CType(dict("tpjADISK1"), TextBox).Text = Rd("disc1").ToString()
@@ -299,7 +298,8 @@ Public Class FPenjualan
     Private Sub SetFilterState(ByVal nonotaActive As Boolean)
         dtpjTGL1.Enabled = Not nonotaActive
         dtpjTGL2.Enabled = Not nonotaActive
-        tpjSNMSUP.Enabled = Not nonotaActive
+        tpjSNMKUST.Enabled = Not nonotaActive
+        tpjSNMSLS.Enabled = Not nonotaActive
         tpjSLUNAS.Enabled = Not nonotaActive
     End Sub
 
@@ -670,7 +670,7 @@ Public Class FPenjualan
         Dim nonota As String = tpjSNONOTA.Text.Trim()
         Dim tgl1 As String = dtpjTGL1.Value.ToString("yyyy-MM-dd")
         Dim tgl2 As String = dtpjTGL2.Value.ToString("yyyy-MM-dd")
-        Dim namasup As String = tpjSNMSUP.Text.Trim()
+        Dim namasup As String = tpjSNMKUST.Text.Trim()
         Dim status As String = ""
 
         ' Tentukan status lunas hanya jika nonota kosong
@@ -689,7 +689,7 @@ Public Class FPenjualan
 
         ' === Clear filter setelah pencarian ===
         tpjSNONOTA.Clear()
-        tpjSNMSUP.Clear()
+        tpjSNMKUST.Clear()
         tpjSLUNAS.SelectedIndex = -1 ' reset pilihan
         ' reset tanggal ke hari ini
         dtpjTGL1.Value = DateTime.Today

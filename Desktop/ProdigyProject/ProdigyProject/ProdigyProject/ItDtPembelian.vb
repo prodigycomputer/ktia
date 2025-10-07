@@ -82,7 +82,7 @@ Public Class ItDtPembelian
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
 
-        SetupGridNOTA(dgitmPEMBELIAN)
+        SetupGridBeli(dgitmPEMBELIAN)
     End Sub
 
     Private Sub dgitmPEMBELIAN_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmPEMBELIAN.CellContentClick

@@ -23,7 +23,7 @@ Partial Class FPenjualan
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.tpjSLUNAS = New System.Windows.Forms.ComboBox()
-        Me.tpjSNMSUP = New System.Windows.Forms.TextBox()
+        Me.tpjSNMKUST = New System.Windows.Forms.TextBox()
         Me.dtpjTGL2 = New System.Windows.Forms.DateTimePicker()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.dtpjTGL1 = New System.Windows.Forms.DateTimePicker()
@@ -79,6 +79,7 @@ Partial Class FPenjualan
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.tpjSNMSLS = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.Nota1.SuspendLayout()
         CType(Me.grPENJUALAN, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -89,25 +90,25 @@ Partial Class FPenjualan
         Me.tpjSLUNAS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.tpjSLUNAS.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tpjSLUNAS.FormattingEnabled = True
-        Me.tpjSLUNAS.Location = New System.Drawing.Point(887, 7)
+        Me.tpjSLUNAS.Location = New System.Drawing.Point(912, 7)
         Me.tpjSLUNAS.Name = "tpjSLUNAS"
-        Me.tpjSLUNAS.Size = New System.Drawing.Size(121, 24)
+        Me.tpjSLUNAS.Size = New System.Drawing.Size(107, 24)
         Me.tpjSLUNAS.TabIndex = 30
         '
-        'tpjSNMSUP
+        'tpjSNMKUST
         '
-        Me.tpjSNMSUP.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tpjSNMSUP.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tpjSNMSUP.Location = New System.Drawing.Point(702, 8)
-        Me.tpjSNMSUP.Name = "tpjSNMSUP"
-        Me.tpjSNMSUP.Size = New System.Drawing.Size(183, 23)
-        Me.tpjSNMSUP.TabIndex = 29
+        Me.tpjSNMKUST.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tpjSNMKUST.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tpjSNMKUST.Location = New System.Drawing.Point(679, 8)
+        Me.tpjSNMKUST.Name = "tpjSNMKUST"
+        Me.tpjSNMKUST.Size = New System.Drawing.Size(113, 23)
+        Me.tpjSNMKUST.TabIndex = 29
         '
         'dtpjTGL2
         '
         Me.dtpjTGL2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtpjTGL2.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpjTGL2.Location = New System.Drawing.Point(599, 8)
+        Me.dtpjTGL2.Location = New System.Drawing.Point(576, 8)
         Me.dtpjTGL2.Name = "dtpjTGL2"
         Me.dtpjTGL2.Size = New System.Drawing.Size(100, 23)
         Me.dtpjTGL2.TabIndex = 28
@@ -115,7 +116,7 @@ Partial Class FPenjualan
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(582, 13)
+        Me.Label15.Location = New System.Drawing.Point(559, 13)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(15, 13)
         Me.Label15.TabIndex = 27
@@ -125,7 +126,7 @@ Partial Class FPenjualan
         '
         Me.dtpjTGL1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtpjTGL1.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpjTGL1.Location = New System.Drawing.Point(479, 8)
+        Me.dtpjTGL1.Location = New System.Drawing.Point(458, 8)
         Me.dtpjTGL1.Name = "dtpjTGL1"
         Me.dtpjTGL1.Size = New System.Drawing.Size(100, 23)
         Me.dtpjTGL1.TabIndex = 26
@@ -159,7 +160,7 @@ Partial Class FPenjualan
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(1010, 4)
+        Me.btnCARI.Location = New System.Drawing.Point(1022, 4)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 22
@@ -172,7 +173,7 @@ Partial Class FPenjualan
         Me.tpjSNONOTA.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tpjSNONOTA.Location = New System.Drawing.Point(345, 8)
         Me.tpjSNONOTA.Name = "tpjSNONOTA"
-        Me.tpjSNONOTA.Size = New System.Drawing.Size(130, 23)
+        Me.tpjSNONOTA.Size = New System.Drawing.Size(108, 23)
         Me.tpjSNONOTA.TabIndex = 21
         '
         'btnBATAL
@@ -634,14 +635,24 @@ Partial Class FPenjualan
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Tanggal"
         '
+        'tpjSNMSLS
+        '
+        Me.tpjSNMSLS.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tpjSNMSLS.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tpjSNMSLS.Location = New System.Drawing.Point(795, 8)
+        Me.tpjSNMSLS.Name = "tpjSNMSLS"
+        Me.tpjSNMSLS.Size = New System.Drawing.Size(113, 23)
+        Me.tpjSNMSLS.TabIndex = 32
+        '
         'FPenjualan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1075, 622)
+        Me.Controls.Add(Me.tpjSNMSLS)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.tpjSLUNAS)
-        Me.Controls.Add(Me.tpjSNMSUP)
+        Me.Controls.Add(Me.tpjSNMKUST)
         Me.Controls.Add(Me.dtpjTGL2)
         Me.Controls.Add(Me.Label15)
         Me.Controls.Add(Me.dtpjTGL1)
@@ -670,7 +681,7 @@ Partial Class FPenjualan
 
     End Sub
     Friend WithEvents tpjSLUNAS As System.Windows.Forms.ComboBox
-    Friend WithEvents tpjSNMSUP As System.Windows.Forms.TextBox
+    Friend WithEvents tpjSNMKUST As System.Windows.Forms.TextBox
     Friend WithEvents dtpjTGL2 As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents dtpjTGL1 As System.Windows.Forms.DateTimePicker
@@ -726,4 +737,5 @@ Partial Class FPenjualan
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents tpjKDHARGA As System.Windows.Forms.TextBox
     Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents tpjSNMSLS As System.Windows.Forms.TextBox
 End Class
