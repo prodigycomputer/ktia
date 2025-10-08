@@ -121,22 +121,28 @@
     <Compile Include="FCetak.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FMutasi.Designer.vb">
+      <DependentUpon>FMutasi.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FMutasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FPenjualan.Designer.vb">
       <DependentUpon>FPenjualan.vb</DependentUpon>
     </Compile>
     <Compile Include="FPenjualan.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HeaderTemplate.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HeaderTemplate.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ItDtKustomer.Designer.vb">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </Compile>
     <Compile Include="ItDtKustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtMutasi.Designer.vb">
+      <DependentUpon>ItDtMutasi.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtMutasi.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtPembelian.Designer.vb">
@@ -194,6 +200,12 @@
     <Compile Include="ItFPopup.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ItFPopupMut.Designer.vb">
+      <DependentUpon>ItFPopupMut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItFPopupMut.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Koneksi.vb" />
     <Compile Include="ModButton.vb" />
     <Compile Include="ModGridHelper.vb" />
@@ -242,12 +254,11 @@
     <EmbeddedResource Include="FCetak.resx">
       <DependentUpon>FCetak.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FMutasi.resx">
+      <DependentUpon>FMutasi.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FPenjualan.resx">
       <DependentUpon>FPenjualan.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HeaderTemplate.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>HeaderTemplate.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
@@ -278,6 +289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ItFPopup.resx">
       <DependentUpon>ItFPopup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItFPopupMut.resx">
+      <DependentUpon>ItFPopupMut.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

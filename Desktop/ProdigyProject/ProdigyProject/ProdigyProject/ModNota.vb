@@ -3,6 +3,9 @@ Imports CrystalDecisions.CrystalReports.Engine
 
 Module ModNota
 
+    Public HeaderNamaToko As String = "Prodigy Computer"
+    Public HeaderAlamat As String = "Gajah Mada, Jl. Setia Budi No 21/115, Pontianak"
+
     ' Fungsi umum untuk load report
     Public Sub LoadNota(ByVal jenis As String, ByVal nonota As String, ByVal viewer As CrystalDecisions.Windows.Forms.CrystalReportViewer)
         Try
@@ -91,7 +94,6 @@ Module ModNota
             Select Case jenis.ToLower()
                 Case "pembelian"
                     ds.Tables("NotaPembelian").Merge(dt)
-
                 Case "penjualan"
                     ds.Tables("NotaPenjualan").Merge(dt)
             End Select
@@ -101,12 +103,14 @@ Module ModNota
             Dim rpt As New ReportDocument()
             Select Case jenis.ToLower()
                 Case "pembelian"
-                    rpt.Load(Application.StartupPath & "\NotaPembelian.rpt")
+                    rpt.Load(Application.StartupPath & "\Report\NotaPembelian.rpt")
                 Case "penjualan"
-                    rpt.Load(Application.StartupPath & "\NotaPenjualan.rpt")
+                    rpt.Load(Application.StartupPath & "\Report\NotaPenjualan.rpt")
             End Select
 
             rpt.SetDataSource(ds)
+            rpt.SetParameterValue("pNamaToko", HeaderNamaToko)
+            rpt.SetParameterValue("pAlamat", HeaderAlamat)
             viewer.ReportSource = rpt
             viewer.Refresh()
 

@@ -70,7 +70,7 @@ Partial Class FPembelian
         Me.Label15 = New System.Windows.Forms.Label()
         Me.dtpmTGL2 = New System.Windows.Forms.DateTimePicker()
         Me.tpmSNMSUP = New System.Windows.Forms.TextBox()
-        Me.tpmSLUNAS = New System.Windows.Forms.ComboBox()
+        Me.tmuSLUNAS = New System.Windows.Forms.ComboBox()
         Me.btnSIMPAN = New System.Windows.Forms.Button()
         Me.btnTAMBAH = New System.Windows.Forms.Button()
         Me.Nota1.SuspendLayout()
@@ -540,15 +540,15 @@ Partial Class FPembelian
         Me.tpmSNMSUP.Size = New System.Drawing.Size(183, 23)
         Me.tpmSNMSUP.TabIndex = 14
         '
-        'tpmSLUNAS
+        'tmuSLUNAS
         '
-        Me.tpmSLUNAS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.tpmSLUNAS.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tpmSLUNAS.FormattingEnabled = True
-        Me.tpmSLUNAS.Location = New System.Drawing.Point(887, 7)
-        Me.tpmSLUNAS.Name = "tpmSLUNAS"
-        Me.tpmSLUNAS.Size = New System.Drawing.Size(121, 24)
-        Me.tpmSLUNAS.TabIndex = 15
+        Me.tmuSLUNAS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.tmuSLUNAS.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tmuSLUNAS.FormattingEnabled = True
+        Me.tmuSLUNAS.Location = New System.Drawing.Point(887, 7)
+        Me.tmuSLUNAS.Name = "tmuSLUNAS"
+        Me.tmuSLUNAS.Size = New System.Drawing.Size(121, 24)
+        Me.tmuSLUNAS.TabIndex = 15
         '
         'btnSIMPAN
         '
@@ -573,7 +573,7 @@ Partial Class FPembelian
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1075, 622)
-        Me.Controls.Add(Me.tpmSLUNAS)
+        Me.Controls.Add(Me.tmuSLUNAS)
         Me.Controls.Add(Me.tpmSNMSUP)
         Me.Controls.Add(Me.dtpmTGL2)
         Me.Controls.Add(Me.Label15)
@@ -651,7 +651,7 @@ Partial Class FPembelian
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents dtpmTGL2 As System.Windows.Forms.DateTimePicker
     Friend WithEvents tpmSNMSUP As System.Windows.Forms.TextBox
-    Friend WithEvents tpmSLUNAS As System.Windows.Forms.ComboBox
+    Friend WithEvents tmuSLUNAS As System.Windows.Forms.ComboBox
     Friend WithEvents btnSIMPAN As System.Windows.Forms.Button
     Friend WithEvents btnTAMBAH As System.Windows.Forms.Button
 End Class

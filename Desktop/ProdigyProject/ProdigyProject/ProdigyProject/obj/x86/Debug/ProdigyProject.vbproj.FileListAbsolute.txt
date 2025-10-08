@@ -20,3 +20,5 @@ D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyPro
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtKustomer.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtPenjualan.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtSales.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FMutasi.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItFPopupMut.resources

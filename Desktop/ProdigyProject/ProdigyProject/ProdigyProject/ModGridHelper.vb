@@ -424,4 +424,47 @@
         End With
     End Sub
 
+    ' === Setup untuk Grid Pembelian (zbelim) ===
+    Public Sub SetupGridMutasi(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+            .EditMode = DataGridViewEditMode.EditProgrammatically ' <<<<< penting
+
+            ' === Definisi Kolom ===
+            .Columns.Add("KodeBrg", "Kode brg")
+            .Columns("KodeBrg").Width = 100
+
+            .Columns.Add("NamaBrg", "Nama brg")
+            .Columns("NamaBrg").Width = 200
+
+            .Columns.Add("KodeGudang", "Kode Gudang")
+            .Columns("KodeGudang").Width = 100
+
+            .Columns.Add("Jlh1", "Jlh 1")
+            .Columns("Jlh1").Width = 60
+
+            .Columns.Add("Sat1", "Satuan 1")
+            .Columns("Sat1").Width = 80
+
+            .Columns.Add("Jlh2", "Jlh 2")
+            .Columns("Jlh2").Width = 60
+
+            .Columns.Add("Sat2", "Satuan 2")
+            .Columns("Sat2").Width = 80
+
+            .Columns.Add("Jlh3", "Jlh 3")
+            .Columns("Jlh3").Width = 60
+
+            .Columns.Add("Sat3", "Satuan 3")
+            .Columns("Sat3").Width = 80
+        End With
+    End Sub
+
 End Module

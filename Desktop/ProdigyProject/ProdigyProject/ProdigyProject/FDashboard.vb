@@ -71,4 +71,5 @@
     Private Sub smLaporan_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smLaporan.Click
 
     End Sub
+
 End Class
