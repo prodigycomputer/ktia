@@ -9,6 +9,31 @@ Public Class FMutasi
     Private TabLoadState As New Dictionary(Of Integer, Boolean)
     Private TabStatus As New Dictionary(Of Integer, String)
 
+    Private Sub LoadGudang()
+        Dim sql As String = "SELECT kodegd, namagd FROM zgudang ORDER BY kodegd"
+
+        Try
+            cbmuGD1.Items.Clear()
+            cbmuGD2.Items.Clear()
+
+            Cmd = New OdbcCommand(sql, Conn)
+            Rd = Cmd.ExecuteReader()
+
+            While Rd.Read()
+                Dim kode As String = Rd("kodegd").ToString()
+                Dim nama As String = Rd("namagd").ToString()
+                Dim itemText As String = kode & " " & nama
+
+                cbmuGD1.Items.Add(itemText)
+                cbmuGD2.Items.Add(itemText)
+            End While
+
+            Rd.Close()
+        Catch ex As Exception
+            MessageBox.Show("Gagal load gudang: " & ex.Message)
+        End Try
+    End Sub
+
     Private Sub FMutasi_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         SetupGridMUTASI(grMUTASI)
@@ -25,6 +50,8 @@ Public Class FMutasi
             TabPagesList.Add(firstTab)
             RegisterTabControls(firstTab, 1)
         End If
+        BukaKoneksi()
+        LoadGudang()
         DisabledLoad()
     End Sub
 
@@ -126,8 +153,8 @@ Public Class FMutasi
         Try
             BukaKoneksi()
 
-            ' ================== HEADER ==================
-            Dim sqlHead As String = "SELECT tgl, kodegd1, kodegd2 FROM zmutasi WHERE z.nonota = ?"
+            ' --- HEADER ---
+            Dim sqlHead As String = "SELECT z.tgl, z.kodegd1, z.kodegd2 FROM zmutasi z WHERE z.nonota = ?"
             Using cmd As New OdbcCommand(sqlHead, Conn)
                 cmd.Parameters.AddWithValue("@nonota", nonota)
                 Rd = cmd.ExecuteReader()
@@ -138,14 +165,19 @@ Public Class FMutasi
 
                     CType(dict("tmuNONOTA"), TextBox).Text = nonota
                     CType(dict("tmuTANGGAL"), DateTimePicker).Value = CDate(Rd("tgl"))
-                    CType(dict("cbmuGD1"), ComboBox).Text = Rd("kodegd1")
-                    CType(dict("cbmuGD2"), ComboBox).Text = Rd("kodegd2")
 
+                    Dim cb1 As ComboBox = CType(dict("cbmuGD1"), ComboBox)
+                    Dim cb2 As ComboBox = CType(dict("cbmuGD2"), ComboBox)
+                    Dim kodegd1 As String = Rd("kodegd1").ToString().Trim()
+                    Dim kodegd2 As String = Rd("kodegd2").ToString().Trim()
+
+                    cb1.SelectedIndex = cb1.FindString(kodegd1)
+                    cb2.SelectedIndex = cb2.FindString(kodegd2)
                 End If
                 Rd.Close()
             End Using
 
-            ' ================== DETAIL ==================
+            ' --- DETAIL ---
             Dim sqlDet As String = "SELECT d.kodebrg, s.namabrg, d.kodegd, d.jlh1, s.satuan1, d.jlh2, s.satuan2, d.jlh3, s.satuan3 FROM zmutasim d LEFT JOIN zstok s ON d.kodebrg = s.kodebrg WHERE d.nonota = ?"
             Using cmdDet As New OdbcCommand(sqlDet, Conn)
                 cmdDet.Parameters.AddWithValue("@nonota", nonota)
@@ -178,6 +210,7 @@ Public Class FMutasi
             MessageBox.Show("Gagal load nota: " & ex.Message, "Error")
         End Try
     End Sub
+
 
     Private Sub SetFilterState(ByVal nonotaActive As Boolean)
         dtmuTGL.Enabled = Not nonotaActive
@@ -293,7 +326,7 @@ Public Class FMutasi
             Dim dict = TabControls(nomor)
             Dim status As String = GetTabStatus(nomor)
 
-            MPemSimpan.SimpanPembelian(nomor, dict, status)
+            MMutSimpan.SimpanMutasi(nomor, dict, status)
 
             MessageBox.Show("Data pembelian berhasil disimpan untuk " & aktifTab.Text, "Sukses")
 
@@ -401,7 +434,7 @@ Public Class FMutasi
             ' --- Ambil grid di tab aktif ---
             Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
 
-            Dim popup As New ItFPopup()
+            Dim popup As New ItFPopupMut()
             popup.TargetGrid = grid
             If popup.ShowDialog(Me) = DialogResult.OK Then
                 ' Fokus ke row terakhir

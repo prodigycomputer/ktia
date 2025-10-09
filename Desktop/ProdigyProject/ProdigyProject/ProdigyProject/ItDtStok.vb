@@ -52,10 +52,14 @@ Public Class ItDtStok
             Dim isi2 As Double = Val(dgitmSTOK.Rows(e.RowIndex).Cells("isi2").Value)
             Dim harga As Double = Val(dgitmSTOK.Rows(e.RowIndex).Cells("hrgbeli").Value)
 
-            ' kirim ke ItFPopupPem
-            Dim parentForm As ItFPopup = TryCast(Me.Owner, ItFPopup)
-            If parentForm IsNot Nothing Then
+            ' ==== deteksi parent form secara dinamis ====
+            If TypeOf Me.Owner Is ItFPopup Then
+                Dim parentForm As ItFPopup = CType(Me.Owner, ItFPopup)
                 parentForm.SetBarang(kode, nama, sat1, sat2, sat3, isi1, isi2, harga)
+
+            ElseIf TypeOf Me.Owner Is ItFPopupMut Then
+                Dim parentForm As ItFPopupMut = CType(Me.Owner, ItFPopupMut)
+                parentForm.SetBarang(kode, nama, sat1, sat2, sat3, isi1, isi2)
             End If
 
             Me.Close()

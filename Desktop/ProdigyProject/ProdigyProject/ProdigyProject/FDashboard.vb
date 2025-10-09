@@ -61,7 +61,7 @@
     End Sub
 
     Private Sub smMutasi_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smMutasi.Click
-
+        BukaChild(Of FMutasi)()
     End Sub
 
     Private Sub smPenyesuaian_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smPenyesuaian.Click

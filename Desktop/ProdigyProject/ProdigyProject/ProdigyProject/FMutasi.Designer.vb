@@ -334,6 +334,7 @@ Partial Class FMutasi
         Me.Controls.Add(Me.btnTAMBAH)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FMutasi"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FMutasi"
         Me.TabControl1.ResumeLayout(False)
         Me.Nota1.ResumeLayout(False)

@@ -442,7 +442,7 @@
             .Columns("KodeBrg").Width = 100
 
             .Columns.Add("NamaBrg", "Nama brg")
-            .Columns("NamaBrg").Width = 200
+            .Columns("NamaBrg").Width = 338
 
             .Columns.Add("KodeGudang", "Kode Gudang")
             .Columns("KodeGudang").Width = 100

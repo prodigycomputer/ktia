@@ -35,8 +35,25 @@
             dtp.Format = DateTimePickerFormat.Custom
             dtp.CustomFormat = "dd/MM/yyyy"
             dtp.Value = DateTime.Now
-        ElseIf TypeOf copy Is DataGridView Then
-            SetupGridPenjualan(CType(copy, DataGridView))
+
+        ElseIf TypeOf copy Is ComboBox Then
+            Dim cboOrig As ComboBox = CType(original, ComboBox)
+            Dim cboCopy As ComboBox = CType(copy, ComboBox)
+
+            ' Salin item dan properti penting ComboBox
+            cboCopy.DropDownStyle = cboOrig.DropDownStyle
+            cboCopy.Sorted = cboOrig.Sorted
+            cboCopy.MaxDropDownItems = cboOrig.MaxDropDownItems
+            cboCopy.DropDownWidth = cboOrig.DropDownWidth
+            cboCopy.IntegralHeight = cboOrig.IntegralHeight
+
+            ' Salin semua item
+            For Each item In cboOrig.Items
+                cboCopy.Items.Add(item)
+            Next
+
+            ' Pilihan awal (jika ada)
+            cboCopy.SelectedIndex = -1
         End If
 
         ' Clone anak-anak kontrol
