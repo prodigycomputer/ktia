@@ -424,7 +424,7 @@
         End With
     End Sub
 
-    ' === Setup untuk Grid Pembelian (zbelim) ===
+    ' === Setup untuk Grid Mutasi (zmutasim) ===
     Public Sub SetupGridMutasi(ByVal grid As DataGridView)
         With grid
             .AllowUserToAddRows = False
@@ -442,10 +442,7 @@
             .Columns("KodeBrg").Width = 100
 
             .Columns.Add("NamaBrg", "Nama brg")
-            .Columns("NamaBrg").Width = 338
-
-            .Columns.Add("KodeGudang", "Kode Gudang")
-            .Columns("KodeGudang").Width = 100
+            .Columns("NamaBrg").Width = 438
 
             .Columns.Add("Jlh1", "Jlh 1")
             .Columns("Jlh1").Width = 60
@@ -464,6 +461,34 @@
 
             .Columns.Add("Sat3", "Satuan 3")
             .Columns("Sat3").Width = 80
+        End With
+    End Sub
+
+    ' === Setup untuk Grid Mutasi (zmutasim) ===
+    Public Sub SetupGridDMutasi(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("tgl", "Tanggal")
+            .Columns("tgl").Width = 100
+
+            .Columns.Add("nonota", "No Nota")
+            .Columns("nonota").Width = 223
+
+            .Columns.Add("namagd1", "Nama Gudang 1")
+            .Columns("namagd1").Width = 260
+
+            .Columns.Add("namagd2", "Nama Gudang 2")
+            .Columns("namagd2").Width = 260
+
         End With
     End Sub
 

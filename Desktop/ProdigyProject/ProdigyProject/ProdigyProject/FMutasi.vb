@@ -178,7 +178,7 @@ Public Class FMutasi
             End Using
 
             ' --- DETAIL ---
-            Dim sqlDet As String = "SELECT d.kodebrg, s.namabrg, d.kodegd, d.jlh1, s.satuan1, d.jlh2, s.satuan2, d.jlh3, s.satuan3 FROM zmutasim d LEFT JOIN zstok s ON d.kodebrg = s.kodebrg WHERE d.nonota = ?"
+            Dim sqlDet As String = "SELECT d.kodebrg, s.namabrg, d.jlh1, s.satuan1, d.jlh2, s.satuan2, d.jlh3, s.satuan3 FROM zmutasim d LEFT JOIN zstok s ON d.kodebrg = s.kodebrg WHERE d.nonota = ?"
             Using cmdDet As New OdbcCommand(sqlDet, Conn)
                 cmdDet.Parameters.AddWithValue("@nonota", nonota)
                 Rd = cmdDet.ExecuteReader()
@@ -193,7 +193,6 @@ Public Class FMutasi
                     grid.Rows.Add(
                         Rd("kodebrg").ToString(),
                         Rd("namabrg").ToString(),
-                        Rd("kodegd").ToString(),
                         Rd("jlh1"),
                         Rd("satuan1").ToString(),
                         Rd("jlh2"),
@@ -210,7 +209,6 @@ Public Class FMutasi
             MessageBox.Show("Gagal load nota: " & ex.Message, "Error")
         End Try
     End Sub
-
 
     Private Sub SetFilterState(ByVal nonotaActive As Boolean)
         dtmuTGL.Enabled = Not nonotaActive
@@ -450,17 +448,17 @@ Public Class FMutasi
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
-        Dim f As New ItDtPembelian()
+        Dim f As New ItDtMutasi()
 
         Dim nonota As String = tmuSNONOTA.Text.Trim()
         Dim tgl As String = dtmuTGL.Value.ToString("yyyy-MM-dd")
-        Dim dg1 As String = tmuSGD1.Text.Trim()
-        Dim dg2 As String = tmuSGD2.Text.Trim()
+        Dim namagd1 As String = tmuSGD1.Text.Trim()
+        Dim namagd2 As String = tmuSGD2.Text.Trim()
 
         ' Load data sesuai filter
         f.Owner = Me
         f.Show()
-        f.LoadDataBeli(nonota, tgl, dg1, dg2)
+        f.LoadDataMutasi(nonota, tgl, namagd1, namagd2)
 
         ' === Clear filter setelah pencarian ===
         tmuSNONOTA.Clear()

@@ -34,7 +34,7 @@ Public Class ItFPopupMut
         End If
     End Sub
 
-    Public Sub LoadBarangInfo(ByVal kodeBrg As String, Optional ByVal kodegd As String = "")
+    Public Sub LoadBarangInfo(ByVal kodeBrg As String)
 
         If Conn Is Nothing OrElse Conn.State = ConnectionState.Closed Then
             BukaKoneksi()
@@ -59,20 +59,6 @@ Public Class ItFPopupMut
             End Using
         End Using
 
-        ' --- Gudang ---
-        LoadGudang()
-
-        If kodegd <> "" Then
-            For i As Integer = 0 To cbPopGudang.Items.Count - 1
-                Dim item As String = cbPopGudang.Items(i).ToString()
-                Dim gdKode As String = item.Split(" "c)(0).Trim()
-
-                If gdKode.ToUpper() = kodegd.Trim().ToUpper() Then
-                    cbPopGudang.SelectedIndex = i
-                    Exit For
-                End If
-            Next
-        End If
     End Sub
 
     Private Sub ClearInput()
@@ -84,7 +70,6 @@ Public Class ItFPopupMut
         tPopSTN1.Clear()
         tPopSTN2.Clear()
         tPopSTN3.Clear()
-        cbPopGudang.SelectedIndex = -1
         FaktorIsi1 = 1
         FaktorIsi2 = 1
         tPopJLH2.Enabled = (FaktorIsi1 > 1)
@@ -96,30 +81,6 @@ Public Class ItFPopupMut
         Me.MaximizeBox = False
 
         BukaKoneksi()
-        If Not IsEditMode Then
-            LoadGudang()
-        End If
-    End Sub
-
-    Private Sub LoadGudang()
-        cbPopGudang.Items.Clear()
-
-        Dim sql As String = "SELECT kodegd, namagd FROM zgudang ORDER BY kodegd"
-
-        Try
-            Cmd = New OdbcCommand(sql, Conn)
-            Rd = Cmd.ExecuteReader()
-
-            While Rd.Read()
-                Dim kode As String = Rd("kodegd").ToString()
-                Dim nama As String = Rd("namagd").ToString()
-                cbPopGudang.Items.Add(kode & " " & nama)
-            End While
-
-            Rd.Close()
-        Catch ex As Exception
-            MessageBox.Show("Gagal load gudang: " & ex.Message)
-        End Try
     End Sub
 
     Private Sub btnPopTAMBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPopTAMBAH.Click
@@ -132,10 +93,6 @@ Public Class ItFPopupMut
             ' --- Ambil data ---
             Dim kode As String = tPopKDBARANG.Text.Trim()
             Dim nama As String = tPopNMBARANG.Text.Trim()
-            Dim gudang As String = ""
-            If cbPopGudang.SelectedItem IsNot Nothing Then
-                gudang = cbPopGudang.SelectedItem.ToString().Split(" "c)(0)
-            End If
 
             Dim jlh1 As String = tPopJLH1.Text.Trim()
             Dim sat1 As String = tPopSTN1.Text.Trim()
@@ -149,7 +106,6 @@ Public Class ItFPopupMut
                 With TargetGrid.CurrentRow
                     .Cells("KodeBrg").Value = kode
                     .Cells("NamaBrg").Value = nama
-                    .Cells("KodeGudang").Value = gudang
                     .Cells("Jlh1").Value = jlh1
                     .Cells("Sat1").Value = sat1
                     .Cells("Jlh2").Value = jlh2
@@ -159,7 +115,7 @@ Public Class ItFPopupMut
 
                 End With
             Else
-                TargetGrid.Rows.Add(kode, nama, gudang, jlh1, sat1, jlh2, sat2, jlh3, sat3)
+                TargetGrid.Rows.Add(kode, nama, jlh1, sat1, jlh2, sat2, jlh3, sat3)
             End If
 
             ' --- Reset input untuk tambah berikutnya ---
@@ -174,15 +130,6 @@ Public Class ItFPopupMut
 
     Private Sub btnPopTUTUP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPopTUTUP.Click
         Me.Close()
-    End Sub
-
-    Private Sub cbPopGudang_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbPopGudang.SelectedIndexChanged
-        If cbPopGudang.SelectedItem IsNot Nothing Then
-            Dim fullText As String = cbPopGudang.SelectedItem.ToString()
-            Dim kodegd As String = fullText.Split(" "c)(0)  ' ambil bagian kode
-            ' contoh: "G01 Gudang Utama" → kodegd = "G01"
-            ' bisa simpan ke variabel / label / textbox hidden
-        End If
     End Sub
 
     Private Sub tPopKDBARANG_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles tPopKDBARANG.KeyDown

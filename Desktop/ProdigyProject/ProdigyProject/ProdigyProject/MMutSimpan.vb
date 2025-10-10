@@ -17,11 +17,14 @@ Module MMutSimpan
             Dim gd1 As String = ""
             Dim gd2 As String = ""
 
-            If cb1.SelectedItem IsNot Nothing Then
-                gd1 = cb1.SelectedItem.ToString().Split(" "c)(0)
+            Dim cb1Text As String = If(cb1.SelectedItem IsNot Nothing, cb1.SelectedItem.ToString(), cb1.Text)
+            Dim cb2Text As String = If(cb2.SelectedItem IsNot Nothing, cb2.SelectedItem.ToString(), cb2.Text)
+
+            If Not String.IsNullOrWhiteSpace(cb1Text) Then
+                gd1 = cb1Text.Split(" "c)(0)
             End If
-            If cb2.SelectedItem IsNot Nothing Then
-                gd2 = cb2.SelectedItem.ToString().Split(" "c)(0)
+            If Not String.IsNullOrWhiteSpace(cb2Text) Then
+                gd2 = cb2Text.Split(" "c)(0)
             End If
 
             Dim grid As DataGridView = CType(dict("GRID"), DataGridView)

@@ -29,7 +29,7 @@ Partial Class ItDtPenjualan
         'dgitmPENJUALAN
         '
         Me.dgitmPENJUALAN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgitmPENJUALAN.Location = New System.Drawing.Point(8, 9)
+        Me.dgitmPENJUALAN.Location = New System.Drawing.Point(8, 8)
         Me.dgitmPENJUALAN.Name = "dgitmPENJUALAN"
         Me.dgitmPENJUALAN.ReadOnly = True
         Me.dgitmPENJUALAN.Size = New System.Drawing.Size(846, 427)

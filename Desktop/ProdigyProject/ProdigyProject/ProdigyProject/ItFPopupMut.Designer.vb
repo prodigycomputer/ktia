@@ -42,13 +42,11 @@ Partial Class ItFPopupMut
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tPopKDBARANG = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.cbPopGudang = New System.Windows.Forms.ComboBox()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'btnPopTUTUP
         '
-        Me.btnPopTUTUP.Location = New System.Drawing.Point(247, 240)
+        Me.btnPopTUTUP.Location = New System.Drawing.Point(247, 221)
         Me.btnPopTUTUP.Name = "btnPopTUTUP"
         Me.btnPopTUTUP.Size = New System.Drawing.Size(55, 30)
         Me.btnPopTUTUP.TabIndex = 130
@@ -57,7 +55,7 @@ Partial Class ItFPopupMut
         '
         'btnPopTAMBAH
         '
-        Me.btnPopTAMBAH.Location = New System.Drawing.Point(186, 240)
+        Me.btnPopTAMBAH.Location = New System.Drawing.Point(186, 221)
         Me.btnPopTAMBAH.Name = "btnPopTAMBAH"
         Me.btnPopTAMBAH.Size = New System.Drawing.Size(55, 30)
         Me.btnPopTAMBAH.TabIndex = 129
@@ -68,7 +66,7 @@ Partial Class ItFPopupMut
         '
         Me.tPopSTN3.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tPopSTN3.Enabled = False
-        Me.tPopSTN3.Location = New System.Drawing.Point(112, 211)
+        Me.tPopSTN3.Location = New System.Drawing.Point(112, 192)
         Me.tPopSTN3.Name = "tPopSTN3"
         Me.tPopSTN3.Size = New System.Drawing.Size(190, 20)
         Me.tPopSTN3.TabIndex = 116
@@ -77,7 +75,7 @@ Partial Class ItFPopupMut
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(11, 212)
+        Me.Label8.Location = New System.Drawing.Point(11, 193)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(56, 15)
         Me.Label8.TabIndex = 115
@@ -86,7 +84,7 @@ Partial Class ItFPopupMut
         'tPopJLH3
         '
         Me.tPopJLH3.Enabled = False
-        Me.tPopJLH3.Location = New System.Drawing.Point(112, 188)
+        Me.tPopJLH3.Location = New System.Drawing.Point(112, 169)
         Me.tPopJLH3.Name = "tPopJLH3"
         Me.tPopJLH3.Size = New System.Drawing.Size(190, 20)
         Me.tPopJLH3.TabIndex = 114
@@ -96,7 +94,7 @@ Partial Class ItFPopupMut
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(11, 189)
+        Me.Label9.Location = New System.Drawing.Point(11, 170)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(58, 15)
         Me.Label9.TabIndex = 113
@@ -106,7 +104,7 @@ Partial Class ItFPopupMut
         '
         Me.tPopSTN2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tPopSTN2.Enabled = False
-        Me.tPopSTN2.Location = New System.Drawing.Point(112, 165)
+        Me.tPopSTN2.Location = New System.Drawing.Point(112, 146)
         Me.tPopSTN2.Name = "tPopSTN2"
         Me.tPopSTN2.Size = New System.Drawing.Size(190, 20)
         Me.tPopSTN2.TabIndex = 112
@@ -115,7 +113,7 @@ Partial Class ItFPopupMut
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(11, 166)
+        Me.Label6.Location = New System.Drawing.Point(11, 147)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(56, 15)
         Me.Label6.TabIndex = 111
@@ -124,7 +122,7 @@ Partial Class ItFPopupMut
         'tPopJLH2
         '
         Me.tPopJLH2.Enabled = False
-        Me.tPopJLH2.Location = New System.Drawing.Point(112, 142)
+        Me.tPopJLH2.Location = New System.Drawing.Point(112, 123)
         Me.tPopJLH2.Name = "tPopJLH2"
         Me.tPopJLH2.Size = New System.Drawing.Size(190, 20)
         Me.tPopJLH2.TabIndex = 110
@@ -134,7 +132,7 @@ Partial Class ItFPopupMut
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(11, 143)
+        Me.Label7.Location = New System.Drawing.Point(11, 124)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(58, 15)
         Me.Label7.TabIndex = 109
@@ -144,7 +142,7 @@ Partial Class ItFPopupMut
         '
         Me.tPopSTN1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tPopSTN1.Enabled = False
-        Me.tPopSTN1.Location = New System.Drawing.Point(112, 119)
+        Me.tPopSTN1.Location = New System.Drawing.Point(112, 100)
         Me.tPopSTN1.Name = "tPopSTN1"
         Me.tPopSTN1.Size = New System.Drawing.Size(190, 20)
         Me.tPopSTN1.TabIndex = 108
@@ -153,7 +151,7 @@ Partial Class ItFPopupMut
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(11, 120)
+        Me.Label5.Location = New System.Drawing.Point(11, 101)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(56, 15)
         Me.Label5.TabIndex = 107
@@ -161,7 +159,7 @@ Partial Class ItFPopupMut
         '
         'tPopJLH1
         '
-        Me.tPopJLH1.Location = New System.Drawing.Point(112, 96)
+        Me.tPopJLH1.Location = New System.Drawing.Point(112, 77)
         Me.tPopJLH1.Name = "tPopJLH1"
         Me.tPopJLH1.Size = New System.Drawing.Size(190, 20)
         Me.tPopJLH1.TabIndex = 106
@@ -172,7 +170,7 @@ Partial Class ItFPopupMut
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(11, 97)
+        Me.Label4.Location = New System.Drawing.Point(11, 78)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(58, 15)
         Me.Label4.TabIndex = 105
@@ -181,7 +179,7 @@ Partial Class ItFPopupMut
         'tPopSTOK
         '
         Me.tPopSTOK.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tPopSTOK.Location = New System.Drawing.Point(112, 73)
+        Me.tPopSTOK.Location = New System.Drawing.Point(112, 54)
         Me.tPopSTOK.Name = "tPopSTOK"
         Me.tPopSTOK.Size = New System.Drawing.Size(190, 20)
         Me.tPopSTOK.TabIndex = 104
@@ -190,7 +188,7 @@ Partial Class ItFPopupMut
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(11, 74)
+        Me.Label3.Location = New System.Drawing.Point(11, 55)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(31, 15)
         Me.Label3.TabIndex = 103
@@ -199,7 +197,7 @@ Partial Class ItFPopupMut
         'tPopNMBARANG
         '
         Me.tPopNMBARANG.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tPopNMBARANG.Location = New System.Drawing.Point(112, 50)
+        Me.tPopNMBARANG.Location = New System.Drawing.Point(112, 31)
         Me.tPopNMBARANG.Name = "tPopNMBARANG"
         Me.tPopNMBARANG.Size = New System.Drawing.Size(190, 20)
         Me.tPopNMBARANG.TabIndex = 102
@@ -208,7 +206,7 @@ Partial Class ItFPopupMut
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(11, 51)
+        Me.Label2.Location = New System.Drawing.Point(11, 32)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(84, 15)
         Me.Label2.TabIndex = 101
@@ -217,7 +215,7 @@ Partial Class ItFPopupMut
         'tPopKDBARANG
         '
         Me.tPopKDBARANG.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tPopKDBARANG.Location = New System.Drawing.Point(112, 27)
+        Me.tPopKDBARANG.Location = New System.Drawing.Point(112, 8)
         Me.tPopKDBARANG.Name = "tPopKDBARANG"
         Me.tPopKDBARANG.Size = New System.Drawing.Size(190, 20)
         Me.tPopKDBARANG.TabIndex = 100
@@ -226,36 +224,17 @@ Partial Class ItFPopupMut
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(11, 28)
+        Me.Label1.Location = New System.Drawing.Point(11, 9)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(79, 15)
         Me.Label1.TabIndex = 99
         Me.Label1.Text = "Kode Barang"
         '
-        'cbPopGudang
-        '
-        Me.cbPopGudang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbPopGudang.FormattingEnabled = True
-        Me.cbPopGudang.Location = New System.Drawing.Point(112, 3)
-        Me.cbPopGudang.Name = "cbPopGudang"
-        Me.cbPopGudang.Size = New System.Drawing.Size(190, 21)
-        Me.cbPopGudang.TabIndex = 98
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(11, 4)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(83, 15)
-        Me.Label13.TabIndex = 97
-        Me.Label13.Text = "Kode Gudang"
-        '
         'ItFPopupMut
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(312, 275)
+        Me.ClientSize = New System.Drawing.Size(312, 260)
         Me.Controls.Add(Me.btnPopTUTUP)
         Me.Controls.Add(Me.btnPopTAMBAH)
         Me.Controls.Add(Me.tPopSTN3)
@@ -276,8 +255,6 @@ Partial Class ItFPopupMut
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.tPopKDBARANG)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.cbPopGudang)
-        Me.Controls.Add(Me.Label13)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "ItFPopupMut"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -306,6 +283,4 @@ Partial Class ItFPopupMut
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents tPopKDBARANG As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents cbPopGudang As System.Windows.Forms.ComboBox
-    Friend WithEvents Label13 As System.Windows.Forms.Label
 End Class

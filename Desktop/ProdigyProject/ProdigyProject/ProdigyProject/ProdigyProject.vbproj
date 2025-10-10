@@ -264,6 +264,9 @@
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ItDtMutasi.resx">
+      <DependentUpon>ItDtMutasi.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ItDtPembelian.resx">
       <DependentUpon>ItDtPembelian.vb</DependentUpon>
     </EmbeddedResource>

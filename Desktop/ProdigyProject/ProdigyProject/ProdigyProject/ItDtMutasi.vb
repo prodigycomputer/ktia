@@ -2,55 +2,102 @@
 
 Public Class ItDtMutasi
 
-    Public Sub LoadDataMut(ByVal keyword As String)
+    Public Sub LoadDataMutasi(Optional ByVal nonota As String = "",
+                          Optional ByVal tgl As String = "",
+                          Optional ByVal namagd1 As String = "",
+                          Optional ByVal namagd2 As String = "")
 
-        Dim sql As String
-        If keyword = "*" Then
-            sql = "SELECT kodekust, namakust, alamat, kota, ktp, npwp FROM zkustomer ORDER BY kodekust"
+        Dim sql As String =
+            "SELECT zmutasi.tgl, zmutasi.nonota, g1.namagd AS namagd1, g2.namagd AS namagd2 " &
+            "FROM zmutasi " &
+            "JOIN zgudang g1 ON zmutasi.kodegd1 = g1.kodegd " &
+            "JOIN zgudang g2 ON zmutasi.kodegd2 = g2.kodegd"
+
+        Dim whereList As New List(Of String)
+
+        ' --- filter berdasarkan nonota
+        If nonota <> "" Then
+            whereList.Add("zmutasi.nonota LIKE ?")
         Else
-            sql = "SELECT kodekust, namakust, alamat, kota, ktp, npwp " &
-                  "FROM zkustomer WHERE kodekust LIKE '%" & keyword & "%' OR namakust LIKE '%" & keyword & "%' ORDER BY kodekust"
+            ' --- filter tanggal
+            If tgl <> "" Then
+                whereList.Add("zmutasi.tgl = ?")
+            End If
+
+            ' --- filter gudang asal
+            If namagd1 <> "" Then
+                whereList.Add("g1.namagd LIKE ?")
+            End If
+
+            ' --- filter gudang tujuan
+            If namagd2 <> "" Then
+                whereList.Add("g2.namagd LIKE ?")
+            End If
         End If
 
-        dgitmMUT.Rows.Clear()
+        ' --- tambahkan WHERE jika ada kondisi
+        If whereList.Count > 0 Then
+            sql &= " WHERE " & String.Join(" AND ", whereList)
+        End If
+
+        sql &= " ORDER BY zmutasi.tgl DESC, zmutasi.nonota DESC"
+
+        ' --- bersihkan isi grid
+        dgitmMUTASI.Rows.Clear()
 
         Try
             BukaKoneksi()
             Cmd = New OdbcCommand(sql, Conn)
-            Rd = Cmd.ExecuteReader()
 
+            ' --- bind parameter sesuai urutan where
+            If nonota <> "" Then
+                Cmd.Parameters.AddWithValue("", "%" & nonota & "%")
+            Else
+                If tgl <> "" Then
+                    Cmd.Parameters.AddWithValue("", tgl)
+                End If
+                If namagd1 <> "" Then
+                    Cmd.Parameters.AddWithValue("", "%" & namagd1 & "%")
+                End If
+                If namagd2 <> "" Then
+                    Cmd.Parameters.AddWithValue("", "%" & namagd2 & "%")
+                End If
+            End If
+
+            ' --- eksekusi dan tampilkan data
+            Rd = Cmd.ExecuteReader()
             While Rd.Read()
-                dgitmMUT.Rows.Add(Rd("kodekust"), Rd("namakust"), Rd("alamat"), Rd("kota"), Rd("ktp"), Rd("npwp"))
+                dgitmMUTASI.Rows.Add(
+                    Rd("tgl"),
+                    Rd("nonota"),
+                    If(IsDBNull(Rd("namagd1")), "-", Rd("namagd1")),
+                    If(IsDBNull(Rd("namagd2")), "-", Rd("namagd2"))
+                )
             End While
 
             Rd.Close()
             Conn.Close()
+
         Catch ex As Exception
             MessageBox.Show("Gagal load data: " & ex.Message)
         End Try
     End Sub
 
+
     Private Sub ItDtMutasi_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
 
-        SetupGridKustomer(dgitmMUT)
+        SetupGridDMutasi(dgitmMUTASI)
     End Sub
 
-    Private Sub dgitmMUT_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmMUT.CellContentClick
+    Private Sub dgitmMUTASI_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmMUTASI.CellContentClick
         If e.RowIndex >= 0 Then
-            Dim kodek As String = dgitmMUT.Rows(e.RowIndex).Cells("kodekust").Value.ToString()
-            Dim namak As String = dgitmMUT.Rows(e.RowIndex).Cells("namakust").Value.ToString()
-            Dim alamat As String = dgitmMUT.Rows(e.RowIndex).Cells("alamat").Value.ToString()
-            Dim kota As String = dgitmMUT.Rows(e.RowIndex).Cells("kota").Value.ToString()
-            Dim ktp As String = dgitmMUT.Rows(e.RowIndex).Cells("ktp").Value.ToString()
-            Dim npwp As Double = Val(dgitmMUT.Rows(e.RowIndex).Cells("npwp").Value)
+            Dim nonota As String = dgitmMUTASI.Rows(e.RowIndex).Cells("nonota").Value.ToString()
 
-
-            ' kirim ke ItFPopupPem
-            Dim parentForm As FPenjualan = TryCast(Me.Owner, FPenjualan)
+            Dim parentForm As FMutasi = TryCast(Me.Owner, FMutasi)
             If parentForm IsNot Nothing Then
-                parentForm.SetKustomer(kodek, namak, alamat, kota, ktp, npwp)
+                parentForm.LoadNota(nonota)
             End If
 
             Me.Close()
