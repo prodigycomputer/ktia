@@ -47,8 +47,8 @@ Partial Class FMutasi
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
-        Me.tmuSGD2 = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.tmuSGD2 = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.Nota1.SuspendLayout()
         CType(Me.grMUTASI, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -248,9 +248,9 @@ Partial Class FMutasi
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(9, 81)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(71, 15)
+        Me.Label4.Size = New System.Drawing.Size(92, 15)
         Me.Label4.TabIndex = 4
-        Me.Label4.Text = "Keterangan"
+        Me.Label4.Text = "Gudang Tujuan"
         '
         'Label3
         '
@@ -258,9 +258,9 @@ Partial Class FMutasi
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(9, 57)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(79, 15)
+        Me.Label3.Size = New System.Drawing.Size(80, 15)
         Me.Label3.TabIndex = 3
-        Me.Label3.Text = "Jatuh Tempo"
+        Me.Label3.Text = "Gudang Awal"
         '
         'Label2
         '
@@ -292,15 +292,6 @@ Partial Class FMutasi
         Me.Label15.TabIndex = 27
         Me.Label15.Text = "Dari"
         '
-        'tmuSGD2
-        '
-        Me.tmuSGD2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tmuSGD2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tmuSGD2.Location = New System.Drawing.Point(786, 7)
-        Me.tmuSGD2.Name = "tmuSGD2"
-        Me.tmuSGD2.Size = New System.Drawing.Size(135, 23)
-        Me.tmuSGD2.TabIndex = 33
-        '
         'Label5
         '
         Me.Label5.AutoSize = True
@@ -310,6 +301,15 @@ Partial Class FMutasi
         Me.Label5.Size = New System.Drawing.Size(23, 13)
         Me.Label5.TabIndex = 32
         Me.Label5.Text = "Ke"
+        '
+        'tmuSGD2
+        '
+        Me.tmuSGD2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tmuSGD2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tmuSGD2.Location = New System.Drawing.Point(786, 7)
+        Me.tmuSGD2.Name = "tmuSGD2"
+        Me.tmuSGD2.Size = New System.Drawing.Size(135, 23)
+        Me.tmuSGD2.TabIndex = 33
         '
         'FMutasi
         '
@@ -367,8 +367,8 @@ Partial Class FMutasi
     Friend WithEvents cbmuGD2 As System.Windows.Forms.ComboBox
     Friend WithEvents cbmuGD1 As System.Windows.Forms.ComboBox
     Friend WithEvents tmuNONOTA As System.Windows.Forms.TextBox
-    Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents tmuSGD2 As System.Windows.Forms.TextBox
-    Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents tmuTANGGAL As System.Windows.Forms.DateTimePicker
+    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents tmuSGD2 As System.Windows.Forms.TextBox
 End Class

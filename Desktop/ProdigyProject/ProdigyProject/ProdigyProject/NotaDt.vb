@@ -2,6 +2,11 @@
 
 
 
+    Partial Class NotaMutasiDataTable
+
+
+    End Class
+
     Partial Class NotaPembelianDataTable
 
         Private Sub NotaPembelianDataTable_NotaPembelianRowChanging(ByVal sender As System.Object, ByVal e As NotaPembelianRowChangeEvent) Handles Me.NotaPembelianRowChanging

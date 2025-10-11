@@ -133,6 +133,12 @@
     <Compile Include="FPenjualan.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FPenyesuaian.Designer.vb">
+      <DependentUpon>FPenyesuaian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FPenyesuaian.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ItDtKustomer.Designer.vb">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </Compile>
@@ -176,6 +182,12 @@
     <Compile Include="ItDtPenjualan.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ItDtPenyesuaian.Designer.vb">
+      <DependentUpon>ItDtPenyesuaian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtPenyesuaian.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ItDtSales.Designer.vb">
       <DependentUpon>ItDtSales.vb</DependentUpon>
     </Compile>
@@ -206,6 +218,12 @@
     <Compile Include="ItFPopupMut.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ItFPopupPeny.Designer.vb">
+      <DependentUpon>ItFPopupPeny.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItFPopupPeny.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Koneksi.vb" />
     <Compile Include="MMutSimpan.vb" />
     <Compile Include="ModButton.vb" />
@@ -215,6 +233,7 @@
     <Compile Include="ModUtility.vb" />
     <Compile Include="MPemSimpan.vb" />
     <Compile Include="MPenSimpan.vb" />
+    <Compile Include="MPenySimpan.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -237,6 +256,12 @@
     </Compile>
     <Compile Include="NotaDt.vb">
       <DependentUpon>NotaDt.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="NotaMutasi.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaMutasi.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="NotaPembelian.vb">
       <AutoGen>True</AutoGen>
@@ -261,6 +286,9 @@
     <EmbeddedResource Include="FPenjualan.resx">
       <DependentUpon>FPenjualan.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FPenyesuaian.resx">
+      <DependentUpon>FPenyesuaian.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </EmbeddedResource>
@@ -282,6 +310,9 @@
     <EmbeddedResource Include="ItDtPenjualan.resx">
       <DependentUpon>ItDtPenjualan.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ItDtPenyesuaian.resx">
+      <DependentUpon>ItDtPenyesuaian.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ItDtSales.resx">
       <DependentUpon>ItDtSales.vb</DependentUpon>
     </EmbeddedResource>
@@ -297,11 +328,18 @@
     <EmbeddedResource Include="ItFPopupMut.resx">
       <DependentUpon>ItFPopupMut.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ItFPopupPeny.resx">
+      <DependentUpon>ItFPopupPeny.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaMutasi.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaMutasi.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="NotaPembelian.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

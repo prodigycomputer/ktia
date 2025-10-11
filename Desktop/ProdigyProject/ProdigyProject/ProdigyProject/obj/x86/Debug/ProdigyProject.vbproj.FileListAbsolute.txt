@@ -23,3 +23,6 @@ D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyPro
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FMutasi.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItFPopupMut.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtMutasi.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FPenyesuaian.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtPenyesuaian.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItFPopupPeny.resources

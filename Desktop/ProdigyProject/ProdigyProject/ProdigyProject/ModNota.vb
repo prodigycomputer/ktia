@@ -45,6 +45,20 @@ Module ModNota
                         "LEFT JOIN dbkita.zkustomer zkustomer ON zjual.kodekust=zkustomer.kodekust) " &
                         "LEFT JOIN dbkita.zsales zsales ON zjual.kodesls=zsales.kodesls " &
                         "WHERE zjual.nonota='" & nonota & "'"
+
+                Case "mutasi"
+                    ' --- query penjualan (isi sesuai tabel kamu)
+                    sql =
+                        "SELECT zmutasi.nonota, zmutasi.tgl, zmutasi.kodegd1, zmutasi.kodegd2, " &
+                        "g1.namagd AS namagd1, g2.namagd AS namagd2, " &
+                        "zmutasim.kodebrg, zmutasim.jlh1, zmutasim.jlh2, zmutasim.jlh3, " &
+                        "zstok.namabrg, zstok.satuan1, zstok.satuan2, zstok.satuan3 " &
+                        "FROM ((dbkita.zmutasi zmutasi " &
+                        "INNER JOIN dbkita.zmutasim zmutasim ON zmutasi.nonota=zmutasim.nonota) " &
+                        "LEFT JOIN dbkita.zstok zstok ON zmutasim.kodebrg=zstok.kodebrg) " &
+                        "JOIN dbkita.zgudang g1 ON zmutasi.kodegd1 = g1.kodegd " &
+                        "JOIN dbkita.zgudang g2 ON zmutasi.kodegd2 = g2.kodegd " &
+                        "WHERE zmutasi.nonota='" & nonota & "'"
             End Select
 
             Dim da As New OdbcDataAdapter(sql, Conn)
@@ -65,6 +79,7 @@ Module ModNota
                     "nonota", "tgl", "tgltempo",
                     "kodesup", "kodekust", "kodesls",
                     "namasup", "namakust", "namasls", "alamat",
+                    "kodegd1", "kodegd2", "namagd1", "namagd2",
                     "disc1", "disc2", "disc3",
                     "hdisc1", "hdisc2", "hdisc3",
                     "ppn", "hppn", "lainnya", "nilai"
@@ -96,6 +111,8 @@ Module ModNota
                     ds.Tables("NotaPembelian").Merge(dt)
                 Case "penjualan"
                     ds.Tables("NotaPenjualan").Merge(dt)
+                Case "mutasi"
+                    ds.Tables("NotaMutasi").Merge(dt)
             End Select
 
 
@@ -106,6 +123,8 @@ Module ModNota
                     rpt.Load(Application.StartupPath & "\Report\NotaPembelian.rpt")
                 Case "penjualan"
                     rpt.Load(Application.StartupPath & "\Report\NotaPenjualan.rpt")
+                Case "mutasi"
+                    rpt.Load(Application.StartupPath & "\Report\NotaMutasi.rpt")
             End Select
 
             rpt.SetDataSource(ds)

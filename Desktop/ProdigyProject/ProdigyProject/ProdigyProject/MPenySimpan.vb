@@ -1,30 +1,25 @@
 ﻿Imports System.Data.Odbc
 
-Module MMutSimpan
+Module MPenySimpan
+
     Public KodeLama As String = ""   ' menyimpan nonota lama jika terjadi error
 
-    Public Sub SimpanMutasi(ByVal nomor As Integer,
+    Public Sub SimpanPenyesuaian(ByVal nomor As Integer,
                                ByVal dict As Dictionary(Of String, Control),
                                ByVal status As String)
 
         Try
-            Dim tgl As String = CType(dict("tmuTANGGAL"), DateTimePicker).Value.ToString("yyyy-MM-dd")
-            Dim nonota As String = CType(dict("tmuNONOTA"), TextBox).Text.Trim()
-            Dim cb1 As ComboBox = CType(dict("cbmuGD1"), ComboBox)
-            Dim cb2 As ComboBox = CType(dict("cbmuGD2"), ComboBox)
+            Dim tgl As String = CType(dict("tpenyTANGGAL"), DateTimePicker).Value.ToString("yyyy-MM-dd")
+            Dim nonota As String = CType(dict("tpenyNONOTA"), TextBox).Text.Trim()
+            Dim cb As ComboBox = CType(dict("cbpenyGD"), ComboBox)
 
             ' Ambil hanya kode gudang sebelum spasi
-            Dim gd1 As String = ""
-            Dim gd2 As String = ""
+            Dim gd As String = ""
 
-            Dim cb1Text As String = If(cb1.SelectedItem IsNot Nothing, cb1.SelectedItem.ToString(), cb1.Text)
-            Dim cb2Text As String = If(cb2.SelectedItem IsNot Nothing, cb2.SelectedItem.ToString(), cb2.Text)
+            Dim cbText As String = If(cb.SelectedItem IsNot Nothing, cb.SelectedItem.ToString(), cb.Text)
 
-            If Not String.IsNullOrWhiteSpace(cb1Text) Then
-                gd1 = cb1Text.Split(" "c)(0)
-            End If
-            If Not String.IsNullOrWhiteSpace(cb2Text) Then
-                gd2 = cb2Text.Split(" "c)(0)
+            If Not String.IsNullOrWhiteSpace(cbText) Then
+                gd = cbText.Split(" "c)(0)
             End If
 
             Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
@@ -40,13 +35,13 @@ Module MMutSimpan
             ' --- Jika UBAH: hapus data lama dulu ---
             If status = "ubah" Then
                 KodeLama = nonota ' simpan kode lama
-                Dim sqldel1 As String = "DELETE FROM zmutasim WHERE nonota = ?"
+                Dim sqldel1 As String = "DELETE FROM zpenyesuaianm WHERE nonota = ?"
                 Using CmdDel1 As New OdbcCommand(sqldel1, Conn, Trans)
                     CmdDel1.Parameters.AddWithValue("@nonota", KodeLama)
                     CmdDel1.ExecuteNonQuery()
                 End Using
 
-                Dim sqldel2 As String = "DELETE FROM zmutasi WHERE nonota = ?"
+                Dim sqldel2 As String = "DELETE FROM zpenyesuaian WHERE nonota = ?"
                 Using CmdDel2 As New OdbcCommand(sqldel2, Conn, Trans)
                     CmdDel2.Parameters.AddWithValue("@nonota", KodeLama)
                     CmdDel2.ExecuteNonQuery()
@@ -54,13 +49,12 @@ Module MMutSimpan
             End If
 
             ' --- Simpan Header ---
-            Dim sql As String = "INSERT INTO zmutasi (tgl, nonota, kodegd1, kodegd2) " &
-                                "VALUES (?, ?, ?, ?)"
+            Dim sql As String = "INSERT INTO zpenyesuaian (tgl, nonota, kodegd) " &
+                                "VALUES (?, ?, ?)"
             Using Cmd As New OdbcCommand(sql, Conn, Trans)
                 Cmd.Parameters.AddWithValue("@tgl", tgl)
                 Cmd.Parameters.AddWithValue("@nonota", nonota)
-                Cmd.Parameters.AddWithValue("@kodegd1", gd1)
-                Cmd.Parameters.AddWithValue("@kodegd2", gd2)
+                Cmd.Parameters.AddWithValue("@kodegd", gd)
                 Cmd.ExecuteNonQuery()
             End Using
 
@@ -74,20 +68,23 @@ Module MMutSimpan
                 Dim jlh1 As Double = Val(If(row.Cells("Jlh1").Value, 0))
                 Dim jlh2 As Double = Val(If(row.Cells("Jlh2").Value, 0))
                 Dim jlh3 As Double = Val(If(row.Cells("Jlh3").Value, 0))
+                Dim qty As Double = Val(If(row.Cells("Qty").Value, 0))
+                Dim harga As Double = Val(If(row.Cells("Harga").Value, 0))
 
 
-                Dim sqldet As String = "INSERT INTO zmutasim " &
-                    "(nonota, kodebrg, kodegd1, kodegd2, jlh1, jlh2, jlh3, operator) " &
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                Dim sqldet As String = "INSERT INTO zpenyesuaianm " &
+                    "(nonota, kodebrg, kodegd, jlh1, jlh2, jlh3, qty, harga, operator) " &
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
                 Using CmdDet As New OdbcCommand(sqldet, Conn, Trans)
                     CmdDet.Parameters.AddWithValue("@nonota", nonota)
                     CmdDet.Parameters.AddWithValue("@kodebrg", kodebrg)
-                    CmdDet.Parameters.AddWithValue("@kodegd1", gd1)
-                    CmdDet.Parameters.AddWithValue("@kodegd2", gd2)
+                    CmdDet.Parameters.AddWithValue("@kodegd", gd)
                     CmdDet.Parameters.AddWithValue("@jlh1", jlh1)
                     CmdDet.Parameters.AddWithValue("@jlh2", jlh2)
                     CmdDet.Parameters.AddWithValue("@jlh3", jlh3)
+                    CmdDet.Parameters.AddWithValue("@qty", qty)
+                    CmdDet.Parameters.AddWithValue("@harga", harga)
                     CmdDet.Parameters.AddWithValue("@operator", Environment.UserName)
                     CmdDet.ExecuteNonQuery()
                 End Using
@@ -107,7 +104,7 @@ Module MMutSimpan
         End Try
     End Sub
 
-    Public Sub HapusMutasi(ByVal nonota As String,
+    Public Sub HapusPenyesuaian(ByVal nonota As String,
                           ByVal dict As Dictionary(Of String, Control))
 
         If String.IsNullOrEmpty(nonota) Then
@@ -120,13 +117,13 @@ Module MMutSimpan
 
         Try
             ' hapus detail
-            Using cmdDet As New OdbcCommand("DELETE FROM zmutasim WHERE nonota = ?", Conn, Trans)
+            Using cmdDet As New OdbcCommand("DELETE FROM zpenyesuaianm WHERE nonota = ?", Conn, Trans)
                 cmdDet.Parameters.AddWithValue("@nonota", nonota)
                 cmdDet.ExecuteNonQuery()
             End Using
 
             ' hapus header
-            Using cmdHead As New OdbcCommand("DELETE FROM zmutasi WHERE nonota = ?", Conn, Trans)
+            Using cmdHead As New OdbcCommand("DELETE FROM zpenyesuaian WHERE nonota = ?", Conn, Trans)
                 cmdHead.Parameters.AddWithValue("@nonota", nonota)
                 cmdHead.ExecuteNonQuery()
             End Using
@@ -135,10 +132,9 @@ Module MMutSimpan
             Conn.Close()
 
             ' bersihkan form/tab setelah hapus
-            CType(dict("tmuNONOTA"), TextBox).Clear()
-            CType(dict("tmuNMSUP"), TextBox).Clear()
-            CType(dict("cbmuGD1"), ComboBox).SelectedIndex = -1
-            CType(dict("cbmuGD2"), ComboBox).SelectedIndex = -1
+            CType(dict("tpenyNONOTA"), TextBox).Clear()
+            CType(dict("tpenyNMSUP"), TextBox).Clear()
+            CType(dict("cbpenyGD1"), ComboBox).SelectedIndex = -1
 
         Catch ex As Exception
             Try
@@ -149,4 +145,5 @@ Module MMutSimpan
             Throw New Exception("Error Hapus: " & ex.Message)
         End Try
     End Sub
+
 End Module

@@ -60,6 +60,10 @@ Public Class ItDtStok
             ElseIf TypeOf Me.Owner Is ItFPopupMut Then
                 Dim parentForm As ItFPopupMut = CType(Me.Owner, ItFPopupMut)
                 parentForm.SetBarang(kode, nama, sat1, sat2, sat3, isi1, isi2)
+
+            ElseIf TypeOf Me.Owner Is ItFPopupPeny Then
+                Dim parentForm As ItFPopupPeny = CType(Me.Owner, ItFPopupPeny)
+                parentForm.SetBarang(kode, nama, sat1, sat2, sat3, isi1, isi2, harga)
             End If
 
             Me.Close()
