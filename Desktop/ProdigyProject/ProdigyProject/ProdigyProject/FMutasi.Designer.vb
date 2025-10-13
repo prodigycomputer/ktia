@@ -193,7 +193,7 @@ Partial Class FMutasi
         '
         'tmuTANGGAL
         '
-        Me.tmuTANGGAL.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.tmuTANGGAL.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.tmuTANGGAL.Location = New System.Drawing.Point(111, 10)
         Me.tmuTANGGAL.Name = "tmuTANGGAL"
         Me.tmuTANGGAL.Size = New System.Drawing.Size(138, 20)

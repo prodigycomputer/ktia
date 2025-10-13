@@ -31,6 +31,10 @@ Represents the strongly named DataTable class.
 	<summary>
 Represents the strongly named DataTable class.
 </summary>
+</member><member name="T:ProdigyProject.NotaDt.NotaPenyesuaianDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
 </member><member name="T:ProdigyProject.NotaDt.NotaPembelianRow">
 	<summary>
 Represents strongly named DataRow class.
@@ -43,6 +47,10 @@ Represents strongly named DataRow class.
 	<summary>
 Represents strongly named DataRow class.
 </summary>
+</member><member name="T:ProdigyProject.NotaDt.NotaPenyesuaianRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
 </member><member name="T:ProdigyProject.NotaDt.NotaPembelianRowChangeEvent">
 	<summary>
 Row event argument class
@@ -52,6 +60,10 @@ Row event argument class
 Row event argument class
 </summary>
 </member><member name="T:ProdigyProject.NotaDt.NotaMutasiRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:ProdigyProject.NotaDt.NotaPenyesuaianRowChangeEvent">
 	<summary>
 Row event argument class
 </summary>

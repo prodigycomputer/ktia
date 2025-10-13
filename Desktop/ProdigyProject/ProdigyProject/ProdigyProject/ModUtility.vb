@@ -84,5 +84,44 @@
         Return candidate
     End Function
 
+    ' Fungsi universal untuk membersihkan semua kontrol dalam dictionary
+    Public Sub ClearForm(ByVal dict As Dictionary(Of String, Control))
+        Try
+            For Each kvp In dict
+                Dim ctrl As Control = kvp.Value
+
+                Select Case True
+                    Case TypeOf ctrl Is TextBox
+                        Dim tb As TextBox = CType(ctrl, TextBox)
+                        tb.Clear()
+
+                    Case TypeOf ctrl Is ComboBox
+                        Dim cb As ComboBox = CType(ctrl, ComboBox)
+                        cb.SelectedIndex = -1
+                        cb.Text = ""
+
+                    Case TypeOf ctrl Is DataGridView
+                        Dim dgv As DataGridView = CType(ctrl, DataGridView)
+                        dgv.Rows.Clear()
+
+                    Case TypeOf ctrl Is DateTimePicker
+                        Dim dtp As DateTimePicker = CType(ctrl, DateTimePicker)
+                        dtp.Value = Date.Today
+
+                    Case TypeOf ctrl Is CheckBox
+                        Dim chk As CheckBox = CType(ctrl, CheckBox)
+                        chk.Checked = False
+
+                    Case TypeOf ctrl Is NumericUpDown
+                        Dim num As NumericUpDown = CType(ctrl, NumericUpDown)
+                        num.Value = 0
+                End Select
+            Next
+
+        Catch ex As Exception
+            MsgBox("Terjadi kesalahan saat membersihkan form: " & ex.Message, MsgBoxStyle.Exclamation)
+        End Try
+    End Sub
+
 End Module
 

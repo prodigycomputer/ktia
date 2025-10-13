@@ -151,63 +151,79 @@ Public Class FPenjualan
         CType(dict("btnADDITEM"), Button).Enabled = True
     End Sub
 
-    ' ============= EVENT KLIK UBAH =============
+    ' ============= EVENT KLIK UBAH (UNIVERSAL PER TAB) =============
     Private Sub GridUbah_Click(ByVal sender As Object, ByVal e As EventArgs)
-        If grPENJUALAN.CurrentRow Is Nothing Then Return
-
-        Dim aktifTab As TabPage = TabControl1.SelectedTab
-        Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
-        Dim dict = TabControls(nomor)
-        Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
-        Dim row As DataGridViewRow = grPENJUALAN.CurrentRow
-        Dim popup As New ItFPopup()
-        Dim kodeBrg As String = row.Cells("KodeBrg").Value.ToString()
-        Dim kodegd As String = row.Cells("KodeGudang").Value.ToString()
-
-        popup.tPopKDBARANG.Text = kodeBrg
-
-        popup.tPopJLH1.Text = Val(row.Cells("Jlh1").Value).ToString()
-        popup.tPopJLH2.Text = Val(row.Cells("Jlh2").Value).ToString()
-        popup.tPopJLH3.Text = Val(row.Cells("Jlh3").Value).ToString()
-
-        popup.tPopDISCA.Text = Val(row.Cells("Disca").Value).ToString()
-        popup.tPopDISCB.Text = Val(row.Cells("Discb").Value).ToString()
-        popup.tPopDISCC.Text = Val(row.Cells("Discc").Value).ToString()
-        popup.tPopDISRP.Text = Val(row.Cells("DiscRp").Value).ToString()
-
-        ' === Popup akan load Nama, Satuan, Stok, Harga dari DB berdasarkan KodeBrg ===
-        popup.TargetGrid = grid
-        popup.IsEditMode = True
-        popup.LoadBarangInfo(kodeBrg, kodegd)
-
-        ' === Tampilkan popup ===
-        If popup.ShowDialog() = DialogResult.OK Then
-            row.Cells("KodeBrg").Value = popup.tPopKDBARANG.Text
-            row.Cells("KodeGudang").Value = If(popup.cbPopGudang.SelectedItem IsNot Nothing, popup.cbPopGudang.SelectedItem.ToString(), "")
-            row.Cells("Jlh1").Value = Val(popup.tPopJLH1.Text)
-            row.Cells("Jlh2").Value = Val(popup.tPopJLH2.Text)
-            row.Cells("Jlh3").Value = Val(popup.tPopJLH3.Text)
-            row.Cells("Disca").Value = Val(popup.tPopDISCA.Text)
-            row.Cells("Discb").Value = Val(popup.tPopDISCB.Text)
-            row.Cells("Discc").Value = Val(popup.tPopDISCC.Text)
-            row.Cells("DiscRp").Value = Val(popup.tPopDISRP.Text)
-            row.Cells("Jumlah").Value = Val(popup.tPopJUMLAH.Text)
-        End If
-    End Sub
-
-    ' ============= EVENT KLIK HAPUS =============
-    Private Sub GridHapus_Click(ByVal sender As Object, ByVal e As EventArgs)
         Try
+            ' --- Ambil tab aktif ---
             Dim aktifTab As TabPage = TabControl1.SelectedTab
             Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
+
+            ' --- Ambil dictionary kontrol tab tersebut ---
             Dim dict = TabControls(nomor)
             Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
 
+            ' --- Pastikan ada baris yang dipilih ---
+            If grid.CurrentRow Is Nothing Then Return
+            Dim row As DataGridViewRow = grid.CurrentRow
+
+            ' --- Siapkan popup ---
+            Dim popup As New ItFPopup()
+            Dim kodeBrg As String = row.Cells("KodeBrg").Value.ToString()
+            Dim kodegd As String = row.Cells("KodeGudang").Value.ToString()
+
+            ' --- Isi data popup dari grid ---
+            popup.tPopKDBARANG.Text = kodeBrg
+            popup.tPopJLH1.Text = Val(row.Cells("Jlh1").Value).ToString()
+            popup.tPopJLH2.Text = Val(row.Cells("Jlh2").Value).ToString()
+            popup.tPopJLH3.Text = Val(row.Cells("Jlh3").Value).ToString()
+            popup.tPopDISCA.Text = Val(row.Cells("Disca").Value).ToString()
+            popup.tPopDISCB.Text = Val(row.Cells("Discb").Value).ToString()
+            popup.tPopDISCC.Text = Val(row.Cells("Discc").Value).ToString()
+            popup.tPopDISRP.Text = Val(row.Cells("DiscRp").Value).ToString()
+
+            ' --- Load info barang berdasarkan Kode & Gudang ---
+            popup.TargetGrid = grid
+            popup.IsEditMode = True
+            popup.LoadBarangInfo(kodeBrg, kodegd)
+
+            ' --- Tampilkan popup dan update data jika OK ---
+            If popup.ShowDialog() = DialogResult.OK Then
+                row.Cells("KodeBrg").Value = popup.tPopKDBARANG.Text
+                row.Cells("KodeGudang").Value = If(popup.cbPopGudang.SelectedItem IsNot Nothing, popup.cbPopGudang.SelectedItem.ToString(), "")
+                row.Cells("Jlh1").Value = Val(popup.tPopJLH1.Text)
+                row.Cells("Jlh2").Value = Val(popup.tPopJLH2.Text)
+                row.Cells("Jlh3").Value = Val(popup.tPopJLH3.Text)
+                row.Cells("Disca").Value = Val(popup.tPopDISCA.Text)
+                row.Cells("Discb").Value = Val(popup.tPopDISCB.Text)
+                row.Cells("Discc").Value = Val(popup.tPopDISCC.Text)
+                row.Cells("DiscRp").Value = Val(popup.tPopDISRP.Text)
+                row.Cells("Jumlah").Value = Val(popup.tPopJUMLAH.Text)
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal ubah item: " & ex.Message, "Error")
+        End Try
+    End Sub
+
+
+    ' ============= EVENT KLIK HAPUS (UNIVERSAL PER TAB) =============
+    Private Sub GridHapus_Click(ByVal sender As Object, ByVal e As EventArgs)
+        Try
+            ' --- Ambil tab aktif ---
+            Dim aktifTab As TabPage = TabControl1.SelectedTab
+            Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
+
+            ' --- Ambil dictionary kontrol tab ---
+            Dim dict = TabControls(nomor)
+            Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
+
+            ' --- Pastikan ada baris yang valid ---
             If grid.CurrentRow Is Nothing OrElse grid.CurrentRow.IsNewRow Then
                 MessageBox.Show("Pilih item yang valid!", "Info")
                 Exit Sub
             End If
 
+            ' --- Konfirmasi hapus ---
             If MessageBox.Show("Hapus item ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 grid.Rows.Remove(grid.CurrentRow)
                 UpdateSubtotal(nomor)
@@ -265,6 +281,10 @@ Public Class FPenjualan
                 Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
                 Dim dict = TabControls(nomor)
                 Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
+
+                If grid.Columns.Count = 0 Then
+                    SetupGridPenjualan(grid)
+                End If
 
                 grid.Rows.Clear()
                 While Rd.Read()
@@ -492,6 +512,9 @@ Public Class FPenjualan
 
         ' set status
         SetTabStatus(nomor, "tambah")
+
+        Dim dict = TabControls(nomor)
+        ClearForm(dict)
 
         TabLoadState(nomor) = False
         TabButtonState(nomor) = False

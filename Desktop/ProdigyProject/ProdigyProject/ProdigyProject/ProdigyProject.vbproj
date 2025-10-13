@@ -275,6 +275,12 @@
       <DependentUpon>NotaPenjualan.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="NotaPenyesuaian.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaPenyesuaian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FCetak.resx">
@@ -348,6 +354,10 @@
     <EmbeddedResource Include="NotaPenjualan.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>NotaPenjualan.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaPenyesuaian.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaPenyesuaian.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -59,6 +59,18 @@ Module ModNota
                         "JOIN dbkita.zgudang g1 ON zmutasi.kodegd1 = g1.kodegd " &
                         "JOIN dbkita.zgudang g2 ON zmutasi.kodegd2 = g2.kodegd " &
                         "WHERE zmutasi.nonota='" & nonota & "'"
+
+                Case "penyesuaian"
+                    ' --- query penjualan (isi sesuai tabel kamu)
+                    sql =
+                        "SELECT zpenyesuaian.nonota, zpenyesuaian.tgl, zpenyesuaian.kodegd, zgudang.namagd, " &
+                        "zpenyesuaianm.kodebrg, zpenyesuaianm.jlh1, zpenyesuaianm.jlh2, zpenyesuaianm.jlh3, " &
+                        "zstok.namabrg, zstok.satuan1, zstok.satuan2, zstok.satuan3 " &
+                        "FROM ((dbkita.zpenyesuaian zpenyesuaian " &
+                        "INNER JOIN dbkita.zpenyesuaianm zpenyesuaianm ON zpenyesuaian.nonota=zpenyesuaianm.nonota) " &
+                        "LEFT JOIN dbkita.zstok zstok ON zpenyesuaianm.kodebrg=zstok.kodebrg) " &
+                        "LEFT JOIN dbkita.zgudang zgudang ON zpenyesuaian.kodegd=zgudang.kodegd " &
+                        "WHERE zpenyesuaian.nonota='" & nonota & "'"
             End Select
 
             Dim da As New OdbcDataAdapter(sql, Conn)
@@ -80,6 +92,7 @@ Module ModNota
                     "kodesup", "kodekust", "kodesls",
                     "namasup", "namakust", "namasls", "alamat",
                     "kodegd1", "kodegd2", "namagd1", "namagd2",
+                    "kodegd", "namagd",
                     "disc1", "disc2", "disc3",
                     "hdisc1", "hdisc2", "hdisc3",
                     "ppn", "hppn", "lainnya", "nilai"
@@ -113,6 +126,8 @@ Module ModNota
                     ds.Tables("NotaPenjualan").Merge(dt)
                 Case "mutasi"
                     ds.Tables("NotaMutasi").Merge(dt)
+                Case "penyesuaian"
+                    ds.Tables("NotaPenyesuaian").Merge(dt)
             End Select
 
 
@@ -125,6 +140,8 @@ Module ModNota
                     rpt.Load(Application.StartupPath & "\Report\NotaPenjualan.rpt")
                 Case "mutasi"
                     rpt.Load(Application.StartupPath & "\Report\NotaMutasi.rpt")
+                Case "penyesuaian"
+                    rpt.Load(Application.StartupPath & "\Report\NotaPenyesuaian.rpt")
             End Select
 
             rpt.SetDataSource(ds)
