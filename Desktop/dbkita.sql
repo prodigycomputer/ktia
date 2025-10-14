@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2025 at 12:04 PM
+-- Generation Time: Oct 14, 2025 at 12:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -56,8 +56,18 @@ CREATE TABLE `zbeli` (
   `hdisc3` double(10,2) DEFAULT 0.00,
   `ket` varchar(1000) DEFAULT NULL,
   `operator` char(10) DEFAULT '',
-  `logtime` timestamp NOT NULL DEFAULT current_timestamp()
+  `logtime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `lainnya` double(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zbeli`
+--
+
+INSERT INTO `zbeli` (`nonota`, `tgl`, `kodesup`, `kodegd`, `nilai`, `lunas`, `tgltempo`, `ppn`, `hppn`, `disc1`, `hdisc1`, `disc2`, `hdisc2`, `disc3`, `hdisc3`, `ket`, `operator`, `logtime`, `lainnya`) VALUES
+('NOTA3', '2025-09-25', 'S002', '', 1678302, 0, '2025-09-25', 11.00, 163345.27, 10.00, 203697.80, 10.00, 183328.02, 10.00, 164995.22, 'TEST NOTA 3', '', '2025-10-03 04:12:56', 30000.00),
+('NOTA1', '2025-09-25', 'S001', '', 3134376, 0, '2025-09-25', 11.00, 310415.65, 10.00, 387100.20, 10.00, 348390.18, 10.00, 313551.16, 'TEST NOTA 1', '', '2025-10-04 01:46:21', 2000.00),
+('NOTA2', '2025-10-02', 'S002', '', 2604289, 0, '2025-10-02', 11.00, 257091.71, 10.00, 360678.60, 10.00, 324610.74, 20.00, 584299.33, 'TEST NOTA 2', '', '2025-10-04 08:53:36', 10000.00);
 
 -- --------------------------------------------------------
 
@@ -84,6 +94,34 @@ CREATE TABLE `zbelim` (
   `logtime` timestamp NOT NULL DEFAULT current_timestamp(),
   `operator` char(10) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zbelim`
+--
+
+INSERT INTO `zbelim` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `harga`, `disca`, `hdisca`, `discb`, `hdiscb`, `discc`, `hdiscc`, `discrp`, `jumlah`, `logtime`, `operator`) VALUES
+('NOTA3', 'ALB0001', 'G02', 1, 0, 0, 3000000, 10, 0, 10, 0, 10, 0, 1000000, 1187000, '2025-10-03 04:12:56', 'User'),
+('NOTA3', 'BAT0002', 'G02', 1, 3, 0, 225000, 20, 0, 0, 0, 0, 0, 0, 234000, '2025-10-03 04:12:56', 'User'),
+('NOTA3', 'CAR0035', 'G03', 1, 2, 3, 30000, 10, 0, 10, 0, 0, 0, 0, 35478, '2025-10-03 04:12:56', 'User'),
+('NOTA3', 'KEY0004', 'G01', 1, 2, 3, 300000, 10, 0, 0, 0, 0, 0, 0, 580500, '2025-10-03 04:12:56', 'User'),
+('NOTA1', 'ALB0001', 'G02', 1, 0, 0, 3000000, 10, 0, 10, 0, 10, 0, 1000000, 1187000, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'BAT0002', 'G02', 1, 3, 0, 225000, 20, 0, 0, 0, 0, 0, 0, 234000, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'CAR0079', 'G02', 1, 2, 3, 50000, 0, 0, 0, 0, 0, 0, 0, 60750, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'CAR0035', 'G03', 1, 2, 3, 30000, 10, 0, 10, 0, 0, 0, 0, 35478, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'CAR0043', 'G03', 1, 0, 0, 250000, 0, 0, 0, 0, 0, 0, 0, 250000, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'KAB0064', 'G02', 1, 2, 0, 20000, 10, 0, 10, 0, 0, 0, 0, 16524, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'KAB0064', 'G02', 1, 0, 0, 20000, 0, 0, 0, 0, 0, 0, 0, 20000, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'KEY0004', 'G01', 1, 2, 3, 300000, 10, 0, 0, 0, 0, 0, 0, 580500, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'PAP0008', 'G01', 2, 0, 0, 110000, 0, 0, 0, 0, 0, 0, 0, 220000, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'PAP0010', 'G03', 10, 0, 0, 3400, 0, 0, 0, 0, 0, 0, 0, 34000, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'HDD0048', 'G01', 1, 0, 0, 1100000, 0, 0, 0, 0, 0, 0, 0, 1100000, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'TIN0081', 'G03', 1, 1, 0, 60000, 0, 0, 0, 0, 0, 0, 0, 72000, '2025-10-04 01:46:21', 'User'),
+('NOTA1', 'CAR0079', 'G02', 1, 2, 3, 50000, 0, 0, 0, 0, 0, 0, 0, 60750, '2025-10-04 01:46:21', 'User'),
+('NOTA2', 'ALB0001', 'G02', 1, 0, 0, 3000000, 10, 0, 0, 0, 0, 0, 0, 2700000, '2025-10-04 08:53:36', 'User'),
+('NOTA2', 'BAT0002', 'G02', 1, 3, 0, 225000, 20, 0, 0, 0, 0, 0, 0, 234000, '2025-10-04 08:53:36', 'User'),
+('NOTA2', 'CAR0079', 'G02', 1, 2, 3, 50000, 0, 0, 0, 0, 0, 0, 0, 60750, '2025-10-04 08:53:36', 'User'),
+('NOTA2', 'CAR0035', 'G01', 1, 2, 3, 30000, 20, 0, 10, 0, 0, 0, 0, 31536, '2025-10-04 08:53:36', 'User'),
+('NOTA2', 'KEY0004', 'G01', 1, 2, 3, 300000, 10, 0, 0, 0, 0, 0, 0, 580500, '2025-10-04 08:53:36', 'User');
 
 -- --------------------------------------------------------
 
@@ -169,8 +207,16 @@ CREATE TABLE `zjual` (
   `hdisc3` double(10,2) DEFAULT 0.00,
   `ket` varchar(1000) DEFAULT NULL,
   `operator` char(10) DEFAULT '',
-  `logtime` timestamp NOT NULL DEFAULT current_timestamp()
+  `logtime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `lainnya` double(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zjual`
+--
+
+INSERT INTO `zjual` (`nonota`, `tgl`, `kodekust`, `kodesls`, `kodegd`, `nilai`, `lunas`, `tgltempo`, `ppn`, `hppn`, `disc1`, `hdisc1`, `disc2`, `hdisc2`, `disc3`, `hdisc3`, `ket`, `operator`, `logtime`, `lainnya`) VALUES
+('NOTA1', '2025-10-07', 'C01', 'S01', NULL, 27746, 0, '2025-10-07', 11.00, 1758.57, 10.00, 2193.00, 10.00, 1973.70, 10.00, 1776.33, 'TEST', '', '2025-10-07 03:26:07', 10000.00);
 
 -- --------------------------------------------------------
 
@@ -197,6 +243,13 @@ CREATE TABLE `zjualm` (
   `operator` char(10) DEFAULT '',
   `logtime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zjualm`
+--
+
+INSERT INTO `zjualm` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `harga`, `disca`, `hdisca`, `discb`, `hdiscb`, `discc`, `hdiscc`, `discrp`, `jumlah`, `operator`, `logtime`) VALUES
+('NOTA1', 'CAR0035', 'G01', 1, 2, 3, 30000, 10, 0, 10, 0, 10, 0, 10000, 21930, 'User', '2025-10-07 03:26:07');
 
 -- --------------------------------------------------------
 
@@ -249,13 +302,21 @@ INSERT INTO `zmerek` (`kodemerk`, `namamerk`) VALUES
 --
 
 CREATE TABLE `zmutasi` (
-  `nonota` char(30) DEFAULT NULL,
+  `nonota` char(30) NOT NULL,
   `tgl` date DEFAULT NULL,
   `kodegd1` char(10) DEFAULT NULL,
   `kodegd2` char(10) NOT NULL,
   `operator` char(10) DEFAULT '',
   `logtime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zmutasi`
+--
+
+INSERT INTO `zmutasi` (`nonota`, `tgl`, `kodegd1`, `kodegd2`, `operator`, `logtime`) VALUES
+('NOTA1', '2025-10-09', 'G02', 'G01', '', '2025-10-09 08:07:07'),
+('NOTA2', '2025-10-09', 'G03', 'G02', '', '2025-10-10 07:33:20');
 
 -- --------------------------------------------------------
 
@@ -275,6 +336,14 @@ CREATE TABLE `zmutasim` (
   `logtime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `zmutasim`
+--
+
+INSERT INTO `zmutasim` (`nonota`, `kodebrg`, `kodegd1`, `kodegd2`, `jlh1`, `jlh2`, `jlh3`, `operator`, `logtime`) VALUES
+('NOTA1', 'ALB0001', 'G01', 'G02', 120, 0, 0, 'User', '2025-10-09 08:07:07'),
+('NOTA2', 'CAR0035', 'G03', 'G02', 0, 0, 0, 'User', '2025-10-10 07:33:20');
+
 -- --------------------------------------------------------
 
 --
@@ -288,6 +357,14 @@ CREATE TABLE `zpenyesuaian` (
   `operator` char(10) DEFAULT '',
   `logtime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zpenyesuaian`
+--
+
+INSERT INTO `zpenyesuaian` (`nonota`, `tgl`, `kodegd`, `operator`, `logtime`) VALUES
+('NOTA 2', '2025-10-13', 'G01', '', '2025-10-13 06:52:08'),
+('NOTA 1', '2025-10-11', 'G02', '', '2025-10-13 06:56:18');
 
 -- --------------------------------------------------------
 
@@ -306,6 +383,43 @@ CREATE TABLE `zpenyesuaianm` (
   `harga` double DEFAULT 0,
   `operator` char(10) DEFAULT '',
   `logtime` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zpenyesuaianm`
+--
+
+INSERT INTO `zpenyesuaianm` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `qty`, `harga`, `operator`, `logtime`) VALUES
+('NOTA 2', 'HDD0048', 'G01', 100, 0, 0, 1000, 1100000, 'User', '2025-10-13 06:52:08'),
+('NOTA 1', 'CAR0035', 'G02', 20, 20, 30, 1000, 30000, 'User', '2025-10-13 06:56:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zrbeli`
+--
+
+CREATE TABLE `zrbeli` (
+  `nonota` char(30) DEFAULT NULL,
+  `nofaktur` char(30) DEFAULT NULL,
+  `tgl` date DEFAULT NULL,
+  `kodesup` char(10) DEFAULT NULL,
+  `kodegd` char(10) NOT NULL,
+  `nilai` double DEFAULT 0,
+  `lunas` int(11) DEFAULT 0,
+  `tgltempo` date DEFAULT NULL,
+  `ppn` double(10,2) DEFAULT 0.00,
+  `hppn` double(10,2) DEFAULT 0.00,
+  `disc1` double(10,2) DEFAULT 0.00,
+  `hdisc1` double(10,2) DEFAULT 0.00,
+  `disc2` double(10,2) DEFAULT 0.00,
+  `hdisc2` double(10,2) DEFAULT 0.00,
+  `disc3` double(10,2) DEFAULT 0.00,
+  `hdisc3` double(10,2) DEFAULT 0.00,
+  `ket` varchar(1000) DEFAULT NULL,
+  `operator` char(10) DEFAULT '',
+  `logtime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `lainnya` double(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1191,6 +1305,12 @@ ALTER TABLE `zkustomer`
 --
 ALTER TABLE `zmerek`
   ADD PRIMARY KEY (`kodemerk`);
+
+--
+-- Indexes for table `zmutasi`
+--
+ALTER TABLE `zmutasi`
+  ADD PRIMARY KEY (`nonota`);
 
 --
 -- Indexes for table `zsales`

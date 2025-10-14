@@ -27,6 +27,7 @@ Partial Class FDashboard
         Me.smExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.mTransaksi = New System.Windows.Forms.ToolStripMenuItem()
         Me.smPembelian = New System.Windows.Forms.ToolStripMenuItem()
+        Me.smReturPembelian = New System.Windows.Forms.ToolStripMenuItem()
         Me.smPenjualan = New System.Windows.Forms.ToolStripMenuItem()
         Me.smMutasi = New System.Windows.Forms.ToolStripMenuItem()
         Me.smPenyesuaian = New System.Windows.Forms.ToolStripMenuItem()
@@ -62,7 +63,7 @@ Partial Class FDashboard
         'mTransaksi
         '
         Me.mTransaksi.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.mTransaksi.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.smPembelian, Me.smPenjualan, Me.smMutasi, Me.smPenyesuaian})
+        Me.mTransaksi.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.smPembelian, Me.smReturPembelian, Me.smPenjualan, Me.smMutasi, Me.smPenyesuaian})
         Me.mTransaksi.Name = "mTransaksi"
         Me.mTransaksi.Size = New System.Drawing.Size(67, 20)
         Me.mTransaksi.Text = "Transaksi"
@@ -70,25 +71,31 @@ Partial Class FDashboard
         'smPembelian
         '
         Me.smPembelian.Name = "smPembelian"
-        Me.smPembelian.Size = New System.Drawing.Size(140, 22)
+        Me.smPembelian.Size = New System.Drawing.Size(161, 22)
         Me.smPembelian.Text = "Pembelian"
+        '
+        'smReturPembelian
+        '
+        Me.smReturPembelian.Name = "smReturPembelian"
+        Me.smReturPembelian.Size = New System.Drawing.Size(161, 22)
+        Me.smReturPembelian.Text = "Retur Pembelian"
         '
         'smPenjualan
         '
         Me.smPenjualan.Name = "smPenjualan"
-        Me.smPenjualan.Size = New System.Drawing.Size(140, 22)
+        Me.smPenjualan.Size = New System.Drawing.Size(161, 22)
         Me.smPenjualan.Text = "Penjualan"
         '
         'smMutasi
         '
         Me.smMutasi.Name = "smMutasi"
-        Me.smMutasi.Size = New System.Drawing.Size(140, 22)
+        Me.smMutasi.Size = New System.Drawing.Size(161, 22)
         Me.smMutasi.Text = "Mutasi"
         '
         'smPenyesuaian
         '
         Me.smPenyesuaian.Name = "smPenyesuaian"
-        Me.smPenyesuaian.Size = New System.Drawing.Size(140, 22)
+        Me.smPenyesuaian.Size = New System.Drawing.Size(161, 22)
         Me.smPenyesuaian.Text = "Penyesuaian"
         '
         'mLaporan
@@ -132,5 +139,6 @@ Partial Class FDashboard
     Friend WithEvents smPenyesuaian As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mLaporan As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents smLaporan As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents smReturPembelian As System.Windows.Forms.ToolStripMenuItem
 
 End Class

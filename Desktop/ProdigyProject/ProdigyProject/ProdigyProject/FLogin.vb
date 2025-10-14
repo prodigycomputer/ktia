@@ -38,7 +38,7 @@ Public Class FLogin
         End Try
     End Sub
 
-    Private Sub btnCANCEL_Click(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub btnCANCEL_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnCANCEL.Click
         ' Kalau user batal → keluar
         Me.DialogResult = DialogResult.Cancel
         Me.Close()

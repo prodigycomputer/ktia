@@ -139,6 +139,12 @@
     <Compile Include="FPenyesuaian.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FReturPembelian.Designer.vb">
+      <DependentUpon>FReturPembelian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FReturPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ItDtKustomer.Designer.vb">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </Compile>
@@ -186,6 +192,12 @@
       <DependentUpon>ItDtPenyesuaian.vb</DependentUpon>
     </Compile>
     <Compile Include="ItDtPenyesuaian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtRPembelian.Designer.vb">
+      <DependentUpon>ItDtRPembelian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtRPembelian.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtSales.Designer.vb">
@@ -295,6 +307,9 @@
     <EmbeddedResource Include="FPenyesuaian.resx">
       <DependentUpon>FPenyesuaian.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FReturPembelian.resx">
+      <DependentUpon>FReturPembelian.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </EmbeddedResource>
@@ -318,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtPenyesuaian.resx">
       <DependentUpon>ItDtPenyesuaian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtRPembelian.resx">
+      <DependentUpon>ItDtRPembelian.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtSales.resx">
       <DependentUpon>ItDtSales.vb</DependentUpon>

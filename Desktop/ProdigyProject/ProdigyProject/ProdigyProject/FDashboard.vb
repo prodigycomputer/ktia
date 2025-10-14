@@ -49,7 +49,8 @@
     End Sub
 
     Private Sub smExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smExit.Click
-
+        Me.DialogResult = DialogResult.Cancel
+        Me.Close()
     End Sub
 
     Private Sub smPembelian_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smPembelian.Click
@@ -72,4 +73,7 @@
 
     End Sub
 
+    Private Sub smReturPembelian_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smReturPembelian.Click
+        BukaChild(Of FReturPembelian)()
+    End Sub
 End Class
