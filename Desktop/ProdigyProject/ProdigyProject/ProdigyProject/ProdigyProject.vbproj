@@ -246,6 +246,7 @@
     <Compile Include="MPemSimpan.vb" />
     <Compile Include="MPenSimpan.vb" />
     <Compile Include="MPenySimpan.vb" />
+    <Compile Include="MRPemSimpan.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -291,6 +292,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>NotaPenyesuaian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NotaReturPembelian.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaReturPembelian.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
@@ -376,6 +383,10 @@
     <EmbeddedResource Include="NotaPenyesuaian.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>NotaPenyesuaian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaReturPembelian.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaReturPembelian.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

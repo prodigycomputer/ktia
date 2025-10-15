@@ -62,6 +62,7 @@ Public Class FReturPembelian
         Dim dict = TabControls(nomor)
 
         CType(dict("trpmNONOTA"), TextBox).Enabled = False
+        CType(dict("trpmNOFAKTUR"), TextBox).Enabled = False
         CType(dict("trpmTANGGAL"), DateTimePicker).Enabled = False
         CType(dict("trpmTEMPO"), DateTimePicker).Enabled = False
         CType(dict("trpmKDSUP"), TextBox).Enabled = False
@@ -98,6 +99,7 @@ Public Class FReturPembelian
         Dim dict = TabControls(nomor)
 
         CType(dict("trpmNONOTA"), TextBox).Enabled = True
+        CType(dict("trpmNOFAKTUR"), TextBox).Enabled = True
         CType(dict("trpmTANGGAL"), DateTimePicker).Enabled = True
         CType(dict("trpmTEMPO"), DateTimePicker).Enabled = True
         CType(dict("trpmKDSUP"), TextBox).Enabled = True
@@ -214,7 +216,7 @@ Public Class FReturPembelian
             BukaKoneksi()
 
             ' ================== HEADER ==================
-            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.ket, z.kodesup, s.namasup, s.alamat, z.nilai, z.lunas, z.disc1, z.hdisc1, z.disc2, z.hdisc2, z.disc3, z.hdisc3, z.ppn, z.hppn, z.lainnya FROM zbeli z LEFT JOIN zsupplier s ON z.kodesup = s.kodesup WHERE z.nonota = ?"
+            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.ket, y.nofaktur, z.kodesup, s.namasup, s.alamat, z.nilai, z.lunas, z.disc1, z.hdisc1, z.disc2, z.hdisc2, z.disc3, z.hdisc3, z.ppn, z.hppn, z.lainnya FROM zbeli z LEFT JOIN zrbeli y ON z.nonota = y.nonota LEFT JOIN zsupplier s ON z.kodesup = s.kodesup WHERE z.nonota = ?"
             Using cmd As New OdbcCommand(sqlHead, Conn)
                 cmd.Parameters.AddWithValue("@nonota", nonota)
                 Rd = cmd.ExecuteReader()
@@ -224,6 +226,7 @@ Public Class FReturPembelian
                     Dim dict = TabControls(nomor)
 
                     CType(dict("trpmNONOTA"), TextBox).Text = nonota
+                    CType(dict("trpmNOFAKTUR"), TextBox).Text = Rd("nofaktur").ToString()
                     CType(dict("trpmTANGGAL"), DateTimePicker).Value = CDate(Rd("tgl"))
                     CType(dict("trpmTEMPO"), DateTimePicker).Value = CDate(Rd("tgltempo"))
                     CType(dict("trpmKET"), TextBox).Text = Rd("ket").ToString()
@@ -325,6 +328,7 @@ Public Class FReturPembelian
 
         dict("trpmTANGGAL") = tab.Controls.Find("trpmTANGGAL", True)(0)
         dict("trpmNONOTA") = tab.Controls.Find("trpmNONOTA", True)(0)
+        dict("trpmNOFAKTUR") = tab.Controls.Find("trpmNOFAKTUR", True)(0)
         dict("trpmTEMPO") = tab.Controls.Find("trpmTEMPO", True)(0)
         dict("trpmKET") = tab.Controls.Find("trpmKET", True)(0)
         dict("trpmKDSUP") = tab.Controls.Find("trpmKDSUP", True)(0)
@@ -454,7 +458,7 @@ Public Class FReturPembelian
             Dim dict = TabControls(nomor)
             Dim status As String = GetTabStatus(nomor)
 
-            MPemSimpan.SimpanPembelian(nomor, dict, status)
+            MRPemSimpan.SimpanPembelian(nomor, dict, status)
 
             MessageBox.Show("Data pembelian berhasil disimpan untuk " & aktifTab.Text, "Sukses")
 
@@ -474,9 +478,6 @@ Public Class FReturPembelian
         If Not TabControls.ContainsKey(nomor) Then
             RegisterTabControls(TabControl1.SelectedTab, nomor)
         End If
-
-        Dim dict = TabControls(nomor)
-        ClearForm(dict)
 
         ' set status
         SetTabStatus(nomor, "tambah")
@@ -532,7 +533,7 @@ Public Class FReturPembelian
             End If
 
             ' === Hapus data dari database (module) ===
-            MPemSimpan.HapusPembelian(nonota, dict)
+            MRPemSimpan.HapusPembelian(nonota, dict)
 
             ' === Update status tab setelah hapus ===
             TabLoadState(nomor) = True

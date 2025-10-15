@@ -29,6 +29,21 @@ Module ModNota
                         "LEFT JOIN dbkita.zsupplier zsupplier ON zbeli.kodesup=zsupplier.kodesup " &
                         "WHERE zbeli.nonota='" & nonota & "'"
 
+                Case "rpembelian"
+                    sql =
+                        "SELECT zstok.namabrg, zrbeli.nonota, zrbeli.tgl, zrbeli.kodesup, zrbeli.nofaktur," &
+                        "zrbeli.tgltempo, zrbeli.disc1, zrbeli.disc2, zrbeli.disc3, zrbeli.hdisc1, zrbeli.hdisc2, zrbeli.hdisc3, " &
+                        "zrbeli.ppn, zrbeli.hppn, zrbeli.lainnya, zrbeli.nilai, " &
+                        "zrbelim.kodebrg, zrbelim.jlh1, zrbelim.jlh2, zrbelim.jlh3, " &
+                        "zrbelim.disca, zrbelim.discb, zrbelim.discc, zrbelim.discrp, zrbelim.jumlah, " &
+                        "zstok.satuan1, zstok.satuan2, zstok.satuan3, zrbelim.harga, " &
+                        "zsupplier.namasup, zsupplier.alamat " &
+                        "FROM ((dbkita.zrbeli zrbeli " &
+                        "INNER JOIN dbkita.zrbelim zrbelim ON zrbeli.nonota=zrbelim.nonota) " &
+                        "LEFT JOIN dbkita.zstok zstok ON zrbelim.kodebrg=zstok.kodebrg) " &
+                        "LEFT JOIN dbkita.zsupplier zsupplier ON zrbeli.kodesup=zsupplier.kodesup " &
+                        "WHERE zrbeli.nonota='" & nonota & "'"
+
                 Case "penjualan"
                     ' --- query penjualan (isi sesuai tabel kamu)
                     sql =
@@ -88,7 +103,7 @@ Module ModNota
 
                 ' daftar kolom header yang selalu diisi
                 Dim headerCols As String() = {
-                    "nonota", "tgl", "tgltempo",
+                    "nonota", "tgl", "tgltempo", "nofaktur",
                     "kodesup", "kodekust", "kodesls",
                     "namasup", "namakust", "namasls", "alamat",
                     "kodegd1", "kodegd2", "namagd1", "namagd2",
@@ -122,6 +137,8 @@ Module ModNota
             Select Case jenis.ToLower()
                 Case "pembelian"
                     ds.Tables("NotaPembelian").Merge(dt)
+                Case "rpembelian"
+                    ds.Tables("NotaRPembelian").Merge(dt)
                 Case "penjualan"
                     ds.Tables("NotaPenjualan").Merge(dt)
                 Case "mutasi"
@@ -136,6 +153,8 @@ Module ModNota
             Select Case jenis.ToLower()
                 Case "pembelian"
                     rpt.Load(Application.StartupPath & "\Report\NotaPembelian.rpt")
+                Case "rpembelian"
+                    rpt.Load(Application.StartupPath & "\Report\NotaReturPembelian.rpt")
                 Case "penjualan"
                     rpt.Load(Application.StartupPath & "\Report\NotaPenjualan.rpt")
                 Case "mutasi"

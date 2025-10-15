@@ -31,8 +31,6 @@ Partial Class FReturPembelian
         Me.brpmTabAdd = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.Nota1 = New System.Windows.Forms.TabPage()
-        Me.trpmNONOTA = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
         Me.trpmTOTAL = New System.Windows.Forms.TextBox()
         Me.trpmSUBTOTAL = New System.Windows.Forms.TextBox()
         Me.trpmLAIN = New System.Windows.Forms.TextBox()
@@ -75,6 +73,8 @@ Partial Class FReturPembelian
         Me.btnUBAH = New System.Windows.Forms.Button()
         Me.btnSIMPAN = New System.Windows.Forms.Button()
         Me.btnTAMBAH = New System.Windows.Forms.Button()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.trpmNONOTA = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.Nota1.SuspendLayout()
         CType(Me.grRPEMBELIAN, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -198,24 +198,6 @@ Partial Class FReturPembelian
         Me.Nota1.Size = New System.Drawing.Size(1057, 526)
         Me.Nota1.TabIndex = 0
         Me.Nota1.Text = "Nota 1"
-        '
-        'trpmNONOTA
-        '
-        Me.trpmNONOTA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.trpmNONOTA.Location = New System.Drawing.Point(911, 5)
-        Me.trpmNONOTA.Name = "trpmNONOTA"
-        Me.trpmNONOTA.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNONOTA.TabIndex = 46
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(846, 8)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(52, 15)
-        Me.Label16.TabIndex = 47
-        Me.Label16.Text = "No Nota"
         '
         'trpmTOTAL
         '
@@ -590,6 +572,24 @@ Partial Class FReturPembelian
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Location = New System.Drawing.Point(846, 8)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(52, 15)
+        Me.Label16.TabIndex = 47
+        Me.Label16.Text = "No Nota"
+        '
+        'trpmNONOTA
+        '
+        Me.trpmNONOTA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.trpmNONOTA.Location = New System.Drawing.Point(911, 5)
+        Me.trpmNONOTA.Name = "trpmNONOTA"
+        Me.trpmNONOTA.Size = New System.Drawing.Size(138, 20)
+        Me.trpmNONOTA.TabIndex = 46
+        '
         'FReturPembelian
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -632,8 +632,6 @@ Partial Class FReturPembelian
     Friend WithEvents brpmTabAdd As System.Windows.Forms.Button
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents Nota1 As System.Windows.Forms.TabPage
-    Friend WithEvents trpmNONOTA As System.Windows.Forms.TextBox
-    Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents trpmTOTAL As System.Windows.Forms.TextBox
     Friend WithEvents trpmSUBTOTAL As System.Windows.Forms.TextBox
     Friend WithEvents trpmLAIN As System.Windows.Forms.TextBox
@@ -676,4 +674,6 @@ Partial Class FReturPembelian
     Friend WithEvents btnUBAH As System.Windows.Forms.Button
     Friend WithEvents btnSIMPAN As System.Windows.Forms.Button
     Friend WithEvents btnTAMBAH As System.Windows.Forms.Button
+    Friend WithEvents trpmNONOTA As System.Windows.Forms.TextBox
+    Friend WithEvents Label16 As System.Windows.Forms.Label
 End Class
