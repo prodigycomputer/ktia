@@ -76,4 +76,8 @@
     Private Sub smReturPembelian_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smReturPembelian.Click
         BukaChild(Of FReturPembelian)()
     End Sub
+
+    Private Sub smReturPenjualan_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smReturPenjualan.Click
+        BukaChild(Of FReturPenjualan)()
+    End Sub
 End Class

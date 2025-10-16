@@ -107,6 +107,7 @@ Public Class FPenjualan
         dtpjTGL1.Enabled = True
         dtpjTGL2.Enabled = True
         tpjSNMKUST.Enabled = True
+        tpjSNMSLS.Enabled = True
         tpjSLUNAS.Enabled = True
 
         CType(dict("btnADDITEM"), Button).Enabled = False
@@ -146,6 +147,7 @@ Public Class FPenjualan
         dtpjTGL1.Enabled = False
         dtpjTGL2.Enabled = False
         tpjSNMKUST.Enabled = False
+        tpjSNMSLS.Enabled = False
         tpjSLUNAS.Enabled = False
 
         CType(dict("btnADDITEM"), Button).Enabled = True

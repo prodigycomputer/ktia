@@ -1,28 +1,28 @@
 ﻿Imports System.Data.Odbc
 
-Public Class ItDtPenjualan
+Public Class ItDtRPenjualan
 
-    Public Sub LoadDataJual(Optional ByVal nonota As String = "",
+    Public Sub LoadDataRJual(Optional ByVal nonota As String = "",
                         Optional ByVal tgl1 As String = "",
                         Optional ByVal tgl2 As String = "",
                         Optional ByVal namakust As String = "",
                         Optional ByVal namasls As String = "",
                         Optional ByVal status As String = "")
 
-        Dim sql As String = "SELECT zjual.tgl, zjual.nonota, zkustomer.namakust, zsales.namasls, zjual.nilai, zjual.lunas " &
-                            "FROM zjual " &
-                            "LEFT JOIN zkustomer ON zjual.kodekust = zkustomer.kodekust " &
-                            "LEFT JOIN zsales ON zjual.kodesls = zsales.kodesls"
+        Dim sql As String = "SELECT zrjual.tgl, zrjual.nonota, zkustomer.namakust, zsales.namasls, zrjual.nilai, zrjual.lunas " &
+                            "FROM zrjual " &
+                            "LEFT JOIN zkustomer ON zrjual.kodekust = zkustomer.kodekust " &
+                            "LEFT JOIN zsales ON zrjual.kodesls = zsales.kodesls"
 
         Dim whereList As New List(Of String)
 
         ' --- filter berdasarkan nonota
         If nonota <> "" Then
-            whereList.Add("zjual.nonota LIKE ?")
+            whereList.Add("zrjual.nonota LIKE ?")
         Else
             ' --- filter tanggal
             If tgl1 <> "" AndAlso tgl2 <> "" Then
-                whereList.Add("zjual.tgl BETWEEN ? AND ?")
+                whereList.Add("zrjual.tgl BETWEEN ? AND ?")
             End If
 
             ' --- filter supplier
@@ -36,9 +36,9 @@ Public Class ItDtPenjualan
 
             ' --- filter status lunas
             If status = "lunas" Then
-                whereList.Add("zjual.lunas = 1")
+                whereList.Add("zrjual.lunas = 1")
             ElseIf status = "belum" Then
-                whereList.Add("zjual.lunas = 0")
+                whereList.Add("zrjual.lunas = 0")
             End If
         End If
 
@@ -46,9 +46,9 @@ Public Class ItDtPenjualan
             sql &= " WHERE " & String.Join(" AND ", whereList)
         End If
 
-        sql &= " ORDER BY zjual.tgl DESC, zjual.nonota DESC"
+        sql &= " ORDER BY zrjual.tgl DESC, zrjual.nonota DESC"
 
-        dgitmPENJUALAN.Rows.Clear()
+        dgitmRPENJUALAN.Rows.Clear()
 
         Try
             BukaKoneksi()
@@ -72,7 +72,7 @@ Public Class ItDtPenjualan
 
             Rd = Cmd.ExecuteReader()
             While Rd.Read()
-                dgitmPENJUALAN.Rows.Add(
+                dgitmRPENJUALAN.Rows.Add(
                     Rd("tgl"),
                     Rd("nonota"),
                     If(IsDBNull(Rd("namakust")), "-", Rd("namakust")),
@@ -88,18 +88,18 @@ Public Class ItDtPenjualan
         End Try
     End Sub
 
-    Private Sub ItDtPenjualan_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub ItDtRPenjualan_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
 
-        SetupGridJual(dgitmPENJUALAN)
+        SetupGridJual(dgitmRPENJUALAN)
     End Sub
 
-    Private Sub dgitmPENJUALAN_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmPENJUALAN.CellContentClick
+    Private Sub dgitmRPENJUALAN_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmRPENJUALAN.CellContentClick
         If e.RowIndex >= 0 Then
-            Dim nonota As String = dgitmPENJUALAN.Rows(e.RowIndex).Cells("nonota").Value.ToString()
+            Dim nonota As String = dgitmRPENJUALAN.Rows(e.RowIndex).Cells("nonota").Value.ToString()
 
-            Dim parentForm As FPenjualan = TryCast(Me.Owner, FPenjualan)
+            Dim parentForm As FReturPenjualan = TryCast(Me.Owner, FReturPenjualan)
             If parentForm IsNot Nothing Then
                 parentForm.LoadNota(nonota)
             End If

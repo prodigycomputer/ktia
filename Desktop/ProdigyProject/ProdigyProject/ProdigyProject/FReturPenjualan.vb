@@ -2,14 +2,14 @@
 Imports CrystalDecisions.Windows.Forms
 Imports System.Data.Odbc
 
-Public Class FReturPembelian
+Public Class FReturPenjualan
     Private TabPagesList As New List(Of TabPage)
     Private TabControls As New Dictionary(Of Integer, Dictionary(Of String, Control))
     Private TabButtonState As New Dictionary(Of Integer, String)
     Private TabLoadState As New Dictionary(Of Integer, Boolean)
     Private TabStatus As New Dictionary(Of Integer, String)
 
-    Public Sub SetSupplier(ByVal kode As String, ByVal nama As String,
+    Public Sub SetKustomer(ByVal kodek As String, ByVal namak As String,
                        ByVal alamat As String, ByVal kota As String,
                        ByVal ktp As String, ByVal npwp As String)
 
@@ -21,30 +21,48 @@ Public Class FReturPembelian
         If TabControls.ContainsKey(nomor) Then
             Dim dict = TabControls(nomor)
 
-            CType(dict("trpmKDSUP"), TextBox).Text = kode
-            CType(dict("trpmNMSUP"), TextBox).Text = nama
-            CType(dict("trpmALAMAT"), TextBox).Text = alamat
-            ' kalau nanti mau dipakai, tinggal tambahkan dict("tpmKOTA"), dict("tpmKTP"), dict("tpmNPWP")
+            CType(dict("trpjKDKUST"), TextBox).Text = kodek
+            CType(dict("trpjNMKUST"), TextBox).Text = namak
+            CType(dict("trpjALAMAT"), TextBox).Text = alamat
+
         End If
     End Sub
 
-    Private Sub FReturPembelian_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Public Sub SetSales(ByVal kodes As String, ByVal namas As String,
+                       ByVal alamat As String, ByVal kota As String,
+                       ByVal ktp As String, ByVal npwp As String)
+
+        If TabControl1.SelectedTab Is Nothing Then Exit Sub
+
+        ' Ambil nomor tab aktif
+        Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
+
+        If TabControls.ContainsKey(nomor) Then
+            Dim dict = TabControls(nomor)
+
+            CType(dict("trpjKDSALES"), TextBox).Text = kodes
+            CType(dict("trpjNMSALES"), TextBox).Text = namas
+
+        End If
+    End Sub
+
+    Private Sub FReturPenjualan_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ' isi dropdown lunas
-        trmuSLUNAS.Items.Clear()
-        trmuSLUNAS.Items.Add(New With {.Value = 0, .Text = "Belum Lunas"})
-        trmuSLUNAS.Items.Add(New With {.Value = 1, .Text = "Lunas"})
-        trmuSLUNAS.DisplayMember = "Text"
-        trmuSLUNAS.ValueMember = "Value"
-        trmuSLUNAS.SelectedValue = 0   ' default Belum Lunas
+        trpjSLUNAS.Items.Clear()
+        trpjSLUNAS.Items.Add(New With {.Value = 0, .Text = "Belum Lunas"})
+        trpjSLUNAS.Items.Add(New With {.Value = 1, .Text = "Lunas"})
+        trpjSLUNAS.DisplayMember = "Text"
+        trpjSLUNAS.ValueMember = "Value"
+        trpjSLUNAS.SelectedValue = 0   ' default Belum Lunas
 
         SetButtonState(Me, True)
-        SetupGridPembelian(grRPEMBELIAN)
+        SetupGridPenjualan(grRPENJUALAN)
 
         ' Tambah context menu ke grid utama
         Dim cms As New ContextMenuStrip()
         cms.Items.Add("Ubah", Nothing, AddressOf GridUbah_Click)
         cms.Items.Add("Hapus", Nothing, AddressOf GridHapus_Click)
-        grRPEMBELIAN.ContextMenuStrip = cms
+        grRPENJUALAN.ContextMenuStrip = cms
 
         ' Registrasi tab manual pertama (Nota 1)
         If TabControl1.TabPages.Count > 0 Then
@@ -61,33 +79,37 @@ Public Class FReturPembelian
         If Not TabControls.ContainsKey(nomor) Then Exit Sub
         Dim dict = TabControls(nomor)
 
-        CType(dict("trpmNONOTA"), TextBox).Enabled = False
-        CType(dict("trpmNOFAKTUR"), TextBox).Enabled = False
-        CType(dict("trpmTANGGAL"), DateTimePicker).Enabled = False
-        CType(dict("trpmTEMPO"), DateTimePicker).Enabled = False
-        CType(dict("trpmKDSUP"), TextBox).Enabled = False
-        CType(dict("trpmNMSUP"), TextBox).Enabled = False
-        CType(dict("trpmKET"), TextBox).Enabled = False
-        CType(dict("trpmALAMAT"), TextBox).Enabled = False
+        CType(dict("trpjNONOTA"), TextBox).Enabled = False
+        CType(dict("trpjNOFAKTUR"), TextBox).Enabled = False
+        CType(dict("trpjTANGGAL"), DateTimePicker).Enabled = False
+        CType(dict("trpjTEMPO"), DateTimePicker).Enabled = False
+        CType(dict("trpjKDKUST"), TextBox).Enabled = False
+        CType(dict("trpjNMKUST"), TextBox).Enabled = False
+        CType(dict("trpjKDSALES"), TextBox).Enabled = False
+        CType(dict("trpjNMSALES"), TextBox).Enabled = False
+        CType(dict("trpjKDHARGA"), TextBox).Enabled = False
+        CType(dict("trpjKET"), TextBox).Enabled = False
+        CType(dict("trpjALAMAT"), TextBox).Enabled = False
         CType(dict("GRID"), DataGridView).Enabled = False
 
-        CType(dict("trpmTOTAL"), TextBox).Enabled = False
-        CType(dict("trpmSUBTOTAL"), TextBox).Enabled = False
-        CType(dict("trpmNPPN"), TextBox).Enabled = False
-        CType(dict("trpmAPPN"), TextBox).Enabled = False
-        CType(dict("trpmLAIN"), TextBox).Enabled = False
-        CType(dict("trpmNDISK3"), TextBox).Enabled = False
-        CType(dict("trpmADISK3"), TextBox).Enabled = False
-        CType(dict("trpmNDISK2"), TextBox).Enabled = False
-        CType(dict("trpmADISK2"), TextBox).Enabled = False
-        CType(dict("trpmNDISK1"), TextBox).Enabled = False
-        CType(dict("trpmADISK1"), TextBox).Enabled = False
+        CType(dict("trpjTOTAL"), TextBox).Enabled = False
+        CType(dict("trpjSUBTOTAL"), TextBox).Enabled = False
+        CType(dict("trpjNPPN"), TextBox).Enabled = False
+        CType(dict("trpjAPPN"), TextBox).Enabled = False
+        CType(dict("trpjLAIN"), TextBox).Enabled = False
+        CType(dict("trpjNDISK3"), TextBox).Enabled = False
+        CType(dict("trpjADISK3"), TextBox).Enabled = False
+        CType(dict("trpjNDISK2"), TextBox).Enabled = False
+        CType(dict("trpjADISK2"), TextBox).Enabled = False
+        CType(dict("trpjNDISK1"), TextBox).Enabled = False
+        CType(dict("trpjADISK1"), TextBox).Enabled = False
 
-        trpmSNONOTA.Enabled = True
-        dtrpmTGL1.Enabled = True
-        dtrpmTGL2.Enabled = True
-        trpmSNMSUP.Enabled = True
-        trmuSLUNAS.Enabled = True
+        trpjSNONOTA.Enabled = True
+        dtrpjTGL1.Enabled = True
+        dtrpjTGL2.Enabled = True
+        trpjSNMKUST.Enabled = True
+        trpjSNMSLS.Enabled = True
+        trpjSLUNAS.Enabled = True
 
         CType(dict("btnADDITEM"), Button).Enabled = False
     End Sub
@@ -98,33 +120,37 @@ Public Class FReturPembelian
         If Not TabControls.ContainsKey(nomor) Then Exit Sub
         Dim dict = TabControls(nomor)
 
-        CType(dict("trpmNONOTA"), TextBox).Enabled = True
-        CType(dict("trpmNOFAKTUR"), TextBox).Enabled = True
-        CType(dict("trpmTANGGAL"), DateTimePicker).Enabled = True
-        CType(dict("trpmTEMPO"), DateTimePicker).Enabled = True
-        CType(dict("trpmKDSUP"), TextBox).Enabled = True
-        CType(dict("trpmNMSUP"), TextBox).Enabled = True
-        CType(dict("trpmKET"), TextBox).Enabled = True
-        CType(dict("trpmALAMAT"), TextBox).Enabled = False
+        CType(dict("trpjNONOTA"), TextBox).Enabled = True
+        CType(dict("trpjNOFAKTUR"), TextBox).Enabled = True
+        CType(dict("trpjTANGGAL"), DateTimePicker).Enabled = True
+        CType(dict("trpjTEMPO"), DateTimePicker).Enabled = True
+        CType(dict("trpjKDKUST"), TextBox).Enabled = True
+        CType(dict("trpjNMKUST"), TextBox).Enabled = True
+        CType(dict("trpjKDSALES"), TextBox).Enabled = True
+        CType(dict("trpjNMSALES"), TextBox).Enabled = True
+        CType(dict("trpjKDHARGA"), TextBox).Enabled = True
+        CType(dict("trpjKET"), TextBox).Enabled = True
+        CType(dict("trpjALAMAT"), TextBox).Enabled = False
         CType(dict("GRID"), DataGridView).Enabled = True
 
-        CType(dict("trpmTOTAL"), TextBox).Enabled = False
-        CType(dict("trpmSUBTOTAL"), TextBox).Enabled = False
-        CType(dict("trpmNPPN"), TextBox).Enabled = False
-        CType(dict("trpmAPPN"), TextBox).Enabled = True
-        CType(dict("trpmLAIN"), TextBox).Enabled = True
-        CType(dict("trpmNDISK3"), TextBox).Enabled = False
-        CType(dict("trpmADISK3"), TextBox).Enabled = True
-        CType(dict("trpmNDISK2"), TextBox).Enabled = False
-        CType(dict("trpmADISK2"), TextBox).Enabled = True
-        CType(dict("trpmNDISK1"), TextBox).Enabled = False
-        CType(dict("trpmADISK1"), TextBox).Enabled = True
+        CType(dict("trpjTOTAL"), TextBox).Enabled = False
+        CType(dict("trpjSUBTOTAL"), TextBox).Enabled = False
+        CType(dict("trpjNPPN"), TextBox).Enabled = False
+        CType(dict("trpjAPPN"), TextBox).Enabled = True
+        CType(dict("trpjLAIN"), TextBox).Enabled = True
+        CType(dict("trpjNDISK3"), TextBox).Enabled = False
+        CType(dict("trpjADISK3"), TextBox).Enabled = True
+        CType(dict("trpjNDISK2"), TextBox).Enabled = False
+        CType(dict("trpjADISK2"), TextBox).Enabled = True
+        CType(dict("trpjNDISK1"), TextBox).Enabled = False
+        CType(dict("trpjADISK1"), TextBox).Enabled = True
 
-        trpmSNONOTA.Enabled = False
-        dtrpmTGL1.Enabled = False
-        dtrpmTGL2.Enabled = False
-        trpmSNMSUP.Enabled = False
-        trmuSLUNAS.Enabled = False
+        trpjSNONOTA.Enabled = False
+        dtrpjTGL1.Enabled = False
+        dtrpjTGL2.Enabled = False
+        trpjSNMKUST.Enabled = False
+        trpjSNMSLS.Enabled = False
+        trpjSLUNAS.Enabled = False
 
         CType(dict("btnADDITEM"), Button).Enabled = True
     End Sub
@@ -183,6 +209,7 @@ Public Class FReturPembelian
         End Try
     End Sub
 
+
     ' ============= EVENT KLIK HAPUS (UNIVERSAL PER TAB) =============
     Private Sub GridHapus_Click(ByVal sender As Object, ByVal e As EventArgs)
         Try
@@ -216,7 +243,7 @@ Public Class FReturPembelian
             BukaKoneksi()
 
             ' ================== HEADER ==================
-            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.ket, z.nofaktur, z.kodesup, s.namasup, s.alamat, z.nilai, z.lunas, z.disc1, z.hdisc1, z.disc2, z.hdisc2, z.disc3, z.hdisc3, z.ppn, z.hppn, z.lainnya FROM zrbeli z LEFT JOIN zsupplier s ON z.kodesup = s.kodesup WHERE z.nonota = ?"
+            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.nofaktur, z.ket, z.kodekust, k.namakust, z.kodesls, s.namasls, k.alamat, z.nilai, z.lunas, z.disc1, z.hdisc1, z.disc2, z.hdisc2, z.disc3, z.hdisc3, z.ppn, z.hppn, z.lainnya FROM zrjual z LEFT JOIN zkustomer k ON z.kodekust = k.kodekust LEFT JOIN zsales s ON z.kodesls = s.kodesls WHERE z.nonota = ?"
             Using cmd As New OdbcCommand(sqlHead, Conn)
                 cmd.Parameters.AddWithValue("@nonota", nonota)
                 Rd = cmd.ExecuteReader()
@@ -225,30 +252,32 @@ Public Class FReturPembelian
                     Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
                     Dim dict = TabControls(nomor)
 
-                    CType(dict("trpmNONOTA"), TextBox).Text = nonota
-                    CType(dict("trpmNOFAKTUR"), TextBox).Text = Rd("nofaktur").ToString()
-                    CType(dict("trpmTANGGAL"), DateTimePicker).Value = CDate(Rd("tgl"))
-                    CType(dict("trpmTEMPO"), DateTimePicker).Value = CDate(Rd("tgltempo"))
-                    CType(dict("trpmKET"), TextBox).Text = Rd("ket").ToString()
-                    CType(dict("trpmKDSUP"), TextBox).Text = Rd("kodesup").ToString()
-                    CType(dict("trpmNMSUP"), TextBox).Text = Rd("namasup").ToString()
-                    CType(dict("trpmALAMAT"), TextBox).Text = Rd("alamat").ToString()
-                    CType(dict("trpmTOTAL"), TextBox).Text = Rd("nilai").ToString()
-                    CType(dict("trpmADISK1"), TextBox).Text = Rd("disc1").ToString()
-                    CType(dict("trpmNDISK1"), TextBox).Text = Rd("hdisc1").ToString()
-                    CType(dict("trpmADISK2"), TextBox).Text = Rd("disc2").ToString()
-                    CType(dict("trpmNDISK2"), TextBox).Text = Rd("hdisc2").ToString()
-                    CType(dict("trpmADISK3"), TextBox).Text = Rd("disc3").ToString()
-                    CType(dict("trpmNDISK3"), TextBox).Text = Rd("hdisc3").ToString()
-                    CType(dict("trpmAPPN"), TextBox).Text = Rd("ppn").ToString()
-                    CType(dict("trpmNPPN"), TextBox).Text = Rd("hppn").ToString()
-                    CType(dict("trpmLAIN"), TextBox).Text = Rd("lainnya").ToString()
+                    CType(dict("trpjNONOTA"), TextBox).Text = nonota
+                    CType(dict("trpjNOFAKTUR"), TextBox).Text = Rd("nofaktur").ToString()
+                    CType(dict("trpjTANGGAL"), DateTimePicker).Value = CDate(Rd("tgl"))
+                    CType(dict("trpjTEMPO"), DateTimePicker).Value = CDate(Rd("tgltempo"))
+                    CType(dict("trpjKET"), TextBox).Text = Rd("ket").ToString()
+                    CType(dict("trpjKDKUST"), TextBox).Text = Rd("kodekust").ToString()
+                    CType(dict("trpjNMKUST"), TextBox).Text = Rd("namakust").ToString()
+                    CType(dict("trpjKDSALES"), TextBox).Text = Rd("kodesls").ToString()
+                    CType(dict("trpjNMSALES"), TextBox).Text = Rd("namasls").ToString()
+                    CType(dict("trpjALAMAT"), TextBox).Text = Rd("alamat").ToString()
+                    CType(dict("trpjTOTAL"), TextBox).Text = Rd("nilai").ToString()
+                    CType(dict("trpjADISK1"), TextBox).Text = Rd("disc1").ToString()
+                    CType(dict("trpjNDISK1"), TextBox).Text = Rd("hdisc1").ToString()
+                    CType(dict("trpjADISK2"), TextBox).Text = Rd("disc2").ToString()
+                    CType(dict("trpjNDISK2"), TextBox).Text = Rd("hdisc2").ToString()
+                    CType(dict("trpjADISK3"), TextBox).Text = Rd("disc3").ToString()
+                    CType(dict("trpjNDISK3"), TextBox).Text = Rd("hdisc3").ToString()
+                    CType(dict("trpjAPPN"), TextBox).Text = Rd("ppn").ToString()
+                    CType(dict("trpjNPPN"), TextBox).Text = Rd("hppn").ToString()
+                    CType(dict("trpjLAIN"), TextBox).Text = Rd("lainnya").ToString()
                 End If
                 Rd.Close()
             End Using
 
             ' ================== DETAIL ==================
-            Dim sqlDet As String = "SELECT d.kodebrg, s.namabrg, d.kodegd, d.jlh1, s.satuan1, d.jlh2, s.satuan2, d.jlh3, s.satuan3, d.harga, d.disca, d.discb, d.discc, d.discrp, d.jumlah FROM zrbelim d LEFT JOIN zstok s ON d.kodebrg = s.kodebrg WHERE d.nonota = ?"
+            Dim sqlDet As String = "SELECT d.kodebrg, s.namabrg, d.kodegd, d.jlh1, s.satuan1, d.jlh2, s.satuan2, d.jlh3, s.satuan3, d.harga, d.disca, d.discb, d.discc, d.discrp, d.jumlah FROM zrjualm d LEFT JOIN zstok s ON d.kodebrg = s.kodebrg WHERE d.nonota = ?"
             Using cmdDet As New OdbcCommand(sqlDet, Conn)
                 cmdDet.Parameters.AddWithValue("@nonota", nonota)
                 Rd = cmdDet.ExecuteReader()
@@ -259,7 +288,7 @@ Public Class FReturPembelian
                 Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
 
                 If grid.Columns.Count = 0 Then
-                    SetupGridPembelian(grid)
+                    SetupGridPenjualan(grid)
                 End If
 
                 grid.Rows.Clear()
@@ -292,10 +321,11 @@ Public Class FReturPembelian
     End Sub
 
     Private Sub SetFilterState(ByVal nonotaActive As Boolean)
-        dtrpmTGL1.Enabled = Not nonotaActive
-        dtrpmTGL2.Enabled = Not nonotaActive
-        trpmSNMSUP.Enabled = Not nonotaActive
-        trmuSLUNAS.Enabled = Not nonotaActive
+        dtrpjTGL1.Enabled = Not nonotaActive
+        dtrpjTGL2.Enabled = Not nonotaActive
+        trpjSNMKUST.Enabled = Not nonotaActive
+        trpjSNMSLS.Enabled = Not nonotaActive
+        trpjSLUNAS.Enabled = Not nonotaActive
     End Sub
 
     ' ----------------- STATUS HELPERS -----------------
@@ -326,31 +356,34 @@ Public Class FReturPembelian
     Private Sub RegisterTabControls(ByVal tab As TabPage, ByVal nomor As Integer)
         Dim dict As New Dictionary(Of String, Control)
 
-        dict("trpmTANGGAL") = tab.Controls.Find("trpmTANGGAL", True)(0)
-        dict("trpmNONOTA") = tab.Controls.Find("trpmNONOTA", True)(0)
-        dict("trpmNOFAKTUR") = tab.Controls.Find("trpmNOFAKTUR", True)(0)
-        dict("trpmTEMPO") = tab.Controls.Find("trpmTEMPO", True)(0)
-        dict("trpmKET") = tab.Controls.Find("trpmKET", True)(0)
-        dict("trpmKDSUP") = tab.Controls.Find("trpmKDSUP", True)(0)
-        dict("trpmNMSUP") = tab.Controls.Find("trpmNMSUP", True)(0)
-        dict("trpmALAMAT") = tab.Controls.Find("trpmALAMAT", True)(0)
-        dict("trpmTOTAL") = tab.Controls.Find("trpmTOTAL", True)(0)
-        dict("trpmSUBTOTAL") = tab.Controls.Find("trpmSUBTOTAL", True)(0)
-        dict("trpmNPPN") = tab.Controls.Find("trpmNPPN", True)(0)
-        dict("trpmAPPN") = tab.Controls.Find("trpmAPPN", True)(0)
-        dict("trpmLAIN") = tab.Controls.Find("trpmLAIN", True)(0)
+        dict("trpjTANGGAL") = tab.Controls.Find("trpjTANGGAL", True)(0)
+        dict("trpjNONOTA") = tab.Controls.Find("trpjNONOTA", True)(0)
+        dict("trpjNOFAKTUR") = tab.Controls.Find("trpjNOFAKTUR", True)(0)
+        dict("trpjTEMPO") = tab.Controls.Find("trpjTEMPO", True)(0)
+        dict("trpjKET") = tab.Controls.Find("trpjKET", True)(0)
+        dict("trpjKDKUST") = tab.Controls.Find("trpjKDKUST", True)(0)
+        dict("trpjNMKUST") = tab.Controls.Find("trpjNMKUST", True)(0)
+        dict("trpjKDSALES") = tab.Controls.Find("trpjKDSALES", True)(0)
+        dict("trpjNMSALES") = tab.Controls.Find("trpjNMSALES", True)(0)
+        dict("trpjKDHARGA") = tab.Controls.Find("trpjKDHARGA", True)(0)
+        dict("trpjALAMAT") = tab.Controls.Find("trpjALAMAT", True)(0)
+        dict("trpjTOTAL") = tab.Controls.Find("trpjTOTAL", True)(0)
+        dict("trpjSUBTOTAL") = tab.Controls.Find("trpjSUBTOTAL", True)(0)
+        dict("trpjNPPN") = tab.Controls.Find("trpjNPPN", True)(0)
+        dict("trpjAPPN") = tab.Controls.Find("trpjAPPN", True)(0)
+        dict("trpjLAIN") = tab.Controls.Find("trpjLAIN", True)(0)
 
-        CType(dict("trpmAPPN"), TextBox).Text = "11"
+        CType(dict("trpjAPPN"), TextBox).Text = "11"
 
-        dict("trpmNDISK3") = tab.Controls.Find("trpmNDISK3", True)(0)
-        dict("trpmADISK3") = tab.Controls.Find("trpmADISK3", True)(0)
-        dict("trpmNDISK2") = tab.Controls.Find("trpmNDISK2", True)(0)
-        dict("trpmADISK2") = tab.Controls.Find("trpmADISK2", True)(0)
-        dict("trpmNDISK1") = tab.Controls.Find("trpmNDISK1", True)(0)
-        dict("trpmADISK1") = tab.Controls.Find("trpmADISK1", True)(0)
+        dict("trpjNDISK3") = tab.Controls.Find("trpjNDISK3", True)(0)
+        dict("trpjADISK3") = tab.Controls.Find("trpjADISK3", True)(0)
+        dict("trpjNDISK2") = tab.Controls.Find("trpjNDISK2", True)(0)
+        dict("trpjADISK2") = tab.Controls.Find("trpjADISK2", True)(0)
+        dict("trpjNDISK1") = tab.Controls.Find("trpjNDISK1", True)(0)
+        dict("trpjADISK1") = tab.Controls.Find("trpjADISK1", True)(0)
 
         ' Grid
-        Dim grid As DataGridView = CType(tab.Controls.Find("grRPEMBELIAN", True)(0), DataGridView)
+        Dim grid As DataGridView = CType(tab.Controls.Find("grRPENJUALAN", True)(0), DataGridView)
         dict("GRID") = grid
 
         ' Context menu khusus untuk grid ini
@@ -374,15 +407,17 @@ Public Class FReturPembelian
                                    End Sub
 
         ' Tambahkan event handler dinamis
-        AddHandler CType(dict("trpmKDSUP"), TextBox).KeyDown, AddressOf trpmKDSUP_KeyDown
-        AddHandler CType(dict("trpmNMSUP"), TextBox).KeyDown, AddressOf trpmNMSUP_KeyDown
-        AddHandler CType(dict("trpmNOFAKTUR"), TextBox).KeyDown, AddressOf trpmNOFAKTUR_KeyDown
+        AddHandler CType(dict("trpjKDKUST"), TextBox).KeyDown, AddressOf trpjKDKUST_KeyDown
+        AddHandler CType(dict("trpjNMKUST"), TextBox).KeyDown, AddressOf trpjNMKUST_KeyDown
+        AddHandler CType(dict("trpjKDSALES"), TextBox).KeyDown, AddressOf trpjKDSALES_KeyDown
+        AddHandler CType(dict("trpjNMSALES"), TextBox).KeyDown, AddressOf trpjNMSALES_KeyDown
+        AddHandler CType(dict("trpjNOFAKTUR"), TextBox).KeyDown, AddressOf trpjNOFAKTUR_KeyDown
 
-        Dim txtADISK1 As TextBox = CType(dict("trpmADISK1"), TextBox)
-        Dim txtADISK2 As TextBox = CType(dict("trpmADISK2"), TextBox)
-        Dim txtADISK3 As TextBox = CType(dict("trpmADISK3"), TextBox)
-        Dim txtAPPN As TextBox = CType(dict("trpmAPPN"), TextBox)
-        Dim txtLAIN As TextBox = CType(dict("trpmLAIN"), TextBox)
+        Dim txtADISK1 As TextBox = CType(dict("trpjADISK1"), TextBox)
+        Dim txtADISK2 As TextBox = CType(dict("trpjADISK2"), TextBox)
+        Dim txtADISK3 As TextBox = CType(dict("trpjADISK3"), TextBox)
+        Dim txtAPPN As TextBox = CType(dict("trpjAPPN"), TextBox)
+        Dim txtLAIN As TextBox = CType(dict("trpjLAIN"), TextBox)
 
         Dim allTextBoxes() As TextBox = {txtADISK1, txtADISK2, txtADISK3, txtAPPN, txtLAIN}
 
@@ -409,8 +444,7 @@ Public Class FReturPembelian
         tab.Tag = String.Empty
     End Sub
 
-    ' ================== TAMBAH TAB ==================
-    Private Sub brpmTabAdd_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles brpmTabAdd.Click
+    Private Sub brpjTabAdd_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles brpjTabAdd.Click
         If TabPagesList.Count = 0 Then Return
 
         Dim nomor As Integer = GetNextNotaNumber(TabControl1)
@@ -433,8 +467,7 @@ Public Class FReturPembelian
         SetButtonState(Me, True)
     End Sub
 
-    ' ================== HAPUS TAB ==================
-    Private Sub brpmTabDel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles brpmTabDel.Click
+    Private Sub brpjTabDel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles brpjTabDel.Click
         If TabPagesList.Count > 1 Then
             Dim aktifIndex As Integer = TabControl1.SelectedIndex
             Dim aktifTab As TabPage = TabControl1.SelectedTab
@@ -459,7 +492,7 @@ Public Class FReturPembelian
             Dim dict = TabControls(nomor)
             Dim status As String = GetTabStatus(nomor)
 
-            MRPemSimpan.SimpanPembelian(nomor, dict, status)
+            MRPenSimpan.SimpanPenjualan(nomor, dict, status)
 
             MessageBox.Show("Data pembelian berhasil disimpan untuk " & aktifTab.Text, "Sukses")
 
@@ -480,11 +513,11 @@ Public Class FReturPembelian
             RegisterTabControls(TabControl1.SelectedTab, nomor)
         End If
 
-        Dim dict = TabControls(nomor)
-        ClearForm(dict)
-
         ' set status
         SetTabStatus(nomor, "tambah")
+
+        Dim dict = TabControls(nomor)
+        ClearForm(dict)
 
         TabLoadState(nomor) = False
         TabButtonState(nomor) = False
@@ -499,19 +532,12 @@ Public Class FReturPembelian
             RegisterTabControls(TabControl1.SelectedTab, nomor)
         End If
 
-        ' ambil kontrol tpmNONOTA dari tab aktif
-        Dim trpmNONOTA As TextBox = TryCast(TabControls(nomor)("trpmNONOTA"), TextBox)
-        Dim trpmNOFAKTUR As TextBox = TryCast(TabControls(nomor)("trpmNOFAKTUR"), TextBox)
+        ' ambil kontrol tpjNONOTA dari tab aktif
+        Dim trpjNONOTA As TextBox = TryCast(TabControls(nomor)("trpjNONOTA"), TextBox)
 
         ' cek apakah kosong
-        If trpmNONOTA Is Nothing OrElse String.IsNullOrWhiteSpace(trpmNONOTA.Text) Then
+        If trpjNONOTA Is Nothing OrElse String.IsNullOrWhiteSpace(trpjNONOTA.Text) Then
             MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-        ' cek apakah nomor faktur kosong
-        If trpmNOFAKTUR Is Nothing OrElse String.IsNullOrWhiteSpace(trpmNOFAKTUR.Text) Then
-            MessageBox.Show("Nomor faktur belum diisi, silakan tambahkan data terlebih dahulu.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
@@ -532,7 +558,7 @@ Public Class FReturPembelian
             If Not TabControls.ContainsKey(nomor) Then Exit Sub
             Dim dict = TabControls(nomor)
 
-            Dim nonota As String = CType(dict("trpmNONOTA"), TextBox).Text.Trim()
+            Dim nonota As String = CType(dict("trpjNONOTA"), TextBox).Text.Trim()
 
             If String.IsNullOrEmpty(nonota) Then
                 MessageBox.Show("Tidak ada nota yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -544,7 +570,7 @@ Public Class FReturPembelian
             End If
 
             ' === Hapus data dari database (module) ===
-            MRPemSimpan.HapusPembelian(nonota, dict)
+            MRPenSimpan.HapusPembelian(nonota, dict)
 
             ' === Update status tab setelah hapus ===
             TabLoadState(nomor) = True
@@ -581,7 +607,7 @@ Public Class FReturPembelian
             End If
         Next
 
-        CType(dict("trpmSUBTOTAL"), TextBox).Text = subtotal.ToString()
+        CType(dict("trpjSUBTOTAL"), TextBox).Text = subtotal.ToString()
     End Sub
 
     Private Sub btnADDITEM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnADDITEM.Click
@@ -609,47 +635,73 @@ Public Class FReturPembelian
         End Try
     End Sub
 
-    ' ================== KEYDOWN SUPPLIER ==================
-    Private Sub trpmKDSUP_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs)
+    ' ================== KEYDOWN KUSTOMER ==================
+    Private Sub trpjKDKUST_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs)
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             Dim txtKode As TextBox = CType(sender, TextBox)
             If txtKode.Text.Trim() <> "" Then
-                Dim f As New ItDtSupplier
+                Dim f As New ItDtKustomer
                 f.Owner = Me
                 f.Show()
-                f.LoadDataSup(txtKode.Text.Trim())
+                f.LoadDataKust(txtKode.Text.Trim())
             End If
         End If
     End Sub
 
-    Private Sub trpmNMSUP_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs)
+    Private Sub trpjNMKUST_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs)
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
             Dim txtNama As TextBox = CType(sender, TextBox)
             If txtNama.Text.Trim() <> "" Then
-                Dim f As New ItDtSupplier
+                Dim f As New ItDtKustomer
                 f.Owner = Me
                 f.Show()
-                f.LoadDataSup(txtNama.Text.Trim())
+                f.LoadDataKust(txtNama.Text.Trim())
+            End If
+        End If
+    End Sub
+
+    Private Sub trpjKDSALES_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs)
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            Dim txtKode As TextBox = CType(sender, TextBox)
+            If txtKode.Text.Trim() <> "" Then
+                Dim f As New ItDtSales
+                f.Owner = Me
+                f.Show()
+                f.LoadDataSls(txtKode.Text.Trim())
+            End If
+        End If
+    End Sub
+
+    Private Sub trpjNMSALES_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs)
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            Dim txtNama As TextBox = CType(sender, TextBox)
+            If txtNama.Text.Trim() <> "" Then
+                Dim f As New ItDtSales
+                f.Owner = Me
+                f.Show()
+                f.LoadDataSls(txtNama.Text.Trim())
             End If
         End If
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
-        Dim f As New ItDtRPembelian()
+        Dim f As New ItDtRPenjualan()
 
-        Dim nonota As String = trpmSNONOTA.Text.Trim()
-        Dim tgl1 As String = dtrpmTGL1.Value.ToString("yyyy-MM-dd")
-        Dim tgl2 As String = dtrpmTGL2.Value.ToString("yyyy-MM-dd")
-        Dim namasup As String = trpmSNMSUP.Text.Trim()
+        Dim nonota As String = trpjSNONOTA.Text.Trim()
+        Dim tgl1 As String = dtrpjTGL1.Value.ToString("yyyy-MM-dd")
+        Dim tgl2 As String = dtrpjTGL2.Value.ToString("yyyy-MM-dd")
+        Dim namasup As String = trpjSNMKUST.Text.Trim()
         Dim status As String = ""
 
         ' Tentukan status lunas hanya jika nonota kosong
         If nonota = "" Then
-            If trmuSLUNAS.SelectedIndex = 0 Then
+            If trpjSLUNAS.SelectedIndex = 0 Then
                 status = "belum"
-            ElseIf trmuSLUNAS.SelectedIndex = 1 Then
+            ElseIf trpjSLUNAS.SelectedIndex = 1 Then
                 status = "lunas"
             End If
         End If
@@ -657,27 +709,19 @@ Public Class FReturPembelian
         ' Load data sesuai filter
         f.Owner = Me
         f.Show()
-        f.LoadDataRBeli(nonota, tgl1, tgl2, namasup, status)
+        f.LoadDataRJual(nonota, tgl1, tgl2, namasup, status)
 
         ' === Clear filter setelah pencarian ===
-        trpmSNONOTA.Clear()
-        trpmSNMSUP.Clear()
-        trmuSLUNAS.SelectedIndex = -1 ' reset pilihan
+        trpjSNONOTA.Clear()
+        trpjSNMKUST.Clear()
+        trpjSLUNAS.SelectedIndex = -1 ' reset pilihan
         ' reset tanggal ke hari ini
-        dtrpmTGL1.Value = DateTime.Today
-        dtrpmTGL2.Value = DateTime.Today
+        dtrpjTGL1.Value = DateTime.Today
+        dtrpjTGL2.Value = DateTime.Today
     End Sub
 
-    Private Sub trmuSLUNAS_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles trmuSLUNAS.SelectedIndexChanged
-        If trpmSNONOTA.Text.Trim() = "" Then
-            Dim cb As ComboBox = CType(sender, ComboBox)
-            Dim val As Integer = Convert.ToInt32(cb.SelectedValue)
-            btnCARI.PerformClick()
-        End If
-    End Sub
-
-    Private Sub trpmSNONOTA_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles trpmSNONOTA.TextChanged
-        If trpmSNONOTA.Text.Trim() <> "" Then
+    Private Sub trpjSNONOTA_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles trpjSNONOTA.TextChanged
+        If trpjSNONOTA.Text.Trim() <> "" Then
             ' kalau nonota diisi, disable yang lain
             SetFilterState(True)
         Else
@@ -715,27 +759,27 @@ Public Class FReturPembelian
         If Not TabControls.ContainsKey(nomor) Then Exit Sub
         Dim dict = TabControls(nomor)
 
-        Dim subtotal As Decimal = Val(CType(dict("trpmSUBTOTAL"), TextBox).Text)
-        Dim adisk1 As Decimal = Val(CType(dict("trpmADISK1"), TextBox).Text)
-        Dim adisk2 As Decimal = Val(CType(dict("trpmADISK2"), TextBox).Text)
-        Dim adisk3 As Decimal = Val(CType(dict("trpmADISK3"), TextBox).Text)
-        Dim appn As Decimal = Val(CType(dict("trpmAPPN"), TextBox).Text)
-        Dim lain As Decimal = Val(CType(dict("trpmLAIN"), TextBox).Text)
+        Dim subtotal As Decimal = Val(CType(dict("trpjSUBTOTAL"), TextBox).Text)
+        Dim adisk1 As Decimal = Val(CType(dict("trpjADISK1"), TextBox).Text)
+        Dim adisk2 As Decimal = Val(CType(dict("trpjADISK2"), TextBox).Text)
+        Dim adisk3 As Decimal = Val(CType(dict("trpjADISK3"), TextBox).Text)
+        Dim appn As Decimal = Val(CType(dict("trpjAPPN"), TextBox).Text)
+        Dim lain As Decimal = Val(CType(dict("trpjLAIN"), TextBox).Text)
 
         Dim hasil = ModHitung.HitungSubtotalTotal(subtotal, adisk1, adisk2, adisk3, appn, lain)
 
-        CType(dict("trpmNDISK1"), TextBox).Text = hasil("hdisca").ToString()
-        CType(dict("trpmNDISK2"), TextBox).Text = hasil("hdiscb").ToString()
-        CType(dict("trpmNDISK3"), TextBox).Text = hasil("hdiscc").ToString()
-        CType(dict("trpmNPPN"), TextBox).Text = hasil("ppn").ToString()
-        CType(dict("trpmTOTAL"), TextBox).Text = hasil("total").ToString()
+        CType(dict("trpjNDISK1"), TextBox).Text = hasil("hdisca").ToString()
+        CType(dict("trpjNDISK2"), TextBox).Text = hasil("hdiscb").ToString()
+        CType(dict("trpjNDISK3"), TextBox).Text = hasil("hdiscc").ToString()
+        CType(dict("trpjNPPN"), TextBox).Text = hasil("ppn").ToString()
+        CType(dict("trpjTOTAL"), TextBox).Text = hasil("total").ToString()
     End Sub
 
     Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
-        Handles trpmSUBTOTAL.KeyPress, trpmTOTAL.KeyPress, trpmADISK1.KeyPress,
-                trpmADISK2.KeyPress, trpmADISK3.KeyPress, trpmNDISK1.KeyPress,
-                trpmNDISK2.KeyPress, trpmNDISK3.KeyPress, trpmLAIN.KeyPress,
-                trpmAPPN.KeyPress, trpmNPPN.KeyPress
+        Handles trpjSUBTOTAL.KeyPress, trpjTOTAL.KeyPress, trpjADISK1.KeyPress,
+                trpjADISK2.KeyPress, trpjADISK3.KeyPress, trpjNDISK1.KeyPress,
+                trpjNDISK2.KeyPress, trpjNDISK3.KeyPress, trpjLAIN.KeyPress,
+                trpjAPPN.KeyPress, trpjNPPN.KeyPress
 
         AngkaHelper.HanyaAngka(e)
     End Sub
@@ -746,7 +790,7 @@ Public Class FReturPembelian
             Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
             Dim dict = TabControls(nomor)
 
-            Dim nonota As String = CType(dict("trpmNONOTA"), TextBox).Text
+            Dim nonota As String = CType(dict("trpjNONOTA"), TextBox).Text
 
             If String.IsNullOrEmpty(nonota) Then
                 MessageBox.Show("Pilih nota yang akan dicetak!", "Info")
@@ -756,7 +800,7 @@ Public Class FReturPembelian
             ' --- Buka form cetak ---
             Dim f As New FCetak()
             f.Param("nonota") = nonota
-            f.Param("jenis") = "rpembelian"
+            f.Param("jenis") = "rpenjualan"
             f.ShowDialog()
 
         Catch ex As Exception
@@ -764,8 +808,7 @@ Public Class FReturPembelian
         End Try
     End Sub
 
-
-    Private Sub trpmNOFAKTUR_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles trpmNOFAKTUR.KeyDown
+    Private Sub trpjNOFAKTUR_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles trpjNOFAKTUR.KeyDown
         If e.KeyCode = Keys.Enter Then
             Try
                 Dim aktifTab As TabPage = TabControl1.SelectedTab
@@ -780,14 +823,15 @@ Public Class FReturPembelian
 
                 BukaKoneksi()
 
-                Dim nonota As String = Trim(CType(dict("trpmNOFAKTUR"), TextBox).Text)
+                Dim nonota As String = Trim(CType(dict("trpjNOFAKTUR"), TextBox).Text)
                 If nonota = "" Then Exit Sub
 
                 ' ====== JOIN zbeli + zsupplier ======
-                Dim sql As String = "SELECT zbeli.kodesup, zsupplier.namasup, zsupplier.alamat " &
-                                    "FROM zbeli " &
-                                    "JOIN zsupplier ON zbeli.kodesup = zsupplier.kodesup " &
-                                    "WHERE zbeli.nonota = ?"
+                Dim sql As String = "SELECT zjual.kodekust, zjual.kodesls, zkustomer.namakust, zkustomer.alamat, zsales.namasls " &
+                                    "FROM zjual " &
+                                    "JOIN zkustomer ON zjual.kodekust = zkustomer.kodekust " &
+                                    "JOIN zsales ON zjual.kodesls = zsales.kodesls " &
+                                    "WHERE zjual.nonota = ?"
 
                 Dim cmd As New Odbc.OdbcCommand(sql, Conn)
                 cmd.Parameters.AddWithValue("@nonota", nonota)
@@ -795,22 +839,30 @@ Public Class FReturPembelian
                 Dim rd As Odbc.OdbcDataReader = cmd.ExecuteReader()
 
                 If rd.Read() Then
-                    CType(dict("trpmKDSUP"), TextBox).Text = rd("kodesup").ToString()
-                    CType(dict("trpmNMSUP"), TextBox).Text = rd("namasup").ToString()
-                    CType(dict("trpmALAMAT"), TextBox).Text = rd("alamat").ToString()
+                    CType(dict("trpjKDKUST"), TextBox).Text = rd("kodekust").ToString()
+                    CType(dict("trpjNMKUST"), TextBox).Text = rd("namakust").ToString()
+                    CType(dict("trpjALAMAT"), TextBox).Text = rd("alamat").ToString()
+                    CType(dict("trpjKDSALES"), TextBox).Text = rd("kodesls").ToString()
+                    CType(dict("trpjNMSALES"), TextBox).Text = rd("namasls").ToString()
 
                     ' Nonaktifkan field setelah data terisi
-                    CType(dict("trpmKDSUP"), TextBox).Enabled = False
-                    CType(dict("trpmNMSUP"), TextBox).Enabled = False
+                    CType(dict("trpjKDKUST"), TextBox).Enabled = False
+                    CType(dict("trpjNMKUST"), TextBox).Enabled = False
+                    CType(dict("trpjKDSALES"), TextBox).Enabled = False
+                    CType(dict("trpjNMSALES"), TextBox).Enabled = False
                 Else
                     MessageBox.Show("Nomor faktur tidak ditemukan!", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     ' Kosongkan dan aktifkan kembali field supaya bisa diisi manual
-                    CType(dict("trpmKDSUP"), TextBox).Clear()
-                    CType(dict("trpmNMSUP"), TextBox).Clear()
-                    CType(dict("trpmALAMAT"), TextBox).Clear()
+                    CType(dict("trpjKDKUST"), TextBox).Clear()
+                    CType(dict("trpjNMKUST"), TextBox).Clear()
+                    CType(dict("trpjALAMAT"), TextBox).Clear()
+                    CType(dict("trpjKDSALES"), TextBox).Clear()
+                    CType(dict("trpjNMSALES"), TextBox).Clear()
 
-                    CType(dict("trpmKDSUP"), TextBox).Enabled = True
-                    CType(dict("trpmNMSUP"), TextBox).Enabled = True
+                    CType(dict("trpjKDKUST"), TextBox).Enabled = True
+                    CType(dict("trpjNMKUST"), TextBox).Enabled = True
+                    CType(dict("trpjKDSALES"), TextBox).Enabled = True
+                    CType(dict("trpjNMSALES"), TextBox).Enabled = True
                 End If
 
                 rd.Close()
@@ -821,6 +873,4 @@ Public Class FReturPembelian
             End Try
         End If
     End Sub
-
-
 End Class

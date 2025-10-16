@@ -31,6 +31,8 @@ Partial Class FReturPembelian
         Me.brpmTabAdd = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.Nota1 = New System.Windows.Forms.TabPage()
+        Me.trpmNONOTA = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
         Me.trpmTOTAL = New System.Windows.Forms.TextBox()
         Me.trpmSUBTOTAL = New System.Windows.Forms.TextBox()
         Me.trpmLAIN = New System.Windows.Forms.TextBox()
@@ -73,8 +75,6 @@ Partial Class FReturPembelian
         Me.btnUBAH = New System.Windows.Forms.Button()
         Me.btnSIMPAN = New System.Windows.Forms.Button()
         Me.btnTAMBAH = New System.Windows.Forms.Button()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.trpmNONOTA = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.Nota1.SuspendLayout()
         CType(Me.grRPEMBELIAN, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -198,6 +198,24 @@ Partial Class FReturPembelian
         Me.Nota1.Size = New System.Drawing.Size(1057, 526)
         Me.Nota1.TabIndex = 0
         Me.Nota1.Text = "Nota 1"
+        '
+        'trpmNONOTA
+        '
+        Me.trpmNONOTA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.trpmNONOTA.Location = New System.Drawing.Point(911, 5)
+        Me.trpmNONOTA.Name = "trpmNONOTA"
+        Me.trpmNONOTA.Size = New System.Drawing.Size(138, 20)
+        Me.trpmNONOTA.TabIndex = 46
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label16.Location = New System.Drawing.Point(846, 8)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(52, 15)
+        Me.Label16.TabIndex = 47
+        Me.Label16.Text = "No Nota"
         '
         'trpmTOTAL
         '
@@ -476,9 +494,9 @@ Partial Class FReturPembelian
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(9, 32)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(60, 15)
+        Me.Label2.Size = New System.Drawing.Size(67, 15)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "No Faktur"
+        Me.Label2.Text = "Atas Faktur"
         '
         'Label7
         '
@@ -571,24 +589,6 @@ Partial Class FReturPembelian
         Me.btnTAMBAH.TabIndex = 16
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(846, 8)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(52, 15)
-        Me.Label16.TabIndex = 47
-        Me.Label16.Text = "No Nota"
-        '
-        'trpmNONOTA
-        '
-        Me.trpmNONOTA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.trpmNONOTA.Location = New System.Drawing.Point(911, 5)
-        Me.trpmNONOTA.Name = "trpmNONOTA"
-        Me.trpmNONOTA.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNONOTA.TabIndex = 46
         '
         'FReturPembelian
         '

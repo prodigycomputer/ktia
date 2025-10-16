@@ -31,7 +31,7 @@ Module ModNota
 
                 Case "rpembelian"
                     sql =
-                        "SELECT zstok.namabrg, zrbeli.nonota, zrbeli.tgl, zrbeli.kodesup, zrbeli.nofaktur," &
+                        "SELECT zstok.namabrg, zrbeli.nonota, zrbeli.tgl, zrbeli.kodesup, zrbeli.nofaktur, " &
                         "zrbeli.tgltempo, zrbeli.disc1, zrbeli.disc2, zrbeli.disc3, zrbeli.hdisc1, zrbeli.hdisc2, zrbeli.hdisc3, " &
                         "zrbeli.ppn, zrbeli.hppn, zrbeli.lainnya, zrbeli.nilai, " &
                         "zrbelim.kodebrg, zrbelim.jlh1, zrbelim.jlh2, zrbelim.jlh3, " &
@@ -60,6 +60,23 @@ Module ModNota
                         "LEFT JOIN dbkita.zkustomer zkustomer ON zjual.kodekust=zkustomer.kodekust) " &
                         "LEFT JOIN dbkita.zsales zsales ON zjual.kodesls=zsales.kodesls " &
                         "WHERE zjual.nonota='" & nonota & "'"
+
+                Case "rpenjualan"
+                    ' --- query penjualan (isi sesuai tabel kamu)
+                    sql =
+                        "SELECT zstok.namabrg, zrjual.nonota, zrjual.tgl, zrjual.kodekust, zrjual.kodesls, zrjual.nofaktur, " &
+                        "zrjual.tgltempo, zrjual.disc1, zrjual.disc2, zrjual.disc3, zrjual.hdisc1, zrjual.hdisc2, zrjual.hdisc3, " &
+                        "zrjual.ppn, zrjual.hppn, zrjual.lainnya, zrjual.nilai, " &
+                        "zrjualm.kodebrg, zrjualm.jlh1, zrjualm.jlh2, zrjualm.jlh3, " &
+                        "zrjualm.disca, zrjualm.discb, zrjualm.discc, zrjualm.discrp, zrjualm.jumlah, " &
+                        "zstok.satuan1, zstok.satuan2, zstok.satuan3, zrjualm.harga, " &
+                        "zkustomer.namakust, zsales.namasls, zkustomer.alamat " &
+                        "FROM (((dbkita.zrjual zrjual " &
+                        "INNER JOIN dbkita.zrjualm zrjualm ON zrjual.nonota=zrjualm.nonota) " &
+                        "LEFT JOIN dbkita.zstok zstok ON zrjualm.kodebrg=zstok.kodebrg) " &
+                        "LEFT JOIN dbkita.zkustomer zkustomer ON zrjual.kodekust=zkustomer.kodekust) " &
+                        "LEFT JOIN dbkita.zsales zsales ON zrjual.kodesls=zsales.kodesls " &
+                        "WHERE zrjual.nonota='" & nonota & "'"
 
                 Case "mutasi"
                     ' --- query penjualan (isi sesuai tabel kamu)
@@ -141,6 +158,8 @@ Module ModNota
                     ds.Tables("NotaRPembelian").Merge(dt)
                 Case "penjualan"
                     ds.Tables("NotaPenjualan").Merge(dt)
+                Case "rpenjualan"
+                    ds.Tables("NotaRPenjualan").Merge(dt)
                 Case "mutasi"
                     ds.Tables("NotaMutasi").Merge(dt)
                 Case "penyesuaian"
@@ -157,6 +176,8 @@ Module ModNota
                     rpt.Load(Application.StartupPath & "\Report\NotaReturPembelian.rpt")
                 Case "penjualan"
                     rpt.Load(Application.StartupPath & "\Report\NotaPenjualan.rpt")
+                Case "rpenjualan"
+                    rpt.Load(Application.StartupPath & "\Report\NotaReturPenjualan.rpt")
                 Case "mutasi"
                     rpt.Load(Application.StartupPath & "\Report\NotaMutasi.rpt")
                 Case "penyesuaian"

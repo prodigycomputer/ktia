@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2025 at 12:01 PM
+-- Generation Time: Oct 16, 2025 at 11:34 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -421,6 +421,122 @@ CREATE TABLE `zrbeli` (
   `logtime` timestamp NOT NULL DEFAULT current_timestamp(),
   `lainnya` double(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zrbeli`
+--
+
+INSERT INTO `zrbeli` (`nonota`, `nofaktur`, `tgl`, `kodesup`, `kodegd`, `nilai`, `lunas`, `tgltempo`, `ppn`, `hppn`, `disc1`, `hdisc1`, `disc2`, `hdisc2`, `disc3`, `hdisc3`, `ket`, `operator`, `logtime`, `lainnya`) VALUES
+('NOTA3', 'FAKTUR 1', '2025-09-25', 'S002', '', 1678302, 0, '2025-09-25', 11.00, 163345.27, 10.00, 203697.80, 10.00, 183328.02, 10.00, 164995.22, 'TEST NOTA 3', '', '2025-10-15 03:14:46', 30000.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zrbelim`
+--
+
+CREATE TABLE `zrbelim` (
+  `nonota` char(30) DEFAULT NULL,
+  `nofaktur` char(30) DEFAULT NULL,
+  `kodebrg` char(20) DEFAULT NULL,
+  `kodegd` char(10) NOT NULL,
+  `jlh1` double DEFAULT 0,
+  `jlh2` double DEFAULT 0,
+  `jlh3` double DEFAULT 0,
+  `harga` double DEFAULT 9,
+  `disca` double DEFAULT 0,
+  `hdisca` double DEFAULT 0,
+  `discb` double DEFAULT 0,
+  `hdiscb` double DEFAULT 0,
+  `discc` double DEFAULT 0,
+  `hdiscc` double DEFAULT 0,
+  `discrp` double DEFAULT 0,
+  `jumlah` double DEFAULT 0,
+  `logtime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `operator` char(10) DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zrbelim`
+--
+
+INSERT INTO `zrbelim` (`nonota`, `nofaktur`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `harga`, `disca`, `hdisca`, `discb`, `hdiscb`, `discc`, `hdiscc`, `discrp`, `jumlah`, `logtime`, `operator`) VALUES
+('NOTA3', 'FAKTUR 1', 'ALB0001', 'G02', 1, 0, 0, 3000000, 10, 0, 10, 0, 10, 0, 1000000, 1187000, '2025-10-15 03:14:46', 'User'),
+('NOTA3', 'FAKTUR 1', 'BAT0002', 'G02', 1, 3, 0, 225000, 20, 0, 0, 0, 0, 0, 0, 234000, '2025-10-15 03:14:46', 'User'),
+('NOTA3', 'FAKTUR 1', 'CAR0035', 'G03', 1, 2, 3, 30000, 10, 0, 10, 0, 0, 0, 0, 35478, '2025-10-15 03:14:46', 'User'),
+('NOTA3', 'FAKTUR 1', 'KEY0004', 'G01', 1, 2, 3, 300000, 10, 0, 0, 0, 0, 0, 0, 580500, '2025-10-15 03:14:46', 'User');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zrjual`
+--
+
+CREATE TABLE `zrjual` (
+  `nonota` char(30) DEFAULT NULL,
+  `nofaktur` char(30) DEFAULT NULL,
+  `tgl` date DEFAULT NULL,
+  `kodekust` char(10) DEFAULT NULL,
+  `kodesls` char(10) DEFAULT NULL,
+  `kodegd` char(10) DEFAULT NULL,
+  `nilai` double DEFAULT 0,
+  `lunas` int(11) DEFAULT 0,
+  `tgltempo` date DEFAULT NULL,
+  `ppn` double(10,2) DEFAULT 0.00,
+  `hppn` double(10,2) DEFAULT 0.00,
+  `disc1` double(10,2) DEFAULT 0.00,
+  `hdisc1` double(10,2) DEFAULT 0.00,
+  `disc2` double(10,2) DEFAULT 0.00,
+  `hdisc2` double(10,2) DEFAULT 0.00,
+  `disc3` double(10,2) DEFAULT 0.00,
+  `hdisc3` double(10,2) DEFAULT 0.00,
+  `ket` varchar(1000) DEFAULT NULL,
+  `operator` char(10) DEFAULT '',
+  `logtime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `lainnya` double(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zrjual`
+--
+
+INSERT INTO `zrjual` (`nonota`, `nofaktur`, `tgl`, `kodekust`, `kodesls`, `kodegd`, `nilai`, `lunas`, `tgltempo`, `ppn`, `hppn`, `disc1`, `hdisc1`, `disc2`, `hdisc2`, `disc3`, `hdisc3`, `ket`, `operator`, `logtime`, `lainnya`) VALUES
+('FAKTUR 1', 'NOTA1', '2025-10-16', 'C01', 'S01', NULL, 2483013, 0, '2025-10-16', 11.00, 244082.32, 10.00, 304380.00, 10.00, 273942.00, 10.00, 246547.80, 'TEST', '', '2025-10-16 05:59:33', 20000.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zrjualm`
+--
+
+CREATE TABLE `zrjualm` (
+  `nonota` char(30) DEFAULT NULL,
+  `nofaktur` char(30) DEFAULT NULL,
+  `kodebrg` char(20) DEFAULT NULL,
+  `kodegd` char(10) DEFAULT NULL,
+  `jlh1` double DEFAULT 0,
+  `jlh2` double DEFAULT 0,
+  `jlh3` double DEFAULT 0,
+  `harga` double DEFAULT 9,
+  `disca` double DEFAULT 0,
+  `hdisca` double DEFAULT 0,
+  `discb` double DEFAULT 0,
+  `hdiscb` double DEFAULT 0,
+  `discc` double DEFAULT 0,
+  `hdiscc` double DEFAULT 0,
+  `discrp` double DEFAULT 0,
+  `jumlah` double DEFAULT 0,
+  `operator` char(10) DEFAULT '',
+  `logtime` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zrjualm`
+--
+
+INSERT INTO `zrjualm` (`nonota`, `nofaktur`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `harga`, `disca`, `hdisca`, `discb`, `hdiscb`, `discc`, `hdiscc`, `discrp`, `jumlah`, `operator`, `logtime`) VALUES
+('FAKTUR 1', 'FAKTUR 1', 'ALB0001', 'G03', 1, 0, 0, 3000000, 0, 0, 0, 0, 0, 0, 0, 3000000, 'User', '2025-10-16 05:59:33'),
+('FAKTUR 1', 'FAKTUR 1', 'CAR0035', 'G01', 1, 2, 3, 30000, 0, 0, 0, 0, 0, 0, 0, 43800, 'User', '2025-10-16 05:59:33');
 
 -- --------------------------------------------------------
 

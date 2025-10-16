@@ -26,6 +26,7 @@
         If TypeOf copy Is TextBox Then
             CType(copy, TextBox).Clear()
             CType(copy, TextBox).TextAlign = CType(original, TextBox).TextAlign
+            CType(copy, TextBox).CharacterCasing = CType(original, TextBox).CharacterCasing
         ElseIf TypeOf copy Is Label Then
             CType(copy, Label).TextAlign = CType(original, Label).TextAlign
         ElseIf TypeOf copy Is Button Then

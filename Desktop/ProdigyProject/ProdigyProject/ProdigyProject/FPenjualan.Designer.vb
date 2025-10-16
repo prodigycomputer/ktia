@@ -43,7 +43,6 @@ Partial Class FPenjualan
         Me.Label18 = New System.Windows.Forms.Label()
         Me.tpjKDSALES = New System.Windows.Forms.TextBox()
         Me.tpjNMSALES = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.tpjTOTAL = New System.Windows.Forms.TextBox()
         Me.tpjSUBTOTAL = New System.Windows.Forms.TextBox()
@@ -74,7 +73,6 @@ Partial Class FPenjualan
         Me.tpjTANGGAL = New System.Windows.Forms.DateTimePicker()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -237,7 +235,6 @@ Partial Class FPenjualan
         Me.Nota1.Controls.Add(Me.Label18)
         Me.Nota1.Controls.Add(Me.tpjKDSALES)
         Me.Nota1.Controls.Add(Me.tpjNMSALES)
-        Me.Nota1.Controls.Add(Me.Label16)
         Me.Nota1.Controls.Add(Me.Label17)
         Me.Nota1.Controls.Add(Me.tpjTOTAL)
         Me.Nota1.Controls.Add(Me.tpjSUBTOTAL)
@@ -268,7 +265,6 @@ Partial Class FPenjualan
         Me.Nota1.Controls.Add(Me.tpjTANGGAL)
         Me.Nota1.Controls.Add(Me.Label5)
         Me.Nota1.Controls.Add(Me.Label4)
-        Me.Nota1.Controls.Add(Me.Label6)
         Me.Nota1.Controls.Add(Me.Label3)
         Me.Nota1.Controls.Add(Me.Label2)
         Me.Nota1.Controls.Add(Me.Label7)
@@ -301,38 +297,28 @@ Partial Class FPenjualan
         'tpjKDSALES
         '
         Me.tpjKDSALES.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tpjKDSALES.Location = New System.Drawing.Point(779, 5)
+        Me.tpjKDSALES.Location = New System.Drawing.Point(380, 5)
         Me.tpjKDSALES.Name = "tpjKDSALES"
-        Me.tpjKDSALES.Size = New System.Drawing.Size(138, 20)
+        Me.tpjKDSALES.Size = New System.Drawing.Size(100, 20)
         Me.tpjKDSALES.TabIndex = 49
         '
         'tpjNMSALES
         '
         Me.tpjNMSALES.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tpjNMSALES.Location = New System.Drawing.Point(779, 29)
+        Me.tpjNMSALES.Location = New System.Drawing.Point(486, 5)
         Me.tpjNMSALES.Name = "tpjNMSALES"
         Me.tpjNMSALES.Size = New System.Drawing.Size(270, 20)
         Me.tpjNMSALES.TabIndex = 47
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(677, 32)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(75, 15)
-        Me.Label16.TabIndex = 48
-        Me.Label16.Text = "Nama Sales"
         '
         'Label17
         '
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label17.Location = New System.Drawing.Point(677, 8)
+        Me.Label17.Location = New System.Drawing.Point(279, 8)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(70, 15)
+        Me.Label17.Size = New System.Drawing.Size(38, 15)
         Me.Label17.TabIndex = 46
-        Me.Label17.Text = "Kode Sales"
+        Me.Label17.Text = "Sales"
         '
         'tpjTOTAL
         '
@@ -433,9 +419,9 @@ Partial Class FPenjualan
         'tpjKDKUST
         '
         Me.tpjKDKUST.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tpjKDKUST.Location = New System.Drawing.Point(380, 5)
+        Me.tpjKDKUST.Location = New System.Drawing.Point(380, 29)
         Me.tpjKDKUST.Name = "tpjKDKUST"
-        Me.tpjKDKUST.Size = New System.Drawing.Size(138, 20)
+        Me.tpjKDKUST.Size = New System.Drawing.Size(100, 20)
         Me.tpjKDKUST.TabIndex = 17
         '
         'tpjKET
@@ -449,7 +435,7 @@ Partial Class FPenjualan
         'tpjNMKUST
         '
         Me.tpjNMKUST.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tpjNMKUST.Location = New System.Drawing.Point(380, 29)
+        Me.tpjNMKUST.Location = New System.Drawing.Point(486, 29)
         Me.tpjNMKUST.Name = "tpjNMKUST"
         Me.tpjNMKUST.Size = New System.Drawing.Size(270, 20)
         Me.tpjNMKUST.TabIndex = 12
@@ -585,16 +571,6 @@ Partial Class FPenjualan
         Me.Label4.TabIndex = 4
         Me.Label4.Text = "Keterangan"
         '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(278, 32)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(97, 15)
-        Me.Label6.TabIndex = 13
-        Me.Label6.Text = "Nama Kustomer"
-        '
         'Label3
         '
         Me.Label3.AutoSize = True
@@ -619,11 +595,11 @@ Partial Class FPenjualan
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(278, 8)
+        Me.Label7.Location = New System.Drawing.Point(278, 32)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(92, 15)
+        Me.Label7.Size = New System.Drawing.Size(60, 15)
         Me.Label7.TabIndex = 11
-        Me.Label7.Text = "Kode Kustomer"
+        Me.Label7.Text = "Kustomer"
         '
         'Label1
         '
@@ -726,14 +702,12 @@ Partial Class FPenjualan
     Friend WithEvents tpjTANGGAL As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents tpjKDSALES As System.Windows.Forms.TextBox
     Friend WithEvents tpjNMSALES As System.Windows.Forms.TextBox
-    Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents tpjKDHARGA As System.Windows.Forms.TextBox
     Friend WithEvents Label18 As System.Windows.Forms.Label

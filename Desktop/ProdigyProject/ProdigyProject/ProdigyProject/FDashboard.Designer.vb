@@ -29,6 +29,7 @@ Partial Class FDashboard
         Me.smPembelian = New System.Windows.Forms.ToolStripMenuItem()
         Me.smReturPembelian = New System.Windows.Forms.ToolStripMenuItem()
         Me.smPenjualan = New System.Windows.Forms.ToolStripMenuItem()
+        Me.smReturPenjualan = New System.Windows.Forms.ToolStripMenuItem()
         Me.smMutasi = New System.Windows.Forms.ToolStripMenuItem()
         Me.smPenyesuaian = New System.Windows.Forms.ToolStripMenuItem()
         Me.mLaporan = New System.Windows.Forms.ToolStripMenuItem()
@@ -63,7 +64,7 @@ Partial Class FDashboard
         'mTransaksi
         '
         Me.mTransaksi.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.mTransaksi.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.smPembelian, Me.smReturPembelian, Me.smPenjualan, Me.smMutasi, Me.smPenyesuaian})
+        Me.mTransaksi.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.smPembelian, Me.smReturPembelian, Me.smPenjualan, Me.smReturPenjualan, Me.smMutasi, Me.smPenyesuaian})
         Me.mTransaksi.Name = "mTransaksi"
         Me.mTransaksi.Size = New System.Drawing.Size(67, 20)
         Me.mTransaksi.Text = "Transaksi"
@@ -85,6 +86,12 @@ Partial Class FDashboard
         Me.smPenjualan.Name = "smPenjualan"
         Me.smPenjualan.Size = New System.Drawing.Size(161, 22)
         Me.smPenjualan.Text = "Penjualan"
+        '
+        'smReturPenjualan
+        '
+        Me.smReturPenjualan.Name = "smReturPenjualan"
+        Me.smReturPenjualan.Size = New System.Drawing.Size(161, 22)
+        Me.smReturPenjualan.Text = "Retur Penjualan"
         '
         'smMutasi
         '
@@ -140,5 +147,6 @@ Partial Class FDashboard
     Friend WithEvents mLaporan As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents smLaporan As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents smReturPembelian As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents smReturPenjualan As System.Windows.Forms.ToolStripMenuItem
 
 End Class

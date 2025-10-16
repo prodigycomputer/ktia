@@ -145,6 +145,12 @@
     <Compile Include="FReturPembelian.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FReturPenjualan.Designer.vb">
+      <DependentUpon>FReturPenjualan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FReturPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ItDtKustomer.Designer.vb">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </Compile>
@@ -200,6 +206,12 @@
     <Compile Include="ItDtRPembelian.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ItDtRPenjualan.Designer.vb">
+      <DependentUpon>ItDtRPenjualan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtRPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ItDtSales.Designer.vb">
       <DependentUpon>ItDtSales.vb</DependentUpon>
     </Compile>
@@ -247,6 +259,7 @@
     <Compile Include="MPenSimpan.vb" />
     <Compile Include="MPenySimpan.vb" />
     <Compile Include="MRPemSimpan.vb" />
+    <Compile Include="MRPenSimpan.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -300,6 +313,12 @@
       <DependentUpon>NotaReturPembelian.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="NotaReturPenjualan.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaReturPenjualan.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FCetak.resx">
@@ -316,6 +335,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FReturPembelian.resx">
       <DependentUpon>FReturPembelian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FReturPenjualan.resx">
+      <DependentUpon>FReturPenjualan.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
@@ -343,6 +365,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtRPembelian.resx">
       <DependentUpon>ItDtRPembelian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtRPenjualan.resx">
+      <DependentUpon>ItDtRPenjualan.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtSales.resx">
       <DependentUpon>ItDtSales.vb</DependentUpon>
@@ -387,6 +412,10 @@
     <EmbeddedResource Include="NotaReturPembelian.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>NotaReturPembelian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaReturPenjualan.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaReturPenjualan.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
