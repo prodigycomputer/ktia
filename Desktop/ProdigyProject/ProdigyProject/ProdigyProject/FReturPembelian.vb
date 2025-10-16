@@ -216,7 +216,7 @@ Public Class FReturPembelian
             BukaKoneksi()
 
             ' ================== HEADER ==================
-            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.ket, y.nofaktur, z.kodesup, s.namasup, s.alamat, z.nilai, z.lunas, z.disc1, z.hdisc1, z.disc2, z.hdisc2, z.disc3, z.hdisc3, z.ppn, z.hppn, z.lainnya FROM zbeli z LEFT JOIN zrbeli y ON z.nonota = y.nonota LEFT JOIN zsupplier s ON z.kodesup = s.kodesup WHERE z.nonota = ?"
+            Dim sqlHead As String = "SELECT z.tgl, z.tgltempo, z.ket, z.nofaktur, z.kodesup, s.namasup, s.alamat, z.nilai, z.lunas, z.disc1, z.hdisc1, z.disc2, z.hdisc2, z.disc3, z.hdisc3, z.ppn, z.hppn, z.lainnya FROM zrbeli z LEFT JOIN zsupplier s ON z.kodesup = s.kodesup WHERE z.nonota = ?"
             Using cmd As New OdbcCommand(sqlHead, Conn)
                 cmd.Parameters.AddWithValue("@nonota", nonota)
                 Rd = cmd.ExecuteReader()
@@ -479,6 +479,9 @@ Public Class FReturPembelian
             RegisterTabControls(TabControl1.SelectedTab, nomor)
         End If
 
+        Dim dict = TabControls(nomor)
+        ClearForm(dict)
+
         ' set status
         SetTabStatus(nomor, "tambah")
 
@@ -497,10 +500,17 @@ Public Class FReturPembelian
 
         ' ambil kontrol tpmNONOTA dari tab aktif
         Dim trpmNONOTA As TextBox = TryCast(TabControls(nomor)("trpmNONOTA"), TextBox)
+        Dim trpmNOFAKTUR As TextBox = TryCast(TabControls(nomor)("trpmNOFAKTUR"), TextBox)
 
         ' cek apakah kosong
         If trpmNONOTA Is Nothing OrElse String.IsNullOrWhiteSpace(trpmNONOTA.Text) Then
             MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        ' cek apakah nomor faktur kosong
+        If trpmNOFAKTUR Is Nothing OrElse String.IsNullOrWhiteSpace(trpmNOFAKTUR.Text) Then
+            MessageBox.Show("Nomor faktur belum diisi, silakan tambahkan data terlebih dahulu.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 

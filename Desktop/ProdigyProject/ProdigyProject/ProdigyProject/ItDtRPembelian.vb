@@ -8,19 +8,19 @@ Public Class ItDtRPembelian
                         Optional ByVal namasup As String = "",
                         Optional ByVal status As String = "")
 
-        Dim sql As String = "SELECT zbeli.tgl, zbeli.nonota, zsupplier.namasup, zbeli.nilai, zbeli.lunas " &
-                            "FROM zbeli " &
-                            "LEFT JOIN zsupplier ON zbeli.kodesup = zsupplier.kodesup"
+        Dim sql As String = "SELECT zrbeli.tgl, zrbeli.nonota, zsupplier.namasup, zrbeli.nilai, zrbeli.lunas " &
+                            "FROM zrbeli " &
+                            "LEFT JOIN zsupplier ON zrbeli.kodesup = zsupplier.kodesup"
 
         Dim whereList As New List(Of String)
 
         ' --- filter berdasarkan nonota
         If nonota <> "" Then
-            whereList.Add("zbeli.nonota LIKE ?")
+            whereList.Add("zrbeli.nonota LIKE ?")
         Else
             ' --- filter tanggal
             If tgl1 <> "" AndAlso tgl2 <> "" Then
-                whereList.Add("zbeli.tgl BETWEEN ? AND ?")
+                whereList.Add("zrbeli.tgl BETWEEN ? AND ?")
             End If
 
             ' --- filter supplier
@@ -30,9 +30,9 @@ Public Class ItDtRPembelian
 
             ' --- filter status lunas
             If status = "lunas" Then
-                whereList.Add("zbeli.lunas = 1")
+                whereList.Add("zrbeli.lunas = 1")
             ElseIf status = "belum" Then
-                whereList.Add("zbeli.lunas = 0")
+                whereList.Add("zrbeli.lunas = 0")
             End If
         End If
 
@@ -40,7 +40,7 @@ Public Class ItDtRPembelian
             sql &= " WHERE " & String.Join(" AND ", whereList)
         End If
 
-        sql &= " ORDER BY zbeli.tgl DESC, zbeli.nonota DESC"
+        sql &= " ORDER BY zrbeli.tgl DESC, zrbeli.nonota DESC"
 
         dgitmRPEMBELIAN.Rows.Clear()
 
