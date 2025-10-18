@@ -121,6 +121,12 @@
     <Compile Include="FCetak.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FDtAkses.Designer.vb">
+      <DependentUpon>FDtAkses.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FDtAkses.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FMutasi.Designer.vb">
       <DependentUpon>FMutasi.vb</DependentUpon>
     </Compile>
@@ -149,6 +155,12 @@
       <DependentUpon>FReturPenjualan.vb</DependentUpon>
     </Compile>
     <Compile Include="FReturPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FSetAkun.Designer.vb">
+      <DependentUpon>FSetAkun.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FSetAkun.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtKustomer.Designer.vb">
@@ -249,6 +261,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Koneksi.vb" />
+    <Compile Include="MAkunSimpan.vb" />
     <Compile Include="MMutSimpan.vb" />
     <Compile Include="ModButton.vb" />
     <Compile Include="ModGridHelper.vb" />
@@ -324,6 +337,9 @@
     <EmbeddedResource Include="FCetak.resx">
       <DependentUpon>FCetak.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FDtAkses.resx">
+      <DependentUpon>FDtAkses.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FMutasi.resx">
       <DependentUpon>FMutasi.vb</DependentUpon>
     </EmbeddedResource>
@@ -338,6 +354,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FReturPenjualan.resx">
       <DependentUpon>FReturPenjualan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FSetAkun.resx">
+      <DependentUpon>FSetAkun.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>

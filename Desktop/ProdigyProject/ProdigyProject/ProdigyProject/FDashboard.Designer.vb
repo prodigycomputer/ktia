@@ -34,6 +34,7 @@ Partial Class FDashboard
         Me.smPenyesuaian = New System.Windows.Forms.ToolStripMenuItem()
         Me.mLaporan = New System.Windows.Forms.ToolStripMenuItem()
         Me.smLaporan = New System.Windows.Forms.ToolStripMenuItem()
+        Me.smAkun = New System.Windows.Forms.ToolStripMenuItem()
         Me.hMenu.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -49,7 +50,7 @@ Partial Class FDashboard
         'mFile
         '
         Me.mFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.mFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.smExit})
+        Me.mFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.smAkun, Me.smExit})
         Me.mFile.Name = "mFile"
         Me.mFile.Size = New System.Drawing.Size(37, 20)
         Me.mFile.Text = "File"
@@ -58,7 +59,7 @@ Partial Class FDashboard
         '
         Me.smExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.smExit.Name = "smExit"
-        Me.smExit.Size = New System.Drawing.Size(92, 22)
+        Me.smExit.Size = New System.Drawing.Size(152, 22)
         Me.smExit.Text = "Exit"
         '
         'mTransaksi
@@ -119,6 +120,12 @@ Partial Class FDashboard
         Me.smLaporan.Size = New System.Drawing.Size(117, 22)
         Me.smLaporan.Text = "Laporan"
         '
+        'smAkun
+        '
+        Me.smAkun.Name = "smAkun"
+        Me.smAkun.Size = New System.Drawing.Size(152, 22)
+        Me.smAkun.Text = "Akun"
+        '
         'FDashboard
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -148,5 +155,6 @@ Partial Class FDashboard
     Friend WithEvents smLaporan As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents smReturPembelian As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents smReturPenjualan As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents smAkun As System.Windows.Forms.ToolStripMenuItem
 
 End Class

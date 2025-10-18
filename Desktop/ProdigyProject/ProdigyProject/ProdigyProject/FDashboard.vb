@@ -80,4 +80,8 @@
     Private Sub smReturPenjualan_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smReturPenjualan.Click
         BukaChild(Of FReturPenjualan)()
     End Sub
+
+    Private Sub smAkun_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smAkun.Click
+        BukaChild(Of FSetAkun)()
+    End Sub
 End Class

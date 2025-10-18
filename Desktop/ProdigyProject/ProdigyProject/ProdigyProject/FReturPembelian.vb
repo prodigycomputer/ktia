@@ -426,6 +426,14 @@ Public Class FReturPembelian
         TabControl1.TabPages.Add(newTab)
         TabPagesList.Add(newTab)
         RegisterTabControls(newTab, nomor)
+
+        ' Ambil grid dari tab baru dan panggil SetupGridPembelian
+        Dim dict = TabControls(nomor)
+        If dict.ContainsKey("GRID") Then
+            Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
+            SetupGridPembelian(grid)
+        End If
+
         SetTabStatus(nomor, String.Empty)
         TabControl1.SelectedTab = newTab
         TabLoadState(nomor) = True

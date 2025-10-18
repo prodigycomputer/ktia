@@ -311,6 +311,13 @@ Public Class FMutasi
         TabControl1.TabPages.Add(newTab)
         TabPagesList.Add(newTab)
         RegisterTabControls(newTab, nomor)
+
+        Dim dict = TabControls(nomor)
+        If dict.ContainsKey("GRID") Then
+            Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
+            SetupGridMutasi(grid)
+        End If
+
         SetTabStatus(nomor, String.Empty)
         TabControl1.SelectedTab = newTab
         TabLoadState(nomor) = True

@@ -163,6 +163,7 @@ Module MRPemSimpan
 
             ' bersihkan form/tab setelah hapus
             CType(dict("trpmNONOTA"), TextBox).Clear()
+            CType(dict("trpmNOFAKTUR"), TextBox).Clear()
             CType(dict("trpmNMSUP"), TextBox).Clear()
             CType(dict("trpmKDSUP"), TextBox).Clear()
             CType(dict("trpmALAMAT"), TextBox).Clear()

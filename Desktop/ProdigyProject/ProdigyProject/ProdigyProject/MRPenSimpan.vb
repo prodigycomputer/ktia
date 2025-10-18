@@ -107,7 +107,7 @@ Module MRPenSimpan
 
                 Using CmdDet As New OdbcCommand(sqldet, Conn, Trans)
                     CmdDet.Parameters.AddWithValue("@nonota", nonota)
-                    CmdDet.Parameters.AddWithValue("@nofaktur", nonota)
+                    CmdDet.Parameters.AddWithValue("@nofaktur", nofaktur)
                     CmdDet.Parameters.AddWithValue("@kodebrg", kodebrg)
                     CmdDet.Parameters.AddWithValue("@kodegd", kodegd)
                     CmdDet.Parameters.AddWithValue("@jlh1", jlh1)
@@ -167,6 +167,7 @@ Module MRPenSimpan
 
             ' bersihkan form/tab setelah hapus
             CType(dict("trpjNONOTA"), TextBox).Clear()
+            CType(dict("trpjNOFAKTUR"), TextBox).Clear()
             CType(dict("trpjNMKUST"), TextBox).Clear()
             CType(dict("trpjKDKUST"), TextBox).Clear()
             CType(dict("trpjNMSALES"), TextBox).Clear()

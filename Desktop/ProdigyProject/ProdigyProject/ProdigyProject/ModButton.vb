@@ -1,35 +1,34 @@
 ﻿Module ModButton
 
     Public Sub SetButtonState(ByVal frm As Form, ByVal tambahAktif As Boolean)
-        Dim buttons As New Dictionary(Of String, Button) From {
-            {"TAMBAH", TryCast(frm.Controls("btnTAMBAH"), Button)},
-            {"UBAH", TryCast(frm.Controls("btnUBAH"), Button)},
-            {"HAPUS", TryCast(frm.Controls("btnHAPUS"), Button)},
-            {"SIMPAN", TryCast(frm.Controls("btnSIMPAN"), Button)},
-            {"BATAL", TryCast(frm.Controls("btnBATAL"), Button)},
-            {"CARI", TryCast(frm.Controls("btnCARI"), Button)},
-            {"PRINT", TryCast(frm.Controls("btnPRINT"), Button)}
-        }
+        ' Daftar nama tombol yang mungkin ada di form
+        Dim buttonNames As String() = {"btnTAMBAH", "btnUBAH", "btnHAPUS",
+                                       "btnSIMPAN", "btnBATAL", "btnCARI", "btnAKSES"}
 
-        ' cek semua tombol ada
-        If buttons.Values.Any(Function(b) b Is Nothing) Then
-            MessageBox.Show("Ada tombol yang tidak ditemukan di form " & frm.Name,
-                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
-        End If
+        ' Simpan tombol yang ditemukan saja
+        Dim buttons As New Dictionary(Of String, Button)
+        For Each name In buttonNames
+            Dim btn As Button = TryCast(frm.Controls.Find(name, True).FirstOrDefault(), Button)
+            If btn IsNot Nothing Then
+                buttons.Add(name.Replace("btn", "").ToUpper(), btn)
+            End If
+        Next
 
-        ' set kondisi btnTAMBAH
-        buttons("TAMBAH").Enabled = tambahAktif
-        buttons("UBAH").Enabled = tambahAktif
-        buttons("HAPUS").Enabled = tambahAktif
-        buttons("CARI").Enabled = tambahAktif
-        buttons("PRINT").Enabled = tambahAktif
+        ' Tidak perlu error kalau ada yang tidak ditemukan — fungsi tetap jalan
 
-        ' tombol lain kebalikannya
-        For Each kvp In buttons
-            If kvp.Key <> "TAMBAH" AndAlso kvp.Key <> "UBAH" AndAlso kvp.Key <> "HAPUS" AndAlso kvp.Key <> "CARI" AndAlso kvp.Key <> "PRINT" Then
-                kvp.Value.Enabled = Not tambahAktif
+        ' Atur tombol utama (mode normal)
+        For Each key In {"TAMBAH", "UBAH", "HAPUS", "CARI"}
+            If buttons.ContainsKey(key) Then
+                buttons(key).Enabled = tambahAktif
+            End If
+        Next
+
+        ' Atur tombol input (mode tambah/ubah)
+        For Each key In {"SIMPAN", "BATAL", "AKSES"}
+            If buttons.ContainsKey(key) Then
+                buttons(key).Enabled = Not tambahAktif
             End If
         Next
     End Sub
+
 End Module
