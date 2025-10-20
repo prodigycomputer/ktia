@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FDashboard
+Partial Class ItDtUser
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,32 +22,31 @@ Partial Class FDashboard
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.hMenu = New System.Windows.Forms.MenuStrip()
+        Me.dgitmUSER = New System.Windows.Forms.DataGridView()
+        CType(Me.dgitmUSER, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'hMenu
+        'dgitmUSER
         '
-        Me.hMenu.Location = New System.Drawing.Point(0, 0)
-        Me.hMenu.Name = "hMenu"
-        Me.hMenu.Size = New System.Drawing.Size(1066, 24)
-        Me.hMenu.TabIndex = 0
-        Me.hMenu.Text = "Menu"
+        Me.dgitmUSER.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgitmUSER.Location = New System.Drawing.Point(5, 5)
+        Me.dgitmUSER.Name = "dgitmUSER"
+        Me.dgitmUSER.Size = New System.Drawing.Size(350, 214)
+        Me.dgitmUSER.TabIndex = 0
         '
-        'FDashboard
+        'ItDtUser
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1066, 497)
-        Me.Controls.Add(Me.hMenu)
+        Me.ClientSize = New System.Drawing.Size(361, 223)
+        Me.Controls.Add(Me.dgitmUSER)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.IsMdiContainer = True
-        Me.Name = "FDashboard"
-        Me.Text = "Prodigy"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
+        Me.Name = "ItDtUser"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "ItDtUser"
+        CType(Me.dgitmUSER, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
-    Friend WithEvents hMenu As System.Windows.Forms.MenuStrip
-
+    Friend WithEvents dgitmUSER As System.Windows.Forms.DataGridView
 End Class

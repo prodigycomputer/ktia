@@ -1,4 +1,6 @@
-﻿Public Class FDashboard
+﻿Imports System.Data.Odbc
+
+Public Class FDashboard
 
     Private Sub FDashboard_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
@@ -20,6 +22,141 @@
         End While
 
         ' Buat TabControl
+        ' === Koneksi database ===
+        BukaKoneksi()
+
+        ' === Buat menu otomatis dari database ===
+        BuatMenuDariDatabase()
+    End Sub
+
+    Private Function BersihkanNama(ByVal rawName As String) As String
+        If rawName.StartsWith("sm") Then
+            rawName = rawName.Substring(2)
+        ElseIf rawName.StartsWith("m") Then
+            rawName = rawName.Substring(1)
+        End If
+
+        ' Ubah huruf pertama jadi kapital, sisanya huruf kecil
+        If rawName.Length > 0 Then
+            rawName = Char.ToUpper(rawName(0)) & rawName.Substring(1)
+        End If
+
+        Return rawName
+    End Function
+
+    Private Sub BuatMenuDariDatabase()
+        Try
+            hMenu.Items.Clear()
+
+            ' Ambil daftar menu dari database
+            Dim sql As String = "SELECT idmenu, mainmenu, submenu, urutan FROM zmenu ORDER BY mainmenu, urutan"
+            Cmd = New OdbcCommand(sql, Conn)
+            Rd = Cmd.ExecuteReader()
+
+            Dim menuDict As New Dictionary(Of String, List(Of Dictionary(Of String, String)))()
+
+            While Rd.Read()
+                Dim main As String = Rd("mainmenu").ToString()
+                Dim subm As String = Rd("submenu").ToString()
+                Dim idMenu As String = Rd("idmenu").ToString()
+
+                ' Cek akses berdasarkan user login
+                Dim akses = GetAkses(KodeUserLogin, idMenu)
+
+                ' Kalau user punya hak (minimal satu tidak 0), baru tampilkan submenu
+                If akses("tambah") Or akses("ubah") Or akses("hapus") Then
+                    If Not menuDict.ContainsKey(main) Then
+                        menuDict(main) = New List(Of Dictionary(Of String, String))()
+                    End If
+                    menuDict(main).Add(New Dictionary(Of String, String) From {
+                        {"submenu", subm},
+                        {"idmenu", idMenu}
+                    })
+                End If
+            End While
+            Rd.Close()
+
+            ' === Buat menu & submenu dinamis ===
+            For Each mainMenuName In menuDict.Keys
+                If menuDict(mainMenuName).Count = 0 Then Continue For ' skip kalau semua submenu kosong
+
+                Dim mainItem As New ToolStripMenuItem(BersihkanNama(mainMenuName))
+                hMenu.Items.Add(mainItem)
+
+                For Each subData In menuDict(mainMenuName)
+                    Dim submName = subData("submenu")
+                    Dim idMenu = subData("idmenu")
+
+                    Dim subItem As New ToolStripMenuItem(BersihkanNama(submName))
+                    subItem.Tag = idMenu ' penting: Tag = idmenu agar bisa cek akses per form
+                    AddHandler subItem.Click, AddressOf SubMenu_Click
+                    mainItem.DropDownItems.Add(subItem)
+                Next
+            Next
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal membuat menu: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub SubMenu_Click(ByVal sender As Object, ByVal e As EventArgs)
+        Dim item As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
+        Dim idMenu As String = item.Tag.ToString()
+
+        Select Case idMenu
+            Case "ME0011"
+                Dim f As New FSetAkun()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME0012"
+                Me.DialogResult = DialogResult.Cancel
+                Me.Close()
+
+            Case "ME0013"
+                Dim f As New FPembelian()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME0014"
+                Dim f As New FReturPembelian()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME0015"
+                Dim f As New FPenjualan()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME0016"
+                Dim f As New FReturPenjualan()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME0017"
+                Dim f As New FMutasi()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME0018"
+                Dim f As New FPenyesuaian()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+                ' Tambahkan case sesuai idmenu kamu di zmenu
+                ' Case "ME003" ...
+                ' Case "ME004" ...
+
+            Case Else
+                MessageBox.Show("Menu belum terhubung dengan form, ID: " & idMenu)
+        End Select
     End Sub
 
     Private Function BukaChild(Of T As {Form, New})() As T
@@ -46,42 +183,5 @@
         If tanya = DialogResult.No Then
             e.Cancel = True ' batal menutup form
         End If
-    End Sub
-
-    Private Sub smExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smExit.Click
-        Me.DialogResult = DialogResult.Cancel
-        Me.Close()
-    End Sub
-
-    Private Sub smPembelian_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smPembelian.Click
-        BukaChild(Of FPembelian)()
-    End Sub
-
-    Private Sub smPenjualan_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smPenjualan.Click
-        BukaChild(Of FPenjualan)()
-    End Sub
-
-    Private Sub smMutasi_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smMutasi.Click
-        BukaChild(Of FMutasi)()
-    End Sub
-
-    Private Sub smPenyesuaian_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smPenyesuaian.Click
-        BukaChild(Of FPenyesuaian)()
-    End Sub
-
-    Private Sub smLaporan_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smLaporan.Click
-
-    End Sub
-
-    Private Sub smReturPembelian_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smReturPembelian.Click
-        BukaChild(Of FReturPembelian)()
-    End Sub
-
-    Private Sub smReturPenjualan_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smReturPenjualan.Click
-        BukaChild(Of FReturPenjualan)()
-    End Sub
-
-    Private Sub smAkun_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles smAkun.Click
-        BukaChild(Of FSetAkun)()
     End Sub
 End Class

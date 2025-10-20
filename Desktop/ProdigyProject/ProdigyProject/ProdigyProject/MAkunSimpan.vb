@@ -44,6 +44,11 @@ Module MAkunSimpan
                 cmd.Parameters.AddWithValue("@kodeuser", kdUser)
                 cmd.ExecuteNonQuery()
             End Using
+
+            Using cmd As New OdbcCommand("DELETE FROM zakses WHERE kodeuser", Conn)
+                cmd.Parameters.AddWithValue("@kodeuser", kdUser)
+                cmd.ExecuteNonQuery()
+            End Using
         Catch ex As Exception
             MsgBox("Gagal menghapus data akun: " & ex.Message, vbCritical)
         End Try

@@ -562,4 +562,26 @@
 
         End With
     End Sub
+
+    ' === Setup untuk Grid Penyesuaian (zmutasim) ===
+    Public Sub SetupGridDUser(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("kodeuser", "Kode User")
+            .Columns("kodeuser").Width = 140
+
+            .Columns.Add("username", "Username")
+            .Columns("username").Width = 207
+
+        End With
+    End Sub
 End Module

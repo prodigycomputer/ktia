@@ -70,6 +70,11 @@ Public Class FPenjualan
             TabPagesList.Add(firstTab)
             RegisterTabControls(firstTab, 1)
         End If
+        ' Ambil idmenu dari form.Tag yang dikirim dari dashboard
+        Dim idMenu As String = Me.Tag.ToString()
+
+        ' Terapkan hak akses ke tombol
+        TerapkanAksesKeButton(Me, idMenu)
         DisabledLoad()
     End Sub
 

@@ -22,21 +22,21 @@ Partial Class FDtAkses
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.dgStAKUN = New System.Windows.Forms.DataGridView()
         Me.btnPTUTUP = New System.Windows.Forms.Button()
         Me.btnPSIMPAN = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lblKDUSER = New System.Windows.Forms.Label()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgStAKUN, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'DataGridView1
+        'dgStAKUN
         '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(4, 42)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(479, 424)
-        Me.DataGridView1.TabIndex = 0
+        Me.dgStAKUN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgStAKUN.Location = New System.Drawing.Point(4, 42)
+        Me.dgStAKUN.Name = "dgStAKUN"
+        Me.dgStAKUN.Size = New System.Drawing.Size(479, 424)
+        Me.dgStAKUN.TabIndex = 0
         '
         'btnPTUTUP
         '
@@ -53,7 +53,7 @@ Partial Class FDtAkses
         Me.btnPSIMPAN.Name = "btnPSIMPAN"
         Me.btnPSIMPAN.Size = New System.Drawing.Size(55, 30)
         Me.btnPSIMPAN.TabIndex = 151
-        Me.btnPSIMPAN.Text = "Tambah"
+        Me.btnPSIMPAN.Text = "Simpan"
         Me.btnPSIMPAN.UseVisualStyleBackColor = True
         '
         'Label2
@@ -85,16 +85,17 @@ Partial Class FDtAkses
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.btnPTUTUP)
         Me.Controls.Add(Me.btnPSIMPAN)
-        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.dgStAKUN)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FDtAkses"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FDtAkses"
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgStAKUN, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+    Friend WithEvents dgStAKUN As System.Windows.Forms.DataGridView
     Friend WithEvents btnPTUTUP As System.Windows.Forms.Button
     Friend WithEvents btnPSIMPAN As System.Windows.Forms.Button
     Friend WithEvents Label2 As System.Windows.Forms.Label

@@ -2,11 +2,40 @@
 
 Public Class FSetAkun
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
+    Private aksesUser As Dictionary(Of String, Boolean)
 
     Private Sub FSetAkun_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+    End Sub
+
+    Public Sub LoadNota(ByVal kodeuser As String)
+        Try
+            BukaKoneksi()
+
+            Dim sql As String = "SELECT kodeuser, username, kunci FROM zusers WHERE kodeuser = ?"
+            Cmd = New OdbcCommand(sql, Conn)
+            Cmd.Parameters.AddWithValue("", kodeuser)
+
+            Rd = Cmd.ExecuteReader()
+
+            If Rd.Read() Then
+                ' === Isi field ke textbox di form ===
+                txtKDUSER.Text = Rd("kodeuser").ToString()
+                txtNMUSER.Text = Rd("username").ToString()
+                txtPASSUSER.Text = Rd("kunci").ToString()
+                txtKPASSUSER.Text = Rd("kunci").ToString()
+
+                ' Kalau ada field lain (misalnya level, aktif, dsb) bisa ditambah di sini
+                ' txtLEVEL.Text = Rd("level").ToString()
+            Else
+                MessageBox.Show("Data user tidak ditemukan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal memuat data user: " & ex.Message)
+        End Try
     End Sub
 
     Private Sub KosongkanInput()
@@ -86,16 +115,47 @@ Public Class FSetAkun
 
     Private Sub btnSIMPAN_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSIMPAN.Click
         Try
-            MAkunSimpan.SimpanAkun(txtKDUSER.Text, txtNMUSER.Text, txtPASSUSER.Text, statusMode)
+            ' === 1. Validasi wajib diisi ===
+            If txtKDUSER.Text.Trim() = "" Or txtNMUSER.Text.Trim() = "" Or txtPASSUSER.Text.Trim() = "" Then
+                MessageBox.Show("Semua field wajib diisi!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
-            MessageBox.Show("Data User berhasil disimpan")
+                ' === 2. Validasi jika status belum ditentukan ===
+            ElseIf statusMode = "" Then
+                MessageBox.Show("Silakan pilih mode Tambah atau Ubah terlebih dahulu!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
-            statusMode = ""
-            SetButtonState(Me, True)
-            DisabledLoad()
+                ' === 3. Cek apakah KDUSER sudah terdaftar di zusers ===
+            Else
+                BukaKoneksi()
+                Dim cmdCekUser As New OdbcCommand("SELECT COUNT(*) FROM zusers WHERE kodeuser = ?", Conn)
+                cmdCekUser.Parameters.AddWithValue("@kodeuser", txtKDUSER.Text.Trim())
+                Dim adaUser As Integer = Convert.ToInt32(cmdCekUser.ExecuteScalar())
+
+                If adaUser > 0 Then
+                    MessageBox.Show("Kode User sudah terdaftar di tabel zusers!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                Else
+                    ' === 4. Cek apakah user sudah memiliki hak akses di zakses ===
+                    Dim cmdCekAkses As New OdbcCommand("SELECT COUNT(*) FROM zakses WHERE kodeuser = ?", Conn)
+                    cmdCekAkses.Parameters.AddWithValue("@kodeuser", txtKDUSER.Text.Trim())
+                    Dim adaAkses As Integer = Convert.ToInt32(cmdCekAkses.ExecuteScalar())
+
+                    If adaAkses = 0 Then
+                        MessageBox.Show("User belum memiliki hak akses di tabel zakses!" & vbCrLf &
+                                        "Silakan atur hak akses terlebih dahulu.", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Else
+                        ' === 5. Semua validasi lolos → simpan data ===
+                        MAkunSimpan.SimpanAkun(txtKDUSER.Text, txtNMUSER.Text, txtPASSUSER.Text, statusMode)
+                        MessageBox.Show("Data User berhasil disimpan", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        statusMode = ""
+                        SetButtonState(Me, True)
+                        DisabledLoad()
+                    End If
+                End If
+            End If
 
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "Error Simpan")
+            MessageBox.Show(ex.Message, "Error Simpan", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -117,6 +177,37 @@ Public Class FSetAkun
     End Sub
 
     Private Sub btnAKSES_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAKSES.Click
+        Try
+            Dim kodeUser As String = txtKDUSER.Text.Trim()
 
+            If String.IsNullOrEmpty(kodeUser) Then
+                MessageBox.Show("Pilih atau buat user terlebih dahulu sebelum mengatur hak akses.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
+            ' Buka form FDtAkses dan kirim kode user
+            Dim aksesForm As New FDtAkses()
+            aksesForm.KodeUser = kodeUser
+            aksesForm.ShowDialog(Me)
+
+        Catch ex As Exception
+            MessageBox.Show("Terjadi kesalahan: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
+        Dim f As New ItDtUser()
+
+        Dim kodeuser As String = tSKDUSER.Text.Trim()
+        Dim username As String = tSNMUSER.Text.Trim()
+
+        ' Load data sesuai filter
+        f.Owner = Me
+        f.Show()
+        f.LoadDataUser(kodeuser, username)
+
+        ' === Clear filter setelah pencarian ===
+        tSKDUSER.Clear()
+        tSNMUSER.Clear()
     End Sub
 End Class

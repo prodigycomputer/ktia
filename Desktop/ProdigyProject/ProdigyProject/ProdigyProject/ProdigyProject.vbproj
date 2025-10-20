@@ -242,6 +242,12 @@
     <Compile Include="ItDtSupplier.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ItDtUser.Designer.vb">
+      <DependentUpon>ItDtUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ItFPopup.Designer.vb">
       <DependentUpon>ItFPopup.vb</DependentUpon>
     </Compile>
@@ -261,6 +267,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Koneksi.vb" />
+    <Compile Include="MAksesSimpan.vb" />
     <Compile Include="MAkunSimpan.vb" />
     <Compile Include="MMutSimpan.vb" />
     <Compile Include="ModButton.vb" />
@@ -273,6 +280,7 @@
     <Compile Include="MPenySimpan.vb" />
     <Compile Include="MRPemSimpan.vb" />
     <Compile Include="MRPenSimpan.vb" />
+    <Compile Include="MUserAkses.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -396,6 +404,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtSupplier.resx">
       <DependentUpon>ItDtSupplier.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtUser.resx">
+      <DependentUpon>ItDtUser.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItFPopup.resx">
       <DependentUpon>ItFPopup.vb</DependentUpon>
