@@ -61,11 +61,11 @@ Public Class ItDtUser
 
     Private Sub dgitmUSER_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmUSER.CellContentClick
         If e.RowIndex >= 0 Then
-            Dim nonota As String = dgitmUSER.Rows(e.RowIndex).Cells("kodeuser").Value.ToString()
+            Dim data As String = dgitmUSER.Rows(e.RowIndex).Cells("kodeuser").Value.ToString()
 
             Dim parentForm As FSetAkun = TryCast(Me.Owner, FSetAkun)
             If parentForm IsNot Nothing Then
-                parentForm.LoadNota(nonota)
+                parentForm.LoadData(data)
             End If
 
             Me.Close()

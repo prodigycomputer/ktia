@@ -33,3 +33,9 @@ D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyPro
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FSetAkun.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FDtAkses.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtUser.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FArea.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtArea.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FTipe.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtTipe.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FGudang.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtGudang.resources

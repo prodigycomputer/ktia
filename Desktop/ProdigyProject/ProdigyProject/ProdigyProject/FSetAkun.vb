@@ -3,6 +3,7 @@
 Public Class FSetAkun
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Private aksesUser As Dictionary(Of String, Boolean)
+    Public KodeLama As String = ""
 
     Private Sub FSetAkun_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
@@ -10,7 +11,7 @@ Public Class FSetAkun
         DisabledLoad()
     End Sub
 
-    Public Sub LoadNota(ByVal kodeuser As String)
+    Public Sub LoadData(ByVal kodeuser As String)
         Try
             BukaKoneksi()
 
@@ -100,8 +101,8 @@ Public Class FSetAkun
                 Exit Sub
             End If
 
-            MAkunSimpan.HapusAkun(txtKDUSER.Text)
-
+            HapusAkun(txtKDUSER.Text)
+            KosongkanInput()
             SetButtonState(Me, True)
             statusMode = ""
             DisabledLoad()
@@ -113,49 +114,144 @@ Public Class FSetAkun
         End Try
     End Sub
 
+    Public Sub HapusAkun(ByVal kdUser As String)
+        Try
+            BukaKoneksi()
+
+            Using Trans = Conn.BeginTransaction()
+                ' Hapus dari zakses dulu (supaya tidak orphan)
+                Using cmdAkses As New OdbcCommand("DELETE FROM zakses WHERE kodeuser = ?", Conn, Trans)
+                    cmdAkses.Parameters.AddWithValue("@kodeuser", kdUser)
+                    cmdAkses.ExecuteNonQuery()
+                End Using
+
+                ' Lalu hapus dari zusers
+                Using cmdUser As New OdbcCommand("DELETE FROM zusers WHERE kodeuser = ?", Conn, Trans)
+                    cmdUser.Parameters.AddWithValue("@kodeuser", kdUser)
+                    cmdUser.ExecuteNonQuery()
+                End Using
+
+                Trans.Commit()
+            End Using
+
+        Catch ex As Exception
+            MsgBox("Gagal menghapus data akun: " & ex.Message, vbCritical)
+        End Try
+    End Sub
+
     Private Sub btnSIMPAN_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSIMPAN.Click
         Try
             ' === 1. Validasi wajib diisi ===
             If txtKDUSER.Text.Trim() = "" Or txtNMUSER.Text.Trim() = "" Or txtPASSUSER.Text.Trim() = "" Then
                 MessageBox.Show("Semua field wajib diisi!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
-                ' === 2. Validasi jika status belum ditentukan ===
-            ElseIf statusMode = "" Then
-                MessageBox.Show("Silakan pilih mode Tambah atau Ubah terlebih dahulu!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-
                 ' === 3. Cek apakah KDUSER sudah terdaftar di zusers ===
             Else
                 BukaKoneksi()
-                Dim cmdCekUser As New OdbcCommand("SELECT COUNT(*) FROM zusers WHERE kodeuser = ?", Conn)
-                cmdCekUser.Parameters.AddWithValue("@kodeuser", txtKDUSER.Text.Trim())
-                Dim adaUser As Integer = Convert.ToInt32(cmdCekUser.ExecuteScalar())
+                Dim CekUser As String = "SELECT COUNT(*) FROM zusers WHERE kodeuser = ?"
+                Dim userExist As Boolean = False
+                Using cmdCekUser As New OdbcCommand(CekUser, Conn)
+                    cmdCekUser.Parameters.AddWithValue("@kodeuser", txtKDUSER.Text.Trim())
+                    userExist = Convert.ToInt32(cmdCekUser.ExecuteScalar())
+                End Using
 
-                If adaUser > 0 Then
-                    MessageBox.Show("Kode User sudah terdaftar di tabel zusers!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-
-                Else
-                    ' === 4. Cek apakah user sudah memiliki hak akses di zakses ===
-                    Dim cmdCekAkses As New OdbcCommand("SELECT COUNT(*) FROM zakses WHERE kodeuser = ?", Conn)
+                Dim CekAkses As String = "SELECT COUNT(*) FROM zakses WHERE kodeuser = ?"
+                Dim aksesExist As Boolean = True
+                Using cmdCekAkses As New OdbcCommand(CekAkses, Conn)
                     cmdCekAkses.Parameters.AddWithValue("@kodeuser", txtKDUSER.Text.Trim())
-                    Dim adaAkses As Integer = Convert.ToInt32(cmdCekAkses.ExecuteScalar())
+                    aksesExist = Convert.ToInt32(cmdCekAkses.ExecuteScalar())
+                End Using
 
-                    If adaAkses = 0 Then
-                        MessageBox.Show("User belum memiliki hak akses di tabel zakses!" & vbCrLf &
-                                        "Silakan atur hak akses terlebih dahulu.", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                    Else
-                        ' === 5. Semua validasi lolos → simpan data ===
-                        MAkunSimpan.SimpanAkun(txtKDUSER.Text, txtNMUSER.Text, txtPASSUSER.Text, statusMode)
-                        MessageBox.Show("Data User berhasil disimpan", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If statusMode.ToLower() = "tambah" Then
+                    If userExist = False AndAlso aksesExist = True Then
+                        ' ✅ Kondisi valid untuk simpan
+                        SimpanAkun(txtKDUSER.Text, txtNMUSER.Text, txtPASSUSER.Text, statusMode)
+                        MessageBox.Show("Data user baru berhasil disimpan.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                         statusMode = ""
                         SetButtonState(Me, True)
                         DisabledLoad()
+
+                    ElseIf userExist = True Then
+                        MessageBox.Show("Kode User sudah terdaftar!" & vbCrLf &
+                                        "Tidak dapat menyimpan data baru.", "Validasi",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                    ElseIf aksesExist = False Then
+                        MessageBox.Show("User belum memiliki hak akses!" & vbCrLf &
+                                        "Silakan atur hak akses terlebih dahulu sebelum menyimpan.", "Validasi",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     End If
+
+                ElseIf statusMode.ToLower() = "ubah" Then
+                    SimpanAkun(txtKDUSER.Text, txtNMUSER.Text, txtPASSUSER.Text, statusMode)
+                    MessageBox.Show("Perubahan data user berhasil disimpan.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    statusMode = ""
+                    SetButtonState(Me, True)
+                    DisabledLoad()
+
+                Else
+                    MessageBox.Show("Mode penyimpanan tidak dikenali!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             End If
 
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Error Simpan", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Public Sub SimpanAkun(ByVal kdUser As String,
+                          ByVal nmUser As String,
+                          ByVal passUser As String,
+                          ByVal status As String)
+
+        Dim Trans As OdbcTransaction = Nothing
+
+        Try
+            If kdUser.Trim() = "" Then Throw New Exception("Kode User tidak boleh kosong!")
+
+            BukaKoneksi()
+            Trans = Conn.BeginTransaction()
+
+            ' === Mode Ubah: hapus data lama dulu ===
+            If status.ToLower() = "ubah" Then
+                KodeLama = kdUser
+                Using cmdDel As New OdbcCommand("DELETE FROM zusers WHERE kodeuser = ?", Conn, Trans)
+                    cmdDel.Parameters.AddWithValue("@kodeuser", kdUser)
+                    cmdDel.ExecuteNonQuery()
+                End Using
+
+                Using cmd As New OdbcCommand("INSERT INTO zusers (kodeuser, username, kunci) VALUES (?, ?, ?)", Conn, Trans)
+                    cmd.Parameters.AddWithValue("@kodeuser", kdUser)
+                    cmd.Parameters.AddWithValue("@username", nmUser)
+                    cmd.Parameters.AddWithValue("@kunci", passUser)
+                    cmd.ExecuteNonQuery()
+                End Using
+            ElseIf status.ToLower() = "tambah" Then
+                ' === Insert data baru ===
+                Using cmd As New OdbcCommand("INSERT INTO zusers (kodeuser, username, kunci) VALUES (?, ?, ?)", Conn, Trans)
+                    cmd.Parameters.AddWithValue("@kodeuser", kdUser)
+                    cmd.Parameters.AddWithValue("@username", nmUser)
+                    cmd.Parameters.AddWithValue("@kunci", passUser)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End If
+
+            ' === Commit transaksi jika semua berhasil ===
+            Trans.Commit()
+
+        Catch ex As Exception
+            ' Rollback jika terjadi error
+            If Trans IsNot Nothing Then
+                Try
+                    Trans.Rollback()
+                Catch
+                End Try
+            End If
+
+            KodeLama = kdUser
+            MsgBox("Gagal menyimpan data akun: " & ex.Message, vbCritical)
         End Try
     End Sub
 

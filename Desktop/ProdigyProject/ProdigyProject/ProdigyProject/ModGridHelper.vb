@@ -584,4 +584,68 @@
 
         End With
     End Sub
+
+    ' === Setup untuk Grid Penyesuaian (zmutasim) ===
+    Public Sub SetupGridDArea(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("kodear", "Kode Area")
+            .Columns("kodear").Width = 140
+
+            .Columns.Add("namaar", "Nama Area")
+            .Columns("namaar").Width = 207
+
+        End With
+    End Sub
+
+    Public Sub SetupGridDTipe(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("kodetipe", "Kode Tipe")
+            .Columns("kodetipe").Width = 140
+
+            .Columns.Add("namatipe", "Nama Tipe")
+            .Columns("namatipe").Width = 207
+
+        End With
+    End Sub
+
+    Public Sub SetupGridDGudang(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("kodegd", "Kode Gudang")
+            .Columns("kodegd").Width = 140
+
+            .Columns.Add("namagd", "Nama Gudang")
+            .Columns("namagd").Width = 207
+
+        End With
+    End Sub
 End Module
