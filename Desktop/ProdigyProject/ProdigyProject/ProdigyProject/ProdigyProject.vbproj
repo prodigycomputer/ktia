@@ -151,6 +151,12 @@
     <Compile Include="FGudang.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FKustomer.Designer.vb">
+      <DependentUpon>FKustomer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FKustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FMerek.Designer.vb">
       <DependentUpon>FMerek.vb</DependentUpon>
     </Compile>
@@ -187,10 +193,22 @@
     <Compile Include="FReturPenjualan.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FSales.Designer.vb">
+      <DependentUpon>FSales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FSales.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FSetAkun.Designer.vb">
       <DependentUpon>FSetAkun.vb</DependentUpon>
     </Compile>
     <Compile Include="FSetAkun.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FSupplier.Designer.vb">
+      <DependentUpon>FSupplier.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FSupplier.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FTipe.Designer.vb">
@@ -205,6 +223,18 @@
     <Compile Include="ItDtArea.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ItDtGolongan.Designer.vb">
+      <DependentUpon>ItDtGolongan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtGolongan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtGrup.Designer.vb">
+      <DependentUpon>ItDtGrup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtGrup.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ItDtGudang.Designer.vb">
       <DependentUpon>ItDtGudang.vb</DependentUpon>
     </Compile>
@@ -215,6 +245,12 @@
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </Compile>
     <Compile Include="ItDtKustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtMerek.Designer.vb">
+      <DependentUpon>ItDtMerek.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtMerek.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtMutasi.Designer.vb">
@@ -278,6 +314,12 @@
     <Compile Include="ItDtSales.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ItSales.Designer.vb">
+      <DependentUpon>ItSales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItSales.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ItDtStok.Designer.vb">
       <DependentUpon>ItDtStok.vb</DependentUpon>
     </Compile>
@@ -288,6 +330,12 @@
       <DependentUpon>ItDtSupplier.vb</DependentUpon>
     </Compile>
     <Compile Include="ItDtSupplier.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItSupplier.Designer.vb">
+      <DependentUpon>ItSupplier.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItSupplier.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtTipe.Designer.vb">
@@ -321,7 +369,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Koneksi.vb" />
-    <Compile Include="MAreaSimpan.vb" />
     <Compile Include="ModButton.vb" />
     <Compile Include="ModGridHelper.vb" />
     <Compile Include="ModHitung.vb" />
@@ -398,8 +445,20 @@
     <EmbeddedResource Include="FDtAkses.resx">
       <DependentUpon>FDtAkses.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FGolongan.resx">
+      <DependentUpon>FGolongan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FGrup.resx">
+      <DependentUpon>FGrup.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FGudang.resx">
       <DependentUpon>FGudang.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FKustomer.resx">
+      <DependentUpon>FKustomer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FMerek.resx">
+      <DependentUpon>FMerek.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FMutasi.resx">
       <DependentUpon>FMutasi.vb</DependentUpon>
@@ -416,8 +475,14 @@
     <EmbeddedResource Include="FReturPenjualan.resx">
       <DependentUpon>FReturPenjualan.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FSales.resx">
+      <DependentUpon>FSales.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FSetAkun.resx">
       <DependentUpon>FSetAkun.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FSupplier.resx">
+      <DependentUpon>FSupplier.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FTipe.resx">
       <DependentUpon>FTipe.vb</DependentUpon>
@@ -425,11 +490,20 @@
     <EmbeddedResource Include="ItDtArea.resx">
       <DependentUpon>ItDtArea.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ItDtGolongan.resx">
+      <DependentUpon>ItDtGolongan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtGrup.resx">
+      <DependentUpon>ItDtGrup.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ItDtGudang.resx">
       <DependentUpon>ItDtGudang.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtMerek.resx">
+      <DependentUpon>ItDtMerek.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtMutasi.resx">
       <DependentUpon>ItDtMutasi.vb</DependentUpon>
@@ -461,11 +535,17 @@
     <EmbeddedResource Include="ItDtSales.resx">
       <DependentUpon>ItDtSales.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ItSales.resx">
+      <DependentUpon>ItSales.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ItDtStok.resx">
       <DependentUpon>ItDtStok.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtSupplier.resx">
       <DependentUpon>ItDtSupplier.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItSupplier.resx">
+      <DependentUpon>ItSupplier.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtTipe.resx">
       <DependentUpon>ItDtTipe.vb</DependentUpon>

@@ -2,27 +2,53 @@
 
 Public Class ItDtSupplier
 
-    Public Sub LoadDataSup(ByVal keyword As String)
+    Public Sub LoadDataSupplier(Optional ByVal kodesup As String = "",
+                        Optional ByVal namasup As String = "")
 
-        Dim sql As String
-        If keyword = "*" Then
-            sql = "SELECT kodesup, namasup, alamat, kota, ktp, npwp FROM zsupplier ORDER BY kodesup"
-        Else
-            sql = "SELECT kodesup, namasup, alamat, kota, ktp, npwp " &
-                  "FROM zsupplier WHERE kodesup LIKE '%" & keyword & "%' OR namasup LIKE '%" & keyword & "%' ORDER BY kodesup"
+        Dim sql As String = "SELECT kodesup, namasup, alamat, kota, ktp, npwp FROM zsupplier"
+        Dim whereList As New List(Of String)
+
+        ' --- Filter berdasarkan kodeuser
+        If kodesup <> "" Then
+            whereList.Add("kodesup LIKE ?")
         End If
 
-        dgitmSUP.Rows.Clear()
+        ' --- Filter berdasarkan username
+        If namasup <> "" Then
+            whereList.Add("namasup LIKE ?")
+        End If
+
+        If whereList.Count > 0 Then
+            sql &= " WHERE " & String.Join(" AND ", whereList)
+        End If
+
+        sql &= " ORDER BY kodesup"
+
+        dgitmSUPP.Rows.Clear()
 
         Try
             BukaKoneksi()
             Cmd = New OdbcCommand(sql, Conn)
+
+            ' --- Bind parameter sesuai urutan filter
+            If kodesup <> "" Then
+                Cmd.Parameters.AddWithValue("", "%" & kodesup & "%")
+            End If
+            If namasup <> "" Then
+                Cmd.Parameters.AddWithValue("", "%" & namasup & "%")
+            End If
+
             Rd = Cmd.ExecuteReader()
-
             While Rd.Read()
-                dgitmSUP.Rows.Add(Rd("kodesup"), Rd("namasup"), Rd("alamat"), Rd("kota"), Rd("ktp"), Rd("npwp"))
+                dgitmSUPP.Rows.Add(
+                    Rd("kodesup").ToString(),
+                    Rd("namasup").ToString(),
+                    Rd("alamat").ToString(),
+                    Rd("kota").ToString(),
+                    Rd("ktp").ToString(),
+                    Rd("npwp").ToString()
+                )
             End While
-
             Rd.Close()
             Conn.Close()
         Catch ex As Exception
@@ -30,26 +56,20 @@ Public Class ItDtSupplier
         End Try
     End Sub
 
-    Private Sub ItDtSupplier_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub ItDtSuplier_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
 
-        SetupGridSupplier(dgitmSUP)
+        SetupGridSupplier(dgitmSUPP)
     End Sub
 
-    Private Sub dgitmSUP_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmSUP.CellContentClick
+    Private Sub dgitmSUPP_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmSUPP.CellContentClick
         If e.RowIndex >= 0 Then
-            Dim kode As String = dgitmSUP.Rows(e.RowIndex).Cells("kodesup").Value.ToString()
-            Dim nama As String = dgitmSUP.Rows(e.RowIndex).Cells("namasup").Value.ToString()
-            Dim alamat As String = dgitmSUP.Rows(e.RowIndex).Cells("alamat").Value.ToString()
-            Dim kota As String = dgitmSUP.Rows(e.RowIndex).Cells("kota").Value.ToString()
-            Dim ktp As String = dgitmSUP.Rows(e.RowIndex).Cells("ktp").Value.ToString()
-            Dim npwp As Double = Val(dgitmSUP.Rows(e.RowIndex).Cells("npwp").Value)
+            Dim data As String = dgitmSUPP.Rows(e.RowIndex).Cells("kodesup").Value.ToString()
 
-            ' kirim ke ItFPopupPem
-            Dim parentForm As FPembelian = TryCast(Me.Owner, FPembelian)
+            Dim parentForm As FSupplier = TryCast(Me.Owner, FSupplier)
             If parentForm IsNot Nothing Then
-                parentForm.SetSupplier(kode, nama, alamat, kota, ktp, npwp)
+                parentForm.LoadData(data)
             End If
 
             Me.Close()

@@ -22,31 +22,31 @@ Partial Class ItDtSales
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.dgitmSLS = New System.Windows.Forms.DataGridView()
-        CType(Me.dgitmSLS, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.dgitmSLSS = New System.Windows.Forms.DataGridView()
+        CType(Me.dgitmSLSS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'dgitmSLS
+        'dgitmSLSS
         '
-        Me.dgitmSLS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgitmSLS.Location = New System.Drawing.Point(8, 7)
-        Me.dgitmSLS.Name = "dgitmSLS"
-        Me.dgitmSLS.Size = New System.Drawing.Size(547, 292)
-        Me.dgitmSLS.TabIndex = 1
+        Me.dgitmSLSS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgitmSLSS.Location = New System.Drawing.Point(8, 8)
+        Me.dgitmSLSS.Name = "dgitmSLSS"
+        Me.dgitmSLSS.Size = New System.Drawing.Size(724, 292)
+        Me.dgitmSLSS.TabIndex = 2
         '
         'ItDtSales
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(563, 308)
-        Me.Controls.Add(Me.dgitmSLS)
+        Me.ClientSize = New System.Drawing.Size(742, 308)
+        Me.Controls.Add(Me.dgitmSLSS)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "ItDtSales"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "ItDtSales"
-        CType(Me.dgitmSLS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgitmSLSS, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents dgitmSLS As System.Windows.Forms.DataGridView
+    Friend WithEvents dgitmSLSS As System.Windows.Forms.DataGridView
 End Class

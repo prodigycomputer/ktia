@@ -116,8 +116,38 @@ Public Class FDashboard
                 f.MdiParent = Me
                 f.Show()
 
+            Case "ME005"
+                Dim f As New FSupplier()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME006"
+                Dim f As New FSales()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
             Case "ME007"
                 Dim f As New FGudang()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME008"
+                Dim f As New FMerek()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME009"
+                Dim f As New FGolongan()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME0010"
+                Dim f As New FGrup()
                 f.Tag = idMenu
                 f.MdiParent = Me
                 f.Show()

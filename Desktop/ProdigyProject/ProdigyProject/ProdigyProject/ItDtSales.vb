@@ -2,27 +2,53 @@
 
 Public Class ItDtSales
 
-    Public Sub LoadDataSls(ByVal keyword As String)
+    Public Sub LoadDataSales(Optional ByVal kodesls As String = "",
+                        Optional ByVal namasls As String = "")
 
-        Dim sql As String
-        If keyword = "*" Then
-            sql = "SELECT kodesls, namasls, alamat, kota, ktp, npwp FROM zsales ORDER BY kodesls"
-        Else
-            sql = "SELECT kodesls, namasls, alamat, kota, ktp, npwp " &
-                  "FROM zsales WHERE kodesls LIKE '%" & keyword & "%' OR namasls LIKE '%" & keyword & "%' ORDER BY kodesls"
+        Dim sql As String = "SELECT kodesls, namasls, alamat, kota, ktp, npwp FROM zsales"
+        Dim whereList As New List(Of String)
+
+        ' --- Filter berdasarkan kodeuser
+        If kodesls <> "" Then
+            whereList.Add("kodesls LIKE ?")
         End If
 
-        dgitmSLS.Rows.Clear()
+        ' --- Filter berdasarkan username
+        If namasls <> "" Then
+            whereList.Add("namasls LIKE ?")
+        End If
+
+        If whereList.Count > 0 Then
+            sql &= " WHERE " & String.Join(" AND ", whereList)
+        End If
+
+        sql &= " ORDER BY kodesls"
+
+        dgitmSLSS.Rows.Clear()
 
         Try
             BukaKoneksi()
             Cmd = New OdbcCommand(sql, Conn)
+
+            ' --- Bind parameter sesuai urutan filter
+            If kodesls <> "" Then
+                Cmd.Parameters.AddWithValue("", "%" & kodesls & "%")
+            End If
+            If namasls <> "" Then
+                Cmd.Parameters.AddWithValue("", "%" & namasls & "%")
+            End If
+
             Rd = Cmd.ExecuteReader()
-
             While Rd.Read()
-                dgitmsls.Rows.Add(Rd("kodesls"), Rd("namasls"), Rd("alamat"), Rd("kota"), Rd("ktp"), Rd("npwp"))
+                dgitmSLSS.Rows.Add(
+                    Rd("kodesls").ToString(),
+                    Rd("namasls").ToString(),
+                    Rd("alamat").ToString(),
+                    Rd("kota").ToString(),
+                    Rd("ktp").ToString(),
+                    Rd("npwp").ToString()
+                )
             End While
-
             Rd.Close()
             Conn.Close()
         Catch ex As Exception
@@ -34,23 +60,16 @@ Public Class ItDtSales
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
 
-        SetupGridSales(dgitmSLS)
+        SetupGridSales(dgitmSLSS)
     End Sub
 
-    Private Sub dgitmSLS_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmSLS.CellContentClick
+    Private Sub dgitmSLSS_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmSLSS.CellContentClick
         If e.RowIndex >= 0 Then
-            Dim kodes As String = dgitmSLS.Rows(e.RowIndex).Cells("kodesls").Value.ToString()
-            Dim namas As String = dgitmSLS.Rows(e.RowIndex).Cells("namasls").Value.ToString()
-            Dim alamat As String = dgitmSLS.Rows(e.RowIndex).Cells("alamat").Value.ToString()
-            Dim kota As String = dgitmSLS.Rows(e.RowIndex).Cells("kota").Value.ToString()
-            Dim ktp As String = dgitmSLS.Rows(e.RowIndex).Cells("ktp").Value.ToString()
-            Dim npwp As Double = Val(dgitmSLS.Rows(e.RowIndex).Cells("npwp").Value)
+            Dim data As String = dgitmSLSS.Rows(e.RowIndex).Cells("kodesls").Value.ToString()
 
-
-            ' kirim ke ItFPopupPem
-            Dim parentForm As FPenjualan = TryCast(Me.Owner, FPenjualan)
+            Dim parentForm As FSales = TryCast(Me.Owner, FSales)
             If parentForm IsNot Nothing Then
-                parentForm.SetSales(kodes, namas, alamat, kota, ktp, npwp)
+                parentForm.LoadData(data)
             End If
 
             Me.Close()

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class ItDtSupplier
+Partial Class ItDtGolongan
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,31 +22,31 @@ Partial Class ItDtSupplier
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.dgitmSUPP = New System.Windows.Forms.DataGridView()
-        CType(Me.dgitmSUPP, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.dgitmGO = New System.Windows.Forms.DataGridView()
+        CType(Me.dgitmGO, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'dgitmSUPP
+        'dgitmGO
         '
-        Me.dgitmSUPP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgitmSUPP.Location = New System.Drawing.Point(8, 8)
-        Me.dgitmSUPP.Name = "dgitmSUPP"
-        Me.dgitmSUPP.Size = New System.Drawing.Size(724, 292)
-        Me.dgitmSUPP.TabIndex = 1
+        Me.dgitmGO.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgitmGO.Location = New System.Drawing.Point(5, 4)
+        Me.dgitmGO.Name = "dgitmGO"
+        Me.dgitmGO.Size = New System.Drawing.Size(350, 214)
+        Me.dgitmGO.TabIndex = 5
         '
-        'ItDtSupplier
+        'ItDtGolongan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(742, 308)
-        Me.Controls.Add(Me.dgitmSUPP)
+        Me.ClientSize = New System.Drawing.Size(361, 223)
+        Me.Controls.Add(Me.dgitmGO)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Name = "ItDtSupplier"
+        Me.Name = "ItDtGolongan"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "ItDtSupplier"
-        CType(Me.dgitmSUPP, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Text = "ItDtGolongan"
+        CType(Me.dgitmGO, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents dgitmSUPP As System.Windows.Forms.DataGridView
+    Friend WithEvents dgitmGO As System.Windows.Forms.DataGridView
 End Class

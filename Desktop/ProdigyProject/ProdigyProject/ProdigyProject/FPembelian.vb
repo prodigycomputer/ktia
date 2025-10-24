@@ -843,7 +843,7 @@ Public Class FPembelian
             e.SuppressKeyPress = True
             Dim txtKode As TextBox = CType(sender, TextBox)
             If txtKode.Text.Trim() <> "" Then
-                Dim f As New ItDtSupplier
+                Dim f As New ItSupplier
                 f.Owner = Me
                 f.Show()
                 f.LoadDataSup(txtKode.Text.Trim())
@@ -856,7 +856,7 @@ Public Class FPembelian
             e.SuppressKeyPress = True
             Dim txtNama As TextBox = CType(sender, TextBox)
             If txtNama.Text.Trim() <> "" Then
-                Dim f As New ItDtSupplier
+                Dim f As New ItSupplier
                 f.Owner = Me
                 f.Show()
                 f.LoadDataSup(txtNama.Text.Trim())

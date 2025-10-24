@@ -22,8 +22,177 @@ Partial Class FGolongan
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtNMGOL = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.txtKDGOL = New System.Windows.Forms.TextBox()
+        Me.btnCARI = New System.Windows.Forms.Button()
+        Me.tSNMGOL = New System.Windows.Forms.TextBox()
+        Me.tSKDGOL = New System.Windows.Forms.TextBox()
+        Me.btnBATAL = New System.Windows.Forms.Button()
+        Me.btnHAPUS = New System.Windows.Forms.Button()
+        Me.btnUBAH = New System.Windows.Forms.Button()
+        Me.btnSIMPAN = New System.Windows.Forms.Button()
+        Me.btnTAMBAH = New System.Windows.Forms.Button()
+        Me.Panel1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'Panel1
+        '
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.Label3)
+        Me.Panel1.Controls.Add(Me.txtNMGOL)
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.txtKDGOL)
+        Me.Panel1.Location = New System.Drawing.Point(9, 83)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(333, 61)
+        Me.Panel1.TabIndex = 95
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(8, 31)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(88, 15)
+        Me.Label3.TabIndex = 53
+        Me.Label3.Text = "Nama Gudang"
+        '
+        'txtNMGOL
+        '
+        Me.txtNMGOL.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtNMGOL.Location = New System.Drawing.Point(136, 29)
+        Me.txtNMGOL.Name = "txtNMGOL"
+        Me.txtNMGOL.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMGOL.TabIndex = 50
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(8, 8)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(93, 15)
+        Me.Label2.TabIndex = 49
+        Me.Label2.Text = "Kode Golongan"
+        '
+        'txtKDGOL
+        '
+        Me.txtKDGOL.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtKDGOL.Location = New System.Drawing.Point(136, 6)
+        Me.txtKDGOL.Name = "txtKDGOL"
+        Me.txtKDGOL.Size = New System.Drawing.Size(185, 20)
+        Me.txtKDGOL.TabIndex = 48
+        '
+        'btnCARI
+        '
+        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Name = "btnCARI"
+        Me.btnCARI.Size = New System.Drawing.Size(47, 30)
+        Me.btnCARI.TabIndex = 94
+        Me.btnCARI.Text = "Cari"
+        Me.btnCARI.UseVisualStyleBackColor = True
+        '
+        'tSNMGOL
+        '
+        Me.tSNMGOL.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tSNMGOL.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tSNMGOL.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMGOL.Name = "tSNMGOL"
+        Me.tSNMGOL.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMGOL.TabIndex = 93
+        '
+        'tSKDGOL
+        '
+        Me.tSKDGOL.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tSKDGOL.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tSKDGOL.Location = New System.Drawing.Point(9, 10)
+        Me.tSKDGOL.Name = "tSKDGOL"
+        Me.tSKDGOL.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDGOL.TabIndex = 92
+        '
+        'btnBATAL
+        '
+        Me.btnBATAL.Location = New System.Drawing.Point(231, 42)
+        Me.btnBATAL.Name = "btnBATAL"
+        Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
+        Me.btnBATAL.TabIndex = 91
+        Me.btnBATAL.Text = "Batal"
+        Me.btnBATAL.UseVisualStyleBackColor = True
+        '
+        'btnHAPUS
+        '
+        Me.btnHAPUS.Location = New System.Drawing.Point(175, 42)
+        Me.btnHAPUS.Name = "btnHAPUS"
+        Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
+        Me.btnHAPUS.TabIndex = 90
+        Me.btnHAPUS.Text = "Hapus"
+        Me.btnHAPUS.UseVisualStyleBackColor = True
+        '
+        'btnUBAH
+        '
+        Me.btnUBAH.Location = New System.Drawing.Point(119, 42)
+        Me.btnUBAH.Name = "btnUBAH"
+        Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
+        Me.btnUBAH.TabIndex = 89
+        Me.btnUBAH.Text = "Ubah"
+        Me.btnUBAH.UseVisualStyleBackColor = True
+        '
+        'btnSIMPAN
+        '
+        Me.btnSIMPAN.Location = New System.Drawing.Point(63, 42)
+        Me.btnSIMPAN.Name = "btnSIMPAN"
+        Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
+        Me.btnSIMPAN.TabIndex = 88
+        Me.btnSIMPAN.Text = "Simpan"
+        Me.btnSIMPAN.UseVisualStyleBackColor = True
+        '
+        'btnTAMBAH
+        '
+        Me.btnTAMBAH.Location = New System.Drawing.Point(7, 42)
+        Me.btnTAMBAH.Name = "btnTAMBAH"
+        Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
+        Me.btnTAMBAH.TabIndex = 87
+        Me.btnTAMBAH.Text = "Tambah"
+        Me.btnTAMBAH.UseVisualStyleBackColor = True
+        '
+        'FGolongan
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(349, 155)
+        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.btnCARI)
+        Me.Controls.Add(Me.tSNMGOL)
+        Me.Controls.Add(Me.tSKDGOL)
+        Me.Controls.Add(Me.btnBATAL)
+        Me.Controls.Add(Me.btnHAPUS)
+        Me.Controls.Add(Me.btnUBAH)
+        Me.Controls.Add(Me.btnSIMPAN)
+        Me.Controls.Add(Me.btnTAMBAH)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.Name = "FGolongan"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FGolongan"
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
     End Sub
+    Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents txtNMGOL As System.Windows.Forms.TextBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents txtKDGOL As System.Windows.Forms.TextBox
+    Friend WithEvents btnCARI As System.Windows.Forms.Button
+    Friend WithEvents tSNMGOL As System.Windows.Forms.TextBox
+    Friend WithEvents tSKDGOL As System.Windows.Forms.TextBox
+    Friend WithEvents btnBATAL As System.Windows.Forms.Button
+    Friend WithEvents btnHAPUS As System.Windows.Forms.Button
+    Friend WithEvents btnUBAH As System.Windows.Forms.Button
+    Friend WithEvents btnSIMPAN As System.Windows.Forms.Button
+    Friend WithEvents btnTAMBAH As System.Windows.Forms.Button
 End Class

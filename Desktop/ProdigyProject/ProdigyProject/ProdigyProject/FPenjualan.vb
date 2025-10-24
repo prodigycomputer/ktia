@@ -899,7 +899,7 @@ Public Class FPenjualan
             e.SuppressKeyPress = True
             Dim txtKode As TextBox = CType(sender, TextBox)
             If txtKode.Text.Trim() <> "" Then
-                Dim f As New ItDtSales
+                Dim f As New ItSales
                 f.Owner = Me
                 f.Show()
                 f.LoadDataSls(txtKode.Text.Trim())
@@ -912,7 +912,7 @@ Public Class FPenjualan
             e.SuppressKeyPress = True
             Dim txtNama As TextBox = CType(sender, TextBox)
             If txtNama.Text.Trim() <> "" Then
-                Dim f As New ItDtSales
+                Dim f As New ItSales
                 f.Owner = Me
                 f.Show()
                 f.LoadDataSls(txtNama.Text.Trim())

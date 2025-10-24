@@ -648,4 +648,67 @@
 
         End With
     End Sub
+
+    Public Sub SetupGridDGrup(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("kodegrup", "Kode Grup")
+            .Columns("kodegrup").Width = 140
+
+            .Columns.Add("namagrup", "Nama Grup")
+            .Columns("namagrup").Width = 207
+
+        End With
+    End Sub
+
+    Public Sub SetupGridDMerek(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("kodemerk", "Kode Merek")
+            .Columns("kodemerk").Width = 140
+
+            .Columns.Add("namamerk", "Nama Merek")
+            .Columns("namamerk").Width = 207
+
+        End With
+    End Sub
+
+    Public Sub SetupGridDGolongan(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("kodegol", "Kode Golongan")
+            .Columns("kodegol").Width = 140
+
+            .Columns.Add("namagol", "Nama Golongan")
+            .Columns("namagol").Width = 207
+
+        End With
+    End Sub
 End Module

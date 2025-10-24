@@ -39,3 +39,13 @@ D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyPro
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtTipe.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FGudang.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtGudang.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FGrup.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtGrup.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FGolongan.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FMerek.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtGolongan.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItDtMerek.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FSupplier.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FSales.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItSales.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.ItSupplier.resources

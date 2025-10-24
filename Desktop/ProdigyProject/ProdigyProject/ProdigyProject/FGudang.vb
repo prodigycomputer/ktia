@@ -134,7 +134,7 @@ Public Class FGudang
                 Dim CekGd As String = "SELECT COUNT(*) FROM zgudang WHERE kodegd = ?"
                 Dim gdExist As Boolean = False
                 Using cmdCekGd As New OdbcCommand(CekGd, Conn)
-                    cmdCekGd.Parameters.AddWithValue("@kodetipe", txtKDGUDANG.Text.Trim())
+                    cmdCekGd.Parameters.AddWithValue("@kodegd", txtKDGUDANG.Text.Trim())
                     gdExist = Convert.ToInt32(cmdCekGd.ExecuteScalar())
                 End Using
 
@@ -180,7 +180,7 @@ Public Class FGudang
         Dim Trans As OdbcTransaction = Nothing
 
         Try
-            If kdGd = "" Then Throw New Exception("Kode Tipe tidak boleh kosong!")
+            If kdGd = "" Then Throw New Exception("Kode Gudang tidak boleh kosong!")
 
             BukaKoneksi()
             Trans = Conn.BeginTransaction()
@@ -220,7 +220,7 @@ Public Class FGudang
             End If
 
             KodeLama = kdGd
-            MsgBox("Gagal menyimpan data tipe: " & ex.Message, vbCritical)
+            MsgBox("Gagal menyimpan data gudang: " & ex.Message, vbCritical)
         End Try
     End Sub
 
