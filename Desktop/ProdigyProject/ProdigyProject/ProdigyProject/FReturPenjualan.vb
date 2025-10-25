@@ -867,7 +867,7 @@ Public Class FReturPenjualan
             e.SuppressKeyPress = True
             Dim txtKode As TextBox = CType(sender, TextBox)
             If txtKode.Text.Trim() <> "" Then
-                Dim f As New ItDtKustomer
+                Dim f As New ItKustomer
                 f.Owner = Me
                 f.Show()
                 f.LoadDataKust(txtKode.Text.Trim())
@@ -880,7 +880,7 @@ Public Class FReturPenjualan
             e.SuppressKeyPress = True
             Dim txtNama As TextBox = CType(sender, TextBox)
             If txtNama.Text.Trim() <> "" Then
-                Dim f As New ItDtKustomer
+                Dim f As New ItKustomer
                 f.Owner = Me
                 f.Show()
                 f.LoadDataKust(txtNama.Text.Trim())

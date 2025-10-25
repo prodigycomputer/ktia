@@ -23,6 +23,12 @@ Partial Class FKustomer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtKDAREA = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.txtKDTIPE = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.txtKOTA = New System.Windows.Forms.TextBox()
         Me.btnUPLOAD = New System.Windows.Forms.Button()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.txtGAMBAR = New System.Windows.Forms.TextBox()
@@ -35,23 +41,17 @@ Partial Class FKustomer
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtALAMAT = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.txtNMSLS = New System.Windows.Forms.TextBox()
+        Me.txtNMKUST = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtKDSLS = New System.Windows.Forms.TextBox()
+        Me.txtKDKUST = New System.Windows.Forms.TextBox()
         Me.btnCARI = New System.Windows.Forms.Button()
-        Me.tSNMSLS = New System.Windows.Forms.TextBox()
-        Me.tSKDSLS = New System.Windows.Forms.TextBox()
+        Me.tSNMKUST = New System.Windows.Forms.TextBox()
+        Me.tSKDKUST = New System.Windows.Forms.TextBox()
         Me.btnBATAL = New System.Windows.Forms.Button()
         Me.btnHAPUS = New System.Windows.Forms.Button()
         Me.btnUBAH = New System.Windows.Forms.Button()
         Me.btnSIMPAN = New System.Windows.Forms.Button()
         Me.btnTAMBAH = New System.Windows.Forms.Button()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.txtKOTA = New System.Windows.Forms.TextBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.txtKDAREA = New System.Windows.Forms.TextBox()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.txtKDTIPE = New System.Windows.Forms.TextBox()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -76,13 +76,67 @@ Partial Class FKustomer
         Me.Panel1.Controls.Add(Me.Label4)
         Me.Panel1.Controls.Add(Me.txtALAMAT)
         Me.Panel1.Controls.Add(Me.Label3)
-        Me.Panel1.Controls.Add(Me.txtNMSLS)
+        Me.Panel1.Controls.Add(Me.txtNMKUST)
         Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Controls.Add(Me.txtKDSLS)
+        Me.Panel1.Controls.Add(Me.txtKDKUST)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(333, 276)
         Me.Panel1.TabIndex = 95
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(8, 224)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(64, 15)
+        Me.Label9.TabIndex = 84
+        Me.Label9.Text = "Kode Area"
+        '
+        'txtKDAREA
+        '
+        Me.txtKDAREA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtKDAREA.Location = New System.Drawing.Point(136, 222)
+        Me.txtKDAREA.Name = "txtKDAREA"
+        Me.txtKDAREA.Size = New System.Drawing.Size(153, 20)
+        Me.txtKDAREA.TabIndex = 83
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(8, 201)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(63, 15)
+        Me.Label10.TabIndex = 82
+        Me.Label10.Text = "Kode Tipe"
+        '
+        'txtKDTIPE
+        '
+        Me.txtKDTIPE.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtKDTIPE.Location = New System.Drawing.Point(136, 199)
+        Me.txtKDTIPE.Name = "txtKDTIPE"
+        Me.txtKDTIPE.Size = New System.Drawing.Size(153, 20)
+        Me.txtKDTIPE.TabIndex = 81
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(8, 109)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(32, 15)
+        Me.Label8.TabIndex = 80
+        Me.Label8.Text = "Kota"
+        '
+        'txtKOTA
+        '
+        Me.txtKOTA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtKOTA.Location = New System.Drawing.Point(136, 107)
+        Me.txtKOTA.Name = "txtKOTA"
+        Me.txtKOTA.Size = New System.Drawing.Size(185, 20)
+        Me.txtKOTA.TabIndex = 79
         '
         'btnUPLOAD
         '
@@ -191,17 +245,17 @@ Partial Class FKustomer
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(8, 31)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(75, 15)
+        Me.Label3.Size = New System.Drawing.Size(97, 15)
         Me.Label3.TabIndex = 53
-        Me.Label3.Text = "Nama Sales"
+        Me.Label3.Text = "Nama Kustomer"
         '
-        'txtNMSLS
+        'txtNMKUST
         '
-        Me.txtNMSLS.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtNMSLS.Location = New System.Drawing.Point(136, 29)
-        Me.txtNMSLS.Name = "txtNMSLS"
-        Me.txtNMSLS.Size = New System.Drawing.Size(185, 20)
-        Me.txtNMSLS.TabIndex = 50
+        Me.txtNMKUST.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtNMKUST.Location = New System.Drawing.Point(136, 29)
+        Me.txtNMKUST.Name = "txtNMKUST"
+        Me.txtNMKUST.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMKUST.TabIndex = 50
         '
         'Label2
         '
@@ -209,17 +263,17 @@ Partial Class FKustomer
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(8, 8)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(70, 15)
+        Me.Label2.Size = New System.Drawing.Size(92, 15)
         Me.Label2.TabIndex = 49
-        Me.Label2.Text = "Kode Sales"
+        Me.Label2.Text = "Kode Kustomer"
         '
-        'txtKDSLS
+        'txtKDKUST
         '
-        Me.txtKDSLS.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtKDSLS.Location = New System.Drawing.Point(136, 6)
-        Me.txtKDSLS.Name = "txtKDSLS"
-        Me.txtKDSLS.Size = New System.Drawing.Size(185, 20)
-        Me.txtKDSLS.TabIndex = 48
+        Me.txtKDKUST.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtKDKUST.Location = New System.Drawing.Point(136, 6)
+        Me.txtKDKUST.Name = "txtKDKUST"
+        Me.txtKDKUST.Size = New System.Drawing.Size(185, 20)
+        Me.txtKDKUST.TabIndex = 48
         '
         'btnCARI
         '
@@ -230,23 +284,23 @@ Partial Class FKustomer
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
-        'tSNMSLS
+        'tSNMKUST
         '
-        Me.tSNMSLS.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tSNMSLS.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMSLS.Location = New System.Drawing.Point(132, 10)
-        Me.tSNMSLS.Name = "tSNMSLS"
-        Me.tSNMSLS.Size = New System.Drawing.Size(157, 23)
-        Me.tSNMSLS.TabIndex = 93
+        Me.tSNMKUST.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tSNMKUST.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tSNMKUST.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMKUST.Name = "tSNMKUST"
+        Me.tSNMKUST.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMKUST.TabIndex = 93
         '
-        'tSKDSLS
+        'tSKDKUST
         '
-        Me.tSKDSLS.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.tSKDSLS.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSKDSLS.Location = New System.Drawing.Point(9, 10)
-        Me.tSKDSLS.Name = "tSKDSLS"
-        Me.tSKDSLS.Size = New System.Drawing.Size(117, 23)
-        Me.tSKDSLS.TabIndex = 92
+        Me.tSKDKUST.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.tSKDKUST.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tSKDKUST.Location = New System.Drawing.Point(9, 10)
+        Me.tSKDKUST.Name = "tSKDKUST"
+        Me.tSKDKUST.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDKUST.TabIndex = 92
         '
         'btnBATAL
         '
@@ -293,60 +347,6 @@ Partial Class FKustomer
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(8, 109)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(32, 15)
-        Me.Label8.TabIndex = 80
-        Me.Label8.Text = "Kota"
-        '
-        'txtKOTA
-        '
-        Me.txtKOTA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtKOTA.Location = New System.Drawing.Point(136, 107)
-        Me.txtKOTA.Name = "txtKOTA"
-        Me.txtKOTA.Size = New System.Drawing.Size(185, 20)
-        Me.txtKOTA.TabIndex = 79
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(8, 224)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(64, 15)
-        Me.Label9.TabIndex = 84
-        Me.Label9.Text = "Kode Area"
-        '
-        'txtKDAREA
-        '
-        Me.txtKDAREA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtKDAREA.Location = New System.Drawing.Point(136, 222)
-        Me.txtKDAREA.Name = "txtKDAREA"
-        Me.txtKDAREA.Size = New System.Drawing.Size(153, 20)
-        Me.txtKDAREA.TabIndex = 83
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(8, 201)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(63, 15)
-        Me.Label10.TabIndex = 82
-        Me.Label10.Text = "Kode Tipe"
-        '
-        'txtKDTIPE
-        '
-        Me.txtKDTIPE.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtKDTIPE.Location = New System.Drawing.Point(136, 199)
-        Me.txtKDTIPE.Name = "txtKDTIPE"
-        Me.txtKDTIPE.Size = New System.Drawing.Size(153, 20)
-        Me.txtKDTIPE.TabIndex = 81
-        '
         'FKustomer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -354,8 +354,8 @@ Partial Class FKustomer
         Me.ClientSize = New System.Drawing.Size(349, 366)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
-        Me.Controls.Add(Me.tSNMSLS)
-        Me.Controls.Add(Me.tSKDSLS)
+        Me.Controls.Add(Me.tSNMKUST)
+        Me.Controls.Add(Me.tSKDKUST)
         Me.Controls.Add(Me.btnBATAL)
         Me.Controls.Add(Me.btnHAPUS)
         Me.Controls.Add(Me.btnUBAH)
@@ -384,12 +384,12 @@ Partial Class FKustomer
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents txtALAMAT As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents txtNMSLS As System.Windows.Forms.TextBox
+    Friend WithEvents txtNMKUST As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents txtKDSLS As System.Windows.Forms.TextBox
+    Friend WithEvents txtKDKUST As System.Windows.Forms.TextBox
     Friend WithEvents btnCARI As System.Windows.Forms.Button
-    Friend WithEvents tSNMSLS As System.Windows.Forms.TextBox
-    Friend WithEvents tSKDSLS As System.Windows.Forms.TextBox
+    Friend WithEvents tSNMKUST As System.Windows.Forms.TextBox
+    Friend WithEvents tSKDKUST As System.Windows.Forms.TextBox
     Friend WithEvents btnBATAL As System.Windows.Forms.Button
     Friend WithEvents btnHAPUS As System.Windows.Forms.Button
     Friend WithEvents btnUBAH As System.Windows.Forms.Button

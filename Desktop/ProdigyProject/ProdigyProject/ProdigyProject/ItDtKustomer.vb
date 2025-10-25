@@ -2,27 +2,53 @@
 
 Public Class ItDtKustomer
 
-    Public Sub LoadDataKust(ByVal keyword As String)
+    Public Sub LoadDataKustomer(Optional ByVal kodekust As String = "",
+                        Optional ByVal namakust As String = "")
 
-        Dim sql As String
-        If keyword = "*" Then
-            sql = "SELECT kodekust, namakust, alamat, kota, ktp, npwp FROM zkustomer ORDER BY kodekust"
-        Else
-            sql = "SELECT kodekust, namakust, alamat, kota, ktp, npwp " &
-                  "FROM zkustomer WHERE kodekust LIKE '%" & keyword & "%' OR namakust LIKE '%" & keyword & "%' ORDER BY kodekust"
+        Dim sql As String = "SELECT kodekust, namakust, alamat, kota, kodehrg, ktp, npwp, kodetipe, kodear FROM zkustomer"
+        Dim whereList As New List(Of String)
+
+        ' --- Filter berdasarkan kodeuser
+        If kodekust <> "" Then
+            whereList.Add("kodekust LIKE ?")
         End If
 
-        dgitmKUST.Rows.Clear()
+        ' --- Filter berdasarkan username
+        If namakust <> "" Then
+            whereList.Add("namakust LIKE ?")
+        End If
+
+        If whereList.Count > 0 Then
+            sql &= " WHERE " & String.Join(" AND ", whereList)
+        End If
+
+        sql &= " ORDER BY kodekust"
+
+        dgitmKUSTT.Rows.Clear()
 
         Try
             BukaKoneksi()
             Cmd = New OdbcCommand(sql, Conn)
+
+            ' --- Bind parameter sesuai urutan filter
+            If kodekust <> "" Then
+                Cmd.Parameters.AddWithValue("", "%" & kodekust & "%")
+            End If
+            If namakust <> "" Then
+                Cmd.Parameters.AddWithValue("", "%" & namakust & "%")
+            End If
+
             Rd = Cmd.ExecuteReader()
-
             While Rd.Read()
-                dgitmKUST.Rows.Add(Rd("kodekust"), Rd("namakust"), Rd("alamat"), Rd("kota"), Rd("ktp"), Rd("npwp"))
+                dgitmKUSTT.Rows.Add(
+                    Rd("kodekust").ToString(),
+                    Rd("namakust").ToString(),
+                    Rd("alamat").ToString(),
+                    Rd("kota").ToString(),
+                    Rd("ktp").ToString(),
+                    Rd("npwp").ToString()
+                )
             End While
-
             Rd.Close()
             Conn.Close()
         Catch ex As Exception
@@ -34,23 +60,16 @@ Public Class ItDtKustomer
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
 
-        SetupGridKustomer(dgitmKUST)
+        SetupGridKustomer(dgitmKUSTT)
     End Sub
 
-    Private Sub dgitmKUST_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmKUST.CellContentClick
+    Private Sub dgitmKUSTT_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmKUSTT.CellContentClick
         If e.RowIndex >= 0 Then
-            Dim kodek As String = dgitmKUST.Rows(e.RowIndex).Cells("kodekust").Value.ToString()
-            Dim namak As String = dgitmKUST.Rows(e.RowIndex).Cells("namakust").Value.ToString()
-            Dim alamat As String = dgitmKUST.Rows(e.RowIndex).Cells("alamat").Value.ToString()
-            Dim kota As String = dgitmKUST.Rows(e.RowIndex).Cells("kota").Value.ToString()
-            Dim ktp As String = dgitmKUST.Rows(e.RowIndex).Cells("ktp").Value.ToString()
-            Dim npwp As Double = Val(dgitmKUST.Rows(e.RowIndex).Cells("npwp").Value)
+            Dim data As String = dgitmKUSTT.Rows(e.RowIndex).Cells("kodekust").Value.ToString()
 
-
-            ' kirim ke ItFPopupPem
-            Dim parentForm As FPenjualan = TryCast(Me.Owner, FPenjualan)
+            Dim parentForm As FKustomer = TryCast(Me.Owner, FKustomer)
             If parentForm IsNot Nothing Then
-                parentForm.SetKustomer(kodek, namak, alamat, kota, ktp, npwp)
+                parentForm.LoadData(data)
             End If
 
             Me.Close()

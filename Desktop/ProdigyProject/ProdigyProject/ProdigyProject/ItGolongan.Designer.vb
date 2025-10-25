@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class ItDtStok
+Partial Class ItGolongan
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,36 +22,31 @@ Partial Class ItDtStok
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.dgitmSTOK = New System.Windows.Forms.DataGridView()
-        CType(Me.dgitmSTOK, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.dgitmGOL = New System.Windows.Forms.DataGridView()
+        CType(Me.dgitmGOL, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'dgitmSTOK
+        'dgitmGOL
         '
-        Me.dgitmSTOK.AllowUserToAddRows = False
-        Me.dgitmSTOK.AllowUserToDeleteRows = False
-        Me.dgitmSTOK.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgitmSTOK.Location = New System.Drawing.Point(7, 9)
-        Me.dgitmSTOK.MultiSelect = False
-        Me.dgitmSTOK.Name = "dgitmSTOK"
-        Me.dgitmSTOK.ReadOnly = True
-        Me.dgitmSTOK.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgitmSTOK.Size = New System.Drawing.Size(880, 436)
-        Me.dgitmSTOK.TabIndex = 1
+        Me.dgitmGOL.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgitmGOL.Location = New System.Drawing.Point(5, 4)
+        Me.dgitmGOL.Name = "dgitmGOL"
+        Me.dgitmGOL.Size = New System.Drawing.Size(350, 214)
+        Me.dgitmGOL.TabIndex = 7
         '
-        'ItDtStok
+        'ItGolongan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(894, 454)
-        Me.Controls.Add(Me.dgitmSTOK)
+        Me.ClientSize = New System.Drawing.Size(361, 223)
+        Me.Controls.Add(Me.dgitmGOL)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Name = "ItDtStok"
+        Me.Name = "ItGolongan"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "ItDtStok"
-        CType(Me.dgitmSTOK, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Text = "ItGolongan"
+        CType(Me.dgitmGOL, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents dgitmSTOK As System.Windows.Forms.DataGridView
+    Friend WithEvents dgitmGOL As System.Windows.Forms.DataGridView
 End Class

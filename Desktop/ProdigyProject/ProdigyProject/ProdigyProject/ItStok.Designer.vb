@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class ItDtStok
+Partial Class ItStok
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -37,7 +37,7 @@ Partial Class ItDtStok
         Me.dgitmSTOK.ReadOnly = True
         Me.dgitmSTOK.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgitmSTOK.Size = New System.Drawing.Size(880, 436)
-        Me.dgitmSTOK.TabIndex = 1
+        Me.dgitmSTOK.TabIndex = 0
         '
         'ItDtStok
         '
@@ -46,6 +46,8 @@ Partial Class ItDtStok
         Me.ClientSize = New System.Drawing.Size(894, 454)
         Me.Controls.Add(Me.dgitmSTOK)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "ItDtStok"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "ItDtStok"

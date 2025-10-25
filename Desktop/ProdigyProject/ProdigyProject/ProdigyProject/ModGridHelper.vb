@@ -539,6 +539,50 @@
     End Sub
 
     ' === Setup untuk Grid Penyesuaian (zmutasim) ===
+    Public Sub SetupGridTipe(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("kodetipe", "Kode Tipe")
+            .Columns("kodetipe").Width = 140
+
+            .Columns.Add("namatipe", "Kode Tipe")
+            .Columns("namatipe").Width = 207
+
+        End With
+    End Sub
+
+    ' === Setup untuk Grid Penyesuaian (zmutasim) ===
+    Public Sub SetupGridArea(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+
+            ' === Definisi Kolom ===
+            .Columns.Add("kodear", "Kode Area")
+            .Columns("kodear").Width = 140
+
+            .Columns.Add("namaar", "Nama Area")
+            .Columns("namaar").Width = 207
+
+        End With
+    End Sub
+
+    ' === Setup untuk Grid Penyesuaian (zmutasim) ===
     Public Sub SetupGridDPenyesuaian(ByVal grid As DataGridView)
         With grid
             .AllowUserToAddRows = False

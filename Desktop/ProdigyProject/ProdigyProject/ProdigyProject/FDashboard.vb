@@ -104,6 +104,12 @@ Public Class FDashboard
         Dim idMenu As String = item.Tag.ToString()
 
         Select Case idMenu
+            Case "ME001"
+                Dim f As New FStok()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
             Case "ME002"
                 Dim f As New FArea()
                 f.Tag = idMenu
@@ -112,6 +118,12 @@ Public Class FDashboard
 
             Case "ME003"
                 Dim f As New FTipe()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME004"
+                Dim f As New FKustomer()
                 f.Tag = idMenu
                 f.MdiParent = Me
                 f.Show()

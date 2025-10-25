@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2025 at 11:34 AM
+-- Generation Time: Oct 25, 2025 at 11:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -24,6 +24,64 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `zakses`
+--
+
+CREATE TABLE `zakses` (
+  `kodeuser` char(11) NOT NULL,
+  `idmenu` varchar(10) NOT NULL,
+  `tambah` int(1) NOT NULL DEFAULT 1,
+  `ubah` int(1) DEFAULT 1,
+  `hapus` int(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zakses`
+--
+
+INSERT INTO `zakses` (`kodeuser`, `idmenu`, `tambah`, `ubah`, `hapus`) VALUES
+('USER00', 'ME001', 1, 1, 1),
+('USER00', 'ME002', 1, 1, 1),
+('USER00', 'ME003', 1, 1, 1),
+('USER00', 'ME004', 1, 1, 1),
+('USER00', 'ME005', 1, 1, 1),
+('USER00', 'ME006', 1, 1, 1),
+('USER00', 'ME007', 1, 1, 1),
+('USER00', 'ME008', 1, 1, 1),
+('USER00', 'ME009', 1, 1, 1),
+('USER00', 'ME0010', 1, 1, 1),
+('USER00', 'ME0011', 1, 1, 1),
+('USER00', 'ME0012', 1, 1, 1),
+('USER00', 'ME0019', 1, 1, 1),
+('USER00', 'ME0013', 1, 1, 1),
+('USER00', 'ME0014', 1, 1, 1),
+('USER00', 'ME0015', 1, 1, 1),
+('USER00', 'ME0016', 1, 1, 1),
+('USER00', 'ME0017', 1, 1, 1),
+('USER00', 'ME0018', 1, 1, 1),
+('USER01', 'ME001', 1, 1, 1),
+('USER01', 'ME002', 1, 1, 1),
+('USER01', 'ME003', 1, 1, 1),
+('USER01', 'ME004', 1, 1, 1),
+('USER01', 'ME005', 1, 1, 1),
+('USER01', 'ME006', 1, 1, 1),
+('USER01', 'ME007', 1, 1, 1),
+('USER01', 'ME008', 1, 1, 1),
+('USER01', 'ME009', 1, 1, 1),
+('USER01', 'ME0010', 1, 1, 1),
+('USER01', 'ME0011', 1, 1, 1),
+('USER01', 'ME0012', 1, 1, 1),
+('USER01', 'ME0019', 1, 1, 1),
+('USER01', 'ME0013', 1, 0, 0),
+('USER01', 'ME0014', 1, 1, 1),
+('USER01', 'ME0015', 1, 1, 1),
+('USER01', 'ME0016', 1, 1, 1),
+('USER01', 'ME0017', 1, 1, 1),
+('USER01', 'ME0018', 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `zarea`
 --
 
@@ -31,6 +89,14 @@ CREATE TABLE `zarea` (
   `kodear` char(20) NOT NULL,
   `namaar` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zarea`
+--
+
+INSERT INTO `zarea` (`kodear`, `namaar`) VALUES
+('AR01', 'SUNGAI JAWI'),
+('AR02', 'SUNGAI BANGKONG');
 
 -- --------------------------------------------------------
 
@@ -67,7 +133,8 @@ CREATE TABLE `zbeli` (
 INSERT INTO `zbeli` (`nonota`, `tgl`, `kodesup`, `kodegd`, `nilai`, `lunas`, `tgltempo`, `ppn`, `hppn`, `disc1`, `hdisc1`, `disc2`, `hdisc2`, `disc3`, `hdisc3`, `ket`, `operator`, `logtime`, `lainnya`) VALUES
 ('NOTA3', '2025-09-25', 'S002', '', 1678302, 0, '2025-09-25', 11.00, 163345.27, 10.00, 203697.80, 10.00, 183328.02, 10.00, 164995.22, 'TEST NOTA 3', '', '2025-10-03 04:12:56', 30000.00),
 ('NOTA1', '2025-09-25', 'S001', '', 3134376, 0, '2025-09-25', 11.00, 310415.65, 10.00, 387100.20, 10.00, 348390.18, 10.00, 313551.16, 'TEST NOTA 1', '', '2025-10-04 01:46:21', 2000.00),
-('NOTA2', '2025-10-02', 'S002', '', 2604289, 0, '2025-10-02', 11.00, 257091.71, 10.00, 360678.60, 10.00, 324610.74, 20.00, 584299.33, 'TEST NOTA 2', '', '2025-10-04 08:53:36', 10000.00);
+('NOTA2', '2025-10-02', 'S002', '', 2604289, 0, '2025-10-31', 11.00, 257091.71, 10.00, 360678.60, 10.00, 324610.74, 20.00, 584299.33, 'TEST NOTA 2', '', '2025-10-21 06:08:17', 10000.00),
+('NOTA4', '2025-10-21', 'S002', '', 24375700, 0, '2025-10-21', 11.00, 2405700.00, 10.00, 3000000.00, 10.00, 2700000.00, 10.00, 2430000.00, 'TEST', '', '2025-10-21 06:23:59', 100000.00);
 
 -- --------------------------------------------------------
 
@@ -117,11 +184,33 @@ INSERT INTO `zbelim` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `ha
 ('NOTA1', 'HDD0048', 'G01', 1, 0, 0, 1100000, 0, 0, 0, 0, 0, 0, 0, 1100000, '2025-10-04 01:46:21', 'User'),
 ('NOTA1', 'TIN0081', 'G03', 1, 1, 0, 60000, 0, 0, 0, 0, 0, 0, 0, 72000, '2025-10-04 01:46:21', 'User'),
 ('NOTA1', 'CAR0079', 'G02', 1, 2, 3, 50000, 0, 0, 0, 0, 0, 0, 0, 60750, '2025-10-04 01:46:21', 'User'),
-('NOTA2', 'ALB0001', 'G02', 1, 0, 0, 3000000, 10, 0, 0, 0, 0, 0, 0, 2700000, '2025-10-04 08:53:36', 'User'),
-('NOTA2', 'BAT0002', 'G02', 1, 3, 0, 225000, 20, 0, 0, 0, 0, 0, 0, 234000, '2025-10-04 08:53:36', 'User'),
-('NOTA2', 'CAR0079', 'G02', 1, 2, 3, 50000, 0, 0, 0, 0, 0, 0, 0, 60750, '2025-10-04 08:53:36', 'User'),
-('NOTA2', 'CAR0035', 'G01', 1, 2, 3, 30000, 20, 0, 10, 0, 0, 0, 0, 31536, '2025-10-04 08:53:36', 'User'),
-('NOTA2', 'KEY0004', 'G01', 1, 2, 3, 300000, 10, 0, 0, 0, 0, 0, 0, 580500, '2025-10-04 08:53:36', 'User');
+('NOTA 4', 'KEY0004', 'G02', 12, 12, 12, 300000, 11, 0, 10, 0, 10, 0, 10000, 4012622, '2025-10-21 01:43:14', 'User'),
+('NOTA2', 'ALB0001', 'G02', 1, 0, 0, 3000000, 10, 0, 0, 0, 0, 0, 0, 2700000, '2025-10-21 06:08:17', 'User'),
+('NOTA2', 'BAT0002', 'G02', 1, 3, 0, 225000, 20, 0, 0, 0, 0, 0, 0, 234000, '2025-10-21 06:08:17', 'User'),
+('NOTA2', 'CAR0079', 'G02', 1, 2, 3, 50000, 0, 0, 0, 0, 0, 0, 0, 60750, '2025-10-21 06:08:17', 'User'),
+('NOTA2', 'CAR0035', 'G01', 1, 2, 3, 30000, 20, 0, 10, 0, 0, 0, 0, 31536, '2025-10-21 06:08:17', 'User'),
+('NOTA2', 'KEY0004', 'G01', 1, 2, 3, 300000, 10, 0, 0, 0, 0, 0, 0, 580500, '2025-10-21 06:08:17', 'User'),
+('NOTA4', 'ALB0001', 'G01', 10, 0, 0, 3000000, 0, 0, 0, 0, 0, 0, 0, 30000000, '2025-10-21 06:23:59', 'User');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zconfig`
+--
+
+CREATE TABLE `zconfig` (
+  `jmlharga` int(11) DEFAULT 12,
+  `qppn` double(10,2) DEFAULT 11.00,
+  `qbrsbeli` int(11) NOT NULL,
+  `qbrsjual` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `zconfig`
+--
+
+INSERT INTO `zconfig` (`jmlharga`, `qppn`, `qbrsbeli`, `qbrsjual`) VALUES
+(6, 11.00, 10, 10);
 
 -- --------------------------------------------------------
 
@@ -216,7 +305,7 @@ CREATE TABLE `zjual` (
 --
 
 INSERT INTO `zjual` (`nonota`, `tgl`, `kodekust`, `kodesls`, `kodegd`, `nilai`, `lunas`, `tgltempo`, `ppn`, `hppn`, `disc1`, `hdisc1`, `disc2`, `hdisc2`, `disc3`, `hdisc3`, `ket`, `operator`, `logtime`, `lainnya`) VALUES
-('NOTA1', '2025-10-07', 'C01', 'S01', NULL, 27746, 0, '2025-10-07', 11.00, 1758.57, 10.00, 2193.00, 10.00, 1973.70, 10.00, 1776.33, 'TEST', '', '2025-10-07 03:26:07', 10000.00);
+('NOTA1', '2025-10-07', 'C01', 'S01', NULL, 27746, 0, '2025-10-07', 11.00, 1758.57, 10.00, 2193.00, 10.00, 1973.70, 10.00, 1776.33, 'TEST', '', '2025-10-21 02:03:47', 10000.00);
 
 -- --------------------------------------------------------
 
@@ -249,7 +338,7 @@ CREATE TABLE `zjualm` (
 --
 
 INSERT INTO `zjualm` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `harga`, `disca`, `hdisca`, `discb`, `hdiscb`, `discc`, `hdiscc`, `discrp`, `jumlah`, `operator`, `logtime`) VALUES
-('NOTA1', 'CAR0035', 'G01', 1, 2, 3, 30000, 10, 0, 10, 0, 10, 0, 10000, 21930, 'User', '2025-10-07 03:26:07');
+('NOTA1', 'CAR0035', 'G01', 1, 2, 3, 30000, 10, 0, 10, 0, 10, 0, 10000, 21930, 'User', '2025-10-21 02:03:47');
 
 -- --------------------------------------------------------
 
@@ -274,8 +363,46 @@ CREATE TABLE `zkustomer` (
 --
 
 INSERT INTO `zkustomer` (`kodekust`, `kodear`, `kodetipe`, `namakust`, `alamat`, `kota`, `kodehrg`, `ktp`, `npwp`) VALUES
-('C01', NULL, NULL, 'PT MEDIA INDAH', 'JL. MENTARI', 'PONTIANAK', '2', '3201021501010001', '12.345.678.9-012.345'),
-('C02', NULL, NULL, 'PT ASIA JAYA ABADI', 'JL. SITAPANG', 'SINGKAWANG', '5', '3201021501010002', '12.345.678.9-013.345');
+('C01', 'AR01', 'TP02', 'PT MEDIA INDAH', 'JL. MENTARI', 'PONTIANAK', '2', '3201021501010001', '12.345.678.9-012.345'),
+('C02', 'AR02', 'TP01', 'PT ASIA JAYA ABADI', 'JL. SITAPANG', 'SINGKAWANG', '5', '3201021501010002', '12.345.678.9-013.345');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zmenu`
+--
+
+CREATE TABLE `zmenu` (
+  `idmenu` char(20) NOT NULL,
+  `mainmenu` varchar(50) NOT NULL,
+  `submenu` varchar(50) NOT NULL,
+  `urutan` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `zmenu`
+--
+
+INSERT INTO `zmenu` (`idmenu`, `mainmenu`, `submenu`, `urutan`) VALUES
+('ME001', 'mFile', 'smStok', 1),
+('ME002', 'mFile', 'smArea', 2),
+('ME003', 'mFile', 'smTipe', 3),
+('ME004', 'mFile', 'smKustomer', 4),
+('ME005', 'mFile', 'smSupplier', 5),
+('ME006', 'mFile', 'smSales', 6),
+('ME007', 'mFile', 'smGudang', 7),
+('ME008', 'mFile', 'smMerek', 8),
+('ME009', 'mFile', 'smGolongan', 9),
+('ME0010', 'mFile', 'smGrup', 10),
+('ME0011', 'mFile', 'smAkun', 11),
+('ME0012', 'mFile', 'smExit', 12),
+('ME0013', 'mTransaksi', 'smPembelian', 13),
+('ME0014', 'mTransaksi', 'smReturPembelian', 14),
+('ME0015', 'mTransaksi', 'smPenjualan', 15),
+('ME0016', 'mTransaksi', 'smReturPenjualan', 16),
+('ME0017', 'mTransaksi', 'smMutasi', 17),
+('ME0018', 'mTransaksi', 'smPenyesuaian', 18),
+('ME0019', 'mLaporan', 'smLaporan', 19);
 
 -- --------------------------------------------------------
 
@@ -316,7 +443,7 @@ CREATE TABLE `zmutasi` (
 
 INSERT INTO `zmutasi` (`nonota`, `tgl`, `kodegd1`, `kodegd2`, `operator`, `logtime`) VALUES
 ('NOTA1', '2025-10-09', 'G02', 'G01', '', '2025-10-09 08:07:07'),
-('NOTA2', '2025-10-09', 'G03', 'G02', '', '2025-10-10 07:33:20');
+('NOTA2', '2025-10-09', 'G03', 'G02', '', '2025-10-21 02:08:43');
 
 -- --------------------------------------------------------
 
@@ -342,7 +469,7 @@ CREATE TABLE `zmutasim` (
 
 INSERT INTO `zmutasim` (`nonota`, `kodebrg`, `kodegd1`, `kodegd2`, `jlh1`, `jlh2`, `jlh3`, `operator`, `logtime`) VALUES
 ('NOTA1', 'ALB0001', 'G01', 'G02', 120, 0, 0, 'User', '2025-10-09 08:07:07'),
-('NOTA2', 'CAR0035', 'G03', 'G02', 0, 0, 0, 'User', '2025-10-10 07:33:20');
+('NOTA2', 'CAR0035', 'G03', 'G02', 0, 0, 0, 'User', '2025-10-21 02:08:43');
 
 -- --------------------------------------------------------
 
@@ -501,7 +628,7 @@ CREATE TABLE `zrjual` (
 --
 
 INSERT INTO `zrjual` (`nonota`, `nofaktur`, `tgl`, `kodekust`, `kodesls`, `kodegd`, `nilai`, `lunas`, `tgltempo`, `ppn`, `hppn`, `disc1`, `hdisc1`, `disc2`, `hdisc2`, `disc3`, `hdisc3`, `ket`, `operator`, `logtime`, `lainnya`) VALUES
-('FAKTUR 1', 'NOTA1', '2025-10-16', 'C01', 'S01', NULL, 2483013, 0, '2025-10-16', 11.00, 244082.32, 10.00, 304380.00, 10.00, 273942.00, 10.00, 246547.80, 'TEST', '', '2025-10-16 05:59:33', 20000.00);
+('NOTARETUR1', 'NOTA1', '2025-10-18', 'C01', 'S01', NULL, 19973706, 0, '2025-10-18', 11.00, 1969466.40, 10.00, 2456000.00, 10.00, 2210400.00, 10.00, 1989360.00, 'TEST', '', '2025-10-18 03:19:19', 100000.00);
 
 -- --------------------------------------------------------
 
@@ -535,8 +662,23 @@ CREATE TABLE `zrjualm` (
 --
 
 INSERT INTO `zrjualm` (`nonota`, `nofaktur`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `harga`, `disca`, `hdisca`, `discb`, `hdiscb`, `discc`, `hdiscc`, `discrp`, `jumlah`, `operator`, `logtime`) VALUES
-('FAKTUR 1', 'FAKTUR 1', 'ALB0001', 'G03', 1, 0, 0, 3000000, 0, 0, 0, 0, 0, 0, 0, 3000000, 'User', '2025-10-16 05:59:33'),
-('FAKTUR 1', 'FAKTUR 1', 'CAR0035', 'G01', 1, 2, 3, 30000, 0, 0, 0, 0, 0, 0, 0, 43800, 'User', '2025-10-16 05:59:33');
+('NOTARETUR1', 'NOTA1', 'ALB0001', 'G01', 10, 0, 0, 3000000, 10, 0, 10, 0, 10, 0, 10000, 21860000, 'User', '2025-10-18 03:19:19'),
+('NOTARETUR1', 'NOTA1', 'BAT0002', 'G01', 12, 0, 0, 225000, 0, 0, 0, 0, 0, 0, 0, 2700000, 'User', '2025-10-18 03:19:19'),
+('NOTARETUR1', 'NOTA1', 'ALB0001', 'G01', 10, 0, 0, 3000000, 10, 0, 10, 0, 10, 0, 10000, 21860000, 'User', '2025-10-17 20:19:19'),
+('NOTARETUR1', 'NOTA1', 'ALB0001', 'G02', 1, 0, 0, 3000000, 10, 0, 10, 0, 10, 0, 1000000, 1187000, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'BAT0002', 'G02', 1, 3, 0, 225000, 20, 0, 0, 0, 0, 0, 0, 234000, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'CAR0079', 'G02', 1, 2, 3, 50000, 0, 0, 0, 0, 0, 0, 0, 60750, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'CAR0035', 'G03', 1, 2, 3, 30000, 10, 0, 10, 0, 0, 0, 0, 35478, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'CAR0043', 'G03', 1, 0, 0, 250000, 0, 0, 0, 0, 0, 0, 0, 250000, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'KAB0064', 'G02', 1, 2, 0, 20000, 10, 0, 10, 0, 0, 0, 0, 16524, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'KAB0064', 'G02', 1, 0, 0, 20000, 0, 0, 0, 0, 0, 0, 0, 20000, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'KEY0004', 'G01', 1, 2, 3, 300000, 10, 0, 0, 0, 0, 0, 0, 580500, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'PAP0008', 'G01', 2, 0, 0, 110000, 0, 0, 0, 0, 0, 0, 0, 220000, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'PAP0010', 'G03', 10, 0, 0, 3400, 0, 0, 0, 0, 0, 0, 0, 34000, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'HDD0048', 'G01', 1, 0, 0, 1100000, 0, 0, 0, 0, 0, 0, 0, 1100000, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'TIN0081', 'G03', 1, 1, 0, 60000, 0, 0, 0, 0, 0, 0, 0, 72000, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'CAR0079', 'G02', 1, 2, 3, 50000, 0, 0, 0, 0, 0, 0, 0, 60750, 'User', '2025-10-03 18:46:21'),
+('NOTARETUR1', 'NOTA1', 'BAT0002', 'G01', 12, 0, 0, 225000, 0, 0, 0, 0, 0, 0, 0, 2700000, 'User', '2025-10-17 20:19:19');
 
 -- --------------------------------------------------------
 
@@ -1373,8 +1515,7 @@ CREATE TABLE `zusers` (
 
 INSERT INTO `zusers` (`kodeuser`, `username`, `kunci`) VALUES
 ('USER00', 'ADMINTEST', 'ADMINTEST'),
-('USER01', 'USER1', 'USER1'),
-('USER02', 'USER2', 'USER2');
+('USER01', 'USER1', 'USER1');
 
 --
 -- Indexes for dumped tables
@@ -1452,12 +1593,6 @@ ALTER TABLE `zsupplier`
 --
 ALTER TABLE `ztipe`
   ADD PRIMARY KEY (`kodetipe`);
-
---
--- Indexes for table `zusers`
---
-ALTER TABLE `zusers`
-  ADD PRIMARY KEY (`kodeuser`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

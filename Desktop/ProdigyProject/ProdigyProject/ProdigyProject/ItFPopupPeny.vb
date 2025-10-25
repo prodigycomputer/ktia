@@ -144,7 +144,7 @@ Public Class ItFPopupPeny
             e.SuppressKeyPress = True ' supaya bunyi beep Enter tidak muncul
 
             If tPopKDBARANG.Text.Trim() <> "" Then
-                Dim f As New ItDtStok
+                Dim f As New ItStok
                 f.Owner = Me
                 f.Show()
                 f.LoadDataStok(tPopKDBARANG.Text.Trim())
@@ -157,7 +157,7 @@ Public Class ItFPopupPeny
             e.SuppressKeyPress = True
 
             If tPopNMBARANG.Text.Trim() <> "" Then
-                Dim f As New ItDtStok
+                Dim f As New ItStok
                 f.Owner = Me
                 f.Show()
                 f.LoadDataStok(tPopNMBARANG.Text.Trim())

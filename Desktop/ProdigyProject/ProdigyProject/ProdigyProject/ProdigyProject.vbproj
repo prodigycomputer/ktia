@@ -133,6 +133,12 @@
     <Compile Include="FDtAkses.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FDtHarga.Designer.vb">
+      <DependentUpon>FDtHarga.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FDtHarga.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FGolongan.Designer.vb">
       <DependentUpon>FGolongan.vb</DependentUpon>
     </Compile>
@@ -205,6 +211,12 @@
     <Compile Include="FSetAkun.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FStok.Designer.vb">
+      <DependentUpon>FStok.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FStok.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FSupplier.Designer.vb">
       <DependentUpon>FSupplier.vb</DependentUpon>
     </Compile>
@@ -215,6 +227,12 @@
       <DependentUpon>FTipe.vb</DependentUpon>
     </Compile>
     <Compile Include="FTipe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItArea.Designer.vb">
+      <DependentUpon>ItArea.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItArea.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtArea.Designer.vb">
@@ -245,6 +263,30 @@
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
     </Compile>
     <Compile Include="ItDtKustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtStok.Designer.vb">
+      <DependentUpon>ItDtStok.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtStok.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItGolongan.Designer.vb">
+      <DependentUpon>ItGolongan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItGolongan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItGrup.Designer.vb">
+      <DependentUpon>ItGrup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItGrup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItKustomer.Designer.vb">
+      <DependentUpon>ItKustomer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItKustomer.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtMerek.Designer.vb">
@@ -314,16 +356,22 @@
     <Compile Include="ItDtSales.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ItMerek.Designer.vb">
+      <DependentUpon>ItMerek.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItMerek.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ItSales.Designer.vb">
       <DependentUpon>ItSales.vb</DependentUpon>
     </Compile>
     <Compile Include="ItSales.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ItDtStok.Designer.vb">
-      <DependentUpon>ItDtStok.vb</DependentUpon>
+    <Compile Include="ItStok.Designer.vb">
+      <DependentUpon>ItStok.vb</DependentUpon>
     </Compile>
-    <Compile Include="ItDtStok.vb">
+    <Compile Include="ItStok.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtSupplier.Designer.vb">
@@ -366,6 +414,12 @@
       <DependentUpon>ItFPopupPeny.vb</DependentUpon>
     </Compile>
     <Compile Include="ItFPopupPeny.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItTipe.Designer.vb">
+      <DependentUpon>ItTipe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItTipe.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Koneksi.vb" />
@@ -445,6 +499,9 @@
     <EmbeddedResource Include="FDtAkses.resx">
       <DependentUpon>FDtAkses.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FDtHarga.resx">
+      <DependentUpon>FDtHarga.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FGolongan.resx">
       <DependentUpon>FGolongan.vb</DependentUpon>
     </EmbeddedResource>
@@ -481,11 +538,17 @@
     <EmbeddedResource Include="FSetAkun.resx">
       <DependentUpon>FSetAkun.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FStok.resx">
+      <DependentUpon>FStok.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FSupplier.resx">
       <DependentUpon>FSupplier.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FTipe.resx">
       <DependentUpon>FTipe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItArea.resx">
+      <DependentUpon>ItArea.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtArea.resx">
       <DependentUpon>ItDtArea.vb</DependentUpon>
@@ -501,6 +564,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtStok.resx">
+      <DependentUpon>ItDtStok.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItGolongan.resx">
+      <DependentUpon>ItGolongan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItGrup.resx">
+      <DependentUpon>ItGrup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItKustomer.resx">
+      <DependentUpon>ItKustomer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtMerek.resx">
       <DependentUpon>ItDtMerek.vb</DependentUpon>
@@ -535,11 +610,14 @@
     <EmbeddedResource Include="ItDtSales.resx">
       <DependentUpon>ItDtSales.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ItMerek.resx">
+      <DependentUpon>ItMerek.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ItSales.resx">
       <DependentUpon>ItSales.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ItDtStok.resx">
-      <DependentUpon>ItDtStok.vb</DependentUpon>
+    <EmbeddedResource Include="ItStok.resx">
+      <DependentUpon>ItStok.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtSupplier.resx">
       <DependentUpon>ItDtSupplier.vb</DependentUpon>
@@ -561,6 +639,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ItFPopupPeny.resx">
       <DependentUpon>ItFPopupPeny.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItTipe.resx">
+      <DependentUpon>ItTipe.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
