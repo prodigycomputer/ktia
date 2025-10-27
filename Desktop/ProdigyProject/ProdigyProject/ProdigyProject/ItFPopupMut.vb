@@ -34,6 +34,61 @@ Public Class ItFPopupMut
         End If
     End Sub
 
+    ' === CEK STOK ===
+    Private Sub CekStok()
+        Try
+            BukaKoneksi()
+
+            Dim kodeBrg As String = tPopKDBARANG.Text.Trim()
+
+            If kodeBrg = "" Then
+                tPopSTOK.Text = ""
+                Exit Sub
+            End If
+
+            Dim sql As String = "SELECT sisa1, sisa2, sisa3 FROM zsaldo WHERE kodebrg=?"
+            Using cmd As New OdbcCommand(sql, Conn)
+                cmd.Parameters.AddWithValue("@1", kodeBrg)
+
+                Using rd As OdbcDataReader = cmd.ExecuteReader()
+                    If rd.Read() Then
+                        Dim s1 As Decimal = If(IsDBNull(rd("sisa1")), 0, Convert.ToDecimal(rd("sisa1")))
+                        Dim s2 As Decimal = If(IsDBNull(rd("sisa2")), 0, Convert.ToDecimal(rd("sisa2")))
+                        Dim s3 As Decimal = If(IsDBNull(rd("sisa3")), 0, Convert.ToDecimal(rd("sisa3")))
+
+                        Dim st1 As String = rd("satuan1").ToString()
+                        Dim st2 As String = rd("satuan2").ToString()
+                        Dim st3 As String = rd("satuan3").ToString()
+
+                        If s1 = 0 AndAlso s2 = 0 AndAlso s3 = 0 Then
+                            tPopSTOK.Text = "Stok Habis"
+                        Else
+                            ' Format tampilan stok per satuan
+                            Dim parts As New List(Of String)
+                            If s1 > 0 Then parts.Add(s1.ToString("N0") & " " & st1)
+                            If s2 > 0 Then parts.Add(s2.ToString("N0") & " " & st2)
+                            If s3 > 0 Then parts.Add(s3.ToString("N0") & " " & st3)
+
+                            ' Jika semuanya nol tapi ingin tetap tampilkan nol juga:
+                            If parts.Count = 0 Then
+                                parts.Add(s1.ToString("N0") & " " & st1)
+                                parts.Add(s2.ToString("N0") & " " & st2)
+                                parts.Add(s3.ToString("N0") & " " & st3)
+                            End If
+
+                            tPopSTOK.Text = String.Join(", ", parts)
+                        End If
+                    Else
+                        tPopSTOK.Text = "Stok tidak tersedia"
+                    End If
+                End Using
+            End Using
+
+        Catch ex As Exception
+            MsgBox("Terjadi kesalahan saat cek stok: " & ex.Message)
+        End Try
+    End Sub
+
     Public Sub LoadBarangInfo(ByVal kodeBrg As String)
 
         If Conn Is Nothing OrElse Conn.State = ConnectionState.Closed Then
@@ -70,6 +125,7 @@ Public Class ItFPopupMut
         tPopSTN1.Clear()
         tPopSTN2.Clear()
         tPopSTN3.Clear()
+        tPopSTOK.Clear()
         FaktorIsi1 = 1
         FaktorIsi2 = 1
         tPopJLH2.Enabled = (FaktorIsi1 > 1)
@@ -130,6 +186,11 @@ Public Class ItFPopupMut
 
     Private Sub btnPopTUTUP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPopTUTUP.Click
         Me.Close()
+    End Sub
+
+    ' === EVENT: SAAT KODE BARANG SELESAI DIISI ===
+    Private Sub tPopKDBARANG_Leave(ByVal sender As Object, ByVal e As EventArgs) Handles tPopKDBARANG.Leave
+        CekStok()
     End Sub
 
     Private Sub tPopKDBARANG_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles tPopKDBARANG.KeyDown

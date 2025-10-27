@@ -35,6 +35,66 @@ Public Class ItFPopup
         End If
     End Sub
 
+    ' === CEK STOK ===
+    Private Sub CekStok()
+        Try
+            BukaKoneksi()
+
+            Dim kodeBrg As String = tPopKDBARANG.Text.Trim()
+            Dim kodeGd As String = ""
+            If cbPopGudang.SelectedItem IsNot Nothing Then
+                kodeGd = cbPopGudang.SelectedItem.ToString().Split(" "c)(0)
+            End If
+
+            If kodeBrg = "" Or kodeGd = "" Then
+                tPopSTOK.Text = ""
+                Exit Sub
+            End If
+
+            Dim sql As String = "SELECT sisa1, sisa2, sisa3 FROM zsaldo WHERE kodebrg=? AND kodegd=?"
+            Using cmd As New OdbcCommand(sql, Conn)
+                cmd.Parameters.AddWithValue("@1", kodeBrg)
+                cmd.Parameters.AddWithValue("@2", kodeGd)
+
+                Using rd As OdbcDataReader = cmd.ExecuteReader()
+                    If rd.Read() Then
+                        Dim s1 As Decimal = If(IsDBNull(rd("sisa1")), 0, Convert.ToDecimal(rd("sisa1")))
+                        Dim s2 As Decimal = If(IsDBNull(rd("sisa2")), 0, Convert.ToDecimal(rd("sisa2")))
+                        Dim s3 As Decimal = If(IsDBNull(rd("sisa3")), 0, Convert.ToDecimal(rd("sisa3")))
+
+                        Dim st1 As String = rd("satuan1").ToString()
+                        Dim st2 As String = rd("satuan2").ToString()
+                        Dim st3 As String = rd("satuan3").ToString()
+
+                        If s1 = 0 AndAlso s2 = 0 AndAlso s3 = 0 Then
+                            tPopSTOK.Text = "Stok Habis"
+                        Else
+                            ' Format tampilan stok per satuan
+                            Dim parts As New List(Of String)
+                            If s1 > 0 Then parts.Add(s1.ToString("N0") & " " & st1)
+                            If s2 > 0 Then parts.Add(s2.ToString("N0") & " " & st2)
+                            If s3 > 0 Then parts.Add(s3.ToString("N0") & " " & st3)
+
+                            ' Jika semuanya nol tapi ingin tetap tampilkan nol juga:
+                            If parts.Count = 0 Then
+                                parts.Add(s1.ToString("N0") & " " & st1)
+                                parts.Add(s2.ToString("N0") & " " & st2)
+                                parts.Add(s3.ToString("N0") & " " & st3)
+                            End If
+
+                            tPopSTOK.Text = String.Join(", ", parts)
+                        End If
+                    Else
+                        tPopSTOK.Text = "Stok tidak tersedia"
+                    End If
+                End Using
+            End Using
+
+        Catch ex As Exception
+            MsgBox("Terjadi kesalahan saat cek stok: " & ex.Message)
+        End Try
+    End Sub
+
     Public Sub LoadBarangInfo(ByVal kodeBrg As String, Optional ByVal kodegd As String = "")
 
         If Conn Is Nothing OrElse Conn.State = ConnectionState.Closed Then
@@ -92,6 +152,7 @@ Public Class ItFPopup
         tPopDISRP.Clear()
         tPopJUMLAH.Clear()
         tPopHARGA.Clear()
+        tPopSTOK.Clear()
         cbPopGudang.SelectedIndex = -1
         FaktorIsi1 = 1
         FaktorIsi2 = 1
@@ -214,8 +275,14 @@ Public Class ItFPopup
         Me.Close()
     End Sub
 
+    ' === EVENT: SAAT KODE BARANG SELESAI DIISI ===
+    Private Sub tPopKDBARANG_Leave(ByVal sender As Object, ByVal e As EventArgs) Handles tPopKDBARANG.Leave
+        CekStok()
+    End Sub
+
     Private Sub cbPopGudang_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbPopGudang.SelectedIndexChanged
         If cbPopGudang.SelectedItem IsNot Nothing Then
+            CekStok()
             Dim fullText As String = cbPopGudang.SelectedItem.ToString()
             Dim kodegd As String = fullText.Split(" "c)(0)  ' ambil bagian kode
             ' contoh: "G01 Gudang Utama" → kodegd = "G01"
