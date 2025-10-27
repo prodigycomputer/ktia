@@ -5,7 +5,7 @@ Public Class FDtAkses
     Public Property KodeUser As String  ' untuk menerima data dari FSetAkun
 
     Private Sub FDtAkses_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        lblKDUSER.Text = "Kode User : " & KodeUser
+        lblKDUSER.Text = KodeUser
         TampilkanDataAkses()
     End Sub
 

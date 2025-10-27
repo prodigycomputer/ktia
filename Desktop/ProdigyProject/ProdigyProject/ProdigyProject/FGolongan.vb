@@ -58,50 +58,84 @@ Public Class FGolongan
     End Sub
 
     Private Sub btnTAMBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTAMBAH.Click
-        SetButtonState(Me, False)
-        statusMode = "tambah"
-        KosongkanInput()
-        EnabledLoad()
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
+
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
+
+        ' === Cek apakah user boleh tambah ===
+        If Not akses("tambah") Then
+            MessageBox.Show("Tidak bisa akses tambah", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        Else
+            SetButtonState(Me, False)
+            statusMode = "tambah"
+            KosongkanInput()
+            EnabledLoad()
+        End If
     End Sub
 
     Private Sub btnUBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUBAH.Click
-        Dim kodeGO As String = txtKDGOL.Text.Trim()
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
 
-        ' cek apakah kosong
-        If kodeGO Is Nothing OrElse String.IsNullOrWhiteSpace(txtKDGOL.Text) Then
-            MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
+
+        If Not akses("ubah") Then
+            MessageBox.Show("Tidak bisa akses ubah", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
-        End If
+        Else
+            Dim kodeGO As String = txtKDGOL.Text.Trim()
 
-        EnabledLoad()
-        SetButtonState(Me, False)
-        statusMode = "ubah"
+            ' cek apakah kosong
+            If kodeGO Is Nothing OrElse String.IsNullOrWhiteSpace(txtKDGOL.Text) Then
+                MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
+            EnabledLoad()
+            SetButtonState(Me, False)
+            statusMode = "ubah"
+        End If
     End Sub
 
     Private Sub btnHAPUS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHAPUS.Click
-        Try
-            Dim kodeGO As String = txtKDGOL.Text.Trim()
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
 
-            If String.IsNullOrEmpty(kodeGO) Then
-                MessageBox.Show("Tidak ada data yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Exit Sub
-            End If
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
 
-            If MessageBox.Show("Yakin hapus " & kodeGO & " ?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
-                Exit Sub
-            End If
+        If Not akses("hapus") Then
+            MessageBox.Show("Tidak bisa akses hapus", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        Else
+            Try
+                Dim kodeGO As String = txtKDGOL.Text.Trim()
 
-            HapusGolongan(txtKDGOL.Text)
-            KosongkanInput()
-            SetButtonState(Me, True)
-            statusMode = ""
-            DisabledLoad()
+                If String.IsNullOrEmpty(kodeGO) Then
+                    MessageBox.Show("Tidak ada data yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Exit Sub
+                End If
 
-            MessageBox.Show(kodeGO & " berhasil dihapus.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If MessageBox.Show("Yakin hapus " & kodeGO & " ?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+                    Exit Sub
+                End If
 
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "Error Hapus", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+                HapusGolongan(txtKDGOL.Text)
+                KosongkanInput()
+                SetButtonState(Me, True)
+                statusMode = ""
+                DisabledLoad()
+
+                MessageBox.Show(kodeGO & " berhasil dihapus.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Error Hapus", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
     End Sub
 
     Public Sub HapusGolongan(ByVal kdGo As String)

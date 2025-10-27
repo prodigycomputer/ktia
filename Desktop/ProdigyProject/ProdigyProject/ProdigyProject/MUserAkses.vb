@@ -14,6 +14,12 @@ Module MUserAkses
         }
 
         Try
+            If Conn Is Nothing Then
+                BukaKoneksi()
+            ElseIf Conn.State = ConnectionState.Closed Then
+                Conn.Open()
+            End If
+
             Dim sql As String = "SELECT tambah, ubah, hapus FROM zakses WHERE kodeuser=? AND idmenu=?"
             Using cmd As New OdbcCommand(sql, Conn)
                 cmd.Parameters.AddWithValue("@1", kodeUser)
@@ -34,42 +40,4 @@ Module MUserAkses
 
         Return akses
     End Function
-
-    ' === Fungsi bantu untuk memblok tombol di setiap form sesuai hak akses ===
-    Public Sub TerapkanAksesKeButton(ByVal form As Form, ByVal idMenu As String)
-        If String.IsNullOrEmpty(KodeUserLogin) Then Exit Sub
-        Dim akses = GetAkses(KodeUserLogin, idMenu)
-
-        ' Cari tombol-tombol umum
-        Dim btnTambah = TryCast(form.Controls("btnTAMBAH"), Button)
-        Dim btnUbah = TryCast(form.Controls("btnUBAH"), Button)
-        Dim btnHapus = TryCast(form.Controls("btnHAPUS"), Button)
-
-        If btnTambah IsNot Nothing Then
-            If akses("tambah") Then
-                btnTambah.Enabled = True
-            Else
-                btnTambah.Enabled = False
-                AddHandler btnTambah.Click, Sub() MsgBox("Anda tidak punya akses untuk menambah!", MsgBoxStyle.Exclamation)
-            End If
-        End If
-
-        If btnUbah IsNot Nothing Then
-            If akses("ubah") Then
-                btnUbah.Enabled = True
-            Else
-                btnUbah.Enabled = False
-                AddHandler btnUbah.Click, Sub() MsgBox("Anda tidak punya akses untuk mengubah!", MsgBoxStyle.Exclamation)
-            End If
-        End If
-
-        If btnHapus IsNot Nothing Then
-            If akses("hapus") Then
-                btnHapus.Enabled = True
-            Else
-                btnHapus.Enabled = False
-                AddHandler btnHapus.Click, Sub() MsgBox("Anda tidak punya akses untuk menghapus!", MsgBoxStyle.Exclamation)
-            End If
-        End If
-    End Sub
 End Module

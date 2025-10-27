@@ -90,6 +90,7 @@ Public Class FStok
         txtHRGBELI.Enabled = False
         btnUPLOAD.Enabled = False
         txtGAMBAR.Enabled = False
+        btnHARGA.Enabled = False
         tSKDBRG.Enabled = True
         tSNMBRG.Enabled = True
     End Sub
@@ -105,55 +106,90 @@ Public Class FStok
         txtHRGBELI.Enabled = True
         btnUPLOAD.Enabled = True
         txtGAMBAR.Enabled = True
+        btnHARGA.Enabled = True
         tSKDBRG.Enabled = False
         tSNMBRG.Enabled = False
     End Sub
 
     Private Sub btnTAMBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTAMBAH.Click
-        SetButtonState(Me, False)
-        statusMode = "tambah"
-        KosongkanInput()
-        EnabledLoad()
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
+
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
+
+        ' === Cek apakah user boleh tambah ===
+        If Not akses("tambah") Then
+            MessageBox.Show("Tidak bisa akses tambah", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        Else
+            SetButtonState(Me, False)
+            statusMode = "tambah"
+            KosongkanInput()
+            EnabledLoad()
+        End If
     End Sub
 
     Private Sub btnUBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUBAH.Click
-        Dim kodebrg As String = txtKDBRG.Text.Trim()
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
 
-        ' cek apakah kosong
-        If kodebrg Is Nothing OrElse String.IsNullOrWhiteSpace(txtKDBRG.Text) Then
-            MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
+
+        If Not akses("ubah") Then
+            MessageBox.Show("Tidak bisa akses ubah", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
-        End If
+        Else
+            Dim kodebrg As String = txtKDBRG.Text.Trim()
 
-        EnabledLoad()
-        SetButtonState(Me, False)
-        statusMode = "ubah"
+            ' cek apakah kosong
+            If kodebrg Is Nothing OrElse String.IsNullOrWhiteSpace(txtKDBRG.Text) Then
+                MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
+            EnabledLoad()
+            SetButtonState(Me, False)
+            statusMode = "ubah"
+        End If
     End Sub
 
     Private Sub btnHAPUS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHAPUS.Click
-        Try
-            Dim kodebrg As String = txtKDBRG.Text.Trim()
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
 
-            If String.IsNullOrEmpty(kodebrg) Then
-                MessageBox.Show("Tidak ada data yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Exit Sub
-            End If
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
 
-            If MessageBox.Show("Yakin hapus " & kodebrg & " ?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
-                Exit Sub
-            End If
+        If Not akses("hapus") Then
+            MessageBox.Show("Tidak bisa akses hapus", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        Else
+            Try
+                Dim kodebrg As String = txtKDBRG.Text.Trim()
 
-            HapusStok(txtKDBRG.Text)
-            KosongkanInput()
-            SetButtonState(Me, True)
-            statusMode = ""
-            DisabledLoad()
+                If String.IsNullOrEmpty(kodebrg) Then
+                    MessageBox.Show("Tidak ada data yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Exit Sub
+                End If
 
-            MessageBox.Show(kodebrg & " berhasil dihapus.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If MessageBox.Show("Yakin hapus " & kodebrg & " ?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+                    Exit Sub
+                End If
 
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "Error Hapus", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+                HapusStok(txtKDBRG.Text)
+                KosongkanInput()
+                SetButtonState(Me, True)
+                statusMode = ""
+                DisabledLoad()
+
+                MessageBox.Show(kodebrg & " berhasil dihapus.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Error Hapus", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
     End Sub
 
     Public Sub HapusStok(ByVal kdBrg As String)
@@ -387,5 +423,22 @@ Public Class FStok
         ElseIf isi2 < 2 Then
             txtSTN3.Enabled = False
         End If
+    End Sub
+
+    Private Sub btnHARGA_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHARGA.Click
+        Dim kdBrg As String = txtKDBRG.Text.Trim()
+        Dim valIsi1 As Integer = 0
+        Dim valIsi2 As Integer = 0
+
+        Integer.TryParse(txtISI1.Text, valIsi1)
+        Integer.TryParse(txtISI2.Text, valIsi2)
+
+        ' Kirim data ke form harga
+        Dim f As New FDtHarga()
+        f.KodeBarang = kdBrg
+        f.Isi1 = valIsi1
+        f.Isi2 = valIsi2
+
+        f.ShowDialog()
     End Sub
 End Class

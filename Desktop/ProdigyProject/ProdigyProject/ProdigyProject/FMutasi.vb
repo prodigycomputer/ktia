@@ -54,10 +54,7 @@ Public Class FMutasi
         BukaKoneksi()
         LoadGudang()
         ' Ambil idmenu dari form.Tag yang dikirim dari dashboard
-        Dim idMenu As String = Me.Tag.ToString()
-
-        ' Terapkan hak akses ke tombol
-        TerapkanAksesKeButton(Me, idMenu)
+        
         DisabledLoad()
     End Sub
 
@@ -502,82 +499,116 @@ Public Class FMutasi
     End Sub
 
     Private Sub btnTAMBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTAMBAH.Click
-        Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
 
-        If Not TabControls.ContainsKey(nomor) Then
-            RegisterTabControls(TabControl1.SelectedTab, nomor)
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
+
+        ' === Cek apakah user boleh tambah ===
+        If Not akses("tambah") Then
+            MessageBox.Show("Tidak bisa akses tambah", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        Else
+            Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
+
+            If Not TabControls.ContainsKey(nomor) Then
+                RegisterTabControls(TabControl1.SelectedTab, nomor)
+            End If
+
+            Dim dict = TabControls(nomor)
+            ClearForm(dict)
+
+            ' set status
+            SetTabStatus(nomor, "tambah")
+
+            TabLoadState(nomor) = False
+            TabButtonState(nomor) = False
+            SetButtonState(Me, False)
+            EnabledLoad()
         End If
-
-        Dim dict = TabControls(nomor)
-        ClearForm(dict)
-
-        ' set status
-        SetTabStatus(nomor, "tambah")
-
-        TabLoadState(nomor) = False
-        TabButtonState(nomor) = False
-        SetButtonState(Me, False)
-        EnabledLoad()
     End Sub
 
     Private Sub btnUBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUBAH.Click
-        Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
 
-        If Not TabControls.ContainsKey(nomor) Then
-            RegisterTabControls(TabControl1.SelectedTab, nomor)
-        End If
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
 
-        ' ambil kontrol tmuNONOTA dari tab aktif
-        Dim tmuNONOTA As TextBox = TryCast(TabControls(nomor)("tmuNONOTA"), TextBox)
-
-        ' cek apakah kosong
-        If tmuNONOTA Is Nothing OrElse String.IsNullOrWhiteSpace(tmuNONOTA.Text) Then
-            MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        If Not akses("ubah") Then
+            MessageBox.Show("Tidak bisa akses ubah", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
+        Else
+            Dim nomor As Integer = Integer.Parse(TabControl1.SelectedTab.Text.Replace("Nota ", ""))
+
+            If Not TabControls.ContainsKey(nomor) Then
+                RegisterTabControls(TabControl1.SelectedTab, nomor)
+            End If
+
+            ' ambil kontrol tmuNONOTA dari tab aktif
+            Dim tmuNONOTA As TextBox = TryCast(TabControls(nomor)("tmuNONOTA"), TextBox)
+
+            ' cek apakah kosong
+            If tmuNONOTA Is Nothing OrElse String.IsNullOrWhiteSpace(tmuNONOTA.Text) Then
+                MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
+            ' set status
+            SetTabStatus(nomor, "ubah")
+
+            TabLoadState(nomor) = False
+            TabButtonState(nomor) = False
+            SetButtonState(Me, False)
+            EnabledLoad()
         End If
-
-        ' set status
-        SetTabStatus(nomor, "ubah")
-
-        TabLoadState(nomor) = False
-        TabButtonState(nomor) = False
-        SetButtonState(Me, False)
-        EnabledLoad()
     End Sub
 
     Private Sub btnHAPUS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHAPUS.Click
-        Try
-            Dim aktifTab As TabPage = TabControl1.SelectedTab
-            Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
 
-            If Not TabControls.ContainsKey(nomor) Then Exit Sub
-            Dim dict = TabControls(nomor)
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
 
-            Dim nonota As String = CType(dict("tmuNONOTA"), TextBox).Text.Trim()
+        If Not akses("hapus") Then
+            MessageBox.Show("Tidak bisa akses hapus", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        Else
+            Try
+                Dim aktifTab As TabPage = TabControl1.SelectedTab
+                Dim nomor As Integer = Integer.Parse(aktifTab.Text.Replace("Nota ", ""))
 
-            If String.IsNullOrEmpty(nonota) Then
-                MessageBox.Show("Tidak ada nota yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Exit Sub
-            End If
+                If Not TabControls.ContainsKey(nomor) Then Exit Sub
+                Dim dict = TabControls(nomor)
 
-            If MessageBox.Show("Yakin hapus nota " & nonota & " ?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
-                Exit Sub
-            End If
+                Dim nonota As String = CType(dict("tmuNONOTA"), TextBox).Text.Trim()
 
-            ' === Hapus data dari database (module) ===
-            HapusMutasi(nonota, dict)
+                If String.IsNullOrEmpty(nonota) Then
+                    MessageBox.Show("Tidak ada nota yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Exit Sub
+                End If
 
-            ' === Update status tab setelah hapus ===
-            TabLoadState(nomor) = True
-            TabButtonState(nomor) = True
-            SetButtonState(Me, True)
-            DisabledLoad()
+                If MessageBox.Show("Yakin hapus nota " & nonota & " ?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+                    Exit Sub
+                End If
 
-            MessageBox.Show("Nota " & nonota & " berhasil dihapus.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ' === Hapus data dari database (module) ===
+                HapusMutasi(nonota, dict)
 
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "Error Hapus", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+                ' === Update status tab setelah hapus ===
+                TabLoadState(nomor) = True
+                TabButtonState(nomor) = True
+                SetButtonState(Me, True)
+                DisabledLoad()
+
+                MessageBox.Show("Nota " & nonota & " berhasil dihapus.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Error Hapus", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
     End Sub
 
     Public Sub HapusMutasi(ByVal nonota As String,

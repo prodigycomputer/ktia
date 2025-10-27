@@ -58,50 +58,84 @@ Public Class FTipe
     End Sub
 
     Private Sub btnTAMBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTAMBAH.Click
-        SetButtonState(Me, False)
-        statusMode = "tambah"
-        KosongkanInput()
-        EnabledLoad()
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
+
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
+
+        ' === Cek apakah user boleh tambah ===
+        If Not akses("tambah") Then
+            MessageBox.Show("Tidak bisa akses tambah", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        Else
+            SetButtonState(Me, False)
+            statusMode = "tambah"
+            KosongkanInput()
+            EnabledLoad()
+        End If
     End Sub
 
     Private Sub btnUBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUBAH.Click
-        Dim kodetipe As String = txtKDTIPE.Text.Trim()
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
 
-        ' cek apakah kosong
-        If kodetipe Is Nothing OrElse String.IsNullOrWhiteSpace(txtKDTIPE.Text) Then
-            MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
+
+        If Not akses("ubah") Then
+            MessageBox.Show("Tidak bisa akses ubah", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
-        End If
+        Else
+            Dim kodetipe As String = txtKDTIPE.Text.Trim()
 
-        EnabledLoad()
-        SetButtonState(Me, False)
-        statusMode = "ubah"
+            ' cek apakah kosong
+            If kodetipe Is Nothing OrElse String.IsNullOrWhiteSpace(txtKDTIPE.Text) Then
+                MessageBox.Show("Tidak ada data yang bisa di edit", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
+            EnabledLoad()
+            SetButtonState(Me, False)
+            statusMode = "ubah"
+        End If
     End Sub
 
     Private Sub btnHAPUS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnHAPUS.Click
-        Try
-            Dim kodetipe As String = txtKDTIPE.Text.Trim()
+        ' === Ambil ID menu dari properti Tag form ===
+        Dim idMenu As String = Me.Tag.ToString()
 
-            If String.IsNullOrEmpty(kodetipe) Then
-                MessageBox.Show("Tidak ada data yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Exit Sub
-            End If
+        ' === Ambil hak akses user aktif ===
+        Dim akses = GetAkses(KodeUserLogin, idMenu)
 
-            If MessageBox.Show("Yakin hapus " & kodetipe & " ?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
-                Exit Sub
-            End If
+        If Not akses("hapus") Then
+            MessageBox.Show("Tidak bisa akses hapus", "Akses Ditolak", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        Else
+            Try
+                Dim kodetipe As String = txtKDTIPE.Text.Trim()
 
-            HapusTipe(txtKDTIPE.Text)
-            KosongkanInput()
-            SetButtonState(Me, True)
-            statusMode = ""
-            DisabledLoad()
+                If String.IsNullOrEmpty(kodetipe) Then
+                    MessageBox.Show("Tidak ada data yang bisa dihapus.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Exit Sub
+                End If
 
-            MessageBox.Show(kodetipe & " berhasil dihapus.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If MessageBox.Show("Yakin hapus " & kodetipe & " ?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
+                    Exit Sub
+                End If
 
-        Catch ex As Exception
-            MessageBox.Show(ex.Message, "Error Hapus", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+                HapusTipe(txtKDTIPE.Text)
+                KosongkanInput()
+                SetButtonState(Me, True)
+                statusMode = ""
+                DisabledLoad()
+
+                MessageBox.Show(kodetipe & " berhasil dihapus.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Error Hapus", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
     End Sub
 
     Public Sub HapusTipe(ByVal kdTipe As String)
