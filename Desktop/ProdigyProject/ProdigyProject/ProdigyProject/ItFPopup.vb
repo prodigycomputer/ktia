@@ -51,7 +51,12 @@ Public Class ItFPopup
                 Exit Sub
             End If
 
-            Dim sql As String = "SELECT sisa1, sisa2, sisa3 FROM zsaldo WHERE kodebrg=? AND kodegd=?"
+            Dim sql As String =
+            "SELECT s.sisa1, s.sisa2, s.sisa3, z.satuan1, z.satuan2, z.satuan3 " &
+            "FROM zsaldo s " &
+            "LEFT JOIN zstok z ON s.kodebrg = z.kodebrg " &
+            "WHERE s.kodebrg = ? AND s.kodegd = ?"
+
             Using cmd As New OdbcCommand(sql, Conn)
                 cmd.Parameters.AddWithValue("@1", kodeBrg)
                 cmd.Parameters.AddWithValue("@2", kodeGd)
@@ -62,9 +67,9 @@ Public Class ItFPopup
                         Dim s2 As Decimal = If(IsDBNull(rd("sisa2")), 0, Convert.ToDecimal(rd("sisa2")))
                         Dim s3 As Decimal = If(IsDBNull(rd("sisa3")), 0, Convert.ToDecimal(rd("sisa3")))
 
-                        Dim st1 As String = rd("satuan1").ToString()
-                        Dim st2 As String = rd("satuan2").ToString()
-                        Dim st3 As String = rd("satuan3").ToString()
+                        Dim st1 As String = If(IsDBNull(rd("satuan1")), "", rd("satuan1").ToString())
+                        Dim st2 As String = If(IsDBNull(rd("satuan2")), "", rd("satuan2").ToString())
+                        Dim st3 As String = If(IsDBNull(rd("satuan3")), "", rd("satuan3").ToString())
 
                         If s1 = 0 AndAlso s2 = 0 AndAlso s3 = 0 Then
                             tPopSTOK.Text = "Stok Habis"

@@ -3,6 +3,7 @@
 Module MUserAkses
     ' === Variabel global untuk menyimpan user login aktif ===
     Public KodeUserLogin As String = ""
+    Public NamaUserLogin As String = ""
 
     ' === Fungsi untuk mengambil data akses berdasarkan user dan idmenu ===
     Public Function GetAkses(ByVal kodeUser As String, ByVal idMenu As String) As Dictionary(Of String, Boolean)

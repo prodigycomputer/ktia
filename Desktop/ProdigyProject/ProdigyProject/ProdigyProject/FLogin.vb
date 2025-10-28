@@ -22,6 +22,7 @@ Public Class FLogin
             If Rd.Read() Then
                 ' Simpan kode user yang login ke variabel global
                 KodeUserLogin = Rd("kodeuser").ToString()
+                NamaUserLogin = Rd("username").ToString()
                 Me.DialogResult = DialogResult.OK
                 Me.Close()
             Else
