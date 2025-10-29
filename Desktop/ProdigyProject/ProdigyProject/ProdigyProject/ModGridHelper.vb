@@ -424,6 +424,40 @@
         End With
     End Sub
 
+    ' === Setup untuk Grid Suppluer (zsupplier) ===
+    Public Sub SetupGridKolektor(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+            .Columns.Clear()
+
+            ' === Kolom utama dari tabel zstok ===
+            .Columns.Add("kodekol", "Kode Kolektor")
+            .Columns("kodekol").Width = 120
+
+            .Columns.Add("namakol", "Nama Kolektor")
+            .Columns("namakol").Width = 200
+
+            .Columns.Add("alamat", "Alamat")
+            .Columns("alamat").Width = 100
+
+            .Columns.Add("kota", "Kota")
+            .Columns("kota").Width = 120
+
+            .Columns.Add("ktp", "KTP")
+            .Columns("ktp").Width = 100
+
+            .Columns.Add("npwp", "NPWP")
+            .Columns("npwp").Width = 80
+        End With
+    End Sub
+
     ' === Setup untuk Grid Mutasi (zmutasim) ===
     Public Sub SetupGridMutasi(ByVal grid As DataGridView)
         With grid

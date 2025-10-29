@@ -141,6 +141,12 @@ Public Class FDashboard
                 f.MdiParent = Me
                 f.Show()
 
+            Case "ME0020"
+                Dim f As New FKolektor()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
             Case "ME007"
                 Dim f As New FGudang()
                 f.Tag = idMenu
@@ -210,10 +216,6 @@ Public Class FDashboard
                 f.Tag = idMenu
                 f.MdiParent = Me
                 f.Show()
-
-                ' Tambahkan case sesuai idmenu kamu di zmenu
-                ' Case "ME003" ...
-                ' Case "ME004" ...
 
             Case Else
                 MessageBox.Show("Menu belum terhubung dengan form, ID: " & idMenu)

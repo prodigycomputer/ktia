@@ -71,8 +71,8 @@ Public Class FSales
         txtKOTA.Enabled = True
         txtKTP.Enabled = True
         txtNPWP.Enabled = True
-        txtGAMBAR.Enabled = False
-        btnUPLOAD.Enabled = False
+        txtGAMBAR.Enabled = True
+        btnUPLOAD.Enabled = True
         tSKDSLS.Enabled = False
         tSNMSLS.Enabled = False
     End Sub
@@ -247,7 +247,7 @@ Public Class FSales
             If status.ToLower() = "ubah" Then
                 KodeLama = kdSls
                 Using cmdDel As New OdbcCommand("DELETE FROM zsales WHERE kodesls = ?", Conn, Trans)
-                    cmdDel.Parameters.AddWithValue("@kodesup", kdSls)
+                    cmdDel.Parameters.AddWithValue("@kodesls", kdSls)
                     cmdDel.ExecuteNonQuery()
                 End Using
 

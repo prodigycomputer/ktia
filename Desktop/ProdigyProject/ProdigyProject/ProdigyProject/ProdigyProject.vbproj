@@ -157,6 +157,12 @@
     <Compile Include="FGudang.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FKolektor.Designer.vb">
+      <DependentUpon>FKolektor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FKolektor.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FKustomer.Designer.vb">
       <DependentUpon>FKustomer.vb</DependentUpon>
     </Compile>
@@ -257,6 +263,12 @@
       <DependentUpon>ItDtGudang.vb</DependentUpon>
     </Compile>
     <Compile Include="ItDtGudang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtKolektor.Designer.vb">
+      <DependentUpon>ItDtKolektor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtKolektor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ItDtKustomer.Designer.vb">
@@ -512,6 +524,9 @@
     <EmbeddedResource Include="FGudang.resx">
       <DependentUpon>FGudang.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FKolektor.resx">
+      <DependentUpon>FKolektor.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FKustomer.resx">
       <DependentUpon>FKustomer.vb</DependentUpon>
     </EmbeddedResource>
@@ -562,6 +577,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtGudang.resx">
       <DependentUpon>ItDtGudang.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtKolektor.resx">
+      <DependentUpon>ItDtKolektor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItDtKustomer.resx">
       <DependentUpon>ItDtKustomer.vb</DependentUpon>
