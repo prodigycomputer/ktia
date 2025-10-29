@@ -42,7 +42,7 @@ Partial Class FDashboard
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.IsMdiContainer = True
         Me.Name = "FDashboard"
-        Me.Text = "Prodigy"
+        Me.Text = "PRODIGY"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)
         Me.PerformLayout()

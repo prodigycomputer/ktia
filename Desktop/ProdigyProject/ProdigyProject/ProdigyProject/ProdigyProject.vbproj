@@ -424,6 +424,7 @@
     </Compile>
     <Compile Include="Koneksi.vb" />
     <Compile Include="ModButton.vb" />
+    <Compile Include="ModCekStok.vb" />
     <Compile Include="ModGridHelper.vb" />
     <Compile Include="ModHitung.vb" />
     <Compile Include="ModNota.vb" />

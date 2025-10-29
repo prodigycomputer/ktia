@@ -557,44 +557,6 @@ Public Class FPembelian
             If status = "ubah" Then
                 KodeLama = nonota ' simpan kode lama
 
-                Dim sqlold As String = "SELECT kodebrg, kodegd, jlh1, jlh2, jlh3 FROM zbelim WHERE nonota = ?"
-                Using CmdOld As New OdbcCommand(sqlold, Conn, Trans)
-                    CmdOld.Parameters.AddWithValue("@nonota", KodeLama)
-                    Using RdOld As OdbcDataReader = CmdOld.ExecuteReader()
-                        While RdOld.Read()
-                            Dim kodebrg As String = RdOld("kodebrg").ToString()
-                            Dim kodegd As String = RdOld("kodegd").ToString()
-                            Dim jlh1Lama As Double = Val(RdOld("jlh1"))
-                            Dim jlh2Lama As Double = Val(RdOld("jlh2"))
-                            Dim jlh3Lama As Double = Val(RdOld("jlh3"))
-
-                            ' --- Kurangi stok di zsaldo ---
-                            Dim sqlcek As String = "SELECT sisa1, sisa2, sisa3 FROM zsaldo WHERE kodebrg = ? AND kodegd = ?"
-                            Using CmdCek As New OdbcCommand(sqlcek, Conn, Trans)
-                                CmdCek.Parameters.AddWithValue("@kodebrg", kodebrg)
-                                CmdCek.Parameters.AddWithValue("@kodegd", kodegd)
-                                Using RdCek As OdbcDataReader = CmdCek.ExecuteReader()
-                                    If RdCek.Read() Then
-                                        Dim s1 As Double = Val(RdCek("sisa1")) - jlh1Lama
-                                        Dim s2 As Double = Val(RdCek("sisa2")) - jlh2Lama
-                                        Dim s3 As Double = Val(RdCek("sisa3")) - jlh3Lama
-
-                                        Dim sqlupd As String = "UPDATE zsaldo SET sisa1=?, sisa2=?, sisa3=? WHERE kodebrg=? AND kodegd=?"
-                                        Using CmdUpd As New OdbcCommand(sqlupd, Conn, Trans)
-                                            CmdUpd.Parameters.AddWithValue("@sisa1", s1)
-                                            CmdUpd.Parameters.AddWithValue("@sisa2", s2)
-                                            CmdUpd.Parameters.AddWithValue("@sisa3", s3)
-                                            CmdUpd.Parameters.AddWithValue("@kodebrg", kodebrg)
-                                            CmdUpd.Parameters.AddWithValue("@kodegd", kodegd)
-                                            CmdUpd.ExecuteNonQuery()
-                                        End Using
-                                    End If
-                                End Using
-                            End Using
-                        End While
-                    End Using
-                End Using
-
                 Dim sqldel1 As String = "DELETE FROM zbelim WHERE nonota = ?"
                 Using CmdDel1 As New OdbcCommand(sqldel1, Conn, Trans)
                     CmdDel1.Parameters.AddWithValue("@nonota", KodeLama)
@@ -667,56 +629,6 @@ Public Class FPembelian
                     CmdDet.Parameters.AddWithValue("@jumlah", jumlah)
                     CmdDet.Parameters.AddWithValue("@operator", Environment.UserName)
                     CmdDet.ExecuteNonQuery()
-                End Using
-
-                ' --- Cek apakah sudah ada stok di zsaldo ---
-                Dim sqlcek As String = "SELECT sisa1, sisa2, sisa3 FROM zsaldo WHERE kodebrg = ? AND kodegd = ?"
-                Using CmdCek As New OdbcCommand(sqlcek, Conn, Trans)
-                    CmdCek.Parameters.AddWithValue("@kodebrg", kodebrg)
-                    CmdCek.Parameters.AddWithValue("@kodegd", kodegd)
-
-                    Using RdCek As OdbcDataReader = CmdCek.ExecuteReader()
-                        If RdCek.Read() Then
-                            ' --- Sudah ada, hitung stok baru ---
-                            Dim s1Lama As Double = Val(RdCek("sisa1"))
-                            Dim s2Lama As Double = Val(RdCek("sisa2"))
-                            Dim s3Lama As Double = Val(RdCek("sisa3"))
-
-                            Dim s1Baru As Double = s1Lama + jlh1
-                            Dim s2Baru As Double = s2Lama + jlh2
-                            Dim s3Baru As Double = s3Lama + jlh3
-
-                            ' --- Cek apakah ada perubahan ---
-                            Dim adaPerubahan As Boolean =
-                                (s1Baru <> s1Lama) OrElse (s2Baru <> s2Lama) OrElse (s3Baru <> s3Lama)
-
-                            If adaPerubahan Then
-                                Dim sqlupd As String =
-                                    "UPDATE zsaldo SET sisa1 = ?, sisa2 = ?, sisa3 = ? WHERE kodebrg = ? AND kodegd = ?"
-                                Using CmdUpd As New OdbcCommand(sqlupd, Conn, Trans)
-                                    CmdUpd.Parameters.AddWithValue("@sisa1", s1Baru)
-                                    CmdUpd.Parameters.AddWithValue("@sisa2", s2Baru)
-                                    CmdUpd.Parameters.AddWithValue("@sisa3", s3Baru)
-                                    CmdUpd.Parameters.AddWithValue("@kodebrg", kodebrg)
-                                    CmdUpd.Parameters.AddWithValue("@kodegd", kodegd)
-                                    CmdUpd.ExecuteNonQuery()
-                                End Using
-                            End If
-
-                        Else
-                            ' --- Belum ada, insert baru ---
-                            Dim sqlins As String =
-                                "INSERT INTO zsaldo (kodebrg, kodegd, sisa1, sisa2, sisa3) VALUES (?, ?, ?, ?, ?)"
-                            Using CmdIns As New OdbcCommand(sqlins, Conn, Trans)
-                                CmdIns.Parameters.AddWithValue("@kodebrg", kodebrg)
-                                CmdIns.Parameters.AddWithValue("@kodegd", kodegd)
-                                CmdIns.Parameters.AddWithValue("@sisa1", jlh1)
-                                CmdIns.Parameters.AddWithValue("@sisa2", jlh2)
-                                CmdIns.Parameters.AddWithValue("@sisa3", jlh3)
-                                CmdIns.ExecuteNonQuery()
-                            End Using
-                        End If
-                    End Using
                 End Using
             Next
 

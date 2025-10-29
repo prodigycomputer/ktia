@@ -13,7 +13,7 @@ Public Class FDashboard
 
             If result = DialogResult.OK Then
                 berhasil = True
-                Me.Text = "Prodigy  |  User : " & NamaUserLogin
+                Me.Text = "PRODIGY  |  USER : " & NamaUserLogin
                 ' Login sukses → dashboard lanjut berjalan
             ElseIf result = DialogResult.Cancel Then
                 ' Kalau user batal, keluar aplikasi
