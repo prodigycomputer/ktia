@@ -1,0 +1,819 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F7CEDD1B-B28E-4DD2-A823-9D9E0C3EE65A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>ProdigyProject.My.MyApplication</StartupObject>
+    <RootNamespace>ProdigyProject</RootNamespace>
+    <AssemblyName>ProdigyProject</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>ProdigyProject.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>ProdigyProject.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="CrystalDecisions" />
+    <Import Include="CrystalDecisions.CrystalReports" />
+    <Import Include="CrystalDecisions.CrystalReports.EMFServerMessageFactory" />
+    <Import Include="CrystalDecisions.CrystalReports.Engine" />
+    <Import Include="CrystalDecisions.CrystalReports.Engine.Migration" />
+    <Import Include="CrystalDecisions.CrystalReports.EPFPageObjectFactory" />
+    <Import Include="CrystalDecisions.CrystalReports.ETFTotallerTreeFactory" />
+    <Import Include="CrystalDecisions.CrystalReports.SCREventLog" />
+    <Import Include="CrystalDecisions.CrystalReports.TSLV" />
+    <Import Include="CrystalDecisions.CrystalReports.ViewerObjectModel" />
+    <Import Include="CrystalDecisions.ReportAppServer" />
+    <Import Include="CrystalDecisions.ReportSource" />
+    <Import Include="CrystalDecisions.Shared" />
+    <Import Include="CrystalDecisions.Shared.Interop" />
+    <Import Include="CrystalDecisions.Web" />
+    <Import Include="CrystalDecisions.Web.HtmlReportRender" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AngkaHelper.vb" />
+    <Compile Include="FArea.Designer.vb">
+      <DependentUpon>FArea.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FArea.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FCetak.Designer.vb">
+      <DependentUpon>FCetak.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FCetak.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FCetakLaporan.Designer.vb">
+      <DependentUpon>FCetakLaporan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FCetakLaporan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FDtAkses.Designer.vb">
+      <DependentUpon>FDtAkses.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FDtAkses.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FDtHarga.Designer.vb">
+      <DependentUpon>FDtHarga.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FDtHarga.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FGolongan.Designer.vb">
+      <DependentUpon>FGolongan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FGolongan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FGrup.Designer.vb">
+      <DependentUpon>FGrup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FGrup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FGudang.Designer.vb">
+      <DependentUpon>FGudang.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FGudang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FKolektor.Designer.vb">
+      <DependentUpon>FKolektor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FKolektor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FKustomer.Designer.vb">
+      <DependentUpon>FKustomer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FKustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FLaporanPembelian.Designer.vb">
+      <DependentUpon>FLaporanPembelian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FLaporanPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FLaporanPenjualan.Designer.vb">
+      <DependentUpon>FLaporanPenjualan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FLaporanPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FMerek.Designer.vb">
+      <DependentUpon>FMerek.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FMerek.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FMutasi.Designer.vb">
+      <DependentUpon>FMutasi.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FMutasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FPenjualan.Designer.vb">
+      <DependentUpon>FPenjualan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FPenyesuaian.Designer.vb">
+      <DependentUpon>FPenyesuaian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FPenyesuaian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FReturPembelian.Designer.vb">
+      <DependentUpon>FReturPembelian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FReturPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FReturPenjualan.Designer.vb">
+      <DependentUpon>FReturPenjualan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FReturPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FSales.Designer.vb">
+      <DependentUpon>FSales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FSales.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FSetAkun.Designer.vb">
+      <DependentUpon>FSetAkun.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FSetAkun.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FStok.Designer.vb">
+      <DependentUpon>FStok.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FStok.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FSupplier.Designer.vb">
+      <DependentUpon>FSupplier.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FSupplier.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FTipe.Designer.vb">
+      <DependentUpon>FTipe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FTipe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItArea.Designer.vb">
+      <DependentUpon>ItArea.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItArea.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtArea.Designer.vb">
+      <DependentUpon>ItDtArea.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtArea.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtGolongan.Designer.vb">
+      <DependentUpon>ItDtGolongan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtGolongan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtGrup.Designer.vb">
+      <DependentUpon>ItDtGrup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtGrup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtGudang.Designer.vb">
+      <DependentUpon>ItDtGudang.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtGudang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtKolektor.Designer.vb">
+      <DependentUpon>ItDtKolektor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtKolektor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtKustomer.Designer.vb">
+      <DependentUpon>ItDtKustomer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtKustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtStok.Designer.vb">
+      <DependentUpon>ItDtStok.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtStok.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItGolongan.Designer.vb">
+      <DependentUpon>ItGolongan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItGolongan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItGrup.Designer.vb">
+      <DependentUpon>ItGrup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItGrup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItKustomer.Designer.vb">
+      <DependentUpon>ItKustomer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItKustomer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtMerek.Designer.vb">
+      <DependentUpon>ItDtMerek.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtMerek.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtMutasi.Designer.vb">
+      <DependentUpon>ItDtMutasi.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtMutasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtPembelian.Designer.vb">
+      <DependentUpon>ItDtPembelian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FLogin.Designer.vb">
+      <DependentUpon>FLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FDashboard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FDashboard.Designer.vb">
+      <DependentUpon>FDashboard.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FPembelian.Designer.vb">
+      <DependentUpon>FPembelian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtPenjualan.Designer.vb">
+      <DependentUpon>ItDtPenjualan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtPenyesuaian.Designer.vb">
+      <DependentUpon>ItDtPenyesuaian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtPenyesuaian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtRPembelian.Designer.vb">
+      <DependentUpon>ItDtRPembelian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtRPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtRPenjualan.Designer.vb">
+      <DependentUpon>ItDtRPenjualan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtRPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtSales.Designer.vb">
+      <DependentUpon>ItDtSales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtSales.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItMerek.Designer.vb">
+      <DependentUpon>ItMerek.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItMerek.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItSales.Designer.vb">
+      <DependentUpon>ItSales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItSales.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItStok.Designer.vb">
+      <DependentUpon>ItStok.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItStok.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtSupplier.Designer.vb">
+      <DependentUpon>ItDtSupplier.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtSupplier.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItSupplier.Designer.vb">
+      <DependentUpon>ItSupplier.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItSupplier.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtTipe.Designer.vb">
+      <DependentUpon>ItDtTipe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtTipe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItDtUser.Designer.vb">
+      <DependentUpon>ItDtUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItDtUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItFPopup.Designer.vb">
+      <DependentUpon>ItFPopup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItFPopup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItFPopupMut.Designer.vb">
+      <DependentUpon>ItFPopupMut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItFPopupMut.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItFPopupPeny.Designer.vb">
+      <DependentUpon>ItFPopupPeny.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItFPopupPeny.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItTipe.Designer.vb">
+      <DependentUpon>ItTipe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ItTipe.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Koneksi.vb" />
+    <Compile Include="LaporanDt.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanDt.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanDt.vb">
+      <DependentUpon>LaporanDt.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanPembelian.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanPembelian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LaporanPenjualan.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanPenjualan.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ModButton.vb" />
+    <Compile Include="ModCekStok.vb" />
+    <Compile Include="ModGridHelper.vb" />
+    <Compile Include="ModHitung.vb" />
+    <Compile Include="ModLaporan.vb" />
+    <Compile Include="ModNota.vb" />
+    <Compile Include="ModUtility.vb" />
+    <Compile Include="MUserAkses.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="NotaDt.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaDt.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="NotaDt.vb">
+      <DependentUpon>NotaDt.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="NotaMutasi.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaMutasi.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NotaPembelian.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaPembelian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NotaPenjualan.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaPenjualan.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NotaPenyesuaian.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaPenyesuaian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NotaReturPembelian.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaReturPembelian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="NotaReturPenjualan.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotaReturPenjualan.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FArea.resx">
+      <DependentUpon>FArea.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FCetak.resx">
+      <DependentUpon>FCetak.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FCetakLaporan.resx">
+      <DependentUpon>FCetakLaporan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FDtAkses.resx">
+      <DependentUpon>FDtAkses.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FDtHarga.resx">
+      <DependentUpon>FDtHarga.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FGolongan.resx">
+      <DependentUpon>FGolongan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FGrup.resx">
+      <DependentUpon>FGrup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FGudang.resx">
+      <DependentUpon>FGudang.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FKolektor.resx">
+      <DependentUpon>FKolektor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FKustomer.resx">
+      <DependentUpon>FKustomer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FLaporanPembelian.resx">
+      <DependentUpon>FLaporanPembelian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FLaporanPenjualan.resx">
+      <DependentUpon>FLaporanPenjualan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FMerek.resx">
+      <DependentUpon>FMerek.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FMutasi.resx">
+      <DependentUpon>FMutasi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FPenjualan.resx">
+      <DependentUpon>FPenjualan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FPenyesuaian.resx">
+      <DependentUpon>FPenyesuaian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FReturPembelian.resx">
+      <DependentUpon>FReturPembelian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FReturPenjualan.resx">
+      <DependentUpon>FReturPenjualan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FSales.resx">
+      <DependentUpon>FSales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FSetAkun.resx">
+      <DependentUpon>FSetAkun.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FStok.resx">
+      <DependentUpon>FStok.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FSupplier.resx">
+      <DependentUpon>FSupplier.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FTipe.resx">
+      <DependentUpon>FTipe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItArea.resx">
+      <DependentUpon>ItArea.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtArea.resx">
+      <DependentUpon>ItDtArea.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtGolongan.resx">
+      <DependentUpon>ItDtGolongan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtGrup.resx">
+      <DependentUpon>ItDtGrup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtGudang.resx">
+      <DependentUpon>ItDtGudang.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtKolektor.resx">
+      <DependentUpon>ItDtKolektor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtKustomer.resx">
+      <DependentUpon>ItDtKustomer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtStok.resx">
+      <DependentUpon>ItDtStok.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItGolongan.resx">
+      <DependentUpon>ItGolongan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItGrup.resx">
+      <DependentUpon>ItGrup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItKustomer.resx">
+      <DependentUpon>ItKustomer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtMerek.resx">
+      <DependentUpon>ItDtMerek.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtMutasi.resx">
+      <DependentUpon>ItDtMutasi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtPembelian.resx">
+      <DependentUpon>ItDtPembelian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FLogin.resx">
+      <DependentUpon>FLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FDashboard.resx">
+      <DependentUpon>FDashboard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FPembelian.resx">
+      <DependentUpon>FPembelian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtPenjualan.resx">
+      <DependentUpon>ItDtPenjualan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtPenyesuaian.resx">
+      <DependentUpon>ItDtPenyesuaian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtRPembelian.resx">
+      <DependentUpon>ItDtRPembelian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtRPenjualan.resx">
+      <DependentUpon>ItDtRPenjualan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtSales.resx">
+      <DependentUpon>ItDtSales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItMerek.resx">
+      <DependentUpon>ItMerek.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItSales.resx">
+      <DependentUpon>ItSales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItStok.resx">
+      <DependentUpon>ItStok.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtSupplier.resx">
+      <DependentUpon>ItDtSupplier.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItSupplier.resx">
+      <DependentUpon>ItSupplier.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtTipe.resx">
+      <DependentUpon>ItDtTipe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItDtUser.resx">
+      <DependentUpon>ItDtUser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItFPopup.resx">
+      <DependentUpon>ItFPopup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItFPopupMut.resx">
+      <DependentUpon>ItFPopupMut.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItFPopupPeny.resx">
+      <DependentUpon>ItFPopupPeny.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItTipe.resx">
+      <DependentUpon>ItTipe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanPembelian.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanPembelian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanPenjualan.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanPenjualan.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaMutasi.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaMutasi.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaPembelian.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaPembelian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaPenjualan.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaPenjualan.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaPenyesuaian.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaPenyesuaian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaReturPembelian.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaReturPembelian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotaReturPenjualan.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>NotaReturPenjualan.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="LaporanDt.xsc">
+      <DependentUpon>LaporanDt.xsd</DependentUpon>
+    </None>
+    <None Include="LaporanDt.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LaporanDt.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="LaporanDt.xss">
+      <DependentUpon>LaporanDt.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="NotaDt.xsc">
+      <DependentUpon>NotaDt.xsd</DependentUpon>
+    </None>
+    <None Include="NotaDt.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>NotaDt.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="NotaDt.xss">
+      <DependentUpon>NotaDt.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
