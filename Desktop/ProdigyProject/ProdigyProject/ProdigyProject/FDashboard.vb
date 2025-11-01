@@ -228,6 +228,18 @@ Public Class FDashboard
                 f.Tag = idMenu
                 f.MdiParent = Me
                 f.Show()
+
+            Case "ME0022"
+                Dim f As New FLaporanMutasi()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME0023"
+                Dim f As New FLaporanPenyesuaian()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
             Case Else
                 MessageBox.Show("Menu belum terhubung dengan form, ID: " & idMenu)
         End Select

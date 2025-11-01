@@ -27,6 +27,14 @@ Represents the strongly named DataTable class.
 	<summary>
 Represents the strongly named DataTable class.
 </summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanMutasiDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanPenyesuaianDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
 </member><member name="T:ProdigyProject.LaporanDt.LaporanBeliRow">
 	<summary>
 Represents strongly named DataRow class.
@@ -35,11 +43,27 @@ Represents strongly named DataRow class.
 	<summary>
 Represents strongly named DataRow class.
 </summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanMutasiRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanPenyesuaianRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
 </member><member name="T:ProdigyProject.LaporanDt.LaporanBeliRowChangeEvent">
 	<summary>
 Row event argument class
 </summary>
 </member><member name="T:ProdigyProject.LaporanDt.LaporanJualRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanMutasiRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanPenyesuaianRowChangeEvent">
 	<summary>
 Row event argument class
 </summary>

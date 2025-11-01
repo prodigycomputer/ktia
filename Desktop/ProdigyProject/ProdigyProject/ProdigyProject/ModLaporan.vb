@@ -27,6 +27,21 @@ Module ModLaporan
                         "LEFT JOIN zkustomer ON zjual.kodekust = zkustomer.kodekust " &
                         "LEFT JOIN zsales ON zjual.kodesls = zsales.kodesls " &
                         "ORDER BY zjual.nonota ASC"
+
+                Case "laporanmutasi"
+                    sql =
+                        "SELECT zmutasi.nonota, zmutasi.tgl, g1.namagd AS namagd1, g2.namagd AS namagd2 " &
+                        "FROM zmutasi " &
+                        "JOIN zgudang g1 ON zmutasi.kodegd1 = g1.kodegd " &
+                        "JOIN zgudang g2 ON zmutasi.kodegd2 = g2.kodegd " &
+                        "ORDER BY zmutasi.nonota ASC"
+
+                Case "laporanpenyesuaian"
+                    sql =
+                        "SELECT zpenyesuaian.tgl, zpenyesuaian.nonota, zgudang.namagd " &
+                        "FROM zpenyesuaian " &
+                        "LEFT JOIN zgudang ON zpenyesuaian.kodegd = zgudang.kodegd " &
+                        "ORDER BY zpenyesuaian.nonota ASC"
             End Select
 
             Dim da As New OdbcDataAdapter(sql, Conn)
@@ -56,6 +71,12 @@ Module ModLaporan
 
                 Case "laporanjual"
                     ds.Tables("LaporanJual").Merge(dt)
+
+                Case "laporanmutasi"
+                    ds.Tables("LaporanMutasi").Merge(dt)
+
+                Case "laporanpenyesuaian"
+                    ds.Tables("LaporanPenyesuaian").Merge(dt)
             End Select
 
 
@@ -67,6 +88,12 @@ Module ModLaporan
 
                 Case "laporanjual"
                     rpt.Load(Application.StartupPath & "\Laporan\LaporanPenjualan.rpt")
+
+                Case "laporanmutasi"
+                    rpt.Load(Application.StartupPath & "\Laporan\LaporanMutasi.rpt")
+
+                Case "laporanpenyesuaian"
+                    rpt.Load(Application.StartupPath & "\Laporan\LaporanPenyesuaian.rpt")
             End Select
 
             rpt.SetDataSource(ds)

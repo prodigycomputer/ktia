@@ -12,7 +12,7 @@
   <xs:element name="LaporanDt" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="LaporanDt" msprop:Generator_UserDSName="LaporanDt">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="LaporanBeli" msprop:Generator_TableClassName="LaporanBeliDataTable" msprop:Generator_TableVarName="tableLaporanBeli" msprop:Generator_RowChangedName="LaporanBeliRowChanged" msprop:Generator_TablePropName="LaporanBeli" msprop:Generator_RowDeletingName="LaporanBeliRowDeleting" msprop:Generator_RowChangingName="LaporanBeliRowChanging" msprop:Generator_RowEvHandlerName="LaporanBeliRowChangeEventHandler" msprop:Generator_RowDeletedName="LaporanBeliRowDeleted" msprop:Generator_RowClassName="LaporanBeliRow" msprop:Generator_UserTableName="LaporanBeli" msprop:Generator_RowEvArgName="LaporanBeliRowChangeEvent">
+        <xs:element name="LaporanBeli" msprop:Generator_TableClassName="LaporanBeliDataTable" msprop:Generator_TableVarName="tableLaporanBeli" msprop:Generator_TablePropName="LaporanBeli" msprop:Generator_RowDeletingName="LaporanBeliRowDeleting" msprop:Generator_RowChangingName="LaporanBeliRowChanging" msprop:Generator_RowEvHandlerName="LaporanBeliRowChangeEventHandler" msprop:Generator_RowDeletedName="LaporanBeliRowDeleted" msprop:Generator_UserTableName="LaporanBeli" msprop:Generator_RowChangedName="LaporanBeliRowChanged" msprop:Generator_RowEvArgName="LaporanBeliRowChangeEvent" msprop:Generator_RowClassName="LaporanBeliRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="nonota" msprop:Generator_ColumnVarNameInTable="columnnonota" msprop:Generator_ColumnPropNameInRow="nonota" msprop:Generator_ColumnPropNameInTable="nonotaColumn" msprop:Generator_UserColumnName="nonota" type="xs:string" minOccurs="0" />
@@ -24,7 +24,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="LaporanJual" msprop:Generator_TableClassName="LaporanJualDataTable" msprop:Generator_TableVarName="tableLaporanJual" msprop:Generator_TablePropName="LaporanJual" msprop:Generator_RowDeletingName="LaporanJualRowDeleting" msprop:Generator_RowChangingName="LaporanJualRowChanging" msprop:Generator_RowEvHandlerName="LaporanJualRowChangeEventHandler" msprop:Generator_RowDeletedName="LaporanJualRowDeleted" msprop:Generator_UserTableName="LaporanJual" msprop:Generator_RowChangedName="LaporanJualRowChanged" msprop:Generator_RowEvArgName="LaporanJualRowChangeEvent" msprop:Generator_RowClassName="LaporanJualRow">
+        <xs:element name="LaporanJual" msprop:Generator_TableClassName="LaporanJualDataTable" msprop:Generator_TableVarName="tableLaporanJual" msprop:Generator_RowChangedName="LaporanJualRowChanged" msprop:Generator_TablePropName="LaporanJual" msprop:Generator_RowDeletingName="LaporanJualRowDeleting" msprop:Generator_RowChangingName="LaporanJualRowChanging" msprop:Generator_RowEvHandlerName="LaporanJualRowChangeEventHandler" msprop:Generator_RowDeletedName="LaporanJualRowDeleted" msprop:Generator_RowClassName="LaporanJualRow" msprop:Generator_UserTableName="LaporanJual" msprop:Generator_RowEvArgName="LaporanJualRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="nonota" msprop:Generator_ColumnVarNameInTable="columnnonota" msprop:Generator_ColumnPropNameInRow="nonota" msprop:Generator_ColumnPropNameInTable="nonotaColumn" msprop:Generator_UserColumnName="nonota" type="xs:string" minOccurs="0" />
@@ -35,6 +35,28 @@
               <xs:element name="nilai" msprop:Generator_ColumnVarNameInTable="columnnilai" msprop:Generator_ColumnPropNameInRow="nilai" msprop:Generator_ColumnPropNameInTable="nilaiColumn" msprop:Generator_UserColumnName="nilai" type="xs:double" minOccurs="0" />
               <xs:element name="kodesls" msprop:Generator_ColumnVarNameInTable="columnkodesls" msprop:Generator_ColumnPropNameInRow="kodesls" msprop:Generator_ColumnPropNameInTable="kodeslsColumn" msprop:Generator_UserColumnName="kodesls" type="xs:string" minOccurs="0" />
               <xs:element name="namasls" msprop:Generator_ColumnVarNameInTable="columnnamasls" msprop:Generator_ColumnPropNameInRow="namasls" msprop:Generator_ColumnPropNameInTable="namaslsColumn" msprop:Generator_UserColumnName="namasls" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LaporanMutasi" msprop:Generator_TableClassName="LaporanMutasiDataTable" msprop:Generator_TableVarName="tableLaporanMutasi" msprop:Generator_TablePropName="LaporanMutasi" msprop:Generator_RowDeletingName="LaporanMutasiRowDeleting" msprop:Generator_RowChangingName="LaporanMutasiRowChanging" msprop:Generator_RowEvHandlerName="LaporanMutasiRowChangeEventHandler" msprop:Generator_RowDeletedName="LaporanMutasiRowDeleted" msprop:Generator_UserTableName="LaporanMutasi" msprop:Generator_RowChangedName="LaporanMutasiRowChanged" msprop:Generator_RowEvArgName="LaporanMutasiRowChangeEvent" msprop:Generator_RowClassName="LaporanMutasiRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nonota" msprop:Generator_ColumnVarNameInTable="columnnonota" msprop:Generator_ColumnPropNameInRow="nonota" msprop:Generator_ColumnPropNameInTable="nonotaColumn" msprop:Generator_UserColumnName="nonota" type="xs:string" minOccurs="0" />
+              <xs:element name="tgl" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="tgl" msprop:Generator_ColumnVarNameInTable="columntgl" msprop:Generator_ColumnPropNameInTable="tglColumn" msprop:Generator_UserColumnName="tgl" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="kodegd1" msprop:Generator_ColumnVarNameInTable="columnkodegd1" msprop:Generator_ColumnPropNameInRow="kodegd1" msprop:Generator_ColumnPropNameInTable="kodegd1Column" msprop:Generator_UserColumnName="kodegd1" type="xs:string" minOccurs="0" />
+              <xs:element name="namagd1" msprop:Generator_ColumnVarNameInTable="columnnamagd1" msprop:Generator_ColumnPropNameInRow="namagd1" msprop:Generator_ColumnPropNameInTable="namagd1Column" msprop:Generator_UserColumnName="namagd1" type="xs:string" minOccurs="0" />
+              <xs:element name="kodegd2" msprop:Generator_ColumnVarNameInTable="columnkodegd2" msprop:Generator_ColumnPropNameInRow="kodegd2" msprop:Generator_ColumnPropNameInTable="kodegd2Column" msprop:Generator_UserColumnName="kodegd2" type="xs:string" minOccurs="0" />
+              <xs:element name="namagd2" msprop:Generator_ColumnVarNameInTable="columnnamagd2" msprop:Generator_ColumnPropNameInRow="namagd2" msprop:Generator_ColumnPropNameInTable="namagd2Column" msprop:Generator_UserColumnName="namagd2" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LaporanPenyesuaian" msprop:Generator_TableClassName="LaporanPenyesuaianDataTable" msprop:Generator_TableVarName="tableLaporanPenyesuaian" msprop:Generator_TablePropName="LaporanPenyesuaian" msprop:Generator_RowDeletingName="LaporanPenyesuaianRowDeleting" msprop:Generator_RowChangingName="LaporanPenyesuaianRowChanging" msprop:Generator_RowEvHandlerName="LaporanPenyesuaianRowChangeEventHandler" msprop:Generator_RowDeletedName="LaporanPenyesuaianRowDeleted" msprop:Generator_UserTableName="LaporanPenyesuaian" msprop:Generator_RowChangedName="LaporanPenyesuaianRowChanged" msprop:Generator_RowEvArgName="LaporanPenyesuaianRowChangeEvent" msprop:Generator_RowClassName="LaporanPenyesuaianRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nonota" msprop:Generator_ColumnVarNameInTable="columnnonota" msprop:Generator_ColumnPropNameInRow="nonota" msprop:Generator_ColumnPropNameInTable="nonotaColumn" msprop:Generator_UserColumnName="nonota" type="xs:string" minOccurs="0" />
+              <xs:element name="tgl" msprop:Generator_ColumnVarNameInTable="columntgl" msprop:Generator_ColumnPropNameInRow="tgl" msprop:Generator_ColumnPropNameInTable="tglColumn" msprop:Generator_UserColumnName="tgl" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="kodegd" msprop:Generator_ColumnVarNameInTable="columnkodegd" msprop:Generator_ColumnPropNameInRow="kodegd" msprop:Generator_ColumnPropNameInTable="kodegdColumn" msprop:Generator_UserColumnName="kodegd" type="xs:string" minOccurs="0" />
+              <xs:element name="namagd" msprop:Generator_ColumnVarNameInTable="columnnamagd" msprop:Generator_ColumnPropNameInRow="namagd" msprop:Generator_ColumnPropNameInTable="namagdColumn" msprop:Generator_UserColumnName="namagd" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

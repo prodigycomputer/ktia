@@ -175,6 +175,12 @@
     <Compile Include="FKustomer.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FLaporanMutasi.Designer.vb">
+      <DependentUpon>FLaporanMutasi.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FLaporanMutasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FLaporanPembelian.Designer.vb">
       <DependentUpon>FLaporanPembelian.vb</DependentUpon>
     </Compile>
@@ -185,6 +191,12 @@
       <DependentUpon>FLaporanPenjualan.vb</DependentUpon>
     </Compile>
     <Compile Include="FLaporanPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FLaporanPenyesuaian.Designer.vb">
+      <DependentUpon>FLaporanPenyesuaian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FLaporanPenyesuaian.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FMerek.Designer.vb">
@@ -461,6 +473,12 @@
     <Compile Include="LaporanDt.vb">
       <DependentUpon>LaporanDt.xsd</DependentUpon>
     </Compile>
+    <Compile Include="LaporanMutasi.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanMutasi.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LaporanPembelian.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -471,6 +489,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LaporanPenjualan.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LaporanPenyesuaian.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanPenyesuaian.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ModButton.vb" />
@@ -572,11 +596,17 @@
     <EmbeddedResource Include="FKustomer.resx">
       <DependentUpon>FKustomer.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FLaporanMutasi.resx">
+      <DependentUpon>FLaporanMutasi.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FLaporanPembelian.resx">
       <DependentUpon>FLaporanPembelian.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FLaporanPenjualan.resx">
       <DependentUpon>FLaporanPenjualan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FLaporanPenyesuaian.resx">
+      <DependentUpon>FLaporanPenyesuaian.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FMerek.resx">
       <DependentUpon>FMerek.vb</DependentUpon>
@@ -710,6 +740,10 @@
     <EmbeddedResource Include="ItTipe.resx">
       <DependentUpon>ItTipe.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LaporanMutasi.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanMutasi.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="LaporanPembelian.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>LaporanPembelian.vb</LastGenOutput>
@@ -717,6 +751,10 @@
     <EmbeddedResource Include="LaporanPenjualan.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>LaporanPenjualan.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanPenyesuaian.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanPenyesuaian.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
