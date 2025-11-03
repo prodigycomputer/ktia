@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2025 at 11:13 AM
+-- Generation Time: Nov 03, 2025 at 11:10 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,31 +40,13 @@ CREATE TABLE `zakses` (
 --
 
 INSERT INTO `zakses` (`kodeuser`, `idmenu`, `tambah`, `ubah`, `hapus`) VALUES
-('USER00', 'ME001', 1, 1, 1),
-('USER00', 'ME002', 1, 1, 1),
-('USER00', 'ME003', 1, 1, 1),
-('USER00', 'ME004', 1, 1, 1),
-('USER00', 'ME005', 1, 1, 1),
-('USER00', 'ME006', 1, 1, 1),
-('USER00', 'ME007', 1, 1, 1),
-('USER00', 'ME008', 1, 1, 1),
-('USER00', 'ME009', 1, 1, 1),
-('USER00', 'ME0010', 1, 1, 1),
-('USER00', 'ME0011', 1, 1, 1),
-('USER00', 'ME0012', 1, 1, 1),
-('USER00', 'ME0019', 1, 1, 1),
-('USER00', 'ME0013', 1, 1, 1),
-('USER00', 'ME0014', 1, 1, 1),
-('USER00', 'ME0015', 1, 1, 1),
-('USER00', 'ME0016', 1, 1, 1),
-('USER00', 'ME0017', 1, 1, 1),
-('USER00', 'ME0018', 1, 1, 1),
-('USER01', 'ME001', 1, 1, 1),
+('USER01', 'ME001', 1, 0, 0),
 ('USER01', 'ME002', 1, 1, 1),
 ('USER01', 'ME003', 1, 1, 1),
 ('USER01', 'ME004', 1, 1, 1),
 ('USER01', 'ME005', 1, 1, 1),
 ('USER01', 'ME006', 1, 1, 1),
+('USER01', 'ME0020', 1, 1, 1),
 ('USER01', 'ME007', 1, 1, 1),
 ('USER01', 'ME008', 1, 1, 1),
 ('USER01', 'ME009', 1, 1, 1),
@@ -72,12 +54,36 @@ INSERT INTO `zakses` (`kodeuser`, `idmenu`, `tambah`, `ubah`, `hapus`) VALUES
 ('USER01', 'ME0011', 1, 1, 1),
 ('USER01', 'ME0012', 1, 1, 1),
 ('USER01', 'ME0019', 1, 1, 1),
-('USER01', 'ME0013', 1, 0, 0),
-('USER01', 'ME0014', 1, 1, 1),
+('USER01', 'ME0021', 1, 1, 1),
+('USER01', 'ME0013', 1, 1, 1),
+('USER01', 'ME0014', 1, 0, 0),
 ('USER01', 'ME0015', 1, 1, 1),
-('USER01', 'ME0016', 1, 1, 1),
+('USER01', 'ME0016', 1, 0, 0),
 ('USER01', 'ME0017', 1, 1, 1),
-('USER01', 'ME0018', 1, 1, 1);
+('USER01', 'ME0018', 1, 1, 1),
+('USER00', 'ME001', 1, 1, 1),
+('USER00', 'ME002', 1, 1, 1),
+('USER00', 'ME003', 1, 1, 1),
+('USER00', 'ME004', 1, 1, 1),
+('USER00', 'ME005', 1, 1, 1),
+('USER00', 'ME006', 1, 1, 1),
+('USER00', 'ME0020', 1, 1, 1),
+('USER00', 'ME007', 1, 1, 1),
+('USER00', 'ME008', 1, 1, 1),
+('USER00', 'ME009', 1, 1, 1),
+('USER00', 'ME0010', 1, 1, 1),
+('USER00', 'ME0011', 1, 1, 1),
+('USER00', 'ME0012', 1, 1, 1),
+('USER00', 'ME0019', 1, 1, 1),
+('USER00', 'ME0021', 1, 1, 1),
+('USER00', 'ME0022', 1, 1, 1),
+('USER00', 'ME0023', 1, 1, 1),
+('USER00', 'ME0013', 1, 1, 1),
+('USER00', 'ME0014', 1, 1, 1),
+('USER00', 'ME0015', 1, 1, 1),
+('USER00', 'ME0016', 1, 1, 1),
+('USER00', 'ME0017', 1, 1, 1),
+('USER00', 'ME0018', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -343,6 +349,28 @@ INSERT INTO `zjualm` (`nonota`, `kodebrg`, `kodegd`, `jlh1`, `jlh2`, `jlh3`, `ha
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `zkolektor`
+--
+
+CREATE TABLE `zkolektor` (
+  `kodekol` char(20) NOT NULL,
+  `namakol` char(50) NOT NULL,
+  `alamat` char(255) NOT NULL,
+  `kota` char(50) NOT NULL,
+  `ktp` varchar(20) NOT NULL,
+  `npwp` varchar(30) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `zkolektor`
+--
+
+INSERT INTO `zkolektor` (`kodekol`, `namakol`, `alamat`, `kota`, `ktp`, `npwp`) VALUES
+('KOL01', 'KOLEKTOR 1', 'JL JAWI', 'PONTIANAK', 'TEST', 'TEST');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `zkustomer`
 --
 
@@ -384,25 +412,29 @@ CREATE TABLE `zmenu` (
 --
 
 INSERT INTO `zmenu` (`idmenu`, `mainmenu`, `submenu`, `urutan`) VALUES
-('ME001', 'mFile', 'smStok', 1),
-('ME002', 'mFile', 'smArea', 2),
-('ME003', 'mFile', 'smTipe', 3),
-('ME004', 'mFile', 'smKustomer', 4),
-('ME005', 'mFile', 'smSupplier', 5),
-('ME006', 'mFile', 'smSales', 6),
-('ME007', 'mFile', 'smGudang', 7),
-('ME008', 'mFile', 'smMerek', 8),
-('ME009', 'mFile', 'smGolongan', 9),
-('ME0010', 'mFile', 'smGrup', 10),
-('ME0011', 'mFile', 'smAkun', 11),
-('ME0012', 'mFile', 'smExit', 12),
-('ME0013', 'mTransaksi', 'smPembelian', 13),
-('ME0014', 'mTransaksi', 'smReturPembelian', 14),
-('ME0015', 'mTransaksi', 'smPenjualan', 15),
-('ME0016', 'mTransaksi', 'smReturPenjualan', 16),
-('ME0017', 'mTransaksi', 'smMutasi', 17),
-('ME0018', 'mTransaksi', 'smPenyesuaian', 18),
-('ME0019', 'mLaporan', 'smLaporan', 19);
+('ME001', 'mFile', 'smStok', 100),
+('ME002', 'mFile', 'smArea', 200),
+('ME003', 'mFile', 'smTipe', 300),
+('ME004', 'mFile', 'smKustomer', 400),
+('ME005', 'mFile', 'smSupplier', 500),
+('ME006', 'mFile', 'smSales', 600),
+('ME0020', 'mFile', 'smKolektor', 601),
+('ME007', 'mFile', 'smGudang', 700),
+('ME008', 'mFile', 'smMerek', 800),
+('ME009', 'mFile', 'smGolongan', 900),
+('ME0010', 'mFile', 'smGrup', 1000),
+('ME0011', 'mFile', 'smAkun', 1100),
+('ME0012', 'mFile', 'smExit', 1200),
+('ME0013', 'mTransaksi', 'smPembelian', 1300),
+('ME0014', 'mTransaksi', 'smReturPembelian', 1400),
+('ME0015', 'mTransaksi', 'smPenjualan', 1500),
+('ME0016', 'mTransaksi', 'smReturPenjualan', 1600),
+('ME0017', 'mTransaksi', 'smMutasi', 1700),
+('ME0018', 'mTransaksi', 'smPenyesuaian', 1800),
+('ME0019', 'mLaporan', 'smLaporanPembelian', 1900),
+('ME0021', 'mLaporan', 'smLaporanPenjualan', 1901),
+('ME0022', 'mLaporan', 'smLaporanMutasi', 1902),
+('ME0023', 'mLaporan', 'smLaporanPenyesuaian', 1903);
 
 -- --------------------------------------------------------
 

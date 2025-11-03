@@ -6,7 +6,7 @@ Public Class FDashboard
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Dim berhasil As Boolean = False
 
-        ' Loop sampai user berhasil login atau menutup form login
+        ' === Loop sampai user berhasil login atau yakin keluar ===
         While Not berhasil
             Dim login As New FLogin()
             Dim result As DialogResult = login.ShowDialog()
@@ -14,20 +14,37 @@ Public Class FDashboard
             If result = DialogResult.OK Then
                 berhasil = True
                 Me.Text = "PRODIGY  |  USER : " & NamaUserLogin
-                ' Login sukses → dashboard lanjut berjalan
             ElseIf result = DialogResult.Cancel Then
-                ' Kalau user batal, keluar aplikasi
-                Application.Exit()
-                Exit While
+                ' User klik batal → tanya dulu
+                Dim tanya As DialogResult = MessageBox.Show(
+                    "Yakin ingin keluar dari aplikasi?",
+                    "Konfirmasi Keluar",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                )
+
+                If tanya = DialogResult.Yes Then
+                    Application.Exit()
+                    Exit While
+                Else
+                    ' User pilih No → tampilkan login lagi
+                    berhasil = False
+                End If
             End If
         End While
 
+        ' === Lanjutkan hanya kalau login sukses ===
+        If berhasil Then
+            BukaKoneksi()
+            BuatMenuDariDatabase()
+        End If
+
         ' Buat TabControl
         ' === Koneksi database ===
-        BukaKoneksi()
+        'BukaKoneksi()
 
         ' === Buat menu otomatis dari database ===
-        BuatMenuDariDatabase()
+        'BuatMenuDariDatabase()
     End Sub
 
     Private Function BersihkanNama(ByVal rawName As String) As String
@@ -265,9 +282,12 @@ Public Class FDashboard
     Private Sub FDashboard_FormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles MyBase.FormClosing
         Dim tanya As DialogResult = MessageBox.Show("Apakah anda mau keluar?", "Konfirmasi",
                                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        Dim login As New FLogin()
 
         If tanya = DialogResult.No Then
+
             e.Cancel = True ' batal menutup form
+            login.ShowDialog()
         End If
     End Sub
 End Class
