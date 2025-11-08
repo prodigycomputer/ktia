@@ -42,7 +42,7 @@ Public Class FLaporanMutasi
     End Sub
 
     Private Sub btnPRINT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPRINT.Click
-        Dim f As New FCetakLaporan()
+        Dim f As New FCetak()
         f.Param("jenis") = "laporanmutasi"
         f.ShowDialog()
     End Sub

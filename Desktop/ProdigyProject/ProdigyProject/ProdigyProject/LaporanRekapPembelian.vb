@@ -18,7 +18,7 @@ Imports System
 Imports System.ComponentModel
 
 
-Public Class LaporanPembelian
+Public Class LaporanRekapPembelian
     Inherits ReportClass
     
     Public Sub New()
@@ -27,7 +27,7 @@ Public Class LaporanPembelian
     
     Public Overrides Property ResourceName() As String
         Get
-            Return "LaporanPembelian.rpt"
+            Return "LaporanRekapPembelian.rpt"
         End Get
         Set
             'Do nothing
@@ -45,7 +45,7 @@ Public Class LaporanPembelian
     
     Public Overrides Property FullResourceName() As String
         Get
-            Return "ProdigyProject.LaporanPembelian.rpt"
+            Return "ProdigyProject.LaporanRekapPembelian.rpt"
         End Get
         Set
             'Do nothing
@@ -94,7 +94,7 @@ Public Class LaporanPembelian
 End Class
 
 <System.Drawing.ToolboxBitmapAttribute(GetType(CrystalDecisions.[Shared].ExportOptions), "report.bmp")>  _
-Public Class CachedLaporanPembelian
+Public Class CachedLaporanRekapPembelian
     Inherits Component
     Implements ICachedReport
     
@@ -136,7 +136,7 @@ Public Class CachedLaporanPembelian
     End Property
     
     Public Overridable Function CreateReport() As CrystalDecisions.CrystalReports.Engine.ReportDocument Implements CrystalDecisions.ReportSource.ICachedReport.CreateReport
-        Dim rpt As LaporanPembelian = New LaporanPembelian()
+        Dim rpt As LaporanRekapPembelian = New LaporanRekapPembelian()
         rpt.Site = Me.Site
         Return rpt
     End Function

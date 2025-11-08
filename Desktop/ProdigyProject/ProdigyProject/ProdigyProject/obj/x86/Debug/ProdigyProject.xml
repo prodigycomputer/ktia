@@ -35,6 +35,14 @@ Represents the strongly named DataTable class.
 	<summary>
 Represents the strongly named DataTable class.
 </summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanRekapBeliDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanRinciBeliDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
 </member><member name="T:ProdigyProject.LaporanDt.LaporanBeliRow">
 	<summary>
 Represents strongly named DataRow class.
@@ -51,6 +59,14 @@ Represents strongly named DataRow class.
 	<summary>
 Represents strongly named DataRow class.
 </summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanRekapBeliRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanRinciBeliRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
 </member><member name="T:ProdigyProject.LaporanDt.LaporanBeliRowChangeEvent">
 	<summary>
 Row event argument class
@@ -64,6 +80,14 @@ Row event argument class
 Row event argument class
 </summary>
 </member><member name="T:ProdigyProject.LaporanDt.LaporanPenyesuaianRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanRekapBeliRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:ProdigyProject.LaporanDt.LaporanRinciBeliRowChangeEvent">
 	<summary>
 Row event argument class
 </summary>

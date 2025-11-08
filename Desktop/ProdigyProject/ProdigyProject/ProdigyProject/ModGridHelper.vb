@@ -319,7 +319,7 @@
         End With
     End Sub
 
-    ' === Setup untuk Grid Pembelian (zbeli) ===
+    ' === Setup untuk Grid Pembelian (zjual) ===
     Public Sub SetupGridJual(ByVal grid As DataGridView)
         With grid
             .AllowUserToAddRows = False

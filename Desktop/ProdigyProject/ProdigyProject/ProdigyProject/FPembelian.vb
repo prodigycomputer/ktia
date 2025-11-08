@@ -532,18 +532,16 @@ Public Class FPembelian
             Dim alamat As String = CType(dict("tpmALAMAT"), TextBox).Text.Trim()
             Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
 
-            Dim adisk1 As Double = CType(dict("tpmADISK1"), TextBox).Text.Trim()
-            Dim ndisk1 As Double = CType(dict("tpmNDISK1"), TextBox).Text.Trim()
-            Dim adisk2 As Double = CType(dict("tpmADISK2"), TextBox).Text.Trim()
-            Dim ndisk2 As Double = CType(dict("tpmNDISK2"), TextBox).Text.Trim()
-            Dim adisk3 As Double = CType(dict("tpmADISK3"), TextBox).Text.Trim()
-            Dim ndisk3 As Double = CType(dict("tpmNDISK3"), TextBox).Text.Trim()
-            Dim lain As Double = CType(dict("tpmLAIN"), TextBox).Text.Trim()
-            Dim appn As Double = CType(dict("tpmAPPN"), TextBox).Text.Trim()
-            Dim nppn As Double = CType(dict("tpmNPPN"), TextBox).Text.Trim()
-            Dim total As Double = CType(dict("tpmTOTAL"), TextBox).Text.Trim()
-
-
+            Dim adisk1 As Double = Val(CType(dict("tpmADISK1"), TextBox).Text.Trim())
+            Dim ndisk1 As Double = Val(CType(dict("tpmNDISK1"), TextBox).Text.Trim())
+            Dim adisk2 As Double = Val(CType(dict("tpmADISK2"), TextBox).Text.Trim())
+            Dim ndisk2 As Double = Val(CType(dict("tpmNDISK2"), TextBox).Text.Trim())
+            Dim adisk3 As Double = Val(CType(dict("tpmADISK3"), TextBox).Text.Trim())
+            Dim ndisk3 As Double = Val(CType(dict("tpmNDISK3"), TextBox).Text.Trim())
+            Dim lain As Double = Val(CType(dict("tpmLAIN"), TextBox).Text.Trim())
+            Dim appn As Double = Val(CType(dict("tpmAPPN"), TextBox).Text.Trim())
+            Dim nppn As Double = Val(CType(dict("tpmNPPN"), TextBox).Text.Trim())
+            Dim total As Double = Val(CType(dict("tpmTOTAL"), TextBox).Text.Trim())
 
             ' --- Validasi ---
             If nonota = "" Then Throw New Exception("No Nota tidak boleh kosong!")
@@ -1017,6 +1015,7 @@ Public Class FPembelian
             Dim f As New FCetak()
             f.Param("nonota") = nonota
             f.Param("jenis") = "pembelian"
+            f.Param("tipe") = "nota"
             f.ShowDialog()
 
         Catch ex As Exception

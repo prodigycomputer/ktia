@@ -761,6 +761,7 @@ Public Class FMutasi
             Dim f As New FCetak()
             f.Param("nonota") = nonota
             f.Param("jenis") = "mutasi"
+            f.Param("tipe") = "nota"
             f.ShowDialog()
 
         Catch ex As Exception

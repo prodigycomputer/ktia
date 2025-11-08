@@ -1057,6 +1057,7 @@ Public Class FReturPenjualan
             Dim f As New FCetak()
             f.Param("nonota") = nonota
             f.Param("jenis") = "rpenjualan"
+            f.Param("tipe") = "nota"
             f.ShowDialog()
 
         Catch ex As Exception
