@@ -240,8 +240,20 @@ Public Class FDashboard
                 f.MdiParent = Me
                 f.Show()
 
+            Case "ME0024"
+                Dim f As New FLaporanReturPembelian()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
             Case "ME0021"
                 Dim f As New FLaporanPenjualan()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
+            Case "ME0025"
+                Dim f As New FLaporanReturPenjualan()
                 f.Tag = idMenu
                 f.MdiParent = Me
                 f.Show()

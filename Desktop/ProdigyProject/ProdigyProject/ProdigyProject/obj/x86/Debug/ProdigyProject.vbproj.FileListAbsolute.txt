@@ -65,3 +65,5 @@ D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyPro
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FLaporanPenjualan.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FLaporanMutasi.resources
 D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FLaporanPenyesuaian.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FLaporanReturPembelian.resources
+D:\Desktop\ProdigyProject\ProdigyProject\ProdigyProject\obj\x86\Debug\ProdigyProject.FLaporanReturPenjualan.resources

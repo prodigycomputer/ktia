@@ -193,6 +193,18 @@
     <Compile Include="FLaporanPenyesuaian.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FLaporanReturPembelian.Designer.vb">
+      <DependentUpon>FLaporanReturPembelian.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FLaporanReturPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FLaporanReturPenjualan.Designer.vb">
+      <DependentUpon>FLaporanReturPenjualan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FLaporanReturPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FMerek.Designer.vb">
       <DependentUpon>FMerek.vb</DependentUpon>
     </Compile>
@@ -467,10 +479,10 @@
     <Compile Include="LaporanDt.vb">
       <DependentUpon>LaporanDt.xsd</DependentUpon>
     </Compile>
-    <Compile Include="LaporanMutasi.vb">
+    <Compile Include="LaporanRekapMutasi.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LaporanMutasi.rpt</DependentUpon>
+      <DependentUpon>LaporanRekapMutasi.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LaporanRekapPembelian.vb">
@@ -479,22 +491,64 @@
       <DependentUpon>LaporanRekapPembelian.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="LaporanPenjualan.vb">
+    <Compile Include="LaporanRekapPenjualan.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LaporanPenjualan.rpt</DependentUpon>
+      <DependentUpon>LaporanRekapPenjualan.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="LaporanPenyesuaian.vb">
+    <Compile Include="LaporanRekapPenyesuaian.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LaporanPenyesuaian.rpt</DependentUpon>
+      <DependentUpon>LaporanRekapPenyesuaian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LaporanRekapRBeli.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanRekapRBeli.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LaporanRekapRJual.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanRekapRJual.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LaporanRinciMutasi.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanRinciMutasi.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LaporanRinciPembelian.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LaporanRinciPembelian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LaporanRinciPenjualan.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanRinciPenjualan.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LaporanRinciPenyesuaian.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanRinciPenyesuaian.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LaporanRinciRBeli.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanRinciRBeli.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LaporanRinciRJual.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LaporanRinciRJual.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ModButton.vb" />
@@ -604,6 +658,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FLaporanPenyesuaian.resx">
       <DependentUpon>FLaporanPenyesuaian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FLaporanReturPembelian.resx">
+      <DependentUpon>FLaporanReturPembelian.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FLaporanReturPenjualan.resx">
+      <DependentUpon>FLaporanReturPenjualan.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FMerek.resx">
       <DependentUpon>FMerek.vb</DependentUpon>
@@ -737,25 +797,53 @@
     <EmbeddedResource Include="ItTipe.resx">
       <DependentUpon>ItTipe.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LaporanMutasi.rpt">
+    <EmbeddedResource Include="LaporanRekapMutasi.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>LaporanMutasi.vb</LastGenOutput>
+      <LastGenOutput>LaporanRekapMutasi.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="LaporanRekapPembelian.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>LaporanRekapPembelian.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="LaporanPenjualan.rpt">
+    <EmbeddedResource Include="LaporanRekapPenjualan.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>LaporanPenjualan.vb</LastGenOutput>
+      <LastGenOutput>LaporanRekapPenjualan.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="LaporanPenyesuaian.rpt">
+    <EmbeddedResource Include="LaporanRekapPenyesuaian.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>LaporanPenyesuaian.vb</LastGenOutput>
+      <LastGenOutput>LaporanRekapPenyesuaian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanRekapRBeli.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanRekapRBeli.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanRekapRJual.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanRekapRJual.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanRinciMutasi.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanRinciMutasi.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="LaporanRinciPembelian.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>LaporanRinciPembelian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanRinciPenjualan.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanRinciPenjualan.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanRinciPenyesuaian.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanRinciPenyesuaian.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanRinciRBeli.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanRinciRBeli.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanRinciRJual.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>LaporanRinciRJual.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

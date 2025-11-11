@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2025 at 10:53 AM
+-- Generation Time: Nov 10, 2025 at 11:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -438,7 +438,9 @@ INSERT INTO `zmenu` (`idmenu`, `mainmenu`, `submenu`, `urutan`) VALUES
 ('ME0019', 'mLaporan', 'smLaporanPembelian', 1900),
 ('ME0021', 'mLaporan', 'smLaporanPenjualan', 1901),
 ('ME0022', 'mLaporan', 'smLaporanMutasi', 1902),
-('ME0023', 'mLaporan', 'smLaporanPenyesuaian', 1903);
+('ME0023', 'mLaporan', 'smLaporanPenyesuaian', 1903),
+('ME0024', 'mLaporan', 'smLaporanReturPembelian', 1904),
+('ME0025', 'mLaporan', 'smLaporanReturPenjualan', 1905);
 
 -- --------------------------------------------------------
 

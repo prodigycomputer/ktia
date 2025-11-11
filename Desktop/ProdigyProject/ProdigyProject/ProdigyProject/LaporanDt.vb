@@ -3,7 +3,7 @@
 
     End Class
 
-    Partial Class LaporanMutasiDataTable
+    Partial Class LaporanRekapMutasiDataTable
 
     End Class
 
