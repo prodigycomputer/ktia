@@ -121,6 +121,12 @@
     <Compile Include="FArea.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FBayarPelunasan.Designer.vb">
+      <DependentUpon>FBayarPelunasan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FBayarPelunasan.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FCetak.Designer.vb">
       <DependentUpon>FCetak.vb</DependentUpon>
     </Compile>
@@ -215,6 +221,12 @@
       <DependentUpon>FMutasi.vb</DependentUpon>
     </Compile>
     <Compile Include="FMutasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FPelunasanPem.Designer.vb">
+      <DependentUpon>FPelunasanPem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FPelunasanPem.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FPenjualan.Designer.vb">
@@ -623,6 +635,9 @@
     <EmbeddedResource Include="FArea.resx">
       <DependentUpon>FArea.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FBayarPelunasan.resx">
+      <DependentUpon>FBayarPelunasan.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FCetak.resx">
       <DependentUpon>FCetak.vb</DependentUpon>
     </EmbeddedResource>
@@ -670,6 +685,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FMutasi.resx">
       <DependentUpon>FMutasi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FPelunasanPem.resx">
+      <DependentUpon>FPelunasanPem.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FPenjualan.resx">
       <DependentUpon>FPenjualan.vb</DependentUpon>

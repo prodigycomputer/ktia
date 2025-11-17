@@ -858,4 +858,42 @@
 
         End With
     End Sub
+
+    ' === Setup untuk Grid Pembayaran () ===
+    Public Sub SetupGridPembayaran(ByVal grid As DataGridView)
+        With grid
+            .AllowUserToAddRows = False
+            .AllowUserToDeleteRows = False
+            .AllowUserToResizeRows = False
+            .ReadOnly = True
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            .MultiSelect = False
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            .RowHeadersVisible = False
+            .EditMode = DataGridViewEditMode.EditProgrammatically ' <<<<< penting
+
+            ' === Definisi Kolom ===
+            .Columns.Add("tgl", "Tanggal")
+            .Columns("tgl").Width = 100
+
+            .Columns.Add("nonota", "No Faktur")
+            .Columns("nonota").Width = 100
+
+            .Columns.Add("nilai", "Nilai Faktur")
+            .Columns("nilai").Width = 100
+            .Columns("nilai").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("nilai").DefaultCellStyle.Format = "N0"
+
+            .Columns.Add("sisa", "Sisa")
+            .Columns("sisa").Width = 100
+
+            .Columns.Add("pembulatan", "Pembulatan")
+            .Columns("pembulatan").Width = 100
+
+            .Columns.Add("bayar", "Pembayaran")
+            .Columns("bayar").Width = 100
+            .Columns("bayar").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("bayar").DefaultCellStyle.Format = "N0"
+        End With
+    End Sub
 End Module

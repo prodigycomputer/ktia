@@ -210,6 +210,12 @@ Public Class FDashboard
                 f.MdiParent = Me
                 f.Show()
 
+            Case "ME0026"
+                Dim f As New FPelunasanPem()
+                f.Tag = idMenu
+                f.MdiParent = Me
+                f.Show()
+
             Case "ME0015"
                 Dim f As New FPenjualan()
                 f.Tag = idMenu

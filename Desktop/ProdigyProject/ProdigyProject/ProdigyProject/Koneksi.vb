@@ -55,17 +55,5 @@ Module Koneksi
                             "Koneksi Ulang", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
     End Sub
-
-    ' === Fungsi untuk menutup koneksi (jarang perlu dipanggil) ===
-    Public Sub TutupKoneksi()
-        Try
-            If Conn IsNot Nothing AndAlso Conn.State = ConnectionState.Open Then
-                Conn.Close()
-            End If
-        Catch ex As Exception
-            MessageBox.Show("Gagal menutup koneksi: " & ex.Message)
-        End Try
-    End Sub
-
 End Module
 
