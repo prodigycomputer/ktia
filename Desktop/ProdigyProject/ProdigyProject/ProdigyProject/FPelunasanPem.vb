@@ -65,13 +65,17 @@
 
             Dim rd = cmd.ExecuteReader()
             While rd.Read()
+                Dim nilai As Decimal = If(IsDBNull(rd("nilai")), 0, CDec(rd("nilai")))
+                Dim bayar As Decimal = If(IsDBNull(rd("bayar")), 0, CDec(rd("bayar")))
+                Dim sisa As Decimal = nilai - bayar
+
                 dgBAYAR.Rows.Add(
                     Format(CDate(rd("tgl")), "dd-MM-yyyy"),
                     rd("nonota").ToString(),
-                    If(IsDBNull(rd("nilai")), "-", rd("nilai")),
+                    nilai,
+                    sisa,
                     "",
-                    "",
-                    If(IsDBNull(rd("bayar")), "-", rd("bayar"))
+                    bayar
                 )
             End While
         End Using
@@ -97,9 +101,25 @@
         If e.RowIndex < 0 Then Exit Sub ' klik header, abaikan
 
         Dim row As DataGridViewRow = dgBAYAR.Rows(e.RowIndex)
+        Dim nonota As String = row.Cells("nonota").Value.ToString()
+        Dim nilai As Decimal = row.Cells("nilai").Value.ToString()
 
+        If IsNumeric(row.Cells("nilai").Value) Then
+            nilai = CDec(row.Cells("nilai").Value)
+        End If
         ' buka form
         Dim f As New FBayarPelunasan()
+        f.NoNota = nonota
         f.ShowDialog()
+
+        If f.DialogResultValue Then
+            Dim bayar As Decimal = f.Bayar
+            Dim diskon As Decimal = f.Diskon
+            Dim sisa As Decimal = nilai - bayar
+
+            row.Cells("bayar").Value = bayar
+            row.Cells("pembulatan").Value = diskon
+            row.Cells("sisa").Value = sisa
+        End If
     End Sub
 End Class

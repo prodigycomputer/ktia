@@ -48,6 +48,7 @@ Partial Class FPelunasanPem
         '
         'txtKDSUP
         '
+        Me.txtKDSUP.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtKDSUP.Location = New System.Drawing.Point(40, 6)
         Me.txtKDSUP.Name = "txtKDSUP"
         Me.txtKDSUP.Size = New System.Drawing.Size(119, 20)
@@ -55,6 +56,7 @@ Partial Class FPelunasanPem
         '
         'txtNMPEM
         '
+        Me.txtNMPEM.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMPEM.Location = New System.Drawing.Point(165, 6)
         Me.txtNMPEM.Name = "txtNMPEM"
         Me.txtNMPEM.Size = New System.Drawing.Size(443, 20)
