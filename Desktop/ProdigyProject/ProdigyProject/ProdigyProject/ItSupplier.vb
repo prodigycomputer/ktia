@@ -48,8 +48,11 @@ Public Class ItSupplier
 
             ' kirim ke ItFPopupPem
             Dim parentForm As FPembelian = TryCast(Me.Owner, FPembelian)
+            Dim parentForm2 As FPelunasanPem = TryCast(Me.Owner, FPelunasanPem)
             If parentForm IsNot Nothing Then
                 parentForm.SetSupplier(kode, nama, alamat, kota, ktp, npwp)
+            ElseIf parentForm2 IsNot Nothing Then
+                parentForm2.SetSupplier(kode, nama)
             End If
 
             Me.Close()

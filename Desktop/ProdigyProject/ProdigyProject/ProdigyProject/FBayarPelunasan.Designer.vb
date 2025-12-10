@@ -30,12 +30,14 @@ Partial Class FBayarPelunasan
         Me.btnBATAL = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.lblNoNota = New System.Windows.Forms.Label()
+        Me.lblSisa = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 37)
+        Me.Label1.Location = New System.Drawing.Point(12, 62)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(40, 13)
         Me.Label1.TabIndex = 0
@@ -44,7 +46,7 @@ Partial Class FBayarPelunasan
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(12, 62)
+        Me.Label2.Location = New System.Drawing.Point(12, 87)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(34, 13)
         Me.Label2.TabIndex = 1
@@ -52,21 +54,21 @@ Partial Class FBayarPelunasan
         '
         'txtDisk
         '
-        Me.txtDisk.Location = New System.Drawing.Point(58, 34)
+        Me.txtDisk.Location = New System.Drawing.Point(58, 59)
         Me.txtDisk.Name = "txtDisk"
         Me.txtDisk.Size = New System.Drawing.Size(141, 20)
         Me.txtDisk.TabIndex = 2
         '
         'txtBayar
         '
-        Me.txtBayar.Location = New System.Drawing.Point(58, 59)
+        Me.txtBayar.Location = New System.Drawing.Point(58, 84)
         Me.txtBayar.Name = "txtBayar"
         Me.txtBayar.Size = New System.Drawing.Size(141, 20)
         Me.txtBayar.TabIndex = 3
         '
         'btnOK
         '
-        Me.btnOK.Location = New System.Drawing.Point(95, 91)
+        Me.btnOK.Location = New System.Drawing.Point(95, 116)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(49, 23)
         Me.btnOK.TabIndex = 4
@@ -75,7 +77,7 @@ Partial Class FBayarPelunasan
         '
         'btnBATAL
         '
-        Me.btnBATAL.Location = New System.Drawing.Point(150, 91)
+        Me.btnBATAL.Location = New System.Drawing.Point(150, 116)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(49, 23)
         Me.btnBATAL.TabIndex = 5
@@ -100,11 +102,31 @@ Partial Class FBayarPelunasan
         Me.lblNoNota.TabIndex = 7
         Me.lblNoNota.Text = "Diskon"
         '
+        'lblSisa
+        '
+        Me.lblSisa.AutoSize = True
+        Me.lblSisa.Location = New System.Drawing.Point(78, 29)
+        Me.lblSisa.Name = "lblSisa"
+        Me.lblSisa.Size = New System.Drawing.Size(27, 13)
+        Me.lblSisa.TabIndex = 9
+        Me.lblSisa.Text = "Sisa"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(39, 29)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(33, 13)
+        Me.Label5.TabIndex = 8
+        Me.Label5.Text = "Sisa :"
+        '
         'FBayarPelunasan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(211, 134)
+        Me.ClientSize = New System.Drawing.Size(211, 184)
+        Me.Controls.Add(Me.lblSisa)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.lblNoNota)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.btnBATAL)
@@ -129,4 +151,6 @@ Partial Class FBayarPelunasan
     Friend WithEvents btnBATAL As System.Windows.Forms.Button
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents lblNoNota As System.Windows.Forms.Label
+    Friend WithEvents lblSisa As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
 End Class

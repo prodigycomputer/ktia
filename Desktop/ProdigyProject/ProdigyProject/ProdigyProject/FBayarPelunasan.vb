@@ -5,10 +5,18 @@ Public Class FBayarPelunasan
     Public Property NoNota As String
     Public Property Diskon As Decimal
     Public Property Bayar As Decimal
+    Public Property Sisa As Decimal
     Public Property DialogResultValue As Boolean = False
+
+    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+        Handles txtDisk.KeyPress, txtBayar.KeyPress
+
+        AngkaHelper.HanyaAngka(e)
+    End Sub
 
     Private Sub FBayarPelunasan_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         lblNoNota.Text = NoNota
+        lblSisa.Text = "Rp " & Sisa.ToString("N2")
     End Sub
 
     Private Sub btnBATAL_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBATAL.Click

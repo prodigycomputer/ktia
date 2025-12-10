@@ -886,9 +886,13 @@
 
             .Columns.Add("sisa", "Sisa")
             .Columns("sisa").Width = 100
+            .Columns("sisa").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("sisa").DefaultCellStyle.Format = "N0"
 
             .Columns.Add("pembulatan", "Pembulatan")
             .Columns("pembulatan").Width = 100
+            .Columns("pembulatan").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("pembulatan").DefaultCellStyle.Format = "N0"
 
             .Columns.Add("bayar", "Pembayaran")
             .Columns("bayar").Width = 100
