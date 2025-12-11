@@ -95,6 +95,7 @@ Public Class FPelunasanPem
         Dim f As New FBayarPelunasan()
         f.NoNota = nonota
         f.Sisa = sisa
+        f.Nilai = nilai
         f.ShowDialog()
 
         If f.DialogResultValue Then

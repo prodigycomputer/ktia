@@ -6,6 +6,7 @@ Public Class FBayarPelunasan
     Public Property Diskon As Decimal
     Public Property Bayar As Decimal
     Public Property Sisa As Decimal
+    Public Property Nilai As Decimal
     Public Property DialogResultValue As Boolean = False
 
     Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
@@ -13,6 +14,25 @@ Public Class FBayarPelunasan
 
         AngkaHelper.HanyaAngka(e)
     End Sub
+
+    Private Sub HitungBayarDenganDiskonPersen()
+        Dim persen As Decimal = 0
+
+        If IsNumeric(txtDisk.Text) Then
+            persen = CDec(txtDisk.Text)
+        End If
+
+        ' Hitung diskon rupiah
+        Dim diskonRupiah As Decimal = Nilai * (persen / 100)
+
+        ' Hitung bayar setelah diskon
+        Dim bayarSetelahDiskon As Decimal = Nilai - diskonRupiah
+        If bayarSetelahDiskon < 0 Then bayarSetelahDiskon = 0
+
+        ' Tampilkan (boleh format tanpa desimal atau 2 desimal sesuai kebutuhan)
+        txtBayar.Text = bayarSetelahDiskon.ToString("N0")
+    End Sub
+
 
     Private Sub FBayarPelunasan_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         lblNoNota.Text = NoNota
@@ -45,5 +65,9 @@ Public Class FBayarPelunasan
         End Using
 
         Me.Close()
+    End Sub
+
+    Private Sub txtDisk_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtDisk.TextChanged
+        HitungBayarDenganDiskonPersen()
     End Sub
 End Class

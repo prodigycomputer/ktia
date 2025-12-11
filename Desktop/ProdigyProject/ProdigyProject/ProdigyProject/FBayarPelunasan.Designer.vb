@@ -124,7 +124,7 @@ Partial Class FBayarPelunasan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(211, 184)
+        Me.ClientSize = New System.Drawing.Size(217, 157)
         Me.Controls.Add(Me.lblSisa)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.lblNoNota)
