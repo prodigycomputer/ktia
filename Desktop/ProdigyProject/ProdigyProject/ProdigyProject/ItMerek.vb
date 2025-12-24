@@ -2,14 +2,19 @@
 
 Public Class ItMerek
 
-    Public Sub LoadDataMerek(ByVal keyword As String)
+    Public Sub LoadDataMerek(ByVal keyword As String, ByVal mode As String)
 
-        Dim sql As String
-        If keyword = "*" Then
+        Dim sql As String = ""
+        If mode = "KODE" AndAlso keyword = "*" Then
             sql = "SELECT kodemerk, namamerk FROM zmerek ORDER BY kodemerk"
-        Else
-            sql = "SELECT kodemerk, namamerk " &
-                  "FROM zmerek WHERE kodemerk LIKE '%" & keyword & "%' OR namamerk LIKE '%" & keyword & "%' ORDER BY kodemerk"
+        ElseIf mode = "NAMA" AndAlso keyword = "*" Then
+            sql = "SELECT kodemerk, namamerk FROM zmerek ORDER BY kodemerk"
+        ElseIf mode = "KODE" Then
+            sql = "SELECT kodemerk, namamerk FROM zmerek " &
+                  "WHERE kodemerk LIKE ? ORDER BY kodemerk LIMIT 50"
+        ElseIf mode = "NAMA" Then
+            sql = "SELECT kodemerk, namamerk FROM zmerek " &
+                  "WHERE namamerk LIKE ? ORDER BY namamerk LIMIT 50"
         End If
 
         dgitmMEREK.Rows.Clear()
@@ -17,6 +22,11 @@ Public Class ItMerek
         Try
             BukaKoneksi()
             Cmd = New OdbcCommand(sql, Conn)
+
+            If keyword <> "*" AndAlso keyword <> "" Then
+                Cmd.Parameters.AddWithValue("@p1", keyword & "%")
+            End If
+
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()

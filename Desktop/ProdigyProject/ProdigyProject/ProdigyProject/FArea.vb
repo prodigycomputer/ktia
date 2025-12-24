@@ -4,10 +4,49 @@ Public Class FArea
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FArea_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDAREA, "KODE AREA")
+        ModPlaceholder.SetPlaceholder(tSNMAREA, "NAMA AREA")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDAREA.Enabled = True
+        tSNMAREA.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDAREA.KeyPress, tSNMAREA.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDAREA.Enter, tSNMAREA.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDAREA.Leave, tSNMAREA.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodearea As String)
@@ -264,15 +303,20 @@ Public Class FArea
         DisabledLoad()
     End Sub
 
-    Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-        Handles tSKDAREA.TextChanged, tSNMAREA.TextChanged
+    Private Sub tUser_TextChanged(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDAREA.TextChanged, tSNMAREA.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDAREA Then
-            tSNMAREA.Enabled = (tSKDAREA.Text.Trim() = "")
-        ElseIf txt Is tSNMAREA Then
-            tSKDAREA.Enabled = (tSNMAREA.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDAREA) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMAREA) <> ""
+
+        tSNMAREA.Enabled = Not isiKODE
+        tSKDAREA.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
@@ -289,5 +333,12 @@ Public Class FArea
         ' === Clear filter setelah pencarian ===
         tSKDAREA.Clear()
         tSNMAREA.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDAREA, "KODE AREA")
+        ModPlaceholder.SetPlaceholder(tSNMAREA, "NAMA AREA")
+
+        isUserTypingSearch = False
+        tSKDAREA.Enabled = True
+        tSNMAREA.Enabled = True
     End Sub
 End Class

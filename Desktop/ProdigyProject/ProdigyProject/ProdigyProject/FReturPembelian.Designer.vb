@@ -88,7 +88,7 @@ Partial Class FReturPembelian
         Me.trmuSLUNAS.Location = New System.Drawing.Point(888, 7)
         Me.trmuSLUNAS.Name = "trmuSLUNAS"
         Me.trmuSLUNAS.Size = New System.Drawing.Size(121, 24)
-        Me.trmuSLUNAS.TabIndex = 31
+        Me.trmuSLUNAS.TabIndex = 10
         '
         'trpmSNMSUP
         '
@@ -97,7 +97,7 @@ Partial Class FReturPembelian
         Me.trpmSNMSUP.Location = New System.Drawing.Point(703, 8)
         Me.trpmSNMSUP.Name = "trpmSNMSUP"
         Me.trpmSNMSUP.Size = New System.Drawing.Size(183, 23)
-        Me.trpmSNMSUP.TabIndex = 30
+        Me.trpmSNMSUP.TabIndex = 9
         '
         'dtrpmTGL2
         '
@@ -106,7 +106,7 @@ Partial Class FReturPembelian
         Me.dtrpmTGL2.Location = New System.Drawing.Point(600, 8)
         Me.dtrpmTGL2.Name = "dtrpmTGL2"
         Me.dtrpmTGL2.Size = New System.Drawing.Size(100, 23)
-        Me.dtrpmTGL2.TabIndex = 29
+        Me.dtrpmTGL2.TabIndex = 8
         '
         'Label15
         '
@@ -124,14 +124,14 @@ Partial Class FReturPembelian
         Me.dtrpmTGL1.Location = New System.Drawing.Point(480, 8)
         Me.dtrpmTGL1.Name = "dtrpmTGL1"
         Me.dtrpmTGL1.Size = New System.Drawing.Size(100, 23)
-        Me.dtrpmTGL1.TabIndex = 27
+        Me.dtrpmTGL1.TabIndex = 7
         '
         'brpmTabDel
         '
         Me.brpmTabDel.Location = New System.Drawing.Point(985, 36)
         Me.brpmTabDel.Name = "brpmTabDel"
         Me.brpmTabDel.Size = New System.Drawing.Size(70, 25)
-        Me.brpmTabDel.TabIndex = 26
+        Me.brpmTabDel.TabIndex = 13
         Me.brpmTabDel.Text = "Hapus Tab"
         Me.brpmTabDel.UseVisualStyleBackColor = True
         '
@@ -140,7 +140,7 @@ Partial Class FReturPembelian
         Me.brpmTabAdd.Location = New System.Drawing.Point(898, 36)
         Me.brpmTabAdd.Name = "brpmTabAdd"
         Me.brpmTabAdd.Size = New System.Drawing.Size(80, 25)
-        Me.brpmTabAdd.TabIndex = 25
+        Me.brpmTabAdd.TabIndex = 12
         Me.brpmTabAdd.Text = "Tambah Tab"
         Me.brpmTabAdd.UseVisualStyleBackColor = True
         '
@@ -205,7 +205,7 @@ Partial Class FReturPembelian
         Me.trpmNONOTA.Location = New System.Drawing.Point(911, 5)
         Me.trpmNONOTA.Name = "trpmNONOTA"
         Me.trpmNONOTA.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNONOTA.TabIndex = 46
+        Me.trpmNONOTA.TabIndex = 7
         '
         'Label16
         '
@@ -222,7 +222,7 @@ Partial Class FReturPembelian
         Me.trpmTOTAL.Location = New System.Drawing.Point(860, 498)
         Me.trpmTOTAL.Name = "trpmTOTAL"
         Me.trpmTOTAL.Size = New System.Drawing.Size(190, 20)
-        Me.trpmTOTAL.TabIndex = 45
+        Me.trpmTOTAL.TabIndex = 20
         Me.trpmTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmSUBTOTAL
@@ -230,7 +230,7 @@ Partial Class FReturPembelian
         Me.trpmSUBTOTAL.Location = New System.Drawing.Point(860, 360)
         Me.trpmSUBTOTAL.Name = "trpmSUBTOTAL"
         Me.trpmSUBTOTAL.Size = New System.Drawing.Size(190, 20)
-        Me.trpmSUBTOTAL.TabIndex = 43
+        Me.trpmSUBTOTAL.TabIndex = 9
         Me.trpmSUBTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmLAIN
@@ -238,7 +238,7 @@ Partial Class FReturPembelian
         Me.trpmLAIN.Location = New System.Drawing.Point(860, 452)
         Me.trpmLAIN.Name = "trpmLAIN"
         Me.trpmLAIN.Size = New System.Drawing.Size(190, 20)
-        Me.trpmLAIN.TabIndex = 40
+        Me.trpmLAIN.TabIndex = 16
         Me.trpmLAIN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmNPPN
@@ -246,7 +246,7 @@ Partial Class FReturPembelian
         Me.trpmNPPN.Location = New System.Drawing.Point(912, 475)
         Me.trpmNPPN.Name = "trpmNPPN"
         Me.trpmNPPN.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNPPN.TabIndex = 38
+        Me.trpmNPPN.TabIndex = 19
         Me.trpmNPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmAPPN
@@ -254,7 +254,7 @@ Partial Class FReturPembelian
         Me.trpmAPPN.Location = New System.Drawing.Point(860, 475)
         Me.trpmAPPN.Name = "trpmAPPN"
         Me.trpmAPPN.Size = New System.Drawing.Size(50, 20)
-        Me.trpmAPPN.TabIndex = 37
+        Me.trpmAPPN.TabIndex = 18
         Me.trpmAPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmNDISK3
@@ -262,7 +262,7 @@ Partial Class FReturPembelian
         Me.trpmNDISK3.Location = New System.Drawing.Point(912, 429)
         Me.trpmNDISK3.Name = "trpmNDISK3"
         Me.trpmNDISK3.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNDISK3.TabIndex = 35
+        Me.trpmNDISK3.TabIndex = 15
         Me.trpmNDISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmADISK3
@@ -270,7 +270,7 @@ Partial Class FReturPembelian
         Me.trpmADISK3.Location = New System.Drawing.Point(860, 429)
         Me.trpmADISK3.Name = "trpmADISK3"
         Me.trpmADISK3.Size = New System.Drawing.Size(50, 20)
-        Me.trpmADISK3.TabIndex = 34
+        Me.trpmADISK3.TabIndex = 14
         Me.trpmADISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmNDISK2
@@ -278,7 +278,7 @@ Partial Class FReturPembelian
         Me.trpmNDISK2.Location = New System.Drawing.Point(912, 406)
         Me.trpmNDISK2.Name = "trpmNDISK2"
         Me.trpmNDISK2.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNDISK2.TabIndex = 32
+        Me.trpmNDISK2.TabIndex = 13
         Me.trpmNDISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmADISK2
@@ -286,7 +286,7 @@ Partial Class FReturPembelian
         Me.trpmADISK2.Location = New System.Drawing.Point(860, 406)
         Me.trpmADISK2.Name = "trpmADISK2"
         Me.trpmADISK2.Size = New System.Drawing.Size(50, 20)
-        Me.trpmADISK2.TabIndex = 31
+        Me.trpmADISK2.TabIndex = 12
         Me.trpmADISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmNDISK1
@@ -294,7 +294,7 @@ Partial Class FReturPembelian
         Me.trpmNDISK1.Location = New System.Drawing.Point(912, 383)
         Me.trpmNDISK1.Name = "trpmNDISK1"
         Me.trpmNDISK1.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNDISK1.TabIndex = 29
+        Me.trpmNDISK1.TabIndex = 11
         Me.trpmNDISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmADISK1
@@ -302,7 +302,7 @@ Partial Class FReturPembelian
         Me.trpmADISK1.Location = New System.Drawing.Point(860, 383)
         Me.trpmADISK1.Name = "trpmADISK1"
         Me.trpmADISK1.Size = New System.Drawing.Size(50, 20)
-        Me.trpmADISK1.TabIndex = 28
+        Me.trpmADISK1.TabIndex = 10
         Me.trpmADISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmALAMAT
@@ -311,7 +311,7 @@ Partial Class FReturPembelian
         Me.trpmALAMAT.Location = New System.Drawing.Point(386, 53)
         Me.trpmALAMAT.Name = "trpmALAMAT"
         Me.trpmALAMAT.Size = New System.Drawing.Size(475, 20)
-        Me.trpmALAMAT.TabIndex = 18
+        Me.trpmALAMAT.TabIndex = 6
         '
         'trpmKDSUP
         '
@@ -319,7 +319,7 @@ Partial Class FReturPembelian
         Me.trpmKDSUP.Location = New System.Drawing.Point(386, 5)
         Me.trpmKDSUP.Name = "trpmKDSUP"
         Me.trpmKDSUP.Size = New System.Drawing.Size(138, 20)
-        Me.trpmKDSUP.TabIndex = 17
+        Me.trpmKDSUP.TabIndex = 4
         '
         'trpmKET
         '
@@ -327,7 +327,7 @@ Partial Class FReturPembelian
         Me.trpmKET.Location = New System.Drawing.Point(111, 77)
         Me.trpmKET.Name = "trpmKET"
         Me.trpmKET.Size = New System.Drawing.Size(939, 20)
-        Me.trpmKET.TabIndex = 5
+        Me.trpmKET.TabIndex = 3
         '
         'trpmNMSUP
         '
@@ -335,7 +335,7 @@ Partial Class FReturPembelian
         Me.trpmNMSUP.Location = New System.Drawing.Point(386, 29)
         Me.trpmNMSUP.Name = "trpmNMSUP"
         Me.trpmNMSUP.Size = New System.Drawing.Size(295, 20)
-        Me.trpmNMSUP.TabIndex = 12
+        Me.trpmNMSUP.TabIndex = 5
         '
         'trpmNOFAKTUR
         '
@@ -428,7 +428,7 @@ Partial Class FReturPembelian
         Me.btnADDITEM.Location = New System.Drawing.Point(985, 103)
         Me.btnADDITEM.Name = "btnADDITEM"
         Me.btnADDITEM.Size = New System.Drawing.Size(65, 20)
-        Me.btnADDITEM.TabIndex = 19
+        Me.btnADDITEM.TabIndex = 8
         Me.btnADDITEM.Text = "Add Item"
         Me.btnADDITEM.UseVisualStyleBackColor = True
         '
@@ -438,7 +438,7 @@ Partial Class FReturPembelian
         Me.trpmTEMPO.Location = New System.Drawing.Point(111, 53)
         Me.trpmTEMPO.Name = "trpmTEMPO"
         Me.trpmTEMPO.Size = New System.Drawing.Size(138, 20)
-        Me.trpmTEMPO.TabIndex = 7
+        Me.trpmTEMPO.TabIndex = 2
         '
         'trpmTANGGAL
         '
@@ -446,7 +446,7 @@ Partial Class FReturPembelian
         Me.trpmTANGGAL.Location = New System.Drawing.Point(111, 5)
         Me.trpmTANGGAL.Name = "trpmTANGGAL"
         Me.trpmTANGGAL.Size = New System.Drawing.Size(138, 20)
-        Me.trpmTANGGAL.TabIndex = 6
+        Me.trpmTANGGAL.TabIndex = 0
         '
         'Label5
         '
@@ -523,7 +523,7 @@ Partial Class FReturPembelian
         Me.btnPRINT.Location = New System.Drawing.Point(290, 4)
         Me.btnPRINT.Name = "btnPRINT"
         Me.btnPRINT.Size = New System.Drawing.Size(50, 30)
-        Me.btnPRINT.TabIndex = 23
+        Me.btnPRINT.TabIndex = 5
         Me.btnPRINT.Text = "Print"
         Me.btnPRINT.UseVisualStyleBackColor = True
         '
@@ -532,7 +532,7 @@ Partial Class FReturPembelian
         Me.btnCARI.Location = New System.Drawing.Point(1011, 4)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 22
+        Me.btnCARI.TabIndex = 11
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -543,14 +543,14 @@ Partial Class FReturPembelian
         Me.trpmSNONOTA.Location = New System.Drawing.Point(346, 8)
         Me.trpmSNONOTA.Name = "trpmSNONOTA"
         Me.trpmSNONOTA.Size = New System.Drawing.Size(130, 23)
-        Me.trpmSNONOTA.TabIndex = 21
+        Me.trpmSNONOTA.TabIndex = 6
         '
         'btnBATAL
         '
         Me.btnBATAL.Location = New System.Drawing.Point(229, 4)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 20
+        Me.btnBATAL.TabIndex = 4
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -559,7 +559,7 @@ Partial Class FReturPembelian
         Me.btnHAPUS.Location = New System.Drawing.Point(173, 4)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 19
+        Me.btnHAPUS.TabIndex = 3
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -568,7 +568,7 @@ Partial Class FReturPembelian
         Me.btnUBAH.Location = New System.Drawing.Point(117, 4)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 18
+        Me.btnUBAH.TabIndex = 2
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -577,7 +577,7 @@ Partial Class FReturPembelian
         Me.btnSIMPAN.Location = New System.Drawing.Point(61, 4)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 17
+        Me.btnSIMPAN.TabIndex = 1
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -586,7 +586,7 @@ Partial Class FReturPembelian
         Me.btnTAMBAH.Location = New System.Drawing.Point(5, 4)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 16
+        Me.btnTAMBAH.TabIndex = 0
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '

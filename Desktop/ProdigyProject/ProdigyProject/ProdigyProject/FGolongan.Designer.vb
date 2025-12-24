@@ -56,9 +56,9 @@ Partial Class FGolongan
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(8, 31)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(88, 15)
+        Me.Label3.Size = New System.Drawing.Size(98, 15)
         Me.Label3.TabIndex = 53
-        Me.Label3.Text = "Nama Gudang"
+        Me.Label3.Text = "Nama Golongan"
         '
         'txtNMGOL
         '
@@ -91,7 +91,7 @@ Partial Class FGolongan
         Me.btnCARI.Location = New System.Drawing.Point(295, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 94
+        Me.btnCARI.TabIndex = 2
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -102,7 +102,7 @@ Partial Class FGolongan
         Me.tSNMGOL.Location = New System.Drawing.Point(132, 10)
         Me.tSNMGOL.Name = "tSNMGOL"
         Me.tSNMGOL.Size = New System.Drawing.Size(157, 23)
-        Me.tSNMGOL.TabIndex = 93
+        Me.tSNMGOL.TabIndex = 1
         '
         'tSKDGOL
         '
@@ -111,14 +111,14 @@ Partial Class FGolongan
         Me.tSKDGOL.Location = New System.Drawing.Point(9, 10)
         Me.tSKDGOL.Name = "tSKDGOL"
         Me.tSKDGOL.Size = New System.Drawing.Size(117, 23)
-        Me.tSKDGOL.TabIndex = 92
+        Me.tSKDGOL.TabIndex = 0
         '
         'btnBATAL
         '
         Me.btnBATAL.Location = New System.Drawing.Point(231, 42)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 91
+        Me.btnBATAL.TabIndex = 7
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -127,7 +127,7 @@ Partial Class FGolongan
         Me.btnHAPUS.Location = New System.Drawing.Point(175, 42)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 90
+        Me.btnHAPUS.TabIndex = 6
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -136,7 +136,7 @@ Partial Class FGolongan
         Me.btnUBAH.Location = New System.Drawing.Point(119, 42)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 89
+        Me.btnUBAH.TabIndex = 5
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -145,7 +145,7 @@ Partial Class FGolongan
         Me.btnSIMPAN.Location = New System.Drawing.Point(63, 42)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 88
+        Me.btnSIMPAN.TabIndex = 4
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -154,7 +154,7 @@ Partial Class FGolongan
         Me.btnTAMBAH.Location = New System.Drawing.Point(7, 42)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 87
+        Me.btnTAMBAH.TabIndex = 3
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '

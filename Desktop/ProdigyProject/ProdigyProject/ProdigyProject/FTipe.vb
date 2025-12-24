@@ -4,10 +4,50 @@ Public Class FTipe
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FTipe_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDTIPE, "KODE TIPE")
+        ModPlaceholder.SetPlaceholder(tSNMTIPE, "NAMA TIPE")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDTIPE.Enabled = True
+        tSNMTIPE.Enabled = True
+
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDTIPE.KeyPress, tSNMTIPE.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDTIPE.Enter, tSNMTIPE.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDTIPE.Leave, tSNMTIPE.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodetipe As String)
@@ -264,15 +304,20 @@ Public Class FTipe
         DisabledLoad()
     End Sub
 
-    Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-        Handles tSKDTIPE.TextChanged, tSNMTIPE.TextChanged
+    Private Sub tUser_TextChanged(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDTIPE.TextChanged, tSNMTIPE.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDTIPE Then
-            tSNMTIPE.Enabled = (tSKDTIPE.Text.Trim() = "")
-        ElseIf txt Is tSNMTIPE Then
-            tSKDTIPE.Enabled = (tSNMTIPE.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDTIPE) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMTIPE) <> ""
+
+        tSNMTIPE.Enabled = Not isiKODE
+        tSKDTIPE.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
@@ -289,5 +334,12 @@ Public Class FTipe
         ' === Clear filter setelah pencarian ===
         tSKDTIPE.Clear()
         tSNMTIPE.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDTIPE, "KODE TIPE")
+        ModPlaceholder.SetPlaceholder(tSNMTIPE, "NAMA TIPE")
+
+        isUserTypingSearch = False
+        tSKDTIPE.Enabled = True
+        tSNMTIPE.Enabled = True
     End Sub
 End Class

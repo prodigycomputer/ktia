@@ -23,6 +23,9 @@ Partial Class FStok
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.txtNMGRUP = New System.Windows.Forms.TextBox()
+        Me.txtNMGOL = New System.Windows.Forms.TextBox()
+        Me.txtNMMERK = New System.Windows.Forms.TextBox()
         Me.btnHARGA = New System.Windows.Forms.Button()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.txtGAMBAR = New System.Windows.Forms.TextBox()
@@ -63,6 +66,9 @@ Partial Class FStok
         'Panel1
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.txtNMGRUP)
+        Me.Panel1.Controls.Add(Me.txtNMGOL)
+        Me.Panel1.Controls.Add(Me.txtNMMERK)
         Me.Panel1.Controls.Add(Me.btnHARGA)
         Me.Panel1.Controls.Add(Me.Label12)
         Me.Panel1.Controls.Add(Me.txtGAMBAR)
@@ -91,15 +97,39 @@ Partial Class FStok
         Me.Panel1.Controls.Add(Me.txtKDMERK)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 323)
-        Me.Panel1.TabIndex = 104
+        Me.Panel1.Size = New System.Drawing.Size(546, 323)
+        Me.Panel1.TabIndex = 0
+        '
+        'txtNMGRUP
+        '
+        Me.txtNMGRUP.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtNMGRUP.Location = New System.Drawing.Point(285, 52)
+        Me.txtNMGRUP.Name = "txtNMGRUP"
+        Me.txtNMGRUP.Size = New System.Drawing.Size(246, 20)
+        Me.txtNMGRUP.TabIndex = 5
+        '
+        'txtNMGOL
+        '
+        Me.txtNMGOL.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtNMGOL.Location = New System.Drawing.Point(285, 29)
+        Me.txtNMGOL.Name = "txtNMGOL"
+        Me.txtNMGOL.Size = New System.Drawing.Size(246, 20)
+        Me.txtNMGOL.TabIndex = 3
+        '
+        'txtNMMERK
+        '
+        Me.txtNMMERK.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtNMMERK.Location = New System.Drawing.Point(285, 6)
+        Me.txtNMMERK.Name = "txtNMMERK"
+        Me.txtNMMERK.Size = New System.Drawing.Size(246, 20)
+        Me.txtNMMERK.TabIndex = 1
         '
         'btnHARGA
         '
-        Me.btnHARGA.Location = New System.Drawing.Point(266, 285)
+        Me.btnHARGA.Location = New System.Drawing.Point(477, 285)
         Me.btnHARGA.Name = "btnHARGA"
         Me.btnHARGA.Size = New System.Drawing.Size(55, 30)
-        Me.btnHARGA.TabIndex = 105
+        Me.btnHARGA.TabIndex = 16
         Me.btnHARGA.Text = "Harga"
         Me.btnHARGA.UseVisualStyleBackColor = True
         '
@@ -118,8 +148,8 @@ Partial Class FStok
         Me.txtGAMBAR.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtGAMBAR.Location = New System.Drawing.Point(136, 259)
         Me.txtGAMBAR.Name = "txtGAMBAR"
-        Me.txtGAMBAR.Size = New System.Drawing.Size(185, 20)
-        Me.txtGAMBAR.TabIndex = 87
+        Me.txtGAMBAR.Size = New System.Drawing.Size(395, 20)
+        Me.txtGAMBAR.TabIndex = 15
         '
         'Label11
         '
@@ -137,7 +167,8 @@ Partial Class FStok
         Me.txtHRGBELI.Location = New System.Drawing.Point(136, 236)
         Me.txtHRGBELI.Name = "txtHRGBELI"
         Me.txtHRGBELI.Size = New System.Drawing.Size(143, 20)
-        Me.txtHRGBELI.TabIndex = 85
+        Me.txtHRGBELI.TabIndex = 13
+        Me.txtHRGBELI.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label9
         '
@@ -155,7 +186,8 @@ Partial Class FStok
         Me.txtISI2.Location = New System.Drawing.Point(136, 190)
         Me.txtISI2.Name = "txtISI2"
         Me.txtISI2.Size = New System.Drawing.Size(84, 20)
-        Me.txtISI2.TabIndex = 83
+        Me.txtISI2.TabIndex = 11
+        Me.txtISI2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label10
         '
@@ -173,7 +205,7 @@ Partial Class FStok
         Me.txtSTN2.Location = New System.Drawing.Point(136, 167)
         Me.txtSTN2.Name = "txtSTN2"
         Me.txtSTN2.Size = New System.Drawing.Size(185, 20)
-        Me.txtSTN2.TabIndex = 81
+        Me.txtSTN2.TabIndex = 10
         '
         'Label8
         '
@@ -191,7 +223,7 @@ Partial Class FStok
         Me.txtKDBRG.Location = New System.Drawing.Point(136, 75)
         Me.txtKDBRG.Name = "txtKDBRG"
         Me.txtKDBRG.Size = New System.Drawing.Size(185, 20)
-        Me.txtKDBRG.TabIndex = 79
+        Me.txtKDBRG.TabIndex = 6
         '
         'btnUPLOAD
         '
@@ -199,7 +231,7 @@ Partial Class FStok
         Me.btnUPLOAD.Location = New System.Drawing.Point(78, 258)
         Me.btnUPLOAD.Name = "btnUPLOAD"
         Me.btnUPLOAD.Size = New System.Drawing.Size(52, 22)
-        Me.btnUPLOAD.TabIndex = 78
+        Me.btnUPLOAD.TabIndex = 14
         Me.btnUPLOAD.Text = "Upload"
         Me.btnUPLOAD.UseVisualStyleBackColor = True
         '
@@ -219,7 +251,7 @@ Partial Class FStok
         Me.txtSTN3.Location = New System.Drawing.Point(136, 213)
         Me.txtSTN3.Name = "txtSTN3"
         Me.txtSTN3.Size = New System.Drawing.Size(185, 20)
-        Me.txtSTN3.TabIndex = 62
+        Me.txtSTN3.TabIndex = 12
         '
         'Label5
         '
@@ -237,7 +269,8 @@ Partial Class FStok
         Me.txtISI1.Location = New System.Drawing.Point(136, 144)
         Me.txtISI1.Name = "txtISI1"
         Me.txtISI1.Size = New System.Drawing.Size(84, 20)
-        Me.txtISI1.TabIndex = 60
+        Me.txtISI1.TabIndex = 9
+        Me.txtISI1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label6
         '
@@ -255,7 +288,7 @@ Partial Class FStok
         Me.txtSTN1.Location = New System.Drawing.Point(136, 121)
         Me.txtSTN1.Name = "txtSTN1"
         Me.txtSTN1.Size = New System.Drawing.Size(185, 20)
-        Me.txtSTN1.TabIndex = 58
+        Me.txtSTN1.TabIndex = 8
         '
         'Label1
         '
@@ -272,8 +305,8 @@ Partial Class FStok
         Me.txtNMBRG.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMBRG.Location = New System.Drawing.Point(136, 98)
         Me.txtNMBRG.Name = "txtNMBRG"
-        Me.txtNMBRG.Size = New System.Drawing.Size(185, 20)
-        Me.txtNMBRG.TabIndex = 56
+        Me.txtNMBRG.Size = New System.Drawing.Size(395, 20)
+        Me.txtNMBRG.TabIndex = 7
         '
         'Label4
         '
@@ -291,7 +324,7 @@ Partial Class FStok
         Me.txtKDGRUP.Location = New System.Drawing.Point(136, 52)
         Me.txtKDGRUP.Name = "txtKDGRUP"
         Me.txtKDGRUP.Size = New System.Drawing.Size(143, 20)
-        Me.txtKDGRUP.TabIndex = 54
+        Me.txtKDGRUP.TabIndex = 4
         '
         'Label3
         '
@@ -309,7 +342,7 @@ Partial Class FStok
         Me.txtKDGOL.Location = New System.Drawing.Point(136, 29)
         Me.txtKDGOL.Name = "txtKDGOL"
         Me.txtKDGOL.Size = New System.Drawing.Size(143, 20)
-        Me.txtKDGOL.TabIndex = 50
+        Me.txtKDGOL.TabIndex = 2
         '
         'Label2
         '
@@ -327,14 +360,14 @@ Partial Class FStok
         Me.txtKDMERK.Location = New System.Drawing.Point(136, 6)
         Me.txtKDMERK.Name = "txtKDMERK"
         Me.txtKDMERK.Size = New System.Drawing.Size(143, 20)
-        Me.txtKDMERK.TabIndex = 48
+        Me.txtKDMERK.TabIndex = 0
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Location = New System.Drawing.Point(508, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 103
+        Me.btnCARI.TabIndex = 3
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -344,8 +377,8 @@ Partial Class FStok
         Me.tSNMBRG.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSNMBRG.Location = New System.Drawing.Point(132, 10)
         Me.tSNMBRG.Name = "tSNMBRG"
-        Me.tSNMBRG.Size = New System.Drawing.Size(157, 23)
-        Me.tSNMBRG.TabIndex = 102
+        Me.tSNMBRG.Size = New System.Drawing.Size(370, 23)
+        Me.tSNMBRG.TabIndex = 2
         '
         'tSKDBRG
         '
@@ -354,14 +387,14 @@ Partial Class FStok
         Me.tSKDBRG.Location = New System.Drawing.Point(9, 10)
         Me.tSKDBRG.Name = "tSKDBRG"
         Me.tSKDBRG.Size = New System.Drawing.Size(117, 23)
-        Me.tSKDBRG.TabIndex = 101
+        Me.tSKDBRG.TabIndex = 1
         '
         'btnBATAL
         '
         Me.btnBATAL.Location = New System.Drawing.Point(231, 42)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 100
+        Me.btnBATAL.TabIndex = 8
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -370,7 +403,7 @@ Partial Class FStok
         Me.btnHAPUS.Location = New System.Drawing.Point(175, 42)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 99
+        Me.btnHAPUS.TabIndex = 7
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -379,7 +412,7 @@ Partial Class FStok
         Me.btnUBAH.Location = New System.Drawing.Point(119, 42)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 98
+        Me.btnUBAH.TabIndex = 6
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -388,7 +421,7 @@ Partial Class FStok
         Me.btnSIMPAN.Location = New System.Drawing.Point(63, 42)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 97
+        Me.btnSIMPAN.TabIndex = 5
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -397,7 +430,7 @@ Partial Class FStok
         Me.btnTAMBAH.Location = New System.Drawing.Point(7, 42)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 96
+        Me.btnTAMBAH.TabIndex = 4
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '
@@ -405,7 +438,7 @@ Partial Class FStok
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 412)
+        Me.ClientSize = New System.Drawing.Size(567, 412)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMBRG)
@@ -460,4 +493,7 @@ Partial Class FStok
     Friend WithEvents txtGAMBAR As System.Windows.Forms.TextBox
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents txtHRGBELI As System.Windows.Forms.TextBox
+    Friend WithEvents txtNMGRUP As System.Windows.Forms.TextBox
+    Friend WithEvents txtNMGOL As System.Windows.Forms.TextBox
+    Friend WithEvents txtNMMERK As System.Windows.Forms.TextBox
 End Class

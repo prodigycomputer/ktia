@@ -92,7 +92,7 @@ Partial Class FReturPenjualan
         Me.trpjSNMSLS.Location = New System.Drawing.Point(796, 8)
         Me.trpjSNMSLS.Name = "trpjSNMSLS"
         Me.trpjSNMSLS.Size = New System.Drawing.Size(113, 23)
-        Me.trpjSNMSLS.TabIndex = 49
+        Me.trpjSNMSLS.TabIndex = 10
         '
         'TabControl1
         '
@@ -159,7 +159,7 @@ Partial Class FReturPenjualan
         Me.trpjNONOTA.Location = New System.Drawing.Point(913, 5)
         Me.trpjNONOTA.Name = "trpjNONOTA"
         Me.trpjNONOTA.Size = New System.Drawing.Size(138, 20)
-        Me.trpjNONOTA.TabIndex = 52
+        Me.trpjNONOTA.TabIndex = 10
         '
         'Label16
         '
@@ -177,7 +177,7 @@ Partial Class FReturPenjualan
         Me.trpjKDHARGA.Location = New System.Drawing.Point(111, 77)
         Me.trpjKDHARGA.Name = "trpjKDHARGA"
         Me.trpjKDHARGA.Size = New System.Drawing.Size(138, 20)
-        Me.trpjKDHARGA.TabIndex = 50
+        Me.trpjKDHARGA.TabIndex = 3
         '
         'Label18
         '
@@ -195,7 +195,7 @@ Partial Class FReturPenjualan
         Me.trpjKDSALES.Location = New System.Drawing.Point(380, 5)
         Me.trpjKDSALES.Name = "trpjKDSALES"
         Me.trpjKDSALES.Size = New System.Drawing.Size(100, 20)
-        Me.trpjKDSALES.TabIndex = 49
+        Me.trpjKDSALES.TabIndex = 4
         '
         'trpjNMSALES
         '
@@ -203,7 +203,7 @@ Partial Class FReturPenjualan
         Me.trpjNMSALES.Location = New System.Drawing.Point(486, 5)
         Me.trpjNMSALES.Name = "trpjNMSALES"
         Me.trpjNMSALES.Size = New System.Drawing.Size(270, 20)
-        Me.trpjNMSALES.TabIndex = 47
+        Me.trpjNMSALES.TabIndex = 5
         '
         'Label17
         '
@@ -220,7 +220,7 @@ Partial Class FReturPenjualan
         Me.trpjTOTAL.Location = New System.Drawing.Point(860, 498)
         Me.trpjTOTAL.Name = "trpjTOTAL"
         Me.trpjTOTAL.Size = New System.Drawing.Size(190, 20)
-        Me.trpjTOTAL.TabIndex = 45
+        Me.trpjTOTAL.TabIndex = 22
         Me.trpjTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjSUBTOTAL
@@ -228,7 +228,7 @@ Partial Class FReturPenjualan
         Me.trpjSUBTOTAL.Location = New System.Drawing.Point(860, 360)
         Me.trpjSUBTOTAL.Name = "trpjSUBTOTAL"
         Me.trpjSUBTOTAL.Size = New System.Drawing.Size(190, 20)
-        Me.trpjSUBTOTAL.TabIndex = 43
+        Me.trpjSUBTOTAL.TabIndex = 12
         Me.trpjSUBTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjLAIN
@@ -236,7 +236,7 @@ Partial Class FReturPenjualan
         Me.trpjLAIN.Location = New System.Drawing.Point(860, 452)
         Me.trpjLAIN.Name = "trpjLAIN"
         Me.trpjLAIN.Size = New System.Drawing.Size(190, 20)
-        Me.trpjLAIN.TabIndex = 40
+        Me.trpjLAIN.TabIndex = 19
         Me.trpjLAIN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjNPPN
@@ -244,7 +244,7 @@ Partial Class FReturPenjualan
         Me.trpjNPPN.Location = New System.Drawing.Point(912, 475)
         Me.trpjNPPN.Name = "trpjNPPN"
         Me.trpjNPPN.Size = New System.Drawing.Size(138, 20)
-        Me.trpjNPPN.TabIndex = 38
+        Me.trpjNPPN.TabIndex = 21
         Me.trpjNPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjAPPN
@@ -252,7 +252,7 @@ Partial Class FReturPenjualan
         Me.trpjAPPN.Location = New System.Drawing.Point(860, 475)
         Me.trpjAPPN.Name = "trpjAPPN"
         Me.trpjAPPN.Size = New System.Drawing.Size(50, 20)
-        Me.trpjAPPN.TabIndex = 37
+        Me.trpjAPPN.TabIndex = 20
         Me.trpjAPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjNDISK3
@@ -260,7 +260,7 @@ Partial Class FReturPenjualan
         Me.trpjNDISK3.Location = New System.Drawing.Point(912, 429)
         Me.trpjNDISK3.Name = "trpjNDISK3"
         Me.trpjNDISK3.Size = New System.Drawing.Size(138, 20)
-        Me.trpjNDISK3.TabIndex = 35
+        Me.trpjNDISK3.TabIndex = 18
         Me.trpjNDISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjADISK3
@@ -268,7 +268,7 @@ Partial Class FReturPenjualan
         Me.trpjADISK3.Location = New System.Drawing.Point(860, 429)
         Me.trpjADISK3.Name = "trpjADISK3"
         Me.trpjADISK3.Size = New System.Drawing.Size(50, 20)
-        Me.trpjADISK3.TabIndex = 34
+        Me.trpjADISK3.TabIndex = 17
         Me.trpjADISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjNDISK2
@@ -276,7 +276,7 @@ Partial Class FReturPenjualan
         Me.trpjNDISK2.Location = New System.Drawing.Point(912, 406)
         Me.trpjNDISK2.Name = "trpjNDISK2"
         Me.trpjNDISK2.Size = New System.Drawing.Size(138, 20)
-        Me.trpjNDISK2.TabIndex = 32
+        Me.trpjNDISK2.TabIndex = 16
         Me.trpjNDISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjADISK2
@@ -284,7 +284,7 @@ Partial Class FReturPenjualan
         Me.trpjADISK2.Location = New System.Drawing.Point(860, 406)
         Me.trpjADISK2.Name = "trpjADISK2"
         Me.trpjADISK2.Size = New System.Drawing.Size(50, 20)
-        Me.trpjADISK2.TabIndex = 31
+        Me.trpjADISK2.TabIndex = 15
         Me.trpjADISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjNDISK1
@@ -292,7 +292,7 @@ Partial Class FReturPenjualan
         Me.trpjNDISK1.Location = New System.Drawing.Point(912, 383)
         Me.trpjNDISK1.Name = "trpjNDISK1"
         Me.trpjNDISK1.Size = New System.Drawing.Size(138, 20)
-        Me.trpjNDISK1.TabIndex = 29
+        Me.trpjNDISK1.TabIndex = 14
         Me.trpjNDISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjADISK1
@@ -300,7 +300,7 @@ Partial Class FReturPenjualan
         Me.trpjADISK1.Location = New System.Drawing.Point(860, 383)
         Me.trpjADISK1.Name = "trpjADISK1"
         Me.trpjADISK1.Size = New System.Drawing.Size(50, 20)
-        Me.trpjADISK1.TabIndex = 28
+        Me.trpjADISK1.TabIndex = 13
         Me.trpjADISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpjALAMAT
@@ -309,7 +309,7 @@ Partial Class FReturPenjualan
         Me.trpjALAMAT.Location = New System.Drawing.Point(380, 53)
         Me.trpjALAMAT.Name = "trpjALAMAT"
         Me.trpjALAMAT.Size = New System.Drawing.Size(475, 20)
-        Me.trpjALAMAT.TabIndex = 18
+        Me.trpjALAMAT.TabIndex = 8
         '
         'trpjKDKUST
         '
@@ -317,7 +317,7 @@ Partial Class FReturPenjualan
         Me.trpjKDKUST.Location = New System.Drawing.Point(380, 29)
         Me.trpjKDKUST.Name = "trpjKDKUST"
         Me.trpjKDKUST.Size = New System.Drawing.Size(100, 20)
-        Me.trpjKDKUST.TabIndex = 17
+        Me.trpjKDKUST.TabIndex = 6
         '
         'trpjKET
         '
@@ -325,7 +325,7 @@ Partial Class FReturPenjualan
         Me.trpjKET.Location = New System.Drawing.Point(380, 77)
         Me.trpjKET.Name = "trpjKET"
         Me.trpjKET.Size = New System.Drawing.Size(669, 20)
-        Me.trpjKET.TabIndex = 5
+        Me.trpjKET.TabIndex = 9
         '
         'trpjNMKUST
         '
@@ -333,7 +333,7 @@ Partial Class FReturPenjualan
         Me.trpjNMKUST.Location = New System.Drawing.Point(486, 29)
         Me.trpjNMKUST.Name = "trpjNMKUST"
         Me.trpjNMKUST.Size = New System.Drawing.Size(270, 20)
-        Me.trpjNMKUST.TabIndex = 12
+        Me.trpjNMKUST.TabIndex = 7
         '
         'trpjNOFAKTUR
         '
@@ -426,7 +426,7 @@ Partial Class FReturPenjualan
         Me.btnADDITEM.Location = New System.Drawing.Point(985, 103)
         Me.btnADDITEM.Name = "btnADDITEM"
         Me.btnADDITEM.Size = New System.Drawing.Size(65, 20)
-        Me.btnADDITEM.TabIndex = 19
+        Me.btnADDITEM.TabIndex = 11
         Me.btnADDITEM.Text = "Add Item"
         Me.btnADDITEM.UseVisualStyleBackColor = True
         '
@@ -436,7 +436,7 @@ Partial Class FReturPenjualan
         Me.trpjTEMPO.Location = New System.Drawing.Point(111, 53)
         Me.trpjTEMPO.Name = "trpjTEMPO"
         Me.trpjTEMPO.Size = New System.Drawing.Size(138, 20)
-        Me.trpjTEMPO.TabIndex = 7
+        Me.trpjTEMPO.TabIndex = 2
         '
         'trpjTANGGAL
         '
@@ -444,7 +444,7 @@ Partial Class FReturPenjualan
         Me.trpjTANGGAL.Location = New System.Drawing.Point(111, 5)
         Me.trpjTANGGAL.Name = "trpjTANGGAL"
         Me.trpjTANGGAL.Size = New System.Drawing.Size(138, 20)
-        Me.trpjTANGGAL.TabIndex = 6
+        Me.trpjTANGGAL.TabIndex = 0
         '
         'Label5
         '
@@ -514,7 +514,7 @@ Partial Class FReturPenjualan
         Me.trpjSLUNAS.Location = New System.Drawing.Point(913, 7)
         Me.trpjSLUNAS.Name = "trpjSLUNAS"
         Me.trpjSLUNAS.Size = New System.Drawing.Size(107, 24)
-        Me.trpjSLUNAS.TabIndex = 47
+        Me.trpjSLUNAS.TabIndex = 11
         '
         'trpjSNMKUST
         '
@@ -523,7 +523,7 @@ Partial Class FReturPenjualan
         Me.trpjSNMKUST.Location = New System.Drawing.Point(680, 8)
         Me.trpjSNMKUST.Name = "trpjSNMKUST"
         Me.trpjSNMKUST.Size = New System.Drawing.Size(113, 23)
-        Me.trpjSNMKUST.TabIndex = 46
+        Me.trpjSNMKUST.TabIndex = 9
         '
         'dtrpjTGL2
         '
@@ -532,7 +532,7 @@ Partial Class FReturPenjualan
         Me.dtrpjTGL2.Location = New System.Drawing.Point(577, 8)
         Me.dtrpjTGL2.Name = "dtrpjTGL2"
         Me.dtrpjTGL2.Size = New System.Drawing.Size(100, 23)
-        Me.dtrpjTGL2.TabIndex = 45
+        Me.dtrpjTGL2.TabIndex = 8
         '
         'Label15
         '
@@ -550,14 +550,14 @@ Partial Class FReturPenjualan
         Me.dtrpjTGL1.Location = New System.Drawing.Point(459, 8)
         Me.dtrpjTGL1.Name = "dtrpjTGL1"
         Me.dtrpjTGL1.Size = New System.Drawing.Size(100, 23)
-        Me.dtrpjTGL1.TabIndex = 43
+        Me.dtrpjTGL1.TabIndex = 7
         '
         'brpjTabDel
         '
         Me.brpjTabDel.Location = New System.Drawing.Point(985, 36)
         Me.brpjTabDel.Name = "brpjTabDel"
         Me.brpjTabDel.Size = New System.Drawing.Size(70, 25)
-        Me.brpjTabDel.TabIndex = 42
+        Me.brpjTabDel.TabIndex = 14
         Me.brpjTabDel.Text = "Hapus Tab"
         Me.brpjTabDel.UseVisualStyleBackColor = True
         '
@@ -566,7 +566,7 @@ Partial Class FReturPenjualan
         Me.brpjTabAdd.Location = New System.Drawing.Point(898, 36)
         Me.brpjTabAdd.Name = "brpjTabAdd"
         Me.brpjTabAdd.Size = New System.Drawing.Size(80, 25)
-        Me.brpjTabAdd.TabIndex = 41
+        Me.brpjTabAdd.TabIndex = 13
         Me.brpjTabAdd.Text = "Tambah Tab"
         Me.brpjTabAdd.UseVisualStyleBackColor = True
         '
@@ -575,7 +575,7 @@ Partial Class FReturPenjualan
         Me.btnPRINT.Location = New System.Drawing.Point(290, 4)
         Me.btnPRINT.Name = "btnPRINT"
         Me.btnPRINT.Size = New System.Drawing.Size(50, 30)
-        Me.btnPRINT.TabIndex = 40
+        Me.btnPRINT.TabIndex = 5
         Me.btnPRINT.Text = "Print"
         Me.btnPRINT.UseVisualStyleBackColor = True
         '
@@ -584,7 +584,7 @@ Partial Class FReturPenjualan
         Me.btnCARI.Location = New System.Drawing.Point(1023, 4)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 39
+        Me.btnCARI.TabIndex = 12
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -595,14 +595,14 @@ Partial Class FReturPenjualan
         Me.trpjSNONOTA.Location = New System.Drawing.Point(346, 8)
         Me.trpjSNONOTA.Name = "trpjSNONOTA"
         Me.trpjSNONOTA.Size = New System.Drawing.Size(108, 23)
-        Me.trpjSNONOTA.TabIndex = 38
+        Me.trpjSNONOTA.TabIndex = 6
         '
         'btnBATAL
         '
         Me.btnBATAL.Location = New System.Drawing.Point(229, 4)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 37
+        Me.btnBATAL.TabIndex = 4
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -611,7 +611,7 @@ Partial Class FReturPenjualan
         Me.btnHAPUS.Location = New System.Drawing.Point(173, 4)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 36
+        Me.btnHAPUS.TabIndex = 3
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -620,7 +620,7 @@ Partial Class FReturPenjualan
         Me.btnUBAH.Location = New System.Drawing.Point(117, 4)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 35
+        Me.btnUBAH.TabIndex = 2
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -629,7 +629,7 @@ Partial Class FReturPenjualan
         Me.btnSIMPAN.Location = New System.Drawing.Point(61, 4)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 34
+        Me.btnSIMPAN.TabIndex = 1
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -638,7 +638,7 @@ Partial Class FReturPenjualan
         Me.btnTAMBAH.Location = New System.Drawing.Point(5, 4)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 33
+        Me.btnTAMBAH.TabIndex = 0
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '

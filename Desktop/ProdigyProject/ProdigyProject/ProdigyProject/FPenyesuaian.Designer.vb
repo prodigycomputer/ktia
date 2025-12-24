@@ -56,7 +56,7 @@ Partial Class FPenyesuaian
         Me.tpenySGD.Location = New System.Drawing.Point(697, 8)
         Me.tpenySGD.Name = "tpenySGD"
         Me.tpenySGD.Size = New System.Drawing.Size(222, 23)
-        Me.tpenySGD.TabIndex = 41
+        Me.tpenySGD.TabIndex = 8
         '
         'dtpenyTGL
         '
@@ -65,14 +65,14 @@ Partial Class FPenyesuaian
         Me.dtpenyTGL.Location = New System.Drawing.Point(551, 8)
         Me.dtpenyTGL.Name = "dtpenyTGL"
         Me.dtpenyTGL.Size = New System.Drawing.Size(140, 23)
-        Me.dtpenyTGL.TabIndex = 40
+        Me.dtpenyTGL.TabIndex = 7
         '
         'bpenyTabDel
         '
         Me.bpenyTabDel.Location = New System.Drawing.Point(903, 36)
         Me.bpenyTabDel.Name = "bpenyTabDel"
         Me.bpenyTabDel.Size = New System.Drawing.Size(70, 25)
-        Me.bpenyTabDel.TabIndex = 39
+        Me.bpenyTabDel.TabIndex = 11
         Me.bpenyTabDel.Text = "Hapus Tab"
         Me.bpenyTabDel.UseVisualStyleBackColor = True
         '
@@ -81,7 +81,7 @@ Partial Class FPenyesuaian
         Me.bpenyTabAdd.Location = New System.Drawing.Point(816, 36)
         Me.bpenyTabAdd.Name = "bpenyTabAdd"
         Me.bpenyTabAdd.Size = New System.Drawing.Size(80, 25)
-        Me.bpenyTabAdd.TabIndex = 38
+        Me.bpenyTabAdd.TabIndex = 10
         Me.bpenyTabAdd.Text = "Tambah Tab"
         Me.bpenyTabAdd.UseVisualStyleBackColor = True
         '
@@ -90,7 +90,7 @@ Partial Class FPenyesuaian
         Me.btnPRINT.Location = New System.Drawing.Point(289, 4)
         Me.btnPRINT.Name = "btnPRINT"
         Me.btnPRINT.Size = New System.Drawing.Size(50, 30)
-        Me.btnPRINT.TabIndex = 37
+        Me.btnPRINT.TabIndex = 5
         Me.btnPRINT.Text = "Print"
         Me.btnPRINT.UseVisualStyleBackColor = True
         '
@@ -99,7 +99,7 @@ Partial Class FPenyesuaian
         Me.btnCARI.Location = New System.Drawing.Point(930, 4)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 36
+        Me.btnCARI.TabIndex = 9
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -110,14 +110,14 @@ Partial Class FPenyesuaian
         Me.tpenySNONOTA.Location = New System.Drawing.Point(345, 8)
         Me.tpenySNONOTA.Name = "tpenySNONOTA"
         Me.tpenySNONOTA.Size = New System.Drawing.Size(200, 23)
-        Me.tpenySNONOTA.TabIndex = 35
+        Me.tpenySNONOTA.TabIndex = 6
         '
         'btnBATAL
         '
         Me.btnBATAL.Location = New System.Drawing.Point(228, 4)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 34
+        Me.btnBATAL.TabIndex = 4
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -126,7 +126,7 @@ Partial Class FPenyesuaian
         Me.btnHAPUS.Location = New System.Drawing.Point(172, 4)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 33
+        Me.btnHAPUS.TabIndex = 3
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -135,7 +135,7 @@ Partial Class FPenyesuaian
         Me.btnUBAH.Location = New System.Drawing.Point(116, 4)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 32
+        Me.btnUBAH.TabIndex = 2
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -144,7 +144,7 @@ Partial Class FPenyesuaian
         Me.btnSIMPAN.Location = New System.Drawing.Point(60, 4)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 31
+        Me.btnSIMPAN.TabIndex = 1
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -153,7 +153,7 @@ Partial Class FPenyesuaian
         Me.btnTAMBAH.Location = New System.Drawing.Point(4, 4)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 30
+        Me.btnTAMBAH.TabIndex = 0
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '
@@ -190,7 +190,7 @@ Partial Class FPenyesuaian
         Me.tpenyTANGGAL.Location = New System.Drawing.Point(111, 10)
         Me.tpenyTANGGAL.Name = "tpenyTANGGAL"
         Me.tpenyTANGGAL.Size = New System.Drawing.Size(138, 20)
-        Me.tpenyTANGGAL.TabIndex = 34
+        Me.tpenyTANGGAL.TabIndex = 0
         '
         'cbpenyGD
         '
@@ -199,7 +199,7 @@ Partial Class FPenyesuaian
         Me.cbpenyGD.Location = New System.Drawing.Point(111, 56)
         Me.cbpenyGD.Name = "cbpenyGD"
         Me.cbpenyGD.Size = New System.Drawing.Size(220, 21)
-        Me.cbpenyGD.TabIndex = 22
+        Me.cbpenyGD.TabIndex = 2
         '
         'tpenyNONOTA
         '
@@ -222,7 +222,7 @@ Partial Class FPenyesuaian
         Me.btnADDITEM.Location = New System.Drawing.Point(899, 78)
         Me.btnADDITEM.Name = "btnADDITEM"
         Me.btnADDITEM.Size = New System.Drawing.Size(65, 20)
-        Me.btnADDITEM.TabIndex = 19
+        Me.btnADDITEM.TabIndex = 3
         Me.btnADDITEM.Text = "Add Item"
         Me.btnADDITEM.UseVisualStyleBackColor = True
         '

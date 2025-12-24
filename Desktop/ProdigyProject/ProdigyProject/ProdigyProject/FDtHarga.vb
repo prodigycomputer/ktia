@@ -62,6 +62,12 @@ Public Class FDtHarga
         End Try
     End Sub
 
+    Private Sub TextBoxAngka_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs)
+        ' Izinkan angka 0–9 dan Backspace
+        If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
     ' === Atur textbox mana yang aktif ===
     Private Sub AturEnableHarga(ByVal grup1 As List(Of String), ByVal grup2 As List(Of String), ByVal grup3 As List(Of String))
         Dim enable1 As Boolean = (Isi1 > 2)
@@ -141,6 +147,9 @@ Public Class FDtHarga
             txt.Left = startX + 60
             txt.Top = startY + (i * spacingY) - 3
             txt.Width = 90
+
+            ' === PASANG KEY PRESS ANGKA ===
+            AddHandler txt.KeyPress, AddressOf TextBoxAngka_KeyPress
 
             Me.Controls.Add(lbl)
             Me.Controls.Add(txt)

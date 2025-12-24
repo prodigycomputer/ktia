@@ -239,6 +239,7 @@ Partial Class ItFPopupPeny
         Me.tPopHARGA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tPopHARGA.Location = New System.Drawing.Point(112, 239)
         Me.tPopHARGA.Name = "tPopHARGA"
+        Me.tPopHARGA.ReadOnly = True
         Me.tPopHARGA.Size = New System.Drawing.Size(190, 20)
         Me.tPopHARGA.TabIndex = 154
         '

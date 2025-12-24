@@ -100,7 +100,7 @@ Partial Class FKustomer
         Me.txtKDAREA.Location = New System.Drawing.Point(136, 222)
         Me.txtKDAREA.Name = "txtKDAREA"
         Me.txtKDAREA.Size = New System.Drawing.Size(153, 20)
-        Me.txtKDAREA.TabIndex = 83
+        Me.txtKDAREA.TabIndex = 8
         '
         'Label10
         '
@@ -118,7 +118,7 @@ Partial Class FKustomer
         Me.txtKDTIPE.Location = New System.Drawing.Point(136, 199)
         Me.txtKDTIPE.Name = "txtKDTIPE"
         Me.txtKDTIPE.Size = New System.Drawing.Size(153, 20)
-        Me.txtKDTIPE.TabIndex = 81
+        Me.txtKDTIPE.TabIndex = 7
         '
         'Label8
         '
@@ -136,7 +136,7 @@ Partial Class FKustomer
         Me.txtKOTA.Location = New System.Drawing.Point(136, 107)
         Me.txtKOTA.Name = "txtKOTA"
         Me.txtKOTA.Size = New System.Drawing.Size(185, 20)
-        Me.txtKOTA.TabIndex = 79
+        Me.txtKOTA.TabIndex = 3
         '
         'btnUPLOAD
         '
@@ -144,7 +144,7 @@ Partial Class FKustomer
         Me.btnUPLOAD.Location = New System.Drawing.Point(78, 244)
         Me.btnUPLOAD.Name = "btnUPLOAD"
         Me.btnUPLOAD.Size = New System.Drawing.Size(52, 22)
-        Me.btnUPLOAD.TabIndex = 78
+        Me.btnUPLOAD.TabIndex = 9
         Me.btnUPLOAD.Text = "Upload"
         Me.btnUPLOAD.UseVisualStyleBackColor = True
         '
@@ -164,7 +164,7 @@ Partial Class FKustomer
         Me.txtGAMBAR.Location = New System.Drawing.Point(136, 245)
         Me.txtGAMBAR.Name = "txtGAMBAR"
         Me.txtGAMBAR.Size = New System.Drawing.Size(185, 20)
-        Me.txtGAMBAR.TabIndex = 62
+        Me.txtGAMBAR.TabIndex = 10
         '
         'Label5
         '
@@ -182,7 +182,7 @@ Partial Class FKustomer
         Me.txtNPWP.Location = New System.Drawing.Point(136, 176)
         Me.txtNPWP.Name = "txtNPWP"
         Me.txtNPWP.Size = New System.Drawing.Size(185, 20)
-        Me.txtNPWP.TabIndex = 60
+        Me.txtNPWP.TabIndex = 6
         '
         'Label6
         '
@@ -200,7 +200,7 @@ Partial Class FKustomer
         Me.txtKTP.Location = New System.Drawing.Point(136, 153)
         Me.txtKTP.Name = "txtKTP"
         Me.txtKTP.Size = New System.Drawing.Size(185, 20)
-        Me.txtKTP.TabIndex = 58
+        Me.txtKTP.TabIndex = 5
         '
         'Label1
         '
@@ -218,7 +218,7 @@ Partial Class FKustomer
         Me.txtKDHARGA.Location = New System.Drawing.Point(136, 130)
         Me.txtKDHARGA.Name = "txtKDHARGA"
         Me.txtKDHARGA.Size = New System.Drawing.Size(84, 20)
-        Me.txtKDHARGA.TabIndex = 56
+        Me.txtKDHARGA.TabIndex = 4
         '
         'Label4
         '
@@ -237,7 +237,7 @@ Partial Class FKustomer
         Me.txtALAMAT.Multiline = True
         Me.txtALAMAT.Name = "txtALAMAT"
         Me.txtALAMAT.Size = New System.Drawing.Size(185, 52)
-        Me.txtALAMAT.TabIndex = 54
+        Me.txtALAMAT.TabIndex = 2
         '
         'Label3
         '
@@ -255,7 +255,7 @@ Partial Class FKustomer
         Me.txtNMKUST.Location = New System.Drawing.Point(136, 29)
         Me.txtNMKUST.Name = "txtNMKUST"
         Me.txtNMKUST.Size = New System.Drawing.Size(185, 20)
-        Me.txtNMKUST.TabIndex = 50
+        Me.txtNMKUST.TabIndex = 1
         '
         'Label2
         '
@@ -273,14 +273,14 @@ Partial Class FKustomer
         Me.txtKDKUST.Location = New System.Drawing.Point(136, 6)
         Me.txtKDKUST.Name = "txtKDKUST"
         Me.txtKDKUST.Size = New System.Drawing.Size(185, 20)
-        Me.txtKDKUST.TabIndex = 48
+        Me.txtKDKUST.TabIndex = 0
         '
         'btnCARI
         '
         Me.btnCARI.Location = New System.Drawing.Point(295, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 94
+        Me.btnCARI.TabIndex = 2
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -291,7 +291,7 @@ Partial Class FKustomer
         Me.tSNMKUST.Location = New System.Drawing.Point(132, 10)
         Me.tSNMKUST.Name = "tSNMKUST"
         Me.tSNMKUST.Size = New System.Drawing.Size(157, 23)
-        Me.tSNMKUST.TabIndex = 93
+        Me.tSNMKUST.TabIndex = 1
         '
         'tSKDKUST
         '
@@ -300,14 +300,14 @@ Partial Class FKustomer
         Me.tSKDKUST.Location = New System.Drawing.Point(9, 10)
         Me.tSKDKUST.Name = "tSKDKUST"
         Me.tSKDKUST.Size = New System.Drawing.Size(117, 23)
-        Me.tSKDKUST.TabIndex = 92
+        Me.tSKDKUST.TabIndex = 0
         '
         'btnBATAL
         '
         Me.btnBATAL.Location = New System.Drawing.Point(231, 42)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 91
+        Me.btnBATAL.TabIndex = 7
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -316,7 +316,7 @@ Partial Class FKustomer
         Me.btnHAPUS.Location = New System.Drawing.Point(175, 42)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 90
+        Me.btnHAPUS.TabIndex = 6
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -325,7 +325,7 @@ Partial Class FKustomer
         Me.btnUBAH.Location = New System.Drawing.Point(119, 42)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 89
+        Me.btnUBAH.TabIndex = 5
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -334,7 +334,7 @@ Partial Class FKustomer
         Me.btnSIMPAN.Location = New System.Drawing.Point(63, 42)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 88
+        Me.btnSIMPAN.TabIndex = 4
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -343,7 +343,7 @@ Partial Class FKustomer
         Me.btnTAMBAH.Location = New System.Drawing.Point(7, 42)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 87
+        Me.btnTAMBAH.TabIndex = 3
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '

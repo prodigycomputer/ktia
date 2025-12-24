@@ -2,14 +2,19 @@
 
 Public Class ItGrup
 
-    Public Sub LoadDataGrup(ByVal keyword As String)
+    Public Sub LoadDataGrup(ByVal keyword As String, ByVal mode As String)
 
-        Dim sql As String
-        If keyword = "*" Then
+        Dim sql As String = ""
+        If mode = "KODE" AndAlso keyword = "*" Then
             sql = "SELECT kodegrup, namagrup FROM zgrup ORDER BY kodegrup"
-        Else
-            sql = "SELECT kodegrup, namagrup " &
-                  "FROM zgrup WHERE kodegrup LIKE '%" & keyword & "%' OR namagrup LIKE '%" & keyword & "%' ORDER BY kodegrup"
+        ElseIf mode = "NAMA" AndAlso keyword = "*" Then
+            sql = "SELECT kodegrup, namagrup FROM zgrup ORDER BY kodegrup"
+        ElseIf mode = "KODE" Then
+            sql = "SELECT kodegrup, namagrup FROM zgrup " &
+                  "WHERE kodegrup LIKE ? ORDER BY kodegrup LIMIT 50"
+        ElseIf mode = "NAMA" Then
+            sql = "SELECT kodegrup, namagrup FROM zgrup " &
+                  "WHERE namagrup LIKE ? ORDER BY namagrup LIMIT 50"
         End If
 
         dgitmGRUP.Rows.Clear()
@@ -17,6 +22,11 @@ Public Class ItGrup
         Try
             BukaKoneksi()
             Cmd = New OdbcCommand(sql, Conn)
+
+            If keyword <> "*" AndAlso keyword <> "" Then
+                Cmd.Parameters.AddWithValue("@p1", keyword & "%")
+            End If
+
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()

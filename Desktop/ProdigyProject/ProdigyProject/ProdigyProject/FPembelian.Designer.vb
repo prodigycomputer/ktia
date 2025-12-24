@@ -112,14 +112,14 @@ Partial Class FPembelian
         Me.tpmSNONOTA.Location = New System.Drawing.Point(345, 8)
         Me.tpmSNONOTA.Name = "tpmSNONOTA"
         Me.tpmSNONOTA.Size = New System.Drawing.Size(130, 23)
-        Me.tpmSNONOTA.TabIndex = 5
+        Me.tpmSNONOTA.TabIndex = 6
         '
         'btnCARI
         '
         Me.btnCARI.Location = New System.Drawing.Point(1010, 4)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 6
+        Me.btnCARI.TabIndex = 11
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -128,7 +128,7 @@ Partial Class FPembelian
         Me.btnPRINT.Location = New System.Drawing.Point(289, 4)
         Me.btnPRINT.Name = "btnPRINT"
         Me.btnPRINT.Size = New System.Drawing.Size(50, 30)
-        Me.btnPRINT.TabIndex = 7
+        Me.btnPRINT.TabIndex = 5
         Me.btnPRINT.Text = "Print"
         Me.btnPRINT.UseVisualStyleBackColor = True
         '
@@ -137,7 +137,7 @@ Partial Class FPembelian
         Me.bpmTabAdd.Location = New System.Drawing.Point(897, 36)
         Me.bpmTabAdd.Name = "bpmTabAdd"
         Me.bpmTabAdd.Size = New System.Drawing.Size(80, 25)
-        Me.bpmTabAdd.TabIndex = 9
+        Me.bpmTabAdd.TabIndex = 12
         Me.bpmTabAdd.Text = "Tambah Tab"
         Me.bpmTabAdd.UseVisualStyleBackColor = True
         '
@@ -146,7 +146,7 @@ Partial Class FPembelian
         Me.bpmTabDel.Location = New System.Drawing.Point(984, 36)
         Me.bpmTabDel.Name = "bpmTabDel"
         Me.bpmTabDel.Size = New System.Drawing.Size(70, 25)
-        Me.bpmTabDel.TabIndex = 10
+        Me.bpmTabDel.TabIndex = 13
         Me.bpmTabDel.Text = "Hapus Tab"
         Me.bpmTabDel.UseVisualStyleBackColor = True
         '
@@ -199,7 +199,7 @@ Partial Class FPembelian
         Me.tpmTOTAL.Location = New System.Drawing.Point(860, 498)
         Me.tpmTOTAL.Name = "tpmTOTAL"
         Me.tpmTOTAL.Size = New System.Drawing.Size(190, 20)
-        Me.tpmTOTAL.TabIndex = 45
+        Me.tpmTOTAL.TabIndex = 18
         Me.tpmTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmSUBTOTAL
@@ -207,7 +207,7 @@ Partial Class FPembelian
         Me.tpmSUBTOTAL.Location = New System.Drawing.Point(860, 360)
         Me.tpmSUBTOTAL.Name = "tpmSUBTOTAL"
         Me.tpmSUBTOTAL.Size = New System.Drawing.Size(190, 20)
-        Me.tpmSUBTOTAL.TabIndex = 43
+        Me.tpmSUBTOTAL.TabIndex = 8
         Me.tpmSUBTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmLAIN
@@ -215,7 +215,7 @@ Partial Class FPembelian
         Me.tpmLAIN.Location = New System.Drawing.Point(860, 452)
         Me.tpmLAIN.Name = "tpmLAIN"
         Me.tpmLAIN.Size = New System.Drawing.Size(190, 20)
-        Me.tpmLAIN.TabIndex = 40
+        Me.tpmLAIN.TabIndex = 15
         Me.tpmLAIN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmNPPN
@@ -223,7 +223,7 @@ Partial Class FPembelian
         Me.tpmNPPN.Location = New System.Drawing.Point(912, 475)
         Me.tpmNPPN.Name = "tpmNPPN"
         Me.tpmNPPN.Size = New System.Drawing.Size(138, 20)
-        Me.tpmNPPN.TabIndex = 38
+        Me.tpmNPPN.TabIndex = 17
         Me.tpmNPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmAPPN
@@ -231,7 +231,7 @@ Partial Class FPembelian
         Me.tpmAPPN.Location = New System.Drawing.Point(860, 475)
         Me.tpmAPPN.Name = "tpmAPPN"
         Me.tpmAPPN.Size = New System.Drawing.Size(50, 20)
-        Me.tpmAPPN.TabIndex = 37
+        Me.tpmAPPN.TabIndex = 16
         Me.tpmAPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmNDISK3
@@ -239,7 +239,7 @@ Partial Class FPembelian
         Me.tpmNDISK3.Location = New System.Drawing.Point(912, 429)
         Me.tpmNDISK3.Name = "tpmNDISK3"
         Me.tpmNDISK3.Size = New System.Drawing.Size(138, 20)
-        Me.tpmNDISK3.TabIndex = 35
+        Me.tpmNDISK3.TabIndex = 14
         Me.tpmNDISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmADISK3
@@ -247,7 +247,7 @@ Partial Class FPembelian
         Me.tpmADISK3.Location = New System.Drawing.Point(860, 429)
         Me.tpmADISK3.Name = "tpmADISK3"
         Me.tpmADISK3.Size = New System.Drawing.Size(50, 20)
-        Me.tpmADISK3.TabIndex = 34
+        Me.tpmADISK3.TabIndex = 13
         Me.tpmADISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmNDISK2
@@ -255,7 +255,7 @@ Partial Class FPembelian
         Me.tpmNDISK2.Location = New System.Drawing.Point(912, 406)
         Me.tpmNDISK2.Name = "tpmNDISK2"
         Me.tpmNDISK2.Size = New System.Drawing.Size(138, 20)
-        Me.tpmNDISK2.TabIndex = 32
+        Me.tpmNDISK2.TabIndex = 12
         Me.tpmNDISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmADISK2
@@ -263,7 +263,7 @@ Partial Class FPembelian
         Me.tpmADISK2.Location = New System.Drawing.Point(860, 406)
         Me.tpmADISK2.Name = "tpmADISK2"
         Me.tpmADISK2.Size = New System.Drawing.Size(50, 20)
-        Me.tpmADISK2.TabIndex = 31
+        Me.tpmADISK2.TabIndex = 11
         Me.tpmADISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmNDISK1
@@ -271,7 +271,7 @@ Partial Class FPembelian
         Me.tpmNDISK1.Location = New System.Drawing.Point(912, 383)
         Me.tpmNDISK1.Name = "tpmNDISK1"
         Me.tpmNDISK1.Size = New System.Drawing.Size(138, 20)
-        Me.tpmNDISK1.TabIndex = 29
+        Me.tpmNDISK1.TabIndex = 10
         Me.tpmNDISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmADISK1
@@ -279,7 +279,7 @@ Partial Class FPembelian
         Me.tpmADISK1.Location = New System.Drawing.Point(860, 383)
         Me.tpmADISK1.Name = "tpmADISK1"
         Me.tpmADISK1.Size = New System.Drawing.Size(50, 20)
-        Me.tpmADISK1.TabIndex = 28
+        Me.tpmADISK1.TabIndex = 9
         Me.tpmADISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'tpmALAMAT
@@ -288,7 +288,7 @@ Partial Class FPembelian
         Me.tpmALAMAT.Location = New System.Drawing.Point(386, 53)
         Me.tpmALAMAT.Name = "tpmALAMAT"
         Me.tpmALAMAT.Size = New System.Drawing.Size(475, 20)
-        Me.tpmALAMAT.TabIndex = 18
+        Me.tpmALAMAT.TabIndex = 6
         '
         'tpmKDSUP
         '
@@ -296,7 +296,7 @@ Partial Class FPembelian
         Me.tpmKDSUP.Location = New System.Drawing.Point(386, 5)
         Me.tpmKDSUP.Name = "tpmKDSUP"
         Me.tpmKDSUP.Size = New System.Drawing.Size(138, 20)
-        Me.tpmKDSUP.TabIndex = 17
+        Me.tpmKDSUP.TabIndex = 4
         '
         'tpmKET
         '
@@ -304,7 +304,7 @@ Partial Class FPembelian
         Me.tpmKET.Location = New System.Drawing.Point(111, 77)
         Me.tpmKET.Name = "tpmKET"
         Me.tpmKET.Size = New System.Drawing.Size(939, 20)
-        Me.tpmKET.TabIndex = 5
+        Me.tpmKET.TabIndex = 3
         '
         'tpmNMSUP
         '
@@ -312,7 +312,7 @@ Partial Class FPembelian
         Me.tpmNMSUP.Location = New System.Drawing.Point(386, 29)
         Me.tpmNMSUP.Name = "tpmNMSUP"
         Me.tpmNMSUP.Size = New System.Drawing.Size(295, 20)
-        Me.tpmNMSUP.TabIndex = 12
+        Me.tpmNMSUP.TabIndex = 5
         '
         'tpmNONOTA
         '
@@ -405,7 +405,7 @@ Partial Class FPembelian
         Me.btnADDITEM.Location = New System.Drawing.Point(985, 103)
         Me.btnADDITEM.Name = "btnADDITEM"
         Me.btnADDITEM.Size = New System.Drawing.Size(65, 20)
-        Me.btnADDITEM.TabIndex = 19
+        Me.btnADDITEM.TabIndex = 7
         Me.btnADDITEM.Text = "Add Item"
         Me.btnADDITEM.UseVisualStyleBackColor = True
         '
@@ -415,7 +415,7 @@ Partial Class FPembelian
         Me.tpmTEMPO.Location = New System.Drawing.Point(111, 53)
         Me.tpmTEMPO.Name = "tpmTEMPO"
         Me.tpmTEMPO.Size = New System.Drawing.Size(138, 20)
-        Me.tpmTEMPO.TabIndex = 7
+        Me.tpmTEMPO.TabIndex = 2
         '
         'tpmTANGGAL
         '
@@ -423,7 +423,7 @@ Partial Class FPembelian
         Me.tpmTANGGAL.Location = New System.Drawing.Point(111, 5)
         Me.tpmTANGGAL.Name = "tpmTANGGAL"
         Me.tpmTANGGAL.Size = New System.Drawing.Size(138, 20)
-        Me.tpmTANGGAL.TabIndex = 6
+        Me.tpmTANGGAL.TabIndex = 0
         '
         'Label5
         '
@@ -502,7 +502,7 @@ Partial Class FPembelian
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(1065, 552)
-        Me.TabControl1.TabIndex = 8
+        Me.TabControl1.TabIndex = 14
         '
         'dtpmTGL1
         '
@@ -511,7 +511,7 @@ Partial Class FPembelian
         Me.dtpmTGL1.Location = New System.Drawing.Point(479, 8)
         Me.dtpmTGL1.Name = "dtpmTGL1"
         Me.dtpmTGL1.Size = New System.Drawing.Size(100, 23)
-        Me.dtpmTGL1.TabIndex = 11
+        Me.dtpmTGL1.TabIndex = 7
         '
         'Label15
         '
@@ -529,7 +529,7 @@ Partial Class FPembelian
         Me.dtpmTGL2.Location = New System.Drawing.Point(599, 8)
         Me.dtpmTGL2.Name = "dtpmTGL2"
         Me.dtpmTGL2.Size = New System.Drawing.Size(100, 23)
-        Me.dtpmTGL2.TabIndex = 13
+        Me.dtpmTGL2.TabIndex = 8
         '
         'tpmSNMSUP
         '
@@ -538,7 +538,7 @@ Partial Class FPembelian
         Me.tpmSNMSUP.Location = New System.Drawing.Point(702, 8)
         Me.tpmSNMSUP.Name = "tpmSNMSUP"
         Me.tpmSNMSUP.Size = New System.Drawing.Size(183, 23)
-        Me.tpmSNMSUP.TabIndex = 14
+        Me.tpmSNMSUP.TabIndex = 9
         '
         'tmuSLUNAS
         '
@@ -548,7 +548,7 @@ Partial Class FPembelian
         Me.tmuSLUNAS.Location = New System.Drawing.Point(887, 7)
         Me.tmuSLUNAS.Name = "tmuSLUNAS"
         Me.tmuSLUNAS.Size = New System.Drawing.Size(121, 24)
-        Me.tmuSLUNAS.TabIndex = 15
+        Me.tmuSLUNAS.TabIndex = 10
         '
         'btnSIMPAN
         '

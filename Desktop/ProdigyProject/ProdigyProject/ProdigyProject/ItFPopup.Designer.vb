@@ -249,6 +249,7 @@ Partial Class ItFPopup
         '
         Me.tPopJUMLAH.Location = New System.Drawing.Point(113, 354)
         Me.tPopJUMLAH.Name = "tPopJUMLAH"
+        Me.tPopJUMLAH.ReadOnly = True
         Me.tPopJUMLAH.Size = New System.Drawing.Size(190, 20)
         Me.tPopJUMLAH.TabIndex = 94
         Me.tPopJUMLAH.TextAlign = System.Windows.Forms.HorizontalAlignment.Right

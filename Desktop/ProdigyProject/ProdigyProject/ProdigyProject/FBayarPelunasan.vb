@@ -26,7 +26,7 @@ Public Class FBayarPelunasan
         Dim diskonRupiah As Decimal = Nilai * (persen / 100)
 
         ' Hitung bayar setelah diskon
-        Dim bayarSetelahDiskon As Decimal = Nilai - diskonRupiah
+        Dim bayarSetelahDiskon As Decimal = Sisa - diskonRupiah
         If bayarSetelahDiskon < 0 Then bayarSetelahDiskon = 0
 
         ' Tampilkan (boleh format tanpa desimal atau 2 desimal sesuai kebutuhan)

@@ -48,7 +48,7 @@ Partial Class FSetAkun
         Me.btnBATAL.Location = New System.Drawing.Point(228, 40)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 42
+        Me.btnBATAL.TabIndex = 7
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -57,7 +57,7 @@ Partial Class FSetAkun
         Me.btnHAPUS.Location = New System.Drawing.Point(172, 40)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 41
+        Me.btnHAPUS.TabIndex = 6
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -66,7 +66,7 @@ Partial Class FSetAkun
         Me.btnUBAH.Location = New System.Drawing.Point(116, 40)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 40
+        Me.btnUBAH.TabIndex = 5
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -75,7 +75,7 @@ Partial Class FSetAkun
         Me.btnSIMPAN.Location = New System.Drawing.Point(60, 40)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 39
+        Me.btnSIMPAN.TabIndex = 4
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -84,7 +84,7 @@ Partial Class FSetAkun
         Me.btnTAMBAH.Location = New System.Drawing.Point(4, 40)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 38
+        Me.btnTAMBAH.TabIndex = 3
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '
@@ -95,7 +95,7 @@ Partial Class FSetAkun
         Me.tSNMUSER.Location = New System.Drawing.Point(129, 8)
         Me.tSNMUSER.Name = "tSNMUSER"
         Me.tSNMUSER.Size = New System.Drawing.Size(157, 23)
-        Me.tSNMUSER.TabIndex = 46
+        Me.tSNMUSER.TabIndex = 1
         '
         'tSKDUSER
         '
@@ -104,14 +104,14 @@ Partial Class FSetAkun
         Me.tSKDUSER.Location = New System.Drawing.Point(6, 8)
         Me.tSKDUSER.Name = "tSKDUSER"
         Me.tSKDUSER.Size = New System.Drawing.Size(117, 23)
-        Me.tSKDUSER.TabIndex = 45
+        Me.tSKDUSER.TabIndex = 0
         '
         'btnCARI
         '
         Me.btnCARI.Location = New System.Drawing.Point(292, 4)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 47
+        Me.btnCARI.TabIndex = 2
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -121,7 +121,7 @@ Partial Class FSetAkun
         Me.txtKDUSER.Location = New System.Drawing.Point(136, 6)
         Me.txtKDUSER.Name = "txtKDUSER"
         Me.txtKDUSER.Size = New System.Drawing.Size(185, 20)
-        Me.txtKDUSER.TabIndex = 48
+        Me.txtKDUSER.TabIndex = 0
         '
         'Label2
         '
@@ -148,14 +148,14 @@ Partial Class FSetAkun
         Me.Panel1.Location = New System.Drawing.Point(6, 81)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(333, 141)
-        Me.Panel1.TabIndex = 50
+        Me.Panel1.TabIndex = 8
         '
         'btnAKSES
         '
         Me.btnAKSES.Location = New System.Drawing.Point(271, 101)
         Me.btnAKSES.Name = "btnAKSES"
         Me.btnAKSES.Size = New System.Drawing.Size(50, 30)
-        Me.btnAKSES.TabIndex = 51
+        Me.btnAKSES.TabIndex = 5
         Me.btnAKSES.Text = "Akses"
         Me.btnAKSES.UseVisualStyleBackColor = True
         '
@@ -175,7 +175,7 @@ Partial Class FSetAkun
         Me.txtKPASSUSER.Location = New System.Drawing.Point(136, 75)
         Me.txtKPASSUSER.Name = "txtKPASSUSER"
         Me.txtKPASSUSER.Size = New System.Drawing.Size(185, 20)
-        Me.txtKPASSUSER.TabIndex = 54
+        Me.txtKPASSUSER.TabIndex = 3
         '
         'Label3
         '
@@ -193,7 +193,7 @@ Partial Class FSetAkun
         Me.txtPASSUSER.Location = New System.Drawing.Point(136, 52)
         Me.txtPASSUSER.Name = "txtPASSUSER"
         Me.txtPASSUSER.Size = New System.Drawing.Size(185, 20)
-        Me.txtPASSUSER.TabIndex = 52
+        Me.txtPASSUSER.TabIndex = 2
         '
         'Label1
         '
@@ -211,7 +211,7 @@ Partial Class FSetAkun
         Me.txtNMUSER.Location = New System.Drawing.Point(136, 29)
         Me.txtNMUSER.Name = "txtNMUSER"
         Me.txtNMUSER.Size = New System.Drawing.Size(185, 20)
-        Me.txtNMUSER.TabIndex = 50
+        Me.txtNMUSER.TabIndex = 1
         '
         'FSetAkun
         '

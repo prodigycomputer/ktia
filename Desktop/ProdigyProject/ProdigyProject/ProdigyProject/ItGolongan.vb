@@ -2,14 +2,19 @@
 
 Public Class ItGolongan
 
-    Public Sub LoadDataGolongan(ByVal keyword As String)
+    Public Sub LoadDataGolongan(ByVal keyword As String, ByVal mode As String)
 
-        Dim sql As String
-        If keyword = "*" Then
+        Dim sql As String = ""
+        If mode = "KODE" AndAlso keyword = "*" Then
             sql = "SELECT kodegol, namagol FROM zgolongan ORDER BY kodegol"
-        Else
-            sql = "SELECT kodegol, namagol " &
-                  "FROM zgolongan WHERE kodegol LIKE '%" & keyword & "%' OR namagol LIKE '%" & keyword & "%' ORDER BY kodegol"
+        ElseIf mode = "NAMA" AndAlso keyword = "*" Then
+            sql = "SELECT kodegol, namagol FROM zgolongan ORDER BY kodegol"
+        ElseIf mode = "KODE" Then
+            sql = "SELECT kodegol, namagol FROM zgolongan " &
+                  "WHERE kodegol LIKE ? ORDER BY kodegol LIMIT 50"
+        ElseIf mode = "NAMA" Then
+            sql = "SELECT kodegol, namagol FROM zgolongan " &
+                  "WHERE namagol LIKE ? ORDER BY namagol LIMIT 50"
         End If
 
         dgitmGOL.Rows.Clear()
@@ -17,6 +22,11 @@ Public Class ItGolongan
         Try
             BukaKoneksi()
             Cmd = New OdbcCommand(sql, Conn)
+
+            If keyword <> "*" AndAlso keyword <> "" Then
+                Cmd.Parameters.AddWithValue("@p1", keyword & "%")
+            End If
+
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()

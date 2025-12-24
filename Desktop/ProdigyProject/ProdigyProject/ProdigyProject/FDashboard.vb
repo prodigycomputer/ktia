@@ -38,13 +38,6 @@ Public Class FDashboard
             BukaKoneksi()
             BuatMenuDariDatabase()
         End If
-
-        ' Buat TabControl
-        ' === Koneksi database ===
-        'BukaKoneksi()
-
-        ' === Buat menu otomatis dari database ===
-        'BuatMenuDariDatabase()
     End Sub
 
     Private Function BersihkanNama(ByVal rawName As String) As String
@@ -67,7 +60,16 @@ Public Class FDashboard
             hMenu.Items.Clear()
 
             ' Ambil daftar menu dari database
-            Dim sql As String = "SELECT idmenu, mainmenu, submenu, urutan FROM zmenu ORDER BY mainmenu, urutan"
+            Dim sql As String =
+                "SELECT idmenu, mainmenu, submenu, urutan " &
+                "FROM zmenu " &
+                "ORDER BY " &
+                "CASE mainmenu " &
+                "WHEN 'mFile' THEN 1 " &
+                "WHEN 'mTransaksi' THEN 2 " &
+                "WHEN 'mLaporan' THEN 3 " &
+                "ELSE 99 END, urutan"
+
             Cmd = New OdbcCommand(sql, Conn)
             Rd = Cmd.ExecuteReader()
 

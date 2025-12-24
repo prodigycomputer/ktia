@@ -569,6 +569,7 @@
     <Compile Include="ModHitung.vb" />
     <Compile Include="ModLaporan.vb" />
     <Compile Include="ModNota.vb" />
+    <Compile Include="ModPlaceholder.vb" />
     <Compile Include="ModUtility.vb" />
     <Compile Include="MUserAkses.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

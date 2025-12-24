@@ -91,7 +91,7 @@ Partial Class FGrup
         Me.btnCARI.Location = New System.Drawing.Point(295, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 85
+        Me.btnCARI.TabIndex = 2
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -102,7 +102,7 @@ Partial Class FGrup
         Me.tSNMGRUP.Location = New System.Drawing.Point(132, 10)
         Me.tSNMGRUP.Name = "tSNMGRUP"
         Me.tSNMGRUP.Size = New System.Drawing.Size(157, 23)
-        Me.tSNMGRUP.TabIndex = 84
+        Me.tSNMGRUP.TabIndex = 1
         '
         'tSKDGRUP
         '
@@ -111,14 +111,14 @@ Partial Class FGrup
         Me.tSKDGRUP.Location = New System.Drawing.Point(9, 10)
         Me.tSKDGRUP.Name = "tSKDGRUP"
         Me.tSKDGRUP.Size = New System.Drawing.Size(117, 23)
-        Me.tSKDGRUP.TabIndex = 83
+        Me.tSKDGRUP.TabIndex = 0
         '
         'btnBATAL
         '
         Me.btnBATAL.Location = New System.Drawing.Point(231, 42)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 82
+        Me.btnBATAL.TabIndex = 7
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -127,7 +127,7 @@ Partial Class FGrup
         Me.btnHAPUS.Location = New System.Drawing.Point(175, 42)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 81
+        Me.btnHAPUS.TabIndex = 6
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -136,7 +136,7 @@ Partial Class FGrup
         Me.btnUBAH.Location = New System.Drawing.Point(119, 42)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 80
+        Me.btnUBAH.TabIndex = 5
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -145,7 +145,7 @@ Partial Class FGrup
         Me.btnSIMPAN.Location = New System.Drawing.Point(63, 42)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 79
+        Me.btnSIMPAN.TabIndex = 4
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -154,7 +154,7 @@ Partial Class FGrup
         Me.btnTAMBAH.Location = New System.Drawing.Point(7, 42)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 78
+        Me.btnTAMBAH.TabIndex = 3
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '

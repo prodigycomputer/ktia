@@ -66,7 +66,7 @@ Partial Class FTipe
         Me.txtNMTIPE.Location = New System.Drawing.Point(136, 29)
         Me.txtNMTIPE.Name = "txtNMTIPE"
         Me.txtNMTIPE.Size = New System.Drawing.Size(185, 20)
-        Me.txtNMTIPE.TabIndex = 50
+        Me.txtNMTIPE.TabIndex = 1
         '
         'Label2
         '
@@ -84,14 +84,14 @@ Partial Class FTipe
         Me.txtKDTIPE.Location = New System.Drawing.Point(136, 6)
         Me.txtKDTIPE.Name = "txtKDTIPE"
         Me.txtKDTIPE.Size = New System.Drawing.Size(185, 20)
-        Me.txtKDTIPE.TabIndex = 48
+        Me.txtKDTIPE.TabIndex = 0
         '
         'btnCARI
         '
         Me.btnCARI.Location = New System.Drawing.Point(295, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 67
+        Me.btnCARI.TabIndex = 2
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -102,7 +102,7 @@ Partial Class FTipe
         Me.tSNMTIPE.Location = New System.Drawing.Point(132, 10)
         Me.tSNMTIPE.Name = "tSNMTIPE"
         Me.tSNMTIPE.Size = New System.Drawing.Size(157, 23)
-        Me.tSNMTIPE.TabIndex = 66
+        Me.tSNMTIPE.TabIndex = 1
         '
         'tSKDTIPE
         '
@@ -111,14 +111,14 @@ Partial Class FTipe
         Me.tSKDTIPE.Location = New System.Drawing.Point(9, 10)
         Me.tSKDTIPE.Name = "tSKDTIPE"
         Me.tSKDTIPE.Size = New System.Drawing.Size(117, 23)
-        Me.tSKDTIPE.TabIndex = 65
+        Me.tSKDTIPE.TabIndex = 0
         '
         'btnBATAL
         '
         Me.btnBATAL.Location = New System.Drawing.Point(231, 42)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 64
+        Me.btnBATAL.TabIndex = 7
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -127,7 +127,7 @@ Partial Class FTipe
         Me.btnHAPUS.Location = New System.Drawing.Point(175, 42)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 63
+        Me.btnHAPUS.TabIndex = 6
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -136,7 +136,7 @@ Partial Class FTipe
         Me.btnUBAH.Location = New System.Drawing.Point(119, 42)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 62
+        Me.btnUBAH.TabIndex = 5
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -145,7 +145,7 @@ Partial Class FTipe
         Me.btnSIMPAN.Location = New System.Drawing.Point(63, 42)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 61
+        Me.btnSIMPAN.TabIndex = 4
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -154,7 +154,7 @@ Partial Class FTipe
         Me.btnTAMBAH.Location = New System.Drawing.Point(7, 42)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 60
+        Me.btnTAMBAH.TabIndex = 3
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '

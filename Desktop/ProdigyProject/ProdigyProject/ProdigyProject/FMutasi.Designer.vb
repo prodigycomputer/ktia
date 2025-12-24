@@ -61,7 +61,7 @@ Partial Class FMutasi
         Me.tmuSGD1.Location = New System.Drawing.Point(622, 7)
         Me.tmuSGD1.Name = "tmuSGD1"
         Me.tmuSGD1.Size = New System.Drawing.Size(135, 23)
-        Me.tmuSGD1.TabIndex = 29
+        Me.tmuSGD1.TabIndex = 8
         '
         'dtmuTGL
         '
@@ -70,14 +70,14 @@ Partial Class FMutasi
         Me.dtmuTGL.Location = New System.Drawing.Point(479, 8)
         Me.dtmuTGL.Name = "dtmuTGL"
         Me.dtmuTGL.Size = New System.Drawing.Size(100, 23)
-        Me.dtmuTGL.TabIndex = 26
+        Me.dtmuTGL.TabIndex = 7
         '
         'bmuTabDel
         '
         Me.bmuTabDel.Location = New System.Drawing.Point(903, 36)
         Me.bmuTabDel.Name = "bmuTabDel"
         Me.bmuTabDel.Size = New System.Drawing.Size(70, 25)
-        Me.bmuTabDel.TabIndex = 25
+        Me.bmuTabDel.TabIndex = 12
         Me.bmuTabDel.Text = "Hapus Tab"
         Me.bmuTabDel.UseVisualStyleBackColor = True
         '
@@ -86,7 +86,7 @@ Partial Class FMutasi
         Me.bmuTabAdd.Location = New System.Drawing.Point(816, 36)
         Me.bmuTabAdd.Name = "bmuTabAdd"
         Me.bmuTabAdd.Size = New System.Drawing.Size(80, 25)
-        Me.bmuTabAdd.TabIndex = 24
+        Me.bmuTabAdd.TabIndex = 11
         Me.bmuTabAdd.Text = "Tambah Tab"
         Me.bmuTabAdd.UseVisualStyleBackColor = True
         '
@@ -95,7 +95,7 @@ Partial Class FMutasi
         Me.btnPRINT.Location = New System.Drawing.Point(289, 4)
         Me.btnPRINT.Name = "btnPRINT"
         Me.btnPRINT.Size = New System.Drawing.Size(50, 30)
-        Me.btnPRINT.TabIndex = 23
+        Me.btnPRINT.TabIndex = 5
         Me.btnPRINT.Text = "Print"
         Me.btnPRINT.UseVisualStyleBackColor = True
         '
@@ -104,7 +104,7 @@ Partial Class FMutasi
         Me.btnCARI.Location = New System.Drawing.Point(929, 4)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
-        Me.btnCARI.TabIndex = 22
+        Me.btnCARI.TabIndex = 10
         Me.btnCARI.Text = "Cari"
         Me.btnCARI.UseVisualStyleBackColor = True
         '
@@ -115,14 +115,14 @@ Partial Class FMutasi
         Me.tmuSNONOTA.Location = New System.Drawing.Point(345, 8)
         Me.tmuSNONOTA.Name = "tmuSNONOTA"
         Me.tmuSNONOTA.Size = New System.Drawing.Size(130, 23)
-        Me.tmuSNONOTA.TabIndex = 21
+        Me.tmuSNONOTA.TabIndex = 6
         '
         'btnBATAL
         '
         Me.btnBATAL.Location = New System.Drawing.Point(228, 4)
         Me.btnBATAL.Name = "btnBATAL"
         Me.btnBATAL.Size = New System.Drawing.Size(55, 30)
-        Me.btnBATAL.TabIndex = 20
+        Me.btnBATAL.TabIndex = 4
         Me.btnBATAL.Text = "Batal"
         Me.btnBATAL.UseVisualStyleBackColor = True
         '
@@ -131,7 +131,7 @@ Partial Class FMutasi
         Me.btnHAPUS.Location = New System.Drawing.Point(172, 4)
         Me.btnHAPUS.Name = "btnHAPUS"
         Me.btnHAPUS.Size = New System.Drawing.Size(55, 30)
-        Me.btnHAPUS.TabIndex = 19
+        Me.btnHAPUS.TabIndex = 3
         Me.btnHAPUS.Text = "Hapus"
         Me.btnHAPUS.UseVisualStyleBackColor = True
         '
@@ -140,7 +140,7 @@ Partial Class FMutasi
         Me.btnUBAH.Location = New System.Drawing.Point(116, 4)
         Me.btnUBAH.Name = "btnUBAH"
         Me.btnUBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnUBAH.TabIndex = 18
+        Me.btnUBAH.TabIndex = 2
         Me.btnUBAH.Text = "Ubah"
         Me.btnUBAH.UseVisualStyleBackColor = True
         '
@@ -149,7 +149,7 @@ Partial Class FMutasi
         Me.btnSIMPAN.Location = New System.Drawing.Point(60, 4)
         Me.btnSIMPAN.Name = "btnSIMPAN"
         Me.btnSIMPAN.Size = New System.Drawing.Size(55, 30)
-        Me.btnSIMPAN.TabIndex = 17
+        Me.btnSIMPAN.TabIndex = 1
         Me.btnSIMPAN.Text = "Simpan"
         Me.btnSIMPAN.UseVisualStyleBackColor = True
         '
@@ -158,7 +158,7 @@ Partial Class FMutasi
         Me.btnTAMBAH.Location = New System.Drawing.Point(4, 4)
         Me.btnTAMBAH.Name = "btnTAMBAH"
         Me.btnTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnTAMBAH.TabIndex = 16
+        Me.btnTAMBAH.TabIndex = 0
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '
@@ -197,7 +197,7 @@ Partial Class FMutasi
         Me.tmuTANGGAL.Location = New System.Drawing.Point(111, 10)
         Me.tmuTANGGAL.Name = "tmuTANGGAL"
         Me.tmuTANGGAL.Size = New System.Drawing.Size(138, 20)
-        Me.tmuTANGGAL.TabIndex = 34
+        Me.tmuTANGGAL.TabIndex = 0
         '
         'cbmuGD2
         '
@@ -206,7 +206,7 @@ Partial Class FMutasi
         Me.cbmuGD2.Location = New System.Drawing.Point(111, 80)
         Me.cbmuGD2.Name = "cbmuGD2"
         Me.cbmuGD2.Size = New System.Drawing.Size(220, 21)
-        Me.cbmuGD2.TabIndex = 23
+        Me.cbmuGD2.TabIndex = 3
         '
         'cbmuGD1
         '
@@ -215,7 +215,7 @@ Partial Class FMutasi
         Me.cbmuGD1.Location = New System.Drawing.Point(111, 56)
         Me.cbmuGD1.Name = "cbmuGD1"
         Me.cbmuGD1.Size = New System.Drawing.Size(220, 21)
-        Me.cbmuGD1.TabIndex = 22
+        Me.cbmuGD1.TabIndex = 2
         '
         'tmuNONOTA
         '
@@ -238,7 +238,7 @@ Partial Class FMutasi
         Me.btnADDITEM.Location = New System.Drawing.Point(896, 103)
         Me.btnADDITEM.Name = "btnADDITEM"
         Me.btnADDITEM.Size = New System.Drawing.Size(65, 20)
-        Me.btnADDITEM.TabIndex = 19
+        Me.btnADDITEM.TabIndex = 4
         Me.btnADDITEM.Text = "Add Item"
         Me.btnADDITEM.UseVisualStyleBackColor = True
         '
@@ -309,7 +309,7 @@ Partial Class FMutasi
         Me.tmuSGD2.Location = New System.Drawing.Point(786, 7)
         Me.tmuSGD2.Name = "tmuSGD2"
         Me.tmuSGD2.Size = New System.Drawing.Size(135, 23)
-        Me.tmuSGD2.TabIndex = 33
+        Me.tmuSGD2.TabIndex = 9
         '
         'FMutasi
         '

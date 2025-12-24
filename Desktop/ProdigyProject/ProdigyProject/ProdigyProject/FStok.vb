@@ -3,27 +3,68 @@
 Public Class FStok
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
+    Private isUserTypingSearch As Boolean = False
 
     Dim isi1 As Integer
     Dim isi2 As Integer
 
     Public Sub SetMerek(ByVal kode As String, ByVal nama As String)
         txtKDMERK.Text = kode
+        txtNMMERK.Text = nama
     End Sub
 
     Public Sub SetGolongan(ByVal kode As String, ByVal nama As String)
         txtKDGOL.Text = kode
+        txtNMGOL.Text = nama
     End Sub
 
     Public Sub SetGrup(ByVal kode As String, ByVal nama As String)
         txtKDGRUP.Text = kode
+        txtNMGRUP.Text = nama
+    End Sub
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
     End Sub
 
     Private Sub FStok_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDBRG, "KODE BARANG")
+        ModPlaceholder.SetPlaceholder(tSNMBRG, "NAMA BARANG")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDBRG.Enabled = True
+        tSNMBRG.Enabled = True
     End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDBRG.KeyPress, tSNMBRG.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDBRG.Enter, tSNMBRG.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDBRG.Leave, tSNMBRG.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
+    End Sub
+
 
     Public Sub LoadData(ByVal kodebrg As String)
         Try
@@ -63,6 +104,9 @@ Public Class FStok
         txtKDMERK.Text = ""
         txtKDGOL.Text = ""
         txtKDGRUP.Text = ""
+        txtNMMERK.Text = ""
+        txtNMGOL.Text = ""
+        txtNMGRUP.Text = ""
         txtKDBRG.Text = ""
         txtNMBRG.Text = ""
         txtSTN1.Text = ""
@@ -80,6 +124,9 @@ Public Class FStok
         txtKDMERK.Enabled = False
         txtKDGOL.Enabled = False
         txtKDGRUP.Enabled = False
+        txtNMMERK.Enabled = False
+        txtNMGOL.Enabled = False
+        txtNMGRUP.Enabled = False
         txtKDBRG.Enabled = False
         txtNMBRG.Enabled = False
         txtSTN1.Enabled = False
@@ -99,6 +146,9 @@ Public Class FStok
         txtKDMERK.Enabled = True
         txtKDGOL.Enabled = True
         txtKDGRUP.Enabled = True
+        txtNMMERK.Enabled = True
+        txtNMGOL.Enabled = True
+        txtNMGRUP.Enabled = True
         txtKDBRG.Enabled = True
         txtNMBRG.Enabled = True
         txtSTN1.Enabled = True
@@ -344,22 +394,27 @@ Public Class FStok
         DisabledLoad()
     End Sub
 
-    Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
-        Handles tSKDBRG.TextChanged, tSNMBRG.TextChanged
+    Private Sub tUser_TextChanged(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDBRG.TextChanged, tSNMBRG.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDBRG Then
-            tSNMBRG.Enabled = (tSKDBRG.Text.Trim() = "")
-        ElseIf txt Is tSNMBRG Then
-            tSKDBRG.Enabled = (tSNMBRG.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDBRG) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMBRG) <> ""
+
+        tSNMBRG.Enabled = Not isiKODE
+        tSKDBRG.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
         Dim f As New ItDtStok()
 
-        Dim kodebrg As String = tSKDBRG.Text.Trim()
-        Dim namabrg As String = tSNMBRG.Text.Trim()
+        Dim kodebrg As String = ModPlaceholder.GetRealText(tSKDBRG)
+        Dim namabrg As String = ModPlaceholder.GetRealText(tSNMBRG)
 
         ' Load data sesuai filter
         f.Owner = Me
@@ -369,6 +424,13 @@ Public Class FStok
         ' === Clear filter setelah pencarian ===
         tSKDBRG.Clear()
         tSNMBRG.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDBRG, "KODE BARANG")
+        ModPlaceholder.SetPlaceholder(tSNMBRG, "NAMA BARANG")
+
+        isUserTypingSearch = False
+        tSKDBRG.Enabled = True
+        tSNMBRG.Enabled = True
     End Sub
 
     Private Sub txtKDMERK_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtKDMERK.KeyDown
@@ -378,7 +440,7 @@ Public Class FStok
                 Dim f As New ItMerek
                 f.Owner = Me
                 f.Show()
-                f.LoadDataMerek(txtKDMERK.Text.Trim())
+                f.LoadDataMerek(txtKDMERK.Text.Trim(), "KODE")
             End If
         End If
     End Sub
@@ -386,11 +448,11 @@ Public Class FStok
     Private Sub txtKDGOL_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtKDGOL.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
-            If txtKDMERK.Text.Trim() <> "" Then
+            If txtKDGOL.Text.Trim() <> "" Then
                 Dim f As New ItGolongan
                 f.Owner = Me
                 f.Show()
-                f.LoadDataGolongan(txtKDGOL.Text.Trim())
+                f.LoadDataGolongan(txtKDGOL.Text.Trim(), "KODE")
             End If
         End If
     End Sub
@@ -398,11 +460,11 @@ Public Class FStok
     Private Sub txtKDGRUP_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtKDGRUP.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
-            If txtKDMERK.Text.Trim() <> "" Then
+            If txtKDGRUP.Text.Trim() <> "" Then
                 Dim f As New ItGrup
                 f.Owner = Me
                 f.Show()
-                f.LoadDataGrup(txtKDGRUP.Text.Trim())
+                f.LoadDataGrup(txtKDGRUP.Text.Trim(), "KODE")
             End If
         End If
     End Sub
@@ -440,5 +502,47 @@ Public Class FStok
         f.Isi2 = valIsi2
 
         f.ShowDialog()
+    End Sub
+
+    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+        Handles txtISI1.KeyPress, txtISI2.KeyPress, txtHRGBELI.KeyPress
+
+        AngkaHelper.HanyaAngka(e)
+    End Sub
+
+    Private Sub txtNMMERK_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtNMMERK.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If txtNMMERK.Text.Trim() <> "" Then
+                Dim f As New ItMerek
+                f.Owner = Me
+                f.Show()
+                f.LoadDataMerek(txtNMMERK.Text.Trim(), "NAMA")
+            End If
+        End If
+    End Sub
+
+    Private Sub txtNMGOL_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtNMGOL.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If txtNMGOL.Text.Trim() <> "" Then
+                Dim f As New ItGolongan
+                f.Owner = Me
+                f.Show()
+                f.LoadDataGolongan(txtNMGOL.Text.Trim(), "NAMA")
+            End If
+        End If
+    End Sub
+
+    Private Sub txtNMGRUP_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtNMGRUP.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If txtNMGRUP.Text.Trim() <> "" Then
+                Dim f As New ItGrup
+                f.Owner = Me
+                f.Show()
+                f.LoadDataGrup(txtNMGRUP.Text.Trim(), "NAMA")
+            End If
+        End If
     End Sub
 End Class
