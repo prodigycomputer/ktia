@@ -47,7 +47,7 @@ Partial Class FGudang
         Me.Panel1.Controls.Add(Me.txtKDGUDANG)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 61)
+        Me.Panel1.Size = New System.Drawing.Size(488, 61)
         Me.Panel1.TabIndex = 77
         '
         'Label3
@@ -65,7 +65,7 @@ Partial Class FGudang
         Me.txtNMGUDANG.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMGUDANG.Location = New System.Drawing.Point(136, 29)
         Me.txtNMGUDANG.Name = "txtNMGUDANG"
-        Me.txtNMGUDANG.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMGUDANG.Size = New System.Drawing.Size(340, 20)
         Me.txtNMGUDANG.TabIndex = 50
         '
         'Label2
@@ -88,7 +88,7 @@ Partial Class FGudang
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Location = New System.Drawing.Point(450, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 2
@@ -99,9 +99,9 @@ Partial Class FGudang
         '
         Me.tSNMGUDANG.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tSNMGUDANG.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMGUDANG.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMGUDANG.Location = New System.Drawing.Point(146, 10)
         Me.tSNMGUDANG.Name = "tSNMGUDANG"
-        Me.tSNMGUDANG.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMGUDANG.Size = New System.Drawing.Size(298, 23)
         Me.tSNMGUDANG.TabIndex = 1
         '
         'tSKDGUDANG
@@ -110,7 +110,7 @@ Partial Class FGudang
         Me.tSKDGUDANG.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSKDGUDANG.Location = New System.Drawing.Point(9, 10)
         Me.tSKDGUDANG.Name = "tSKDGUDANG"
-        Me.tSKDGUDANG.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDGUDANG.Size = New System.Drawing.Size(131, 23)
         Me.tSKDGUDANG.TabIndex = 0
         '
         'btnBATAL
@@ -162,7 +162,7 @@ Partial Class FGudang
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 155)
+        Me.ClientSize = New System.Drawing.Size(509, 155)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMGUDANG)

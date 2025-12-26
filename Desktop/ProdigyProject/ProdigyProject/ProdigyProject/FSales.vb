@@ -4,10 +4,49 @@ Public Class FSales
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FSales_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDSLS, "KODE SALES")
+        ModPlaceholder.SetPlaceholder(tSNMSLS, "NAMA SALES")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDSLS.Enabled = True
+        tSNMSLS.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDSLS.KeyPress, tSNMSLS.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDSLS.Enter, tSNMSLS.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDSLS.Leave, tSNMSLS.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodesls As String)
@@ -299,12 +338,18 @@ Public Class FSales
     Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles tSKDSLS.TextChanged, tSNMSLS.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDSLS Then
-            tSNMSLS.Enabled = (tSKDSLS.Text.Trim() = "")
-        ElseIf txt Is tSNMSLS Then
-            tSKDSLS.Enabled = (tSNMSLS.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDSLS) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMSLS) <> ""
+
+        tSNMSLS.Enabled = Not isiKODE
+        tSKDSLS.Enabled = Not isiNAMA
+
     End Sub
 
 
@@ -322,5 +367,12 @@ Public Class FSales
         ' === Clear filter setelah pencarian ===
         tSKDSLS.Clear()
         tSNMSLS.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDSLS, "KODE SALES")
+        ModPlaceholder.SetPlaceholder(tSNMSLS, "NAMA SALES")
+
+        isUserTypingSearch = False
+        tSKDSLS.Enabled = True
+        tSNMSLS.Enabled = True
     End Sub
 End Class

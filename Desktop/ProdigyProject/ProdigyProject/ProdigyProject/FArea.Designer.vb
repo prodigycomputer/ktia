@@ -47,7 +47,7 @@ Partial Class FArea
         Me.Panel1.Controls.Add(Me.txtKDAREA)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 61)
+        Me.Panel1.Size = New System.Drawing.Size(491, 61)
         Me.Panel1.TabIndex = 59
         '
         'Label3
@@ -65,7 +65,7 @@ Partial Class FArea
         Me.txtNMAREA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMAREA.Location = New System.Drawing.Point(136, 29)
         Me.txtNMAREA.Name = "txtNMAREA"
-        Me.txtNMAREA.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMAREA.Size = New System.Drawing.Size(347, 20)
         Me.txtNMAREA.TabIndex = 50
         '
         'Label2
@@ -88,7 +88,7 @@ Partial Class FArea
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Location = New System.Drawing.Point(453, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 2
@@ -99,9 +99,9 @@ Partial Class FArea
         '
         Me.tSNMAREA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tSNMAREA.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMAREA.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMAREA.Location = New System.Drawing.Point(146, 10)
         Me.tSNMAREA.Name = "tSNMAREA"
-        Me.tSNMAREA.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMAREA.Size = New System.Drawing.Size(301, 23)
         Me.tSNMAREA.TabIndex = 1
         '
         'tSKDAREA
@@ -110,7 +110,7 @@ Partial Class FArea
         Me.tSKDAREA.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSKDAREA.Location = New System.Drawing.Point(9, 10)
         Me.tSKDAREA.Name = "tSKDAREA"
-        Me.tSKDAREA.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDAREA.Size = New System.Drawing.Size(131, 23)
         Me.tSKDAREA.TabIndex = 0
         '
         'btnBATAL
@@ -162,7 +162,7 @@ Partial Class FArea
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 155)
+        Me.ClientSize = New System.Drawing.Size(509, 155)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMAREA)

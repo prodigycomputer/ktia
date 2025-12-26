@@ -4,10 +4,49 @@ Public Class FMerek
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FMerek_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDMEREK, "KODE MEREK")
+        ModPlaceholder.SetPlaceholder(tSNMMEREK, "NAMA MEREK")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDMEREK.Enabled = True
+        tSNMMEREK.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDMEREK.KeyPress, tSNMMEREK.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDMEREK.Enter, tSNMMEREK.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDMEREK.Leave, tSNMMEREK.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodemerk As String)
@@ -267,12 +306,17 @@ Public Class FMerek
     Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles tSKDMEREK.TextChanged, tSNMMEREK.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDMEREK Then
-            tSNMMEREK.Enabled = (tSKDMEREK.Text.Trim() = "")
-        ElseIf txt Is tSNMMEREK Then
-            tSKDMEREK.Enabled = (tSNMMEREK.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDMEREK) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMMEREK) <> ""
+
+        tSNMMEREK.Enabled = Not isiKODE
+        tSKDMEREK.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
@@ -289,5 +333,12 @@ Public Class FMerek
         ' === Clear filter setelah pencarian ===
         tSKDMEREK.Clear()
         tSNMMEREK.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDMEREK, "KODE MEREK")
+        ModPlaceholder.SetPlaceholder(tSNMMEREK, "NAMA MEREK")
+
+        isUserTypingSearch = False
+        tSKDMEREK.Enabled = True
+        tSNMMEREK.Enabled = True
     End Sub
 End Class

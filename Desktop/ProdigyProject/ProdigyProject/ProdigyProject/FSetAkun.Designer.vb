@@ -92,9 +92,9 @@ Partial Class FSetAkun
         '
         Me.tSNMUSER.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tSNMUSER.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMUSER.Location = New System.Drawing.Point(129, 8)
+        Me.tSNMUSER.Location = New System.Drawing.Point(143, 8)
         Me.tSNMUSER.Name = "tSNMUSER"
-        Me.tSNMUSER.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMUSER.Size = New System.Drawing.Size(298, 23)
         Me.tSNMUSER.TabIndex = 1
         '
         'tSKDUSER
@@ -103,12 +103,12 @@ Partial Class FSetAkun
         Me.tSKDUSER.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSKDUSER.Location = New System.Drawing.Point(6, 8)
         Me.tSKDUSER.Name = "tSKDUSER"
-        Me.tSKDUSER.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDUSER.Size = New System.Drawing.Size(131, 23)
         Me.tSKDUSER.TabIndex = 0
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(292, 4)
+        Me.btnCARI.Location = New System.Drawing.Point(447, 4)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 2
@@ -147,12 +147,12 @@ Partial Class FSetAkun
         Me.Panel1.Controls.Add(Me.txtKDUSER)
         Me.Panel1.Location = New System.Drawing.Point(6, 81)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 141)
+        Me.Panel1.Size = New System.Drawing.Size(488, 141)
         Me.Panel1.TabIndex = 8
         '
         'btnAKSES
         '
-        Me.btnAKSES.Location = New System.Drawing.Point(271, 101)
+        Me.btnAKSES.Location = New System.Drawing.Point(425, 101)
         Me.btnAKSES.Name = "btnAKSES"
         Me.btnAKSES.Size = New System.Drawing.Size(50, 30)
         Me.btnAKSES.TabIndex = 5
@@ -210,14 +210,14 @@ Partial Class FSetAkun
         Me.txtNMUSER.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMUSER.Location = New System.Drawing.Point(136, 29)
         Me.txtNMUSER.Name = "txtNMUSER"
-        Me.txtNMUSER.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMUSER.Size = New System.Drawing.Size(340, 20)
         Me.txtNMUSER.TabIndex = 1
         '
         'FSetAkun
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 230)
+        Me.ClientSize = New System.Drawing.Size(509, 230)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMUSER)

@@ -47,7 +47,7 @@ Partial Class FGolongan
         Me.Panel1.Controls.Add(Me.txtKDGOL)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 61)
+        Me.Panel1.Size = New System.Drawing.Size(488, 61)
         Me.Panel1.TabIndex = 95
         '
         'Label3
@@ -65,7 +65,7 @@ Partial Class FGolongan
         Me.txtNMGOL.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMGOL.Location = New System.Drawing.Point(136, 29)
         Me.txtNMGOL.Name = "txtNMGOL"
-        Me.txtNMGOL.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMGOL.Size = New System.Drawing.Size(340, 20)
         Me.txtNMGOL.TabIndex = 50
         '
         'Label2
@@ -88,7 +88,7 @@ Partial Class FGolongan
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Location = New System.Drawing.Point(450, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 2
@@ -99,9 +99,9 @@ Partial Class FGolongan
         '
         Me.tSNMGOL.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tSNMGOL.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMGOL.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMGOL.Location = New System.Drawing.Point(146, 10)
         Me.tSNMGOL.Name = "tSNMGOL"
-        Me.tSNMGOL.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMGOL.Size = New System.Drawing.Size(298, 23)
         Me.tSNMGOL.TabIndex = 1
         '
         'tSKDGOL
@@ -110,7 +110,7 @@ Partial Class FGolongan
         Me.tSKDGOL.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSKDGOL.Location = New System.Drawing.Point(9, 10)
         Me.tSKDGOL.Name = "tSKDGOL"
-        Me.tSKDGOL.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDGOL.Size = New System.Drawing.Size(131, 23)
         Me.tSKDGOL.TabIndex = 0
         '
         'btnBATAL
@@ -162,7 +162,7 @@ Partial Class FGolongan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 155)
+        Me.ClientSize = New System.Drawing.Size(509, 155)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMGOL)

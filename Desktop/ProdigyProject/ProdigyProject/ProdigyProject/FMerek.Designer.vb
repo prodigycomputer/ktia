@@ -47,7 +47,7 @@ Partial Class FMerek
         Me.Panel1.Controls.Add(Me.txtKDMEREK)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 61)
+        Me.Panel1.Size = New System.Drawing.Size(488, 61)
         Me.Panel1.TabIndex = 95
         '
         'Label3
@@ -65,7 +65,7 @@ Partial Class FMerek
         Me.txtNMMEREK.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMMEREK.Location = New System.Drawing.Point(136, 29)
         Me.txtNMMEREK.Name = "txtNMMEREK"
-        Me.txtNMMEREK.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMMEREK.Size = New System.Drawing.Size(340, 20)
         Me.txtNMMEREK.TabIndex = 50
         '
         'Label2
@@ -88,7 +88,7 @@ Partial Class FMerek
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Location = New System.Drawing.Point(450, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 2
@@ -99,9 +99,9 @@ Partial Class FMerek
         '
         Me.tSNMMEREK.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tSNMMEREK.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMMEREK.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMMEREK.Location = New System.Drawing.Point(146, 10)
         Me.tSNMMEREK.Name = "tSNMMEREK"
-        Me.tSNMMEREK.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMMEREK.Size = New System.Drawing.Size(298, 23)
         Me.tSNMMEREK.TabIndex = 1
         '
         'tSKDMEREK
@@ -110,7 +110,7 @@ Partial Class FMerek
         Me.tSKDMEREK.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSKDMEREK.Location = New System.Drawing.Point(9, 10)
         Me.tSKDMEREK.Name = "tSKDMEREK"
-        Me.tSKDMEREK.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDMEREK.Size = New System.Drawing.Size(131, 23)
         Me.tSKDMEREK.TabIndex = 0
         '
         'btnBATAL
@@ -162,7 +162,7 @@ Partial Class FMerek
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 155)
+        Me.ClientSize = New System.Drawing.Size(509, 155)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMMEREK)

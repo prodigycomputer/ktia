@@ -47,7 +47,7 @@ Partial Class FTipe
         Me.Panel1.Controls.Add(Me.txtKDTIPE)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 61)
+        Me.Panel1.Size = New System.Drawing.Size(491, 61)
         Me.Panel1.TabIndex = 68
         '
         'Label3
@@ -65,7 +65,7 @@ Partial Class FTipe
         Me.txtNMTIPE.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMTIPE.Location = New System.Drawing.Point(136, 29)
         Me.txtNMTIPE.Name = "txtNMTIPE"
-        Me.txtNMTIPE.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMTIPE.Size = New System.Drawing.Size(347, 20)
         Me.txtNMTIPE.TabIndex = 1
         '
         'Label2
@@ -88,7 +88,7 @@ Partial Class FTipe
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Location = New System.Drawing.Point(453, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 2
@@ -99,9 +99,9 @@ Partial Class FTipe
         '
         Me.tSNMTIPE.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tSNMTIPE.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMTIPE.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMTIPE.Location = New System.Drawing.Point(146, 10)
         Me.tSNMTIPE.Name = "tSNMTIPE"
-        Me.tSNMTIPE.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMTIPE.Size = New System.Drawing.Size(301, 23)
         Me.tSNMTIPE.TabIndex = 1
         '
         'tSKDTIPE
@@ -110,7 +110,7 @@ Partial Class FTipe
         Me.tSKDTIPE.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSKDTIPE.Location = New System.Drawing.Point(9, 10)
         Me.tSKDTIPE.Name = "tSKDTIPE"
-        Me.tSKDTIPE.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDTIPE.Size = New System.Drawing.Size(131, 23)
         Me.tSKDTIPE.TabIndex = 0
         '
         'btnBATAL
@@ -162,7 +162,7 @@ Partial Class FTipe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 155)
+        Me.ClientSize = New System.Drawing.Size(509, 155)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMTIPE)

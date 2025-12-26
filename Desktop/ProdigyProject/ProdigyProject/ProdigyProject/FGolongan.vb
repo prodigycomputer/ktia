@@ -4,10 +4,49 @@ Public Class FGolongan
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FGolongan_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDGOL, "KODE GOLONGAN")
+        ModPlaceholder.SetPlaceholder(tSNMGOL, "NAMA GOLONGAN")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDGOL.Enabled = True
+        tSNMGOL.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDGOL.KeyPress, tSNMGOL.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDGOL.Enter, tSNMGOL.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDGOL.Leave, tSNMGOL.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodegol As String)
@@ -267,12 +306,17 @@ Public Class FGolongan
     Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles tSKDGOL.TextChanged, tSNMGOL.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDGOL Then
-            tSNMGOL.Enabled = (tSKDGOL.Text.Trim() = "")
-        ElseIf txt Is tSNMGOL Then
-            tSKDGOL.Enabled = (tSNMGOL.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDGOL) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMGOL) <> ""
+
+        tSNMGOL.Enabled = Not isiKODE
+        tSKDGOL.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
@@ -289,5 +333,12 @@ Public Class FGolongan
         ' === Clear filter setelah pencarian ===
         tSKDGOL.Clear()
         tSNMGOL.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDGOL, "KODE GOLONGAN")
+        ModPlaceholder.SetPlaceholder(tSNMGOL, "NAMA GOLONGAN")
+
+        isUserTypingSearch = False
+        tSKDGOL.Enabled = True
+        tSNMGOL.Enabled = True
     End Sub
 End Class

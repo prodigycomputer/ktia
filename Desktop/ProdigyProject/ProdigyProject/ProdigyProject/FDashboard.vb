@@ -4,40 +4,33 @@ Public Class FDashboard
 
     Private Sub FDashboard_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
-        Dim berhasil As Boolean = False
 
-        ' === Loop sampai user berhasil login atau yakin keluar ===
-        While Not berhasil
-            Dim login As New FLogin()
-            Dim result As DialogResult = login.ShowDialog()
+        While True
+            Using login As New FLogin()
+                Dim hasil = login.ShowDialog()
 
-            If result = DialogResult.OK Then
-                berhasil = True
-                Me.Text = "PRODIGY  |  USER : " & NamaUserLogin
-            ElseIf result = DialogResult.Cancel Then
-                ' User klik batal → tanya dulu
-                Dim tanya As DialogResult = MessageBox.Show(
-                    "Yakin ingin keluar dari aplikasi?",
-                    "Konfirmasi Keluar",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                )
-
-                If tanya = DialogResult.Yes Then
-                    Application.Exit()
+                If hasil = DialogResult.OK Then
                     Exit While
                 Else
-                    ' User pilih No → tampilkan login lagi
-                    berhasil = False
+                    Dim tanya = MessageBox.Show(
+                        "Apakah anda yakin ingin keluar dari aplikasi?",
+                        "Konfirmasi",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question)
+
+                    If tanya = DialogResult.Yes Then
+                        Application.Exit()
+                        Exit Sub
+                    End If
+                    ' Kalau NO → loop lagi → Login muncul lagi
                 End If
-            End If
+            End Using
         End While
 
-        ' === Lanjutkan hanya kalau login sukses ===
-        If berhasil Then
-            BukaKoneksi()
-            BuatMenuDariDatabase()
-        End If
+        Me.Text = "PRODIGY  |  USER : " & NamaUserLogin
+
+        BukaKoneksi()
+        BuatMenuDariDatabase()
     End Sub
 
     Private Function BersihkanNama(ByVal rawName As String) As String
@@ -299,15 +292,17 @@ Public Class FDashboard
     End Function
 
     ' Tambahkan event ini
-    Private Sub FDashboard_FormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles MyBase.FormClosing
-        Dim tanya As DialogResult = MessageBox.Show("Apakah anda mau keluar?", "Konfirmasi",
-                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-        Dim login As New FLogin()
+    Private Sub FDashboard_FormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles Me.FormClosing
+        If e.CloseReason = CloseReason.UserClosing Then
+            Dim tanya = MessageBox.Show(
+                "Apakah anda yakin ingin keluar dari aplikasi?",
+                "Konfirmasi",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question)
 
-        If tanya = DialogResult.No Then
-
-            e.Cancel = True ' batal menutup form
-            login.ShowDialog()
+            If tanya = DialogResult.No Then
+                e.Cancel = True
+            End If
         End If
     End Sub
 End Class

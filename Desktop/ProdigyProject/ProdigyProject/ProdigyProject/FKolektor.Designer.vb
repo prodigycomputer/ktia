@@ -69,7 +69,7 @@ Partial Class FKolektor
         Me.Panel1.Controls.Add(Me.txtKDKOL)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 206)
+        Me.Panel1.Size = New System.Drawing.Size(488, 206)
         Me.Panel1.TabIndex = 95
         '
         'btnUPLOAD
@@ -97,7 +97,7 @@ Partial Class FKolektor
         Me.txtGAMBAR.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtGAMBAR.Location = New System.Drawing.Point(136, 176)
         Me.txtGAMBAR.Name = "txtGAMBAR"
-        Me.txtGAMBAR.Size = New System.Drawing.Size(185, 20)
+        Me.txtGAMBAR.Size = New System.Drawing.Size(340, 20)
         Me.txtGAMBAR.TabIndex = 7
         '
         'Label5
@@ -170,7 +170,7 @@ Partial Class FKolektor
         Me.txtALAMAT.Location = New System.Drawing.Point(136, 52)
         Me.txtALAMAT.Multiline = True
         Me.txtALAMAT.Name = "txtALAMAT"
-        Me.txtALAMAT.Size = New System.Drawing.Size(185, 52)
+        Me.txtALAMAT.Size = New System.Drawing.Size(340, 52)
         Me.txtALAMAT.TabIndex = 2
         '
         'Label3
@@ -188,7 +188,7 @@ Partial Class FKolektor
         Me.txtNMKOL.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMKOL.Location = New System.Drawing.Point(136, 29)
         Me.txtNMKOL.Name = "txtNMKOL"
-        Me.txtNMKOL.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMKOL.Size = New System.Drawing.Size(340, 20)
         Me.txtNMKOL.TabIndex = 1
         '
         'Label2
@@ -211,7 +211,7 @@ Partial Class FKolektor
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Location = New System.Drawing.Point(450, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 2
@@ -222,9 +222,9 @@ Partial Class FKolektor
         '
         Me.tSNMKOL.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tSNMKOL.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMKOL.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMKOL.Location = New System.Drawing.Point(146, 10)
         Me.tSNMKOL.Name = "tSNMKOL"
-        Me.tSNMKOL.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMKOL.Size = New System.Drawing.Size(312, 23)
         Me.tSNMKOL.TabIndex = 1
         '
         'tSKDKOL
@@ -233,7 +233,7 @@ Partial Class FKolektor
         Me.tSKDKOL.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSKDKOL.Location = New System.Drawing.Point(9, 10)
         Me.tSKDKOL.Name = "tSKDKOL"
-        Me.tSKDKOL.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDKOL.Size = New System.Drawing.Size(131, 23)
         Me.tSKDKOL.TabIndex = 0
         '
         'btnBATAL
@@ -285,7 +285,7 @@ Partial Class FKolektor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 295)
+        Me.ClientSize = New System.Drawing.Size(509, 295)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMKOL)

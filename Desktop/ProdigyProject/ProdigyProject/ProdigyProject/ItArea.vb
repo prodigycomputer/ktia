@@ -2,14 +2,19 @@
 
 Public Class ItArea
 
-    Public Sub LoadDataArea(ByVal keyword As String)
+    Public Sub LoadDataArea(ByVal keyword As String, ByVal mode As String)
 
-        Dim sql As String
-        If keyword = "*" Then
+        Dim sql As String = ""
+        If mode = "KODE" AndAlso keyword = "*" Then
             sql = "SELECT kodear, namaar FROM zarea ORDER BY kodear"
-        Else
-            sql = "SELECT kodear, namaar " &
-                  "FROM zarea WHERE kodear LIKE '%" & keyword & "%' OR namaar LIKE '%" & keyword & "%' ORDER BY kodear"
+        ElseIf mode = "NAMA" AndAlso keyword = "*" Then
+            sql = "SELECT kodear, namaar FROM zarea ORDER BY kodear"
+        ElseIf mode = "KODE" Then
+            sql = "SELECT kodear, namaar FROM zarea " &
+                  "WHERE kodear LIKE ? ORDER BY kodear LIMIT 50"
+        ElseIf mode = "NAMA" Then
+            sql = "SELECT kodear, namaar FROM zarea " &
+                  "WHERE namaar LIKE ? ORDER BY namaar LIMIT 50"
         End If
 
         dgitmAREA.Rows.Clear()
@@ -17,6 +22,11 @@ Public Class ItArea
         Try
             BukaKoneksi()
             Cmd = New OdbcCommand(sql, Conn)
+
+            If keyword <> "*" AndAlso keyword <> "" Then
+                Cmd.Parameters.AddWithValue("@p1", keyword & "%")
+            End If
+
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()

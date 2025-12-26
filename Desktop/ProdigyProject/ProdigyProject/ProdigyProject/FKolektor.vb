@@ -4,10 +4,49 @@ Public Class FKolektor
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FKolektor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDKOL, "KODE KOLEKTOR")
+        ModPlaceholder.SetPlaceholder(tSNMKOL, "NAMA KOLEKTOR")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDKOL.Enabled = True
+        tSNMKOL.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDKOL.KeyPress, tSNMKOL.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDKOL.Enter, tSNMKOL.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDKOL.Leave, tSNMKOL.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodekol As String)
@@ -299,12 +338,17 @@ Public Class FKolektor
     Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles tSKDKOL.TextChanged, tSNMKOL.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDKOL Then
-            tSNMKOL.Enabled = (tSKDKOL.Text.Trim() = "")
-        ElseIf txt Is tSNMKOL Then
-            tSKDKOL.Enabled = (tSNMKOL.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDKOL) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMKOL) <> ""
+
+        tSNMKOL.Enabled = Not isiKODE
+        tSKDKOL.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
@@ -321,5 +365,12 @@ Public Class FKolektor
         ' === Clear filter setelah pencarian ===
         tSKDKOL.Clear()
         tSNMKOL.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDKOL, "KODE KOLEKTOR")
+        ModPlaceholder.SetPlaceholder(tSNMKOL, "NAMA KOLEKTO")
+
+        isUserTypingSearch = False
+        tSKDKOL.Enabled = True
+        tSNMKOL.Enabled = True
     End Sub
 End Class

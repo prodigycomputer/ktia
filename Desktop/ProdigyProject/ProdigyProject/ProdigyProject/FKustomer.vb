@@ -4,18 +4,59 @@ Public Class FKustomer
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Public Sub SetTipe(ByVal kodet As String, ByVal namat As String)
         txtKDTIPE.Text = kodet
+        txtNMTIPE.Text = namat
     End Sub
 
     Public Sub SetArea(ByVal kodea As String, ByVal namaa As String)
         txtKDAREA.Text = kodea
+        txtNMAREA.Text = namaa
     End Sub
 
     Private Sub FKustomer_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDKUST, "KODE KUSTOMER")
+        ModPlaceholder.SetPlaceholder(tSNMKUST, "NAMA KUSTOMER")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDKUST.Enabled = True
+        tSNMKUST.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDKUST.KeyPress, tSNMKUST.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDKUST.Enter, tSNMKUST.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDKUST.Leave, tSNMKUST.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodekust As String)
@@ -61,6 +102,8 @@ Public Class FKustomer
         txtGAMBAR.Text = ""
         txtKDTIPE.Text = ""
         txtKDAREA.Text = ""
+        txtNMTIPE.Text = ""
+        txtNMAREA.Text = ""
         tSKDKUST.Text = ""
         tSNMKUST.Text = ""
     End Sub
@@ -75,6 +118,8 @@ Public Class FKustomer
         txtNPWP.Enabled = False
         txtKDTIPE.Enabled = False
         txtKDAREA.Enabled = False
+        txtNMTIPE.Enabled = False
+        txtNMAREA.Enabled = False
         txtGAMBAR.Enabled = False
         btnUPLOAD.Enabled = False
         tSKDKUST.Enabled = True
@@ -91,6 +136,8 @@ Public Class FKustomer
         txtNPWP.Enabled = True
         txtKDTIPE.Enabled = True
         txtKDAREA.Enabled = True
+        txtNMTIPE.Enabled = True
+        txtNMAREA.Enabled = True
         txtGAMBAR.Enabled = True
         btnUPLOAD.Enabled = True
         tSKDKUST.Enabled = False
@@ -328,12 +375,17 @@ Public Class FKustomer
     Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles tSKDKUST.TextChanged, tSNMKUST.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDKUST Then
-            tSNMKUST.Enabled = (tSKDKUST.Text.Trim() = "")
-        ElseIf txt Is tSNMKUST Then
-            tSKDKUST.Enabled = (tSNMKUST.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDKUST) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMKUST) <> ""
+
+        tSNMKUST.Enabled = Not isiKODE
+        tSKDKUST.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
@@ -359,7 +411,7 @@ Public Class FKustomer
                 Dim f As New ItTipe
                 f.Owner = Me
                 f.Show()
-                f.LoadDataTipe(txtKDTIPE.Text.Trim())
+                f.LoadDataTipe(txtKDTIPE.Text.Trim(), "KODE")
             End If
         End If
     End Sub
@@ -367,11 +419,35 @@ Public Class FKustomer
     Private Sub txtKDAREA_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txtKDAREA.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
-            If txtKDTIPE.Text.Trim() <> "" Then
+            If txtKDAREA.Text.Trim() <> "" Then
                 Dim f As New ItArea
                 f.Owner = Me
                 f.Show()
-                f.LoadDataArea(txtKDAREA.Text.Trim())
+                f.LoadDataArea(txtKDAREA.Text.Trim(), "KODE")
+            End If
+        End If
+    End Sub
+
+    Private Sub txtNMTIPE_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtNMTIPE.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If txtNMTIPE.Text.Trim() <> "" Then
+                Dim f As New ItTipe
+                f.Owner = Me
+                f.Show()
+                f.LoadDataTipe(txtNMTIPE.Text.Trim(), "NAMA")
+            End If
+        End If
+    End Sub
+
+    Private Sub txtNMAREA_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtNMAREA.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            If txtNMAREA.Text.Trim() <> "" Then
+                Dim f As New ItArea
+                f.Owner = Me
+                f.Show()
+                f.LoadDataArea(txtNMAREA.Text.Trim(), "NAMA")
             End If
         End If
     End Sub

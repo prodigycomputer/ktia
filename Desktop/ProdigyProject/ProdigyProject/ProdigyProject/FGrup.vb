@@ -4,10 +4,49 @@ Public Class FGrup
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FGrup_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDGRUP, "KODE GRUP")
+        ModPlaceholder.SetPlaceholder(tSNMGRUP, "NAMA GRUP")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDGRUP.Enabled = True
+        tSNMGRUP.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDGRUP.KeyPress, tSNMGRUP.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDGRUP.Enter, tSNMGRUP.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDGRUP.Leave, tSNMGRUP.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodegrup As String)
@@ -267,12 +306,16 @@ Public Class FGrup
     Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles tSKDGRUP.TextChanged, tSNMGRUP.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDGRUP Then
-            tSNMGRUP.Enabled = (tSKDGRUP.Text.Trim() = "")
-        ElseIf txt Is tSNMGRUP Then
-            tSKDGRUP.Enabled = (tSNMGRUP.Text.Trim() = "")
-        End If
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDGRUP) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMGRUP) <> ""
+
+        tSNMGRUP.Enabled = Not isiKODE
+        tSKDGRUP.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
@@ -289,5 +332,12 @@ Public Class FGrup
         ' === Clear filter setelah pencarian ===
         tSKDGRUP.Clear()
         tSNMGRUP.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDGRUP, "KODE GRUP")
+        ModPlaceholder.SetPlaceholder(tSNMGRUP, "NAMA GRUP")
+
+        isUserTypingSearch = False
+        tSKDGRUP.Enabled = True
+        tSNMGRUP.Enabled = True
     End Sub
 End Class

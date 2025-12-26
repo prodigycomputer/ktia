@@ -2,14 +2,19 @@
 
 Public Class ItTipe
 
-    Public Sub LoadDataTipe(ByVal keyword As String)
+    Public Sub LoadDataTipe(ByVal keyword As String, ByVal mode As String)
 
-        Dim sql As String
-        If keyword = "*" Then
+        Dim sql As String = ""
+        If mode = "KODE" AndAlso keyword = "*" Then
             sql = "SELECT kodetipe, namatipe FROM ztipe ORDER BY kodetipe"
-        Else
-            sql = "SELECT kodetipe, namatipe " &
-                  "FROM ztipe WHERE kodetipe LIKE '%" & keyword & "%' OR namatipe LIKE '%" & keyword & "%' ORDER BY kodetipe"
+        ElseIf mode = "NAMA" AndAlso keyword = "*" Then
+            sql = "SELECT kodetipe, namatipe FROM ztipe ORDER BY kodetipe"
+        ElseIf mode = "KODE" Then
+            sql = "SELECT kodetipe, namatipe FROM ztipe " &
+                  "WHERE kodetipe LIKE ? ORDER BY kodetipe LIMIT 50"
+        ElseIf mode = "NAMA" Then
+            sql = "SELECT kodetipe, namatipe FROM ztipe " &
+                  "WHERE namatipe LIKE ? ORDER BY namatipe LIMIT 50"
         End If
 
         dgitmTIPE.Rows.Clear()
@@ -17,6 +22,11 @@ Public Class ItTipe
         Try
             BukaKoneksi()
             Cmd = New OdbcCommand(sql, Conn)
+
+            If keyword <> "*" AndAlso keyword <> "" Then
+                Cmd.Parameters.AddWithValue("@p1", keyword & "%")
+            End If
+
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()

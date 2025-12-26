@@ -23,6 +23,8 @@ Partial Class FKustomer
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.txtNMAREA = New System.Windows.Forms.TextBox()
+        Me.txtNMTIPE = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.txtKDAREA = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -58,6 +60,8 @@ Partial Class FKustomer
         'Panel1
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.txtNMAREA)
+        Me.Panel1.Controls.Add(Me.txtNMTIPE)
         Me.Panel1.Controls.Add(Me.Label9)
         Me.Panel1.Controls.Add(Me.txtKDAREA)
         Me.Panel1.Controls.Add(Me.Label10)
@@ -81,8 +85,24 @@ Partial Class FKustomer
         Me.Panel1.Controls.Add(Me.txtKDKUST)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 276)
+        Me.Panel1.Size = New System.Drawing.Size(548, 276)
         Me.Panel1.TabIndex = 95
+        '
+        'txtNMAREA
+        '
+        Me.txtNMAREA.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtNMAREA.Location = New System.Drawing.Point(295, 222)
+        Me.txtNMAREA.Name = "txtNMAREA"
+        Me.txtNMAREA.Size = New System.Drawing.Size(248, 20)
+        Me.txtNMAREA.TabIndex = 10
+        '
+        'txtNMTIPE
+        '
+        Me.txtNMTIPE.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtNMTIPE.Location = New System.Drawing.Point(295, 199)
+        Me.txtNMTIPE.Name = "txtNMTIPE"
+        Me.txtNMTIPE.Size = New System.Drawing.Size(248, 20)
+        Me.txtNMTIPE.TabIndex = 8
         '
         'Label9
         '
@@ -100,7 +120,7 @@ Partial Class FKustomer
         Me.txtKDAREA.Location = New System.Drawing.Point(136, 222)
         Me.txtKDAREA.Name = "txtKDAREA"
         Me.txtKDAREA.Size = New System.Drawing.Size(153, 20)
-        Me.txtKDAREA.TabIndex = 8
+        Me.txtKDAREA.TabIndex = 9
         '
         'Label10
         '
@@ -144,7 +164,7 @@ Partial Class FKustomer
         Me.btnUPLOAD.Location = New System.Drawing.Point(78, 244)
         Me.btnUPLOAD.Name = "btnUPLOAD"
         Me.btnUPLOAD.Size = New System.Drawing.Size(52, 22)
-        Me.btnUPLOAD.TabIndex = 9
+        Me.btnUPLOAD.TabIndex = 11
         Me.btnUPLOAD.Text = "Upload"
         Me.btnUPLOAD.UseVisualStyleBackColor = True
         '
@@ -163,8 +183,8 @@ Partial Class FKustomer
         Me.txtGAMBAR.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtGAMBAR.Location = New System.Drawing.Point(136, 245)
         Me.txtGAMBAR.Name = "txtGAMBAR"
-        Me.txtGAMBAR.Size = New System.Drawing.Size(185, 20)
-        Me.txtGAMBAR.TabIndex = 10
+        Me.txtGAMBAR.Size = New System.Drawing.Size(407, 20)
+        Me.txtGAMBAR.TabIndex = 12
         '
         'Label5
         '
@@ -236,7 +256,7 @@ Partial Class FKustomer
         Me.txtALAMAT.Location = New System.Drawing.Point(136, 52)
         Me.txtALAMAT.Multiline = True
         Me.txtALAMAT.Name = "txtALAMAT"
-        Me.txtALAMAT.Size = New System.Drawing.Size(185, 52)
+        Me.txtALAMAT.Size = New System.Drawing.Size(407, 52)
         Me.txtALAMAT.TabIndex = 2
         '
         'Label3
@@ -254,7 +274,7 @@ Partial Class FKustomer
         Me.txtNMKUST.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMKUST.Location = New System.Drawing.Point(136, 29)
         Me.txtNMKUST.Name = "txtNMKUST"
-        Me.txtNMKUST.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMKUST.Size = New System.Drawing.Size(407, 20)
         Me.txtNMKUST.TabIndex = 1
         '
         'Label2
@@ -277,7 +297,7 @@ Partial Class FKustomer
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Location = New System.Drawing.Point(510, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 2
@@ -290,7 +310,7 @@ Partial Class FKustomer
         Me.tSNMKUST.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSNMKUST.Location = New System.Drawing.Point(132, 10)
         Me.tSNMKUST.Name = "tSNMKUST"
-        Me.tSNMKUST.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMKUST.Size = New System.Drawing.Size(372, 23)
         Me.tSNMKUST.TabIndex = 1
         '
         'tSKDKUST
@@ -351,7 +371,7 @@ Partial Class FKustomer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 366)
+        Me.ClientSize = New System.Drawing.Size(569, 366)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMKUST)
@@ -401,4 +421,6 @@ Partial Class FKustomer
     Friend WithEvents txtKDTIPE As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents txtKOTA As System.Windows.Forms.TextBox
+    Friend WithEvents txtNMAREA As System.Windows.Forms.TextBox
+    Friend WithEvents txtNMTIPE As System.Windows.Forms.TextBox
 End Class

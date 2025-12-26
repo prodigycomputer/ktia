@@ -10,6 +10,17 @@ Public Class FPembelian
     Private TabStatus As New Dictionary(Of Integer, String)
     Public KodeLama As String = ""
 
+    Private popupOpened As Boolean = False
+
+    Private Sub FPembelian_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        If popupOpened Then Exit Sub
+        popupOpened = True
+
+        Dim pop As New ItFPopup
+        pop.ShowDialog(Me)
+        pop.Dispose()
+    End Sub
+
     Public Sub SetSupplier(ByVal kode As String, ByVal nama As String,
                        ByVal alamat As String, ByVal kota As String,
                        ByVal ktp As String, ByVal npwp As String)

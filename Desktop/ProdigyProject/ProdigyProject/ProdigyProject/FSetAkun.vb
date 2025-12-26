@@ -5,10 +5,49 @@ Public Class FSetAkun
     Private aksesUser As Dictionary(Of String, Boolean)
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FSetAkun_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDUSER, "KODE USER")
+        ModPlaceholder.SetPlaceholder(tSNMUSER, "NAMA USER")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDUSER.Enabled = True
+        tSNMUSER.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDUSER.KeyPress, tSNMUSER.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDUSER.Enter, tSNMUSER.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDUSER.Leave, tSNMUSER.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodeuser As String)
@@ -297,12 +336,16 @@ Public Class FSetAkun
     Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles tSKDUSER.TextChanged, tSNMUSER.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDUSER Then
-            tSNMUSER.Enabled = (tSKDUSER.Text.Trim() = "")
-        ElseIf txt Is tSNMUSER Then
-            tSKDUSER.Enabled = (tSNMUSER.Text.Trim() = "")
-        End If
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDUSER) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMUSER) <> ""
+
+        tSNMUSER.Enabled = Not isiKODE
+        tSKDUSER.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnAKSES_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAKSES.Click
@@ -338,5 +381,12 @@ Public Class FSetAkun
         ' === Clear filter setelah pencarian ===
         tSKDUSER.Clear()
         tSNMUSER.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDUSER, "KODE USER")
+        ModPlaceholder.SetPlaceholder(tSNMUSER, "NAMA USER")
+
+        isUserTypingSearch = False
+        tSKDUSER.Enabled = True
+        tSNMUSER.Enabled = True
     End Sub
 End Class

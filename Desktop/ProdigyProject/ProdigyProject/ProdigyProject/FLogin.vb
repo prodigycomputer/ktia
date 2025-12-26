@@ -1,6 +1,9 @@
 ﻿Imports System.Data.Odbc
 
 Public Class FLogin
+
+    Private isExitConfirmed As Boolean = False
+
     Private Sub FLogin_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
@@ -41,7 +44,6 @@ Public Class FLogin
     End Sub
 
     Private Sub btnCANCEL_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnCANCEL.Click
-        ' Kalau user batal → keluar
         Me.DialogResult = DialogResult.Cancel
         Me.Close()
     End Sub

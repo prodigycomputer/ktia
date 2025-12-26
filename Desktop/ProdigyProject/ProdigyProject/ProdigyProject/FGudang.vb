@@ -4,10 +4,49 @@ Public Class FGudang
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FGudang_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDGUDANG, "KODE GUDANG")
+        ModPlaceholder.SetPlaceholder(tSNMGUDANG, "NAMA GUDANG")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDGUDANG.Enabled = True
+        tSNMGUDANG.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDGUDANG.KeyPress, tSNMGUDANG.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDGUDANG.Enter, tSNMGUDANG.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDGUDANG.Leave, tSNMGUDANG.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodegd As String)
@@ -267,12 +306,17 @@ Public Class FGudang
     Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles tSKDGUDANG.TextChanged, tSNMGUDANG.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDGUDANG Then
-            tSNMGUDANG.Enabled = (tSKDGUDANG.Text.Trim() = "")
-        ElseIf txt Is tSNMGUDANG Then
-            tSKDGUDANG.Enabled = (tSNMGUDANG.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDGUDANG) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMGUDANG) <> ""
+
+        tSNMGUDANG.Enabled = Not isiKODE
+        tSKDGUDANG.Enabled = Not isiNAMA
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
@@ -289,5 +333,12 @@ Public Class FGudang
         ' === Clear filter setelah pencarian ===
         tSKDGUDANG.Clear()
         tSNMGUDANG.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDGUDANG, "KODE GUDANG")
+        ModPlaceholder.SetPlaceholder(tSNMGUDANG, "NAMA GUDANG")
+
+        isUserTypingSearch = False
+        tSKDGUDANG.Enabled = True
+        tSNMGUDANG.Enabled = True
     End Sub
 End Class

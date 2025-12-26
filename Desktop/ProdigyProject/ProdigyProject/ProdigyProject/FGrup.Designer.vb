@@ -47,7 +47,7 @@ Partial Class FGrup
         Me.Panel1.Controls.Add(Me.txtKDGRUP)
         Me.Panel1.Location = New System.Drawing.Point(9, 83)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(333, 61)
+        Me.Panel1.Size = New System.Drawing.Size(488, 61)
         Me.Panel1.TabIndex = 86
         '
         'Label3
@@ -65,7 +65,7 @@ Partial Class FGrup
         Me.txtNMGRUP.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtNMGRUP.Location = New System.Drawing.Point(136, 29)
         Me.txtNMGRUP.Name = "txtNMGRUP"
-        Me.txtNMGRUP.Size = New System.Drawing.Size(185, 20)
+        Me.txtNMGRUP.Size = New System.Drawing.Size(340, 20)
         Me.txtNMGRUP.TabIndex = 50
         '
         'Label2
@@ -88,7 +88,7 @@ Partial Class FGrup
         '
         'btnCARI
         '
-        Me.btnCARI.Location = New System.Drawing.Point(295, 6)
+        Me.btnCARI.Location = New System.Drawing.Point(450, 6)
         Me.btnCARI.Name = "btnCARI"
         Me.btnCARI.Size = New System.Drawing.Size(47, 30)
         Me.btnCARI.TabIndex = 2
@@ -99,9 +99,9 @@ Partial Class FGrup
         '
         Me.tSNMGRUP.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tSNMGRUP.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMGRUP.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMGRUP.Location = New System.Drawing.Point(146, 10)
         Me.tSNMGRUP.Name = "tSNMGRUP"
-        Me.tSNMGRUP.Size = New System.Drawing.Size(157, 23)
+        Me.tSNMGRUP.Size = New System.Drawing.Size(298, 23)
         Me.tSNMGRUP.TabIndex = 1
         '
         'tSKDGRUP
@@ -110,7 +110,7 @@ Partial Class FGrup
         Me.tSKDGRUP.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSKDGRUP.Location = New System.Drawing.Point(9, 10)
         Me.tSKDGRUP.Name = "tSKDGRUP"
-        Me.tSKDGRUP.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDGRUP.Size = New System.Drawing.Size(131, 23)
         Me.tSKDGRUP.TabIndex = 0
         '
         'btnBATAL
@@ -162,7 +162,7 @@ Partial Class FGrup
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 155)
+        Me.ClientSize = New System.Drawing.Size(509, 155)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.btnCARI)
         Me.Controls.Add(Me.tSNMGRUP)

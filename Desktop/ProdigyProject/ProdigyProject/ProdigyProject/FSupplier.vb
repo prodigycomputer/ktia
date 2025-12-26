@@ -4,10 +4,49 @@ Public Class FSupplier
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
 
+    Private isUserTypingSearch As Boolean = False
+
+    Private Sub FStok_Shown(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Shown
+        Me.ActiveControl = Nothing
+    End Sub
+
     Private Sub FSupplier_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
         BukaKoneksi()
         DisabledLoad()
+
+        ModPlaceholder.SetPlaceholder(tSKDSUP, "KODE SUPPLIER")
+        ModPlaceholder.SetPlaceholder(tSNMSUP, "NAMA SUPPLIER")
+
+        isUserTypingSearch = False
+
+        ' pastikan dua-duanya aktif di awal
+        tSKDSUP.Enabled = True
+        tSNMSUP.Enabled = True
+    End Sub
+
+    Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
+    Handles tSKDSUP.KeyPress, tSNMSUP.KeyPress
+
+        If Char.IsLetterOrDigit(e.KeyChar) Then
+            isUserTypingSearch = True
+        End If
+    End Sub
+
+
+    Private Sub TextBox_Enter(ByVal sender As Object, ByVal e As EventArgs) _
+    Handles tSKDSUP.Enter, tSNMSUP.Enter
+
+        ModPlaceholder.RemovePlaceholder(CType(sender, TextBox))
+    End Sub
+
+    Private Sub TextBox_Leave(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tSKDSUP.Leave, tSNMSUP.Leave
+
+        Dim txt = CType(sender, TextBox)
+        If txt.Text.Trim() = "" Then
+            ModPlaceholder.SetPlaceholder(txt, txt.Tag.ToString())
+        End If
     End Sub
 
     Public Sub LoadData(ByVal kodesup As String)
@@ -299,12 +338,18 @@ Public Class FSupplier
     Private Sub tUser_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
         Handles tSKDSUP.TextChanged, tSNMSUP.TextChanged
 
-        Dim txt As TextBox = CType(sender, TextBox)
-        If txt Is tSKDSUP Then
-            tSNMSUP.Enabled = (tSKDSUP.Text.Trim() = "")
-        ElseIf txt Is tSNMSUP Then
-            tSKDSUP.Enabled = (tSNMSUP.Text.Trim() = "")
-        End If
+        ' ⛔ Jangan jalankan logika kalau user belum mengetik
+        If Not isUserTypingSearch Then Exit Sub
+
+        Dim isiKODE As Boolean =
+            ModPlaceholder.GetRealText(tSKDSUP) <> ""
+
+        Dim isiNAMA As Boolean =
+            ModPlaceholder.GetRealText(tSNMSUP) <> ""
+
+        tSNMSUP.Enabled = Not isiKODE
+        tSKDSUP.Enabled = Not isiNAMA
+
     End Sub
 
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
@@ -321,5 +366,12 @@ Public Class FSupplier
         ' === Clear filter setelah pencarian ===
         tSKDSUP.Clear()
         tSNMSUP.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDSUP, "KODE SUPPLIER")
+        ModPlaceholder.SetPlaceholder(tSNMSUP, "NAMA SUPPLIER")
+
+        isUserTypingSearch = False
+        tSKDSUP.Enabled = True
+        tSNMSUP.Enabled = True
     End Sub
 End Class

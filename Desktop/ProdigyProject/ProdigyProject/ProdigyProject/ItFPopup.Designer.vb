@@ -100,7 +100,7 @@ Partial Class ItFPopup
         Me.tPopNMBARANG.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tPopNMBARANG.Location = New System.Drawing.Point(113, 55)
         Me.tPopNMBARANG.Name = "tPopNMBARANG"
-        Me.tPopNMBARANG.Size = New System.Drawing.Size(190, 20)
+        Me.tPopNMBARANG.Size = New System.Drawing.Size(325, 20)
         Me.tPopNMBARANG.TabIndex = 68
         '
         'Label2
@@ -118,7 +118,7 @@ Partial Class ItFPopup
         Me.tPopSTOK.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tPopSTOK.Location = New System.Drawing.Point(113, 78)
         Me.tPopSTOK.Name = "tPopSTOK"
-        Me.tPopSTOK.Size = New System.Drawing.Size(190, 20)
+        Me.tPopSTOK.Size = New System.Drawing.Size(275, 20)
         Me.tPopSTOK.TabIndex = 70
         '
         'Label3
@@ -250,7 +250,7 @@ Partial Class ItFPopup
         Me.tPopJUMLAH.Location = New System.Drawing.Point(113, 354)
         Me.tPopJUMLAH.Name = "tPopJUMLAH"
         Me.tPopJUMLAH.ReadOnly = True
-        Me.tPopJUMLAH.Size = New System.Drawing.Size(190, 20)
+        Me.tPopJUMLAH.Size = New System.Drawing.Size(325, 20)
         Me.tPopJUMLAH.TabIndex = 94
         Me.tPopJUMLAH.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -268,7 +268,7 @@ Partial Class ItFPopup
         '
         Me.tPopDISRP.Location = New System.Drawing.Point(113, 331)
         Me.tPopDISRP.Name = "tPopDISRP"
-        Me.tPopDISRP.Size = New System.Drawing.Size(190, 20)
+        Me.tPopDISRP.Size = New System.Drawing.Size(231, 20)
         Me.tPopDISRP.TabIndex = 92
         Me.tPopDISRP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -286,7 +286,7 @@ Partial Class ItFPopup
         '
         Me.tPopDISCC.Location = New System.Drawing.Point(113, 308)
         Me.tPopDISCC.Name = "tPopDISCC"
-        Me.tPopDISCC.Size = New System.Drawing.Size(190, 20)
+        Me.tPopDISCC.Size = New System.Drawing.Size(231, 20)
         Me.tPopDISCC.TabIndex = 90
         Me.tPopDISCC.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -304,7 +304,7 @@ Partial Class ItFPopup
         '
         Me.tPopDISCB.Location = New System.Drawing.Point(113, 285)
         Me.tPopDISCB.Name = "tPopDISCB"
-        Me.tPopDISCB.Size = New System.Drawing.Size(190, 20)
+        Me.tPopDISCB.Size = New System.Drawing.Size(231, 20)
         Me.tPopDISCB.TabIndex = 88
         Me.tPopDISCB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -322,7 +322,7 @@ Partial Class ItFPopup
         '
         Me.tPopDISCA.Location = New System.Drawing.Point(113, 262)
         Me.tPopDISCA.Name = "tPopDISCA"
-        Me.tPopDISCA.Size = New System.Drawing.Size(190, 20)
+        Me.tPopDISCA.Size = New System.Drawing.Size(231, 20)
         Me.tPopDISCA.TabIndex = 86
         Me.tPopDISCA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -340,7 +340,7 @@ Partial Class ItFPopup
         '
         Me.tPopHARGA.Location = New System.Drawing.Point(113, 239)
         Me.tPopHARGA.Name = "tPopHARGA"
-        Me.tPopHARGA.Size = New System.Drawing.Size(190, 20)
+        Me.tPopHARGA.Size = New System.Drawing.Size(325, 20)
         Me.tPopHARGA.TabIndex = 84
         Me.tPopHARGA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -356,7 +356,7 @@ Partial Class ItFPopup
         '
         'btnPopTUTUP
         '
-        Me.btnPopTUTUP.Location = New System.Drawing.Point(248, 380)
+        Me.btnPopTUTUP.Location = New System.Drawing.Point(383, 380)
         Me.btnPopTUTUP.Name = "btnPopTUTUP"
         Me.btnPopTUTUP.Size = New System.Drawing.Size(55, 30)
         Me.btnPopTUTUP.TabIndex = 96
@@ -365,7 +365,7 @@ Partial Class ItFPopup
         '
         'btnPopTAMBAH
         '
-        Me.btnPopTAMBAH.Location = New System.Drawing.Point(187, 380)
+        Me.btnPopTAMBAH.Location = New System.Drawing.Point(322, 380)
         Me.btnPopTAMBAH.Name = "btnPopTAMBAH"
         Me.btnPopTAMBAH.Size = New System.Drawing.Size(55, 30)
         Me.btnPopTAMBAH.TabIndex = 95
@@ -376,7 +376,8 @@ Partial Class ItFPopup
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(322, 419)
+        Me.ClientSize = New System.Drawing.Size(450, 419)
+        Me.ControlBox = False
         Me.Controls.Add(Me.btnPopTUTUP)
         Me.Controls.Add(Me.btnPopTAMBAH)
         Me.Controls.Add(Me.tPopJUMLAH)
