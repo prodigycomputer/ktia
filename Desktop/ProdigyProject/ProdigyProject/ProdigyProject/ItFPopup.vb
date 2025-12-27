@@ -225,6 +225,7 @@ Public Class ItFPopup
     End Sub
 
     Private Sub btnPopTUTUP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPopTUTUP.Click
+        Me.DialogResult = DialogResult.Cancel
         Me.Close()
     End Sub
 

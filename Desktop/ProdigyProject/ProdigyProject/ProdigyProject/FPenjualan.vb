@@ -432,7 +432,10 @@ Public Class FPenjualan
         Next
 
         ' Event tombol Add Item
-        AddHandler CType(dict("btnADDITEM"), Button).Click, AddressOf btnADDITEM_Click
+        Dim btn As Button = CType(dict("btnADDITEM"), Button)
+
+        RemoveHandler btn.Click, AddressOf btnADDITEM_Click
+        AddHandler btn.Click, AddressOf btnADDITEM_Click
 
         If TabStatus.ContainsKey(nomor) Then
             TabStatus(nomor) = String.Empty
