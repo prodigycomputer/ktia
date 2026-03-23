@@ -172,4 +172,24 @@ Public Class FDtAkses
             MessageBox.Show("Gagal menyimpan data akses user: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
+    Private Sub FDtAkses_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
+
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
+    End Sub
 End Class

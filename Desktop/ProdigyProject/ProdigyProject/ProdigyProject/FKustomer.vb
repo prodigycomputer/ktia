@@ -3,6 +3,7 @@
 Public Class FKustomer
     Private statusMode As String = ""   ' status: "TAMBAH" / "UBAH"
     Public KodeLama As String = ""
+    Private MaxHarga As Integer = 0
 
     Private isUserTypingSearch As Boolean = False
 
@@ -21,7 +22,9 @@ Public Class FKustomer
     End Sub
 
     Private Sub FKustomer_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        LoadConfigHarga()
         SetButtonState(Me, True)
+        AngkaHelper.AktifkanEnterPindah(Me)
         BukaKoneksi()
         DisabledLoad()
 
@@ -33,6 +36,26 @@ Public Class FKustomer
         ' pastikan dua-duanya aktif di awal
         tSKDKUST.Enabled = True
         tSNMKUST.Enabled = True
+    End Sub
+
+    Private Sub LoadConfigHarga()
+
+        Try
+            BukaKoneksi()
+
+            Dim cmd As New OdbcCommand("SELECT jmlharga FROM zconfig LIMIT 1", Conn)
+            Dim result = cmd.ExecuteScalar()
+
+            If result IsNot Nothing Then
+                Integer.TryParse(result.ToString(), MaxHarga)
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Gagal mengambil konfigurasi harga: " & ex.Message)
+        Finally
+            If Conn.State = ConnectionState.Open Then Conn.Close()
+        End Try
+
     End Sub
 
     Private Sub Search_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
@@ -63,7 +86,12 @@ Public Class FKustomer
         Try
             BukaKoneksi()
 
-            Dim sql As String = "SELECT kodekust, namakust, kodear, kodetipe, alamat, kota, kodehrg, ktp, npwp FROM zkustomer WHERE kodekust = ?"
+            Dim sql As String = "SELECT k.kodekust, k.namakust, k.kodear, a.namaar, k.kodetipe, t.namatipe, k.alamat, k.kota, k.kodehrg, k.ktp, k.npwp " &
+                "FROM zkustomer k " &
+                "LEFT JOIN zarea a ON k.kodear = a.kodear " &
+                "LEFT JOIN ztipe t ON k.kodetipe = t.kodetipe " &
+                "WHERE k.kodekust = ?"
+
             Cmd = New OdbcCommand(sql, Conn)
             Cmd.Parameters.AddWithValue("", kodekust)
 
@@ -80,6 +108,8 @@ Public Class FKustomer
                 txtNPWP.Text = Rd("npwp").ToString()
                 txtKDTIPE.Text = Rd("kodetipe").ToString()
                 txtKDAREA.Text = Rd("kodear").ToString()
+                txtNMTIPE.Text = Rd("namatipe").ToString()
+                txtNMAREA.Text = Rd("namaar").ToString()
                 ' Kalau ada field lain (misalnya level, aktif, dsb) bisa ditambah di sini
                 ' txtLEVEL.Text = Rd("level").ToString()
             Else
@@ -391,8 +421,8 @@ Public Class FKustomer
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
         Dim f As New ItDtKustomer()
 
-        Dim kodekust As String = tSKDKUST.Text.Trim()
-        Dim namakust As String = tSNMKUST.Text.Trim()
+        Dim kodekust As String = ModPlaceholder.GetRealText(tSKDKUST)
+        Dim namakust As String = ModPlaceholder.GetRealText(tSNMKUST)
 
         ' Load data sesuai filter
         f.Owner = Me
@@ -402,53 +432,153 @@ Public Class FKustomer
         ' === Clear filter setelah pencarian ===
         tSKDKUST.Clear()
         tSNMKUST.Clear()
+
+        ModPlaceholder.SetPlaceholder(tSKDKUST, "KODE KUSTOMER")
+        ModPlaceholder.SetPlaceholder(tSNMKUST, "NAMA KUSTOMER")
+
+        isUserTypingSearch = False
+        tSKDKUST.Enabled = True
+        tSNMKUST.Enabled = True
+    End Sub
+
+    Private skipLeaveArea As Boolean = False
+    Private skipLeaveTipe As Boolean = False
+
+    Private Sub OpenArea(ByVal keyword As String, ByVal mode As String)
+        If keyword.Trim() = "" Then Exit Sub
+
+        Dim f As New ItArea
+        f.Owner = Me
+        f.Caller = mode
+        f.Show()
+        f.LoadDataArea(keyword.Trim(), mode)
+    End Sub
+
+    Private Sub OpenTipe(ByVal keyword As String, ByVal mode As String)
+        If keyword.Trim() = "" Then Exit Sub
+
+        Dim f As New ItTipe
+        f.Owner = Me
+        f.Caller = mode
+        f.Show()
+        f.LoadDataTipe(keyword.Trim(), mode)
     End Sub
 
     Private Sub txtKDTIPE_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txtKDTIPE.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
-            If txtKDTIPE.Text.Trim() <> "" Then
-                Dim f As New ItTipe
-                f.Owner = Me
-                f.Show()
-                f.LoadDataTipe(txtKDTIPE.Text.Trim(), "KODE")
-            End If
-        End If
-    End Sub
-
-    Private Sub txtKDAREA_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txtKDAREA.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            e.SuppressKeyPress = True
-            If txtKDAREA.Text.Trim() <> "" Then
-                Dim f As New ItArea
-                f.Owner = Me
-                f.Show()
-                f.LoadDataArea(txtKDAREA.Text.Trim(), "KODE")
-            End If
+            skipLeaveTipe = True
+            OpenTipe(txtKDTIPE.Text, "KODE")
         End If
     End Sub
 
     Private Sub txtNMTIPE_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtNMTIPE.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
-            If txtNMTIPE.Text.Trim() <> "" Then
-                Dim f As New ItTipe
-                f.Owner = Me
-                f.Show()
-                f.LoadDataTipe(txtNMTIPE.Text.Trim(), "NAMA")
-            End If
+            skipLeaveTipe = True
+            OpenTipe(txtNMTIPE.Text, "NAMA")
+        End If
+    End Sub
+
+    Private Sub txtKDAREA_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txtKDAREA.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            skipLeaveArea = True
+            OpenArea(txtKDAREA.Text, "KODE")
         End If
     End Sub
 
     Private Sub txtNMAREA_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtNMAREA.KeyDown
         If e.KeyCode = Keys.Enter Then
             e.SuppressKeyPress = True
-            If txtNMAREA.Text.Trim() <> "" Then
-                Dim f As New ItArea
-                f.Owner = Me
-                f.Show()
-                f.LoadDataArea(txtNMAREA.Text.Trim(), "NAMA")
-            End If
+            skipLeaveArea = True
+            OpenArea(txtNMAREA.Text, "KODE")
         End If
+    End Sub
+
+    Private Sub FKustomer_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
+
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
+    End Sub
+
+    Private Sub txtKDTIPE_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtKDTIPE.Leave
+        If skipLeaveTipe Then
+            skipLeaveTipe = False
+            Exit Sub
+        End If
+        OpenTipe(txtKDTIPE.Text, "KODE")
+    End Sub
+
+    Private Sub txtNMTIPE_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtNMTIPE.Leave
+        If skipLeaveTipe Then
+            skipLeaveTipe = False
+            Exit Sub
+        End If
+        OpenTipe(txtNMTIPE.Text, "NAMA")
+    End Sub
+
+    Private Sub txtKDAREA_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtKDAREA.Leave
+        If skipLeaveArea Then
+            skipLeaveArea = False
+            Exit Sub
+        End If
+        OpenArea(txtKDAREA.Text, "KODE")
+    End Sub
+
+    Private Sub txtNMAREA_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtNMAREA.Leave
+        If skipLeaveArea Then
+            skipLeaveArea = False
+            Exit Sub
+        End If
+        OpenArea(txtNMAREA.Text, "NAMA")
+    End Sub
+
+    Private Sub txtKDHARGA_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtKDHARGA.TextChanged
+
+    End Sub
+
+    Private Sub txtKDHARGA_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles txtKDHARGA.KeyPress
+
+        ' Tetap pakai helper hanya angka
+        If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+            Exit Sub
+        End If
+
+        ' Jika angka ditekan
+        If Char.IsDigit(e.KeyChar) Then
+
+            Dim txt As TextBox = CType(sender, TextBox)
+
+            ' Gabungkan angka yang sedang diketik
+            Dim angkaBaru As String = txt.Text & e.KeyChar
+
+            Dim nilai As Integer
+            If Integer.TryParse(angkaBaru, nilai) Then
+
+                ' Cek range 1 sampai MaxHarga
+                If nilai < 1 OrElse nilai > MaxHarga Then
+                    e.Handled = True
+                End If
+
+            End If
+
+        End If
+
     End Sub
 End Class

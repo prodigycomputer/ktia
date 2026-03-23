@@ -79,16 +79,27 @@ Public Class ItDtPenyesuaian
         SetupGridDPenyesuaian(dgitmPENYESUAIAN)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmPENYESUAIAN.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmPENYESUAIAN.CurrentRow.Cells("nonota").Value.ToString()
+
+        Dim parentForm As FPenyesuaian = TryCast(Me.Owner, FPenyesuaian)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadNota(data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmPENYESUAIAN_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmPENYESUAIAN.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim nonota As String = dgitmPENYESUAIAN.Rows(e.RowIndex).Cells("nonota").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FPenyesuaian = TryCast(Me.Owner, FPenyesuaian)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadNota(nonota)
-            End If
-
-            Me.Close()
+    Private Sub dgitmPENYESUAIAN_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmPENYESUAIAN.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

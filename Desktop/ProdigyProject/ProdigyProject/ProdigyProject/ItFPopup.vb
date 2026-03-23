@@ -17,7 +17,7 @@ Public Class ItFPopup
         tPopSTN1.Text = sat1
         tPopSTN2.Text = sat2
         tPopSTN3.Text = sat3
-        tPopHARGA.Text = harga
+        tPopHARGA.Value = harga
 
         FaktorIsi1 = isi1
         FaktorIsi2 = isi2
@@ -93,18 +93,18 @@ Public Class ItFPopup
     Private Sub ClearInput()
         tPopKDBARANG.Clear()
         tPopNMBARANG.Clear()
-        tPopJLH1.Clear()
-        tPopJLH2.Clear()
-        tPopJLH3.Clear()
+        tPopJLH1.Value = 0
+        tPopJLH2.Value = 0
+        tPopJLH3.Value = 0
         tPopSTN1.Clear()
         tPopSTN2.Clear()
         tPopSTN3.Clear()
-        tPopDISCA.Clear()
-        tPopDISCB.Clear()
-        tPopDISCC.Clear()
-        tPopDISRP.Clear()
-        tPopJUMLAH.Clear()
-        tPopHARGA.Clear()
+        tPopDISCA.Value = 0
+        tPopDISCB.Value = 0
+        tPopDISCC.Value = 0
+        tPopDISCRP.Value = 0
+        tPopJUMLAH.Value = 0
+        tPopHARGA.Value = 0
         tPopSTOK.Clear()
         cbPopGudang.SelectedIndex = -1
         FaktorIsi1 = 1
@@ -116,30 +116,51 @@ Public Class ItFPopup
     Private Sub HitungOtomatis()
 
         Dim hasil = ModHitung.HitungJumlah(
-            Val(tPopJLH1.Text),
-            Val(tPopJLH2.Text),
-            Val(tPopJLH3.Text),
-            Val(tPopHARGA.Text),
-            Val(tPopDISCA.Text),
-            Val(tPopDISCB.Text),
-            Val(tPopDISCC.Text),
-            Val(tPopDISRP.Text),
-            FaktorIsi1,
-            FaktorIsi2
+            tPopJLH1.Value,
+            tPopJLH2.Value,
+            tPopJLH3.Value,
+            tPopHARGA.Value,
+            tPopDISCA.Value,
+            tPopDISCB.Value,
+            tPopDISCC.Value,
+            tPopDISCRP.Value,
+        FaktorIsi1,
+        FaktorIsi2
         )
 
-        tPopJUMLAH.Text = hasil("final").ToString()
+        Dim finalValue As Decimal = hasil("final")
+
+        If finalValue < tPopJUMLAH.Minimum Then
+            finalValue = tPopJUMLAH.Minimum
+        End If
+
+        tPopJUMLAH.Value = finalValue
     End Sub
 
     Private Sub ItFPopupPem_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
+        AngkaHelper.AktifkanEnterPindah(Me)
 
         BukaKoneksi()
         If Not IsEditMode Then
             LoadGudang()
         End If
+
     End Sub
+
+
+    Private Function DataBelumLengkap() As Boolean
+        If tPopKDBARANG.Text.Trim() = "" Then Return True
+        If tPopNMBARANG.Text.Trim() = "" Then Return True
+        If tPopJLH1.Value = 0 OrElse tPopJLH1.Value <= 0 Then Return True
+        If tPopHARGA.Value = 0 OrElse tPopHARGA.Value <= 0 Then Return True
+        If cbPopGudang.SelectedIndex = -1 Then Return True
+        If tPopJUMLAH.Value = 0 OrElse tPopJUMLAH.Value <= 0 Then Return True
+
+        Return False
+    End Function
+
 
     Private Sub LoadGudang()
         cbPopGudang.Items.Clear()
@@ -164,6 +185,12 @@ Public Class ItFPopup
 
     Private Sub btnPopTAMBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPopTAMBAH.Click
         Try
+            If DataBelumLengkap() Then
+                MessageBox.Show("Data belum diisi", "Peringatan",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
             If TargetGrid Is Nothing Then
                 MessageBox.Show("Grid belum dihubungkan!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
@@ -177,18 +204,18 @@ Public Class ItFPopup
                 gudang = cbPopGudang.SelectedItem.ToString().Split(" "c)(0)
             End If
 
-            Dim jlh1 As String = tPopJLH1.Text.Trim()
+            Dim jlh1 As Decimal = tPopJLH1.Value
             Dim sat1 As String = tPopSTN1.Text.Trim()
-            Dim jlh2 As String = tPopJLH2.Text.Trim()
+            Dim jlh2 As Decimal = tPopJLH2.Value
             Dim sat2 As String = tPopSTN2.Text.Trim()
-            Dim jlh3 As String = tPopJLH3.Text.Trim()
+            Dim jlh3 As Decimal = tPopJLH3.Value
             Dim sat3 As String = tPopSTN3.Text.Trim()
-            Dim harga As Decimal = Val(tPopHARGA.Text)
-            Dim disca As Decimal = Val(tPopDISCA.Text)
-            Dim discb As Decimal = Val(tPopDISCB.Text)
-            Dim discc As Decimal = Val(tPopDISCC.Text)
-            Dim discrp As Decimal = Val(tPopDISRP.Text)
-            Dim jumlah As Decimal = Val(tPopJUMLAH.Text)
+            Dim harga As Decimal = tPopHARGA.Value
+            Dim disca As Decimal = tPopDISCA.Value
+            Dim discb As Decimal = tPopDISCB.Value
+            Dim discc As Decimal = tPopDISCC.Value
+            Dim discrp As Decimal = tPopDISCRP.Value
+            Dim jumlah As Decimal = tPopJUMLAH.Value
 
             ' --- Masukkan ke grid ---
             If IsEditMode AndAlso TargetGrid.CurrentRow IsNot Nothing Then
@@ -270,21 +297,30 @@ Public Class ItFPopup
         End If
     End Sub
 
-    ' === KeyPress hanya angka ===
-    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
-        Handles tPopDISCA.KeyPress, tPopDISCB.KeyPress, tPopDISCC.KeyPress,
-                tPopDISRP.KeyPress, tPopJLH1.KeyPress, tPopJLH2.KeyPress,
-                tPopJLH3.KeyPress, tPopHARGA.KeyPress, tPopJUMLAH.KeyPress
-
-        AngkaHelper.HanyaAngka(e)
+    ' === ValueChanged hitung otomatis ===
+    Private Sub AutoHitung_ValueChanged(ByVal sender As Object, ByVal e As EventArgs) _
+        Handles tPopHARGA.ValueChanged, tPopDISCA.ValueChanged, tPopDISCB.ValueChanged,
+        tPopDISCC.ValueChanged, tPopDISCRP.ValueChanged
+        HitungOtomatis()
     End Sub
 
-    ' === TextChanged hitung otomatis ===
-    Private Sub AutoHitung_TextChanged(ByVal sender As Object, ByVal e As EventArgs) _
-        Handles tPopJLH1.TextChanged, tPopJLH2.TextChanged, tPopJLH3.TextChanged,
-                tPopHARGA.TextChanged, tPopDISCA.TextChanged, tPopDISCB.TextChanged,
-                tPopDISCC.TextChanged, tPopDISRP.TextChanged
+    Private Sub ItFPopup_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
 
-        HitungOtomatis()
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
     End Sub
 End Class

@@ -1,8 +1,10 @@
 ﻿Imports System.Data.Odbc
 
 Public Class ItArea
+    Public Property Caller As String
 
     Public Sub LoadDataArea(ByVal keyword As String, ByVal mode As String)
+        Dim adaData As Boolean = False
 
         Dim sql As String = ""
         If mode = "KODE" AndAlso keyword = "*" Then
@@ -30,8 +32,25 @@ Public Class ItArea
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()
+                adaData = True
                 dgitmAREA.Rows.Add(Rd("kodear"), Rd("namaar"))
             End While
+
+            If Not adaData Then
+                MessageBox.Show("Data tidak ditemukan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Dim parentForm As FKustomer = TryCast(Me.Owner, FKustomer)
+                If parentForm IsNot Nothing Then
+
+                    If Caller = "KODE" Then
+                        parentForm.txtKDAREA.Clear()
+                        Me.Close()
+                    ElseIf Caller = "NAMA" Then
+                        parentForm.txtNMAREA.Clear()
+                        Me.Close()
+                    End If
+
+                End If
+            End If
 
             Rd.Close()
             Conn.Close()
@@ -47,18 +66,28 @@ Public Class ItArea
         SetupGridArea(dgitmAREA)
     End Sub
 
-    Private Sub dgitmAREA_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmAREA.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim kodea As String = dgitmAREA.Rows(e.RowIndex).Cells("kodear").Value.ToString()
-            Dim namaa As String = dgitmAREA.Rows(e.RowIndex).Cells("namaar").Value.ToString()
+    Private Sub PilihData()
+        If dgitmAREA.CurrentRow Is Nothing Then Exit Sub
 
-            ' kirim ke ItFPopupPem
-            Dim parentForm As FKustomer = TryCast(Me.Owner, FKustomer)
-            If parentForm IsNot Nothing Then
-                parentForm.SetArea(kodea, namaa)
-            End If
+        Dim kode As String = dgitmAREA.CurrentRow.Cells("kodear").Value.ToString()
+        Dim nama As String = dgitmAREA.CurrentRow.Cells("namaar").Value.ToString()
 
-            Me.Close()
+        Dim parentForm As FKustomer = TryCast(Me.Owner, FKustomer)
+        If parentForm IsNot Nothing Then
+            parentForm.SetArea(kode, nama)
+        End If
+
+        Me.Close()
+    End Sub
+
+    Private Sub dgitmAREA_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmAREA.CellClick
+        PilihData()
+    End Sub
+
+    Private Sub dgitmAREA_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmAREA.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

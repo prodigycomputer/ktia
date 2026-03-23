@@ -63,16 +63,27 @@ Public Class ItDtKustomer
         SetupGridKustomer(dgitmKUSTT)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmKUSTT.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmKUSTT.CurrentRow.Cells("kodekust").Value.ToString()
+
+        Dim parentForm As FKustomer = TryCast(Me.Owner, FKustomer)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmKUSTT_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmKUSTT.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmKUSTT.Rows(e.RowIndex).Cells("kodekust").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FKustomer = TryCast(Me.Owner, FKustomer)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmKUSTT_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmKUSTT.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

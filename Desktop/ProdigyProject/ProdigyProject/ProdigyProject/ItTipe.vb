@@ -1,8 +1,10 @@
 ﻿Imports System.Data.Odbc
 
 Public Class ItTipe
+    Public Property Caller As String
 
     Public Sub LoadDataTipe(ByVal keyword As String, ByVal mode As String)
+        Dim adaData As Boolean = False
 
         Dim sql As String = ""
         If mode = "KODE" AndAlso keyword = "*" Then
@@ -30,8 +32,25 @@ Public Class ItTipe
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()
+                adaData = True
                 dgitmTIPE.Rows.Add(Rd("kodetipe"), Rd("namatipe"))
             End While
+
+            If Not adaData Then
+                MessageBox.Show("Data tidak ditemukan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Dim parentForm As FKustomer = TryCast(Me.Owner, FKustomer)
+                If parentForm IsNot Nothing Then
+
+                    If Caller = "KODE" Then
+                        parentForm.txtKDTIPE.Clear()
+                        Me.Close()
+                    ElseIf Caller = "NAMA" Then
+                        parentForm.txtNMTIPE.Clear()
+                        Me.Close()
+                    End If
+
+                End If
+            End If
 
             Rd.Close()
             Conn.Close()
@@ -47,18 +66,28 @@ Public Class ItTipe
         SetupGridTipe(dgitmTIPE)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmTIPE.CurrentRow Is Nothing Then Exit Sub
+
+        Dim kode As String = dgitmTIPE.CurrentRow.Cells("kodetipe").Value.ToString()
+        Dim nama As String = dgitmTIPE.CurrentRow.Cells("namatipe").Value.ToString()
+
+        Dim parentForm As FKustomer = TryCast(Me.Owner, FKustomer)
+        If parentForm IsNot Nothing Then
+            parentForm.SetTipe(kode, nama)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmTIPE_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmTIPE.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim kodet As String = dgitmTIPE.Rows(e.RowIndex).Cells("kodetipe").Value.ToString()
-            Dim namat As String = dgitmTIPE.Rows(e.RowIndex).Cells("namatipe").Value.ToString()
+        PilihData()
+    End Sub
 
-            ' kirim ke ItFPopupPem
-            Dim parentForm As FKustomer = TryCast(Me.Owner, FKustomer)
-            If parentForm IsNot Nothing Then
-                parentForm.SetTipe(kodet, namat)
-            End If
-
-            Me.Close()
+    Private Sub dgitmTIPE_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmTIPE.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

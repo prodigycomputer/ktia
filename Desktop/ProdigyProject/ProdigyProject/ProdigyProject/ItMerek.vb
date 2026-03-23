@@ -1,8 +1,10 @@
 ﻿Imports System.Data.Odbc
 
 Public Class ItMerek
+    Public Property Caller As String
 
     Public Sub LoadDataMerek(ByVal keyword As String, ByVal mode As String)
+        Dim adaData As Boolean = False
 
         Dim sql As String = ""
         If mode = "KODE" AndAlso keyword = "*" Then
@@ -30,8 +32,25 @@ Public Class ItMerek
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()
+                adaData = True
                 dgitmMEREK.Rows.Add(Rd("kodemerk"), Rd("namamerk"))
             End While
+
+            If Not adaData Then
+                MessageBox.Show("Data tidak ditemukan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Dim parentForm As FStok = TryCast(Me.Owner, FStok)
+                If parentForm IsNot Nothing Then
+
+                    If Caller = "KODE" Then
+                        parentForm.txtKDMERK.Clear()
+                        Me.Close()
+                    ElseIf Caller = "NAMA" Then
+                        parentForm.txtNMMERK.Clear()
+                        Me.Close()
+                    End If
+
+                End If
+            End If
 
             Rd.Close()
             Conn.Close()
@@ -47,18 +66,28 @@ Public Class ItMerek
         SetupGridDMerek(dgitmMEREK)
     End Sub
 
-    Private Sub dgitmMEREK_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmMEREK.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim kode As String = dgitmMEREK.Rows(e.RowIndex).Cells("kodemerk").Value.ToString()
-            Dim nama As String = dgitmMEREK.Rows(e.RowIndex).Cells("namamerk").Value.ToString()
+    Private Sub PilihData()
+        If dgitmMEREK.CurrentRow Is Nothing Then Exit Sub
 
-            ' kirim ke ItFPopupPem
-            Dim parentForm As FStok = TryCast(Me.Owner, FStok)
-            If parentForm IsNot Nothing Then
-                parentForm.SetMerek(kode, nama)
-            End If
+        Dim kode As String = dgitmMEREK.CurrentRow.Cells("kodemerk").Value.ToString()
+        Dim nama As String = dgitmMEREK.CurrentRow.Cells("namamerk").Value.ToString()
 
-            Me.Close()
+        Dim parentForm As FStok = TryCast(Me.Owner, FStok)
+        If parentForm IsNot Nothing Then
+            parentForm.SetMerek(kode, nama)
+        End If
+
+        Me.Close()
+    End Sub
+
+    Private Sub dgitmMEREK_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmMEREK.CellClick
+        PilihData()
+    End Sub
+
+    Private Sub dgitmMEREK_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmMEREK.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

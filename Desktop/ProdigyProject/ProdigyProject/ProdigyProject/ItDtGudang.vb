@@ -59,16 +59,27 @@ Public Class ItDtGudang
         SetupGridDGudang(dgitmGD)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmGD.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmGD.CurrentRow.Cells("kodegd").Value.ToString()
+
+        Dim parentForm As FGudang = TryCast(Me.Owner, FGudang)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmGD_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmGD.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmGD.Rows(e.RowIndex).Cells("kodegd").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FGudang = TryCast(Me.Owner, FGudang)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmGD_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmGD.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

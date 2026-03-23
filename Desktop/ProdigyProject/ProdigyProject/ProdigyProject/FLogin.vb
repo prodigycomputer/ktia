@@ -7,6 +7,7 @@ Public Class FLogin
     Private Sub FLogin_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
+        AngkaHelper.AktifkanEnterPindah(Me)
     End Sub
 
     Private Sub btnLOGIN_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLOGIN.Click

@@ -85,16 +85,27 @@ Public Class ItDtPembelian
         SetupGridBeli(dgitmPEMBELIAN)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmPEMBELIAN.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmPEMBELIAN.CurrentRow.Cells("nonota").Value.ToString()
+
+        Dim parentForm As FPembelian = TryCast(Me.Owner, FPembelian)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadNota(data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmPEMBELIAN_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmPEMBELIAN.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim nonota As String = dgitmPEMBELIAN.Rows(e.RowIndex).Cells("nonota").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FPembelian = TryCast(Me.Owner, FPembelian)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadNota(nonota)
-            End If
-
-            Me.Close()
+    Private Sub dgitmPEMBELIAN_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmPEMBELIAN.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

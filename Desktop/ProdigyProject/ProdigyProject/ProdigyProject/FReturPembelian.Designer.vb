@@ -33,29 +33,11 @@ Partial Class FReturPembelian
         Me.Nota1 = New System.Windows.Forms.TabPage()
         Me.trpmNONOTA = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.trpmTOTAL = New System.Windows.Forms.TextBox()
-        Me.trpmSUBTOTAL = New System.Windows.Forms.TextBox()
-        Me.trpmLAIN = New System.Windows.Forms.TextBox()
-        Me.trpmNPPN = New System.Windows.Forms.TextBox()
-        Me.trpmAPPN = New System.Windows.Forms.TextBox()
-        Me.trpmNDISK3 = New System.Windows.Forms.TextBox()
-        Me.trpmADISK3 = New System.Windows.Forms.TextBox()
-        Me.trpmNDISK2 = New System.Windows.Forms.TextBox()
-        Me.trpmADISK2 = New System.Windows.Forms.TextBox()
-        Me.trpmNDISK1 = New System.Windows.Forms.TextBox()
-        Me.trpmADISK1 = New System.Windows.Forms.TextBox()
         Me.trpmALAMAT = New System.Windows.Forms.TextBox()
         Me.trpmKDSUP = New System.Windows.Forms.TextBox()
         Me.trpmKET = New System.Windows.Forms.TextBox()
         Me.trpmNMSUP = New System.Windows.Forms.TextBox()
         Me.trpmNOFAKTUR = New System.Windows.Forms.TextBox()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
         Me.grRPEMBELIAN = New System.Windows.Forms.DataGridView()
         Me.btnADDITEM = New System.Windows.Forms.Button()
         Me.trpmTEMPO = New System.Windows.Forms.DateTimePicker()
@@ -75,9 +57,42 @@ Partial Class FReturPembelian
         Me.btnUBAH = New System.Windows.Forms.Button()
         Me.btnSIMPAN = New System.Windows.Forms.Button()
         Me.btnTAMBAH = New System.Windows.Forms.Button()
+        Me.trpmTOTAL = New System.Windows.Forms.NumericUpDown()
+        Me.trpmNPPN = New System.Windows.Forms.NumericUpDown()
+        Me.trpmAPPN = New System.Windows.Forms.NumericUpDown()
+        Me.trpmLAIN = New System.Windows.Forms.NumericUpDown()
+        Me.trpmNDISK3 = New System.Windows.Forms.NumericUpDown()
+        Me.trpmADISK3 = New System.Windows.Forms.NumericUpDown()
+        Me.trpmNDISK2 = New System.Windows.Forms.NumericUpDown()
+        Me.trpmADISK2 = New System.Windows.Forms.NumericUpDown()
+        Me.trpmNDISK1 = New System.Windows.Forms.NumericUpDown()
+        Me.trpmADISK1 = New System.Windows.Forms.NumericUpDown()
+        Me.trpmSUBTOTAL = New System.Windows.Forms.NumericUpDown()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.Nota1.SuspendLayout()
         CType(Me.grRPEMBELIAN, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmTOTAL, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmNPPN, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmAPPN, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmLAIN, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmNDISK3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmADISK3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmNDISK2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmADISK2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmNDISK1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmADISK1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.trpmSUBTOTAL, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'trmuSLUNAS
@@ -156,24 +171,17 @@ Partial Class FReturPembelian
         'Nota1
         '
         Me.Nota1.BackColor = System.Drawing.Color.Transparent
-        Me.Nota1.Controls.Add(Me.trpmNONOTA)
-        Me.Nota1.Controls.Add(Me.Label16)
         Me.Nota1.Controls.Add(Me.trpmTOTAL)
-        Me.Nota1.Controls.Add(Me.trpmSUBTOTAL)
-        Me.Nota1.Controls.Add(Me.trpmLAIN)
         Me.Nota1.Controls.Add(Me.trpmNPPN)
         Me.Nota1.Controls.Add(Me.trpmAPPN)
+        Me.Nota1.Controls.Add(Me.trpmLAIN)
         Me.Nota1.Controls.Add(Me.trpmNDISK3)
         Me.Nota1.Controls.Add(Me.trpmADISK3)
         Me.Nota1.Controls.Add(Me.trpmNDISK2)
         Me.Nota1.Controls.Add(Me.trpmADISK2)
         Me.Nota1.Controls.Add(Me.trpmNDISK1)
         Me.Nota1.Controls.Add(Me.trpmADISK1)
-        Me.Nota1.Controls.Add(Me.trpmALAMAT)
-        Me.Nota1.Controls.Add(Me.trpmKDSUP)
-        Me.Nota1.Controls.Add(Me.trpmKET)
-        Me.Nota1.Controls.Add(Me.trpmNMSUP)
-        Me.Nota1.Controls.Add(Me.trpmNOFAKTUR)
+        Me.Nota1.Controls.Add(Me.trpmSUBTOTAL)
         Me.Nota1.Controls.Add(Me.Label14)
         Me.Nota1.Controls.Add(Me.Label13)
         Me.Nota1.Controls.Add(Me.Label9)
@@ -181,6 +189,17 @@ Partial Class FReturPembelian
         Me.Nota1.Controls.Add(Me.Label12)
         Me.Nota1.Controls.Add(Me.Label10)
         Me.Nota1.Controls.Add(Me.Label11)
+        Me.Nota1.Controls.Add(Me.Label17)
+        Me.Nota1.Controls.Add(Me.Label18)
+        Me.Nota1.Controls.Add(Me.Label19)
+        Me.Nota1.Controls.Add(Me.Label20)
+        Me.Nota1.Controls.Add(Me.trpmNONOTA)
+        Me.Nota1.Controls.Add(Me.Label16)
+        Me.Nota1.Controls.Add(Me.trpmALAMAT)
+        Me.Nota1.Controls.Add(Me.trpmKDSUP)
+        Me.Nota1.Controls.Add(Me.trpmKET)
+        Me.Nota1.Controls.Add(Me.trpmNMSUP)
+        Me.Nota1.Controls.Add(Me.trpmNOFAKTUR)
         Me.Nota1.Controls.Add(Me.grRPEMBELIAN)
         Me.Nota1.Controls.Add(Me.btnADDITEM)
         Me.Nota1.Controls.Add(Me.trpmTEMPO)
@@ -216,94 +235,6 @@ Partial Class FReturPembelian
         Me.Label16.Size = New System.Drawing.Size(52, 15)
         Me.Label16.TabIndex = 47
         Me.Label16.Text = "No Nota"
-        '
-        'trpmTOTAL
-        '
-        Me.trpmTOTAL.Location = New System.Drawing.Point(860, 498)
-        Me.trpmTOTAL.Name = "trpmTOTAL"
-        Me.trpmTOTAL.Size = New System.Drawing.Size(190, 20)
-        Me.trpmTOTAL.TabIndex = 20
-        Me.trpmTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmSUBTOTAL
-        '
-        Me.trpmSUBTOTAL.Location = New System.Drawing.Point(860, 360)
-        Me.trpmSUBTOTAL.Name = "trpmSUBTOTAL"
-        Me.trpmSUBTOTAL.Size = New System.Drawing.Size(190, 20)
-        Me.trpmSUBTOTAL.TabIndex = 9
-        Me.trpmSUBTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmLAIN
-        '
-        Me.trpmLAIN.Location = New System.Drawing.Point(860, 452)
-        Me.trpmLAIN.Name = "trpmLAIN"
-        Me.trpmLAIN.Size = New System.Drawing.Size(190, 20)
-        Me.trpmLAIN.TabIndex = 16
-        Me.trpmLAIN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmNPPN
-        '
-        Me.trpmNPPN.Location = New System.Drawing.Point(912, 475)
-        Me.trpmNPPN.Name = "trpmNPPN"
-        Me.trpmNPPN.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNPPN.TabIndex = 19
-        Me.trpmNPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmAPPN
-        '
-        Me.trpmAPPN.Location = New System.Drawing.Point(860, 475)
-        Me.trpmAPPN.Name = "trpmAPPN"
-        Me.trpmAPPN.Size = New System.Drawing.Size(50, 20)
-        Me.trpmAPPN.TabIndex = 18
-        Me.trpmAPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmNDISK3
-        '
-        Me.trpmNDISK3.Location = New System.Drawing.Point(912, 429)
-        Me.trpmNDISK3.Name = "trpmNDISK3"
-        Me.trpmNDISK3.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNDISK3.TabIndex = 15
-        Me.trpmNDISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmADISK3
-        '
-        Me.trpmADISK3.Location = New System.Drawing.Point(860, 429)
-        Me.trpmADISK3.Name = "trpmADISK3"
-        Me.trpmADISK3.Size = New System.Drawing.Size(50, 20)
-        Me.trpmADISK3.TabIndex = 14
-        Me.trpmADISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmNDISK2
-        '
-        Me.trpmNDISK2.Location = New System.Drawing.Point(912, 406)
-        Me.trpmNDISK2.Name = "trpmNDISK2"
-        Me.trpmNDISK2.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNDISK2.TabIndex = 13
-        Me.trpmNDISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmADISK2
-        '
-        Me.trpmADISK2.Location = New System.Drawing.Point(860, 406)
-        Me.trpmADISK2.Name = "trpmADISK2"
-        Me.trpmADISK2.Size = New System.Drawing.Size(50, 20)
-        Me.trpmADISK2.TabIndex = 12
-        Me.trpmADISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmNDISK1
-        '
-        Me.trpmNDISK1.Location = New System.Drawing.Point(912, 383)
-        Me.trpmNDISK1.Name = "trpmNDISK1"
-        Me.trpmNDISK1.Size = New System.Drawing.Size(138, 20)
-        Me.trpmNDISK1.TabIndex = 11
-        Me.trpmNDISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'trpmADISK1
-        '
-        Me.trpmADISK1.Location = New System.Drawing.Point(860, 383)
-        Me.trpmADISK1.Name = "trpmADISK1"
-        Me.trpmADISK1.Size = New System.Drawing.Size(50, 20)
-        Me.trpmADISK1.TabIndex = 10
-        Me.trpmADISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'trpmALAMAT
         '
@@ -344,76 +275,6 @@ Partial Class FReturPembelian
         Me.trpmNOFAKTUR.Name = "trpmNOFAKTUR"
         Me.trpmNOFAKTUR.Size = New System.Drawing.Size(138, 20)
         Me.trpmNOFAKTUR.TabIndex = 1
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(796, 501)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(34, 15)
-        Me.Label14.TabIndex = 44
-        Me.Label14.Text = "Total"
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(796, 361)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(52, 15)
-        Me.Label13.TabIndex = 42
-        Me.Label13.Text = "Subtotal"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(796, 455)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(59, 15)
-        Me.Label9.TabIndex = 39
-        Me.Label9.Text = "Lain-Lain"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(796, 476)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(32, 15)
-        Me.Label8.TabIndex = 36
-        Me.Label8.Text = "PPN"
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(796, 432)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(55, 15)
-        Me.Label12.TabIndex = 33
-        Me.Label12.Text = "Diskon 3"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(796, 409)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(55, 15)
-        Me.Label10.TabIndex = 30
-        Me.Label10.Text = "Diskon 2"
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(796, 386)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(55, 15)
-        Me.Label11.TabIndex = 25
-        Me.Label11.Text = "Diskon 1"
         '
         'grRPEMBELIAN
         '
@@ -590,6 +451,233 @@ Partial Class FReturPembelian
         Me.btnTAMBAH.Text = "Tambah"
         Me.btnTAMBAH.UseVisualStyleBackColor = True
         '
+        'trpmTOTAL
+        '
+        Me.trpmTOTAL.DecimalPlaces = 2
+        Me.trpmTOTAL.Location = New System.Drawing.Point(808, 498)
+        Me.trpmTOTAL.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
+        Me.trpmTOTAL.Name = "trpmTOTAL"
+        Me.trpmTOTAL.Size = New System.Drawing.Size(243, 20)
+        Me.trpmTOTAL.TabIndex = 81
+        Me.trpmTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmTOTAL.ThousandsSeparator = True
+        '
+        'trpmNPPN
+        '
+        Me.trpmNPPN.DecimalPlaces = 2
+        Me.trpmNPPN.Location = New System.Drawing.Point(912, 475)
+        Me.trpmNPPN.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
+        Me.trpmNPPN.Name = "trpmNPPN"
+        Me.trpmNPPN.Size = New System.Drawing.Size(139, 20)
+        Me.trpmNPPN.TabIndex = 80
+        Me.trpmNPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmNPPN.ThousandsSeparator = True
+        '
+        'trpmAPPN
+        '
+        Me.trpmAPPN.DecimalPlaces = 2
+        Me.trpmAPPN.Location = New System.Drawing.Point(808, 475)
+        Me.trpmAPPN.Name = "trpmAPPN"
+        Me.trpmAPPN.Size = New System.Drawing.Size(73, 20)
+        Me.trpmAPPN.TabIndex = 79
+        Me.trpmAPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmAPPN.ThousandsSeparator = True
+        '
+        'trpmLAIN
+        '
+        Me.trpmLAIN.DecimalPlaces = 2
+        Me.trpmLAIN.Location = New System.Drawing.Point(808, 452)
+        Me.trpmLAIN.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
+        Me.trpmLAIN.Name = "trpmLAIN"
+        Me.trpmLAIN.Size = New System.Drawing.Size(243, 20)
+        Me.trpmLAIN.TabIndex = 78
+        Me.trpmLAIN.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmLAIN.ThousandsSeparator = True
+        '
+        'trpmNDISK3
+        '
+        Me.trpmNDISK3.DecimalPlaces = 2
+        Me.trpmNDISK3.Location = New System.Drawing.Point(912, 429)
+        Me.trpmNDISK3.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
+        Me.trpmNDISK3.Name = "trpmNDISK3"
+        Me.trpmNDISK3.Size = New System.Drawing.Size(139, 20)
+        Me.trpmNDISK3.TabIndex = 77
+        Me.trpmNDISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmNDISK3.ThousandsSeparator = True
+        '
+        'trpmADISK3
+        '
+        Me.trpmADISK3.DecimalPlaces = 2
+        Me.trpmADISK3.Location = New System.Drawing.Point(808, 429)
+        Me.trpmADISK3.Name = "trpmADISK3"
+        Me.trpmADISK3.Size = New System.Drawing.Size(73, 20)
+        Me.trpmADISK3.TabIndex = 76
+        Me.trpmADISK3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmADISK3.ThousandsSeparator = True
+        '
+        'trpmNDISK2
+        '
+        Me.trpmNDISK2.DecimalPlaces = 2
+        Me.trpmNDISK2.Location = New System.Drawing.Point(912, 406)
+        Me.trpmNDISK2.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
+        Me.trpmNDISK2.Name = "trpmNDISK2"
+        Me.trpmNDISK2.Size = New System.Drawing.Size(139, 20)
+        Me.trpmNDISK2.TabIndex = 75
+        Me.trpmNDISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmNDISK2.ThousandsSeparator = True
+        '
+        'trpmADISK2
+        '
+        Me.trpmADISK2.DecimalPlaces = 2
+        Me.trpmADISK2.Location = New System.Drawing.Point(808, 406)
+        Me.trpmADISK2.Name = "trpmADISK2"
+        Me.trpmADISK2.Size = New System.Drawing.Size(73, 20)
+        Me.trpmADISK2.TabIndex = 74
+        Me.trpmADISK2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmADISK2.ThousandsSeparator = True
+        '
+        'trpmNDISK1
+        '
+        Me.trpmNDISK1.DecimalPlaces = 2
+        Me.trpmNDISK1.Location = New System.Drawing.Point(912, 383)
+        Me.trpmNDISK1.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
+        Me.trpmNDISK1.Name = "trpmNDISK1"
+        Me.trpmNDISK1.Size = New System.Drawing.Size(139, 20)
+        Me.trpmNDISK1.TabIndex = 73
+        Me.trpmNDISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmNDISK1.ThousandsSeparator = True
+        '
+        'trpmADISK1
+        '
+        Me.trpmADISK1.DecimalPlaces = 2
+        Me.trpmADISK1.Location = New System.Drawing.Point(808, 383)
+        Me.trpmADISK1.Name = "trpmADISK1"
+        Me.trpmADISK1.Size = New System.Drawing.Size(73, 20)
+        Me.trpmADISK1.TabIndex = 72
+        Me.trpmADISK1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmADISK1.ThousandsSeparator = True
+        '
+        'trpmSUBTOTAL
+        '
+        Me.trpmSUBTOTAL.DecimalPlaces = 2
+        Me.trpmSUBTOTAL.Location = New System.Drawing.Point(808, 360)
+        Me.trpmSUBTOTAL.Maximum = New Decimal(New Integer() {99999999, 0, 0, 0})
+        Me.trpmSUBTOTAL.Name = "trpmSUBTOTAL"
+        Me.trpmSUBTOTAL.Size = New System.Drawing.Size(243, 20)
+        Me.trpmSUBTOTAL.TabIndex = 71
+        Me.trpmSUBTOTAL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.trpmSUBTOTAL.ThousandsSeparator = True
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(745, 500)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(34, 15)
+        Me.Label14.TabIndex = 66
+        Me.Label14.Text = "Total"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(745, 361)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(52, 15)
+        Me.Label13.TabIndex = 65
+        Me.Label13.Text = "Subtotal"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(745, 455)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(59, 15)
+        Me.Label9.TabIndex = 64
+        Me.Label9.Text = "Lain-Lain"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(745, 478)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(32, 15)
+        Me.Label8.TabIndex = 63
+        Me.Label8.Text = "PPN"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(745, 432)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(55, 15)
+        Me.Label12.TabIndex = 62
+        Me.Label12.Text = "Diskon 3"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(745, 409)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(55, 15)
+        Me.Label10.TabIndex = 61
+        Me.Label10.Text = "Diskon 2"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(745, 386)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(55, 15)
+        Me.Label11.TabIndex = 60
+        Me.Label11.Text = "Diskon 1"
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.Location = New System.Drawing.Point(883, 386)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(18, 15)
+        Me.Label17.TabIndex = 67
+        Me.Label17.Text = "%"
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.Location = New System.Drawing.Point(883, 409)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(18, 15)
+        Me.Label18.TabIndex = 68
+        Me.Label18.Text = "%"
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label19.Location = New System.Drawing.Point(883, 432)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(18, 15)
+        Me.Label19.TabIndex = 69
+        Me.Label19.Text = "%"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.Location = New System.Drawing.Point(883, 478)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(18, 15)
+        Me.Label20.TabIndex = 70
+        Me.Label20.Text = "%"
+        '
         'FReturPembelian
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -619,6 +707,17 @@ Partial Class FReturPembelian
         Me.Nota1.ResumeLayout(False)
         Me.Nota1.PerformLayout()
         CType(Me.grRPEMBELIAN, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmTOTAL, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmNPPN, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmAPPN, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmLAIN, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmNDISK3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmADISK3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmNDISK2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmADISK2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmNDISK1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmADISK1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.trpmSUBTOTAL, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -632,29 +731,11 @@ Partial Class FReturPembelian
     Friend WithEvents brpmTabAdd As System.Windows.Forms.Button
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents Nota1 As System.Windows.Forms.TabPage
-    Friend WithEvents trpmTOTAL As System.Windows.Forms.TextBox
-    Friend WithEvents trpmSUBTOTAL As System.Windows.Forms.TextBox
-    Friend WithEvents trpmLAIN As System.Windows.Forms.TextBox
-    Friend WithEvents trpmNPPN As System.Windows.Forms.TextBox
-    Friend WithEvents trpmAPPN As System.Windows.Forms.TextBox
-    Friend WithEvents trpmNDISK3 As System.Windows.Forms.TextBox
-    Friend WithEvents trpmADISK3 As System.Windows.Forms.TextBox
-    Friend WithEvents trpmNDISK2 As System.Windows.Forms.TextBox
-    Friend WithEvents trpmADISK2 As System.Windows.Forms.TextBox
-    Friend WithEvents trpmNDISK1 As System.Windows.Forms.TextBox
-    Friend WithEvents trpmADISK1 As System.Windows.Forms.TextBox
     Friend WithEvents trpmALAMAT As System.Windows.Forms.TextBox
     Friend WithEvents trpmKDSUP As System.Windows.Forms.TextBox
     Friend WithEvents trpmKET As System.Windows.Forms.TextBox
     Friend WithEvents trpmNMSUP As System.Windows.Forms.TextBox
     Friend WithEvents trpmNOFAKTUR As System.Windows.Forms.TextBox
-    Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents Label13 As System.Windows.Forms.Label
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents Label10 As System.Windows.Forms.Label
-    Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents grRPEMBELIAN As System.Windows.Forms.DataGridView
     Friend WithEvents btnADDITEM As System.Windows.Forms.Button
     Friend WithEvents trpmTEMPO As System.Windows.Forms.DateTimePicker
@@ -676,4 +757,26 @@ Partial Class FReturPembelian
     Friend WithEvents btnTAMBAH As System.Windows.Forms.Button
     Friend WithEvents trpmNONOTA As System.Windows.Forms.TextBox
     Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents trpmTOTAL As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmNPPN As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmAPPN As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmLAIN As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmNDISK3 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmADISK3 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmNDISK2 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmADISK2 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmNDISK1 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmADISK1 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents trpmSUBTOTAL As System.Windows.Forms.NumericUpDown
+    Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents Label18 As System.Windows.Forms.Label
+    Friend WithEvents Label19 As System.Windows.Forms.Label
+    Friend WithEvents Label20 As System.Windows.Forms.Label
 End Class

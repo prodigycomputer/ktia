@@ -239,6 +239,7 @@ Partial Class FKustomer
         Me.txtKDHARGA.Name = "txtKDHARGA"
         Me.txtKDHARGA.Size = New System.Drawing.Size(84, 20)
         Me.txtKDHARGA.TabIndex = 4
+        Me.txtKDHARGA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label4
         '
@@ -308,9 +309,9 @@ Partial Class FKustomer
         '
         Me.tSNMKUST.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.tSNMKUST.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.tSNMKUST.Location = New System.Drawing.Point(132, 10)
+        Me.tSNMKUST.Location = New System.Drawing.Point(146, 10)
         Me.tSNMKUST.Name = "tSNMKUST"
-        Me.tSNMKUST.Size = New System.Drawing.Size(372, 23)
+        Me.tSNMKUST.Size = New System.Drawing.Size(358, 23)
         Me.tSNMKUST.TabIndex = 1
         '
         'tSKDKUST
@@ -319,7 +320,7 @@ Partial Class FKustomer
         Me.tSKDKUST.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSKDKUST.Location = New System.Drawing.Point(9, 10)
         Me.tSKDKUST.Name = "tSKDKUST"
-        Me.tSKDKUST.Size = New System.Drawing.Size(117, 23)
+        Me.tSKDKUST.Size = New System.Drawing.Size(131, 23)
         Me.tSKDKUST.TabIndex = 0
         '
         'btnBATAL
@@ -382,6 +383,7 @@ Partial Class FKustomer
         Me.Controls.Add(Me.btnSIMPAN)
         Me.Controls.Add(Me.btnTAMBAH)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "FKustomer"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FKustomer"

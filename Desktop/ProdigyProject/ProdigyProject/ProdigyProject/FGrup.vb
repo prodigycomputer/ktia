@@ -12,6 +12,7 @@ Public Class FGrup
 
     Private Sub FGrup_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
+        AngkaHelper.AktifkanEnterPindah(Me)
         BukaKoneksi()
         DisabledLoad()
 
@@ -321,8 +322,8 @@ Public Class FGrup
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
         Dim f As New ItDtGrup()
 
-        Dim kodeGP As String = tSKDGRUP.Text.Trim()
-        Dim namaGP As String = tSNMGRUP.Text.Trim()
+        Dim kodeGP As String = ModPlaceholder.GetRealText(tSKDGRUP)
+        Dim namaGP As String = ModPlaceholder.GetRealText(tSNMGRUP)
 
         ' Load data sesuai filter
         f.Owner = Me
@@ -339,5 +340,25 @@ Public Class FGrup
         isUserTypingSearch = False
         tSKDGRUP.Enabled = True
         tSNMGRUP.Enabled = True
+    End Sub
+
+    Private Sub FGrup_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
+
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
     End Sub
 End Class

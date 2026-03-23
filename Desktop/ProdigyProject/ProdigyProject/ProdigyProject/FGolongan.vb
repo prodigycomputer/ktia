@@ -12,6 +12,7 @@ Public Class FGolongan
 
     Private Sub FGolongan_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
+        AngkaHelper.AktifkanEnterPindah(Me)
         BukaKoneksi()
         DisabledLoad()
 
@@ -322,8 +323,8 @@ Public Class FGolongan
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
         Dim f As New ItDtGolongan()
 
-        Dim kodeGO As String = tSKDGOL.Text.Trim()
-        Dim namaGO As String = tSNMGOL.Text.Trim()
+        Dim kodeGO As String = ModPlaceholder.GetRealText(tSKDGOL)
+        Dim namaGO As String = ModPlaceholder.GetRealText(tSNMGOL)
 
         ' Load data sesuai filter
         f.Owner = Me
@@ -340,5 +341,25 @@ Public Class FGolongan
         isUserTypingSearch = False
         tSKDGOL.Enabled = True
         tSNMGOL.Enabled = True
+    End Sub
+
+    Private Sub FGolongan_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
+
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
     End Sub
 End Class

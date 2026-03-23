@@ -59,16 +59,27 @@ Public Class ItDtArea
         SetupGridDArea(dgitmAREA)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmAREA.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmAREA.CurrentRow.Cells("kodear").Value.ToString()
+
+        Dim parentForm As FArea = TryCast(Me.Owner, FArea)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmAREA_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmAREA.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmAREA.Rows(e.RowIndex).Cells("kodear").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FArea = TryCast(Me.Owner, FArea)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmAREA_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmAREA.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

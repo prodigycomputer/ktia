@@ -76,6 +76,7 @@ Partial Class FDtHarga
         Me.Controls.Add(Me.btnPTUTUP)
         Me.Controls.Add(Me.btnPSIMPAN)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "FDtHarga"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FDtHarga"

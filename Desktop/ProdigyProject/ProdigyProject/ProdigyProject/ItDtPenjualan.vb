@@ -95,16 +95,27 @@ Public Class ItDtPenjualan
         SetupGridJual(dgitmPENJUALAN)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmPENJUALAN.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmPENJUALAN.CurrentRow.Cells("nonota").Value.ToString()
+
+        Dim parentForm As FPenjualan = TryCast(Me.Owner, FPenjualan)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadNota(data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmPENJUALAN_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmPENJUALAN.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim nonota As String = dgitmPENJUALAN.Rows(e.RowIndex).Cells("nonota").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FPenjualan = TryCast(Me.Owner, FPenjualan)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadNota(nonota)
-            End If
-
-            Me.Close()
+    Private Sub dgitmPENJUALAN_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmPENJUALAN.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

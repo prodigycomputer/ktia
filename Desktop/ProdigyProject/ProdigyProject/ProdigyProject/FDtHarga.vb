@@ -1,9 +1,11 @@
 ﻿Imports System.Data.Odbc
+Imports System.Globalization
 
 Public Class FDtHarga
     Public Property KodeBarang As String
     Public Property Isi1 As Integer
     Public Property Isi2 As Integer
+    Private koma As CultureInfo = New CultureInfo("en-US")
 
     Private Sub FDtHarga_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -64,7 +66,7 @@ Public Class FDtHarga
 
     Private Sub TextBoxAngka_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs)
         ' Izinkan angka 0–9 dan Backspace
-        If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then
+        If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ","c AndAlso e.KeyChar <> "."c Then
             e.Handled = True
         End If
     End Sub
@@ -119,7 +121,16 @@ Public Class FDtHarga
                     Dim ctl = Me.Controls.Find("txt" & col.ToUpper(), True).FirstOrDefault()
                     If ctl IsNot Nothing AndAlso TypeOf ctl Is TextBox Then
                         Dim nilai = Rd(col)
-                        CType(ctl, TextBox).Text = If(IsDBNull(nilai), "", nilai.ToString())
+                        If Not IsDBNull(nilai) Then
+                            Dim angka As Double
+                            If Double.TryParse(nilai.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, angka) Then
+                                CType(ctl, TextBox).Text = angka.ToString("N2", koma)
+                            Else
+                                CType(ctl, TextBox).Text = 0D.ToString("N2", koma)
+                            End If
+                        Else
+                            CType(ctl, TextBox).Text = "0,00"
+                        End If
                     End If
                 Next
             End If
@@ -128,6 +139,17 @@ Public Class FDtHarga
         Catch ex As Exception
             MessageBox.Show("Gagal memuat data harga: " & ex.Message)
         End Try
+    End Sub
+    Private Sub FormatRibuanDesimal(ByVal txt As TextBox)
+
+        If txt.Text.Trim = "" Then Exit Sub
+
+        Dim angka As Double
+
+        If Double.TryParse(txt.Text, NumberStyles.Any, koma, angka) Then
+            txt.Text = angka.ToString("N2", koma)
+        End If
+
     End Sub
 
     ' === Sub bantu untuk tampilan vertikal ===
@@ -147,15 +169,22 @@ Public Class FDtHarga
             txt.Left = startX + 60
             txt.Top = startY + (i * spacingY) - 3
             txt.Width = 90
+            txt.TextAlign = HorizontalAlignment.Right
 
             ' === PASANG KEY PRESS ANGKA ===
             AddHandler txt.KeyPress, AddressOf TextBoxAngka_KeyPress
+            AddHandler txt.Leave, AddressOf TextBoxAngka_Leave
 
             Me.Controls.Add(lbl)
             Me.Controls.Add(txt)
 
             i += 1
         Next
+    End Sub
+
+    Private Sub TextBoxAngka_Leave(ByVal sender As Object, ByVal e As EventArgs)
+        Dim txt As TextBox = CType(sender, TextBox)
+        FormatRibuanDesimal(txt)
     End Sub
 
     Private Sub btnPTUTUP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPTUTUP.Click
@@ -165,93 +194,121 @@ Public Class FDtHarga
     Private Sub btnPSIMPAN_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPSIMPAN.Click
         Try
             If String.IsNullOrEmpty(KodeBarang) Then
-                MessageBox.Show("Kode barang belum diatur!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBox.Show("Kode barang belum diatur!")
                 Exit Sub
             End If
 
             BukaKoneksi()
 
-            ' === Ambil semua kolom harga di tabel ===
-            Cmd = New OdbcCommand("SHOW COLUMNS FROM zstok", Conn)
-            Rd = Cmd.ExecuteReader()
-            Dim hargaList As New List(Of String)
-            While Rd.Read()
-                Dim colName As String = Rd("Field").ToString()
-                If colName.ToLower().StartsWith("harga") Then
-                    hargaList.Add(colName)
-                End If
-            End While
-            Rd.Close()
+            ' === Ambil semua textbox harga yang ADA di form saja ===
+            Dim hargaControls = Me.Controls.
+                OfType(Of TextBox)().
+                Where(Function(t) t.Name.StartsWith("txtHARGA", StringComparison.OrdinalIgnoreCase)).
+                OrderBy(Function(t) t.Name).
+                ToList()
 
-            ' === Cek apakah kode barang sudah ada ===
-            Cmd = New OdbcCommand("SELECT COUNT(*) FROM zstok WHERE kodebrg = ?", Conn)
-            Cmd.Parameters.AddWithValue("@kodebrg", KodeBarang)
-            Dim ada As Integer = Convert.ToInt32(Cmd.ExecuteScalar())
+            If hargaControls.Count = 0 Then
+                MessageBox.Show("Tidak ada kolom harga ditemukan!")
+                Exit Sub
+            End If
 
-            ' === Siapkan nilai harga dari form ===
-            Dim nilaiHarga As New Dictionary(Of String, String)
-            For Each col As String In hargaList
-                Dim ctl = Me.Controls.Find("txt" & col.ToUpper(), True).FirstOrDefault()
-                If ctl IsNot Nothing AndAlso TypeOf ctl Is TextBox Then
-                    Dim isi = CType(ctl, TextBox).Text.Trim()
-                    nilaiHarga(col) = If(isi = "", "0", isi)
-                End If
-            Next
+            ' === Cek apakah data sudah ada ===
+            Dim cekCmd As New OdbcCommand("SELECT COUNT(*) FROM zstok WHERE kodebrg = ?", Conn)
+            cekCmd.Parameters.AddWithValue("", KodeBarang)
+            Dim ada As Integer = Convert.ToInt32(cekCmd.ExecuteScalar())
 
-            ' === Jika sudah ada, update ===
             If ada > 0 Then
-                Dim updateSql As String = "UPDATE zstok SET "
-                Dim updateParts As New List(Of String)
+                ' =========================
+                ' UPDATE
+                ' =========================
+                Dim sql As String = "UPDATE zstok SET "
 
-                For Each kvp In nilaiHarga
-                    updateParts.Add(kvp.Key & " = ?")
+                Dim setParts As New List(Of String)
+                For Each txt In hargaControls
+                    Dim namaKolom As String = txt.Name.Substring(3).ToLower()
+                    setParts.Add(namaKolom & " = ?")
                 Next
 
-                updateSql &= String.Join(", ", updateParts) & " WHERE kodebrg = ?"
+                sql &= String.Join(", ", setParts)
+                sql &= " WHERE kodebrg = ?"
 
-                Cmd = New OdbcCommand(updateSql, Conn)
+                Dim cmd As New OdbcCommand(sql, Conn)
 
-                ' Tambahkan semua nilai harga
-                For Each kvp In nilaiHarga
-                    Cmd.Parameters.AddWithValue("@" & kvp.Key, kvp.Value)
+                ' === isi parameter sesuai URUTAN ? ===
+                For Each txt In hargaControls
+                    Dim angka As Double = 0
+                    Double.TryParse(txt.Text, NumberStyles.Any, koma, angka)
+                    cmd.Parameters.AddWithValue("", angka)
                 Next
 
-                ' Parameter terakhir untuk kode barang
-                Cmd.Parameters.AddWithValue("@kodebrg", KodeBarang)
+                ' parameter terakhir untuk WHERE
+                cmd.Parameters.AddWithValue("", KodeBarang)
 
-                Cmd.ExecuteNonQuery()
-                MessageBox.Show("Data harga berhasil diperbarui!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Dim rows = cmd.ExecuteNonQuery()
+
+                If rows > 0 Then
+                    MessageBox.Show("Data harga berhasil diupdate!")
+                Else
+                    MessageBox.Show("Data tidak berubah atau kode tidak ditemukan!")
+                End If
 
             Else
-                ' === Jika belum ada, insert ===
-                Dim semuaKolom As New List(Of String)
-                semuaKolom.Add("kodebrg")
-                semuaKolom.AddRange(nilaiHarga.Keys)
+                ' =========================
+                ' INSERT
+                ' =========================
+                Dim kolomList As New List(Of String)
+                kolomList.Add("kodebrg")
 
-                Dim kolomSql As String = String.Join(",", semuaKolom)
-                Dim paramSql As String = String.Join(",", Enumerable.Repeat("?", semuaKolom.Count))
-
-                Dim insertSql As String = "INSERT INTO zstok (" & kolomSql & ") VALUES (" & paramSql & ")"
-                Cmd = New OdbcCommand(insertSql, Conn)
-
-                ' Tambahkan kodebrg dulu
-                Cmd.Parameters.AddWithValue("@kodebrg", KodeBarang)
-
-                ' Tambahkan semua nilai harga
-                For Each kvp In nilaiHarga
-                    Cmd.Parameters.AddWithValue("@" & kvp.Key, kvp.Value)
+                For Each txt In hargaControls
+                    kolomList.Add(txt.Name.Substring(3).ToLower())
                 Next
 
-                Cmd.ExecuteNonQuery()
-                MessageBox.Show("Data harga baru berhasil ditambahkan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Dim sql As String =
+                    "INSERT INTO zstok (" &
+                    String.Join(",", kolomList) &
+                    ") VALUES (" &
+                    String.Join(",", Enumerable.Repeat("?", kolomList.Count)) &
+                    ")"
+
+                Dim cmd As New OdbcCommand(sql, Conn)
+
+                ' urutan parameter HARUS sama
+                cmd.Parameters.AddWithValue("", KodeBarang)
+
+                For Each txt In hargaControls
+                    Dim angka As Double = 0
+                    Double.TryParse(txt.Text, NumberStyles.Any, koma, angka)
+                    cmd.Parameters.AddWithValue("", angka)
+                Next
+
+                cmd.ExecuteNonQuery()
+                MessageBox.Show("Data harga berhasil ditambahkan!")
             End If
 
         Catch ex As Exception
-            MessageBox.Show("Gagal menyimpan data harga: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Gagal simpan: " & ex.Message)
         Finally
-            If Not Rd Is Nothing AndAlso Not Rd.IsClosed Then Rd.Close()
             If Conn.State = ConnectionState.Open Then Conn.Close()
         End Try
     End Sub
 
+    Private Sub FDtHarga_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
+
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
+    End Sub
 End Class

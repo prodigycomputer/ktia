@@ -173,6 +173,7 @@ Partial Class FArea
         Me.Controls.Add(Me.btnSIMPAN)
         Me.Controls.Add(Me.btnTAMBAH)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "FArea"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FArea"

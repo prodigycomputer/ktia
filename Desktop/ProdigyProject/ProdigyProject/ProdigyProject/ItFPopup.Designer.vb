@@ -30,32 +30,41 @@ Partial Class ItFPopup
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tPopSTOK = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.tPopJLH1 = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.tPopSTN1 = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.tPopSTN2 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.tPopJLH2 = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.tPopSTN3 = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.tPopJLH3 = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.tPopJUMLAH = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.tPopDISRP = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
-        Me.tPopDISCC = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.tPopDISCB = New System.Windows.Forms.TextBox()
         Me.Label14 = New System.Windows.Forms.Label()
-        Me.tPopDISCA = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
-        Me.tPopHARGA = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.btnPopTUTUP = New System.Windows.Forms.Button()
         Me.btnPopTAMBAH = New System.Windows.Forms.Button()
+        Me.tPopJLH1 = New System.Windows.Forms.NumericUpDown()
+        Me.tPopJLH2 = New System.Windows.Forms.NumericUpDown()
+        Me.tPopJLH3 = New System.Windows.Forms.NumericUpDown()
+        Me.tPopHARGA = New System.Windows.Forms.NumericUpDown()
+        Me.tPopDISCA = New System.Windows.Forms.NumericUpDown()
+        Me.tPopDISCB = New System.Windows.Forms.NumericUpDown()
+        Me.tPopDISCC = New System.Windows.Forms.NumericUpDown()
+        Me.tPopDISCRP = New System.Windows.Forms.NumericUpDown()
+        Me.tPopJUMLAH = New System.Windows.Forms.NumericUpDown()
+        CType(Me.tPopJLH1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tPopJLH2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tPopJLH3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tPopHARGA, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tPopDISCA, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tPopDISCB, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tPopDISCC, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tPopDISCRP, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tPopJUMLAH, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label13
@@ -75,7 +84,7 @@ Partial Class ItFPopup
         Me.cbPopGudang.Location = New System.Drawing.Point(113, 8)
         Me.cbPopGudang.Name = "cbPopGudang"
         Me.cbPopGudang.Size = New System.Drawing.Size(190, 21)
-        Me.cbPopGudang.TabIndex = 64
+        Me.cbPopGudang.TabIndex = 0
         '
         'tPopKDBARANG
         '
@@ -83,7 +92,7 @@ Partial Class ItFPopup
         Me.tPopKDBARANG.Location = New System.Drawing.Point(113, 32)
         Me.tPopKDBARANG.Name = "tPopKDBARANG"
         Me.tPopKDBARANG.Size = New System.Drawing.Size(190, 20)
-        Me.tPopKDBARANG.TabIndex = 66
+        Me.tPopKDBARANG.TabIndex = 1
         '
         'Label1
         '
@@ -101,7 +110,7 @@ Partial Class ItFPopup
         Me.tPopNMBARANG.Location = New System.Drawing.Point(113, 55)
         Me.tPopNMBARANG.Name = "tPopNMBARANG"
         Me.tPopNMBARANG.Size = New System.Drawing.Size(325, 20)
-        Me.tPopNMBARANG.TabIndex = 68
+        Me.tPopNMBARANG.TabIndex = 2
         '
         'Label2
         '
@@ -119,7 +128,7 @@ Partial Class ItFPopup
         Me.tPopSTOK.Location = New System.Drawing.Point(113, 78)
         Me.tPopSTOK.Name = "tPopSTOK"
         Me.tPopSTOK.Size = New System.Drawing.Size(275, 20)
-        Me.tPopSTOK.TabIndex = 70
+        Me.tPopSTOK.TabIndex = 3
         '
         'Label3
         '
@@ -130,15 +139,6 @@ Partial Class ItFPopup
         Me.Label3.Size = New System.Drawing.Size(31, 15)
         Me.Label3.TabIndex = 69
         Me.Label3.Text = "Stok"
-        '
-        'tPopJLH1
-        '
-        Me.tPopJLH1.Location = New System.Drawing.Point(113, 101)
-        Me.tPopJLH1.Name = "tPopJLH1"
-        Me.tPopJLH1.Size = New System.Drawing.Size(190, 20)
-        Me.tPopJLH1.TabIndex = 72
-        Me.tPopJLH1.Tag = "NUM"
-        Me.tPopJLH1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label4
         '
@@ -157,7 +157,7 @@ Partial Class ItFPopup
         Me.tPopSTN1.Location = New System.Drawing.Point(113, 124)
         Me.tPopSTN1.Name = "tPopSTN1"
         Me.tPopSTN1.Size = New System.Drawing.Size(190, 20)
-        Me.tPopSTN1.TabIndex = 74
+        Me.tPopSTN1.TabIndex = 5
         '
         'Label5
         '
@@ -176,7 +176,7 @@ Partial Class ItFPopup
         Me.tPopSTN2.Location = New System.Drawing.Point(113, 170)
         Me.tPopSTN2.Name = "tPopSTN2"
         Me.tPopSTN2.Size = New System.Drawing.Size(190, 20)
-        Me.tPopSTN2.TabIndex = 78
+        Me.tPopSTN2.TabIndex = 7
         '
         'Label6
         '
@@ -187,15 +187,6 @@ Partial Class ItFPopup
         Me.Label6.Size = New System.Drawing.Size(56, 15)
         Me.Label6.TabIndex = 77
         Me.Label6.Text = "Satuan 2"
-        '
-        'tPopJLH2
-        '
-        Me.tPopJLH2.Enabled = False
-        Me.tPopJLH2.Location = New System.Drawing.Point(113, 147)
-        Me.tPopJLH2.Name = "tPopJLH2"
-        Me.tPopJLH2.Size = New System.Drawing.Size(190, 20)
-        Me.tPopJLH2.TabIndex = 76
-        Me.tPopJLH2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label7
         '
@@ -214,7 +205,7 @@ Partial Class ItFPopup
         Me.tPopSTN3.Location = New System.Drawing.Point(113, 216)
         Me.tPopSTN3.Name = "tPopSTN3"
         Me.tPopSTN3.Size = New System.Drawing.Size(190, 20)
-        Me.tPopSTN3.TabIndex = 82
+        Me.tPopSTN3.TabIndex = 9
         '
         'Label8
         '
@@ -226,15 +217,6 @@ Partial Class ItFPopup
         Me.Label8.TabIndex = 81
         Me.Label8.Text = "Satuan 3"
         '
-        'tPopJLH3
-        '
-        Me.tPopJLH3.Enabled = False
-        Me.tPopJLH3.Location = New System.Drawing.Point(113, 193)
-        Me.tPopJLH3.Name = "tPopJLH3"
-        Me.tPopJLH3.Size = New System.Drawing.Size(190, 20)
-        Me.tPopJLH3.TabIndex = 80
-        Me.tPopJLH3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
         'Label9
         '
         Me.Label9.AutoSize = True
@@ -244,15 +226,6 @@ Partial Class ItFPopup
         Me.Label9.Size = New System.Drawing.Size(58, 15)
         Me.Label9.TabIndex = 79
         Me.Label9.Text = "Jumlah 3"
-        '
-        'tPopJUMLAH
-        '
-        Me.tPopJUMLAH.Location = New System.Drawing.Point(113, 354)
-        Me.tPopJUMLAH.Name = "tPopJUMLAH"
-        Me.tPopJUMLAH.ReadOnly = True
-        Me.tPopJUMLAH.Size = New System.Drawing.Size(325, 20)
-        Me.tPopJUMLAH.TabIndex = 94
-        Me.tPopJUMLAH.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label10
         '
@@ -264,14 +237,6 @@ Partial Class ItFPopup
         Me.Label10.TabIndex = 93
         Me.Label10.Text = "Jumlah"
         '
-        'tPopDISRP
-        '
-        Me.tPopDISRP.Location = New System.Drawing.Point(113, 331)
-        Me.tPopDISRP.Name = "tPopDISRP"
-        Me.tPopDISRP.Size = New System.Drawing.Size(231, 20)
-        Me.tPopDISRP.TabIndex = 92
-        Me.tPopDISRP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
         'Label11
         '
         Me.Label11.AutoSize = True
@@ -281,14 +246,6 @@ Partial Class ItFPopup
         Me.Label11.Size = New System.Drawing.Size(36, 15)
         Me.Label11.TabIndex = 91
         Me.Label11.Text = "Disrp"
-        '
-        'tPopDISCC
-        '
-        Me.tPopDISCC.Location = New System.Drawing.Point(113, 308)
-        Me.tPopDISCC.Name = "tPopDISCC"
-        Me.tPopDISCC.Size = New System.Drawing.Size(231, 20)
-        Me.tPopDISCC.TabIndex = 90
-        Me.tPopDISCC.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label12
         '
@@ -300,14 +257,6 @@ Partial Class ItFPopup
         Me.Label12.TabIndex = 89
         Me.Label12.Text = "Discc"
         '
-        'tPopDISCB
-        '
-        Me.tPopDISCB.Location = New System.Drawing.Point(113, 285)
-        Me.tPopDISCB.Name = "tPopDISCB"
-        Me.tPopDISCB.Size = New System.Drawing.Size(231, 20)
-        Me.tPopDISCB.TabIndex = 88
-        Me.tPopDISCB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
         'Label14
         '
         Me.Label14.AutoSize = True
@@ -318,14 +267,6 @@ Partial Class ItFPopup
         Me.Label14.TabIndex = 87
         Me.Label14.Text = "Discb"
         '
-        'tPopDISCA
-        '
-        Me.tPopDISCA.Location = New System.Drawing.Point(113, 262)
-        Me.tPopDISCA.Name = "tPopDISCA"
-        Me.tPopDISCA.Size = New System.Drawing.Size(231, 20)
-        Me.tPopDISCA.TabIndex = 86
-        Me.tPopDISCA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
         'Label15
         '
         Me.Label15.AutoSize = True
@@ -335,14 +276,6 @@ Partial Class ItFPopup
         Me.Label15.Size = New System.Drawing.Size(38, 15)
         Me.Label15.TabIndex = 85
         Me.Label15.Text = "Disca"
-        '
-        'tPopHARGA
-        '
-        Me.tPopHARGA.Location = New System.Drawing.Point(113, 239)
-        Me.tPopHARGA.Name = "tPopHARGA"
-        Me.tPopHARGA.Size = New System.Drawing.Size(325, 20)
-        Me.tPopHARGA.TabIndex = 84
-        Me.tPopHARGA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label16
         '
@@ -359,7 +292,7 @@ Partial Class ItFPopup
         Me.btnPopTUTUP.Location = New System.Drawing.Point(383, 380)
         Me.btnPopTUTUP.Name = "btnPopTUTUP"
         Me.btnPopTUTUP.Size = New System.Drawing.Size(55, 30)
-        Me.btnPopTUTUP.TabIndex = 96
+        Me.btnPopTUTUP.TabIndex = 17
         Me.btnPopTUTUP.Text = "Tutup"
         Me.btnPopTUTUP.UseVisualStyleBackColor = True
         '
@@ -368,9 +301,105 @@ Partial Class ItFPopup
         Me.btnPopTAMBAH.Location = New System.Drawing.Point(322, 380)
         Me.btnPopTAMBAH.Name = "btnPopTAMBAH"
         Me.btnPopTAMBAH.Size = New System.Drawing.Size(55, 30)
-        Me.btnPopTAMBAH.TabIndex = 95
+        Me.btnPopTAMBAH.TabIndex = 16
         Me.btnPopTAMBAH.Text = "Tambah"
         Me.btnPopTAMBAH.UseVisualStyleBackColor = True
+        '
+        'tPopJLH1
+        '
+        Me.tPopJLH1.DecimalPlaces = 2
+        Me.tPopJLH1.Location = New System.Drawing.Point(113, 101)
+        Me.tPopJLH1.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.tPopJLH1.Name = "tPopJLH1"
+        Me.tPopJLH1.Size = New System.Drawing.Size(190, 20)
+        Me.tPopJLH1.TabIndex = 4
+        Me.tPopJLH1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tPopJLH1.ThousandsSeparator = True
+        '
+        'tPopJLH2
+        '
+        Me.tPopJLH2.DecimalPlaces = 2
+        Me.tPopJLH2.Location = New System.Drawing.Point(113, 147)
+        Me.tPopJLH2.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.tPopJLH2.Name = "tPopJLH2"
+        Me.tPopJLH2.Size = New System.Drawing.Size(190, 20)
+        Me.tPopJLH2.TabIndex = 6
+        Me.tPopJLH2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tPopJLH2.ThousandsSeparator = True
+        '
+        'tPopJLH3
+        '
+        Me.tPopJLH3.DecimalPlaces = 2
+        Me.tPopJLH3.Location = New System.Drawing.Point(113, 193)
+        Me.tPopJLH3.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.tPopJLH3.Name = "tPopJLH3"
+        Me.tPopJLH3.Size = New System.Drawing.Size(190, 20)
+        Me.tPopJLH3.TabIndex = 8
+        Me.tPopJLH3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tPopJLH3.ThousandsSeparator = True
+        '
+        'tPopHARGA
+        '
+        Me.tPopHARGA.DecimalPlaces = 2
+        Me.tPopHARGA.Location = New System.Drawing.Point(113, 239)
+        Me.tPopHARGA.Maximum = New Decimal(New Integer() {999999999, 0, 0, 0})
+        Me.tPopHARGA.Name = "tPopHARGA"
+        Me.tPopHARGA.Size = New System.Drawing.Size(275, 20)
+        Me.tPopHARGA.TabIndex = 10
+        Me.tPopHARGA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tPopHARGA.ThousandsSeparator = True
+        '
+        'tPopDISCA
+        '
+        Me.tPopDISCA.DecimalPlaces = 2
+        Me.tPopDISCA.Location = New System.Drawing.Point(113, 262)
+        Me.tPopDISCA.Name = "tPopDISCA"
+        Me.tPopDISCA.Size = New System.Drawing.Size(190, 20)
+        Me.tPopDISCA.TabIndex = 11
+        Me.tPopDISCA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tPopDISCA.ThousandsSeparator = True
+        '
+        'tPopDISCB
+        '
+        Me.tPopDISCB.DecimalPlaces = 2
+        Me.tPopDISCB.Location = New System.Drawing.Point(113, 285)
+        Me.tPopDISCB.Name = "tPopDISCB"
+        Me.tPopDISCB.Size = New System.Drawing.Size(190, 20)
+        Me.tPopDISCB.TabIndex = 12
+        Me.tPopDISCB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tPopDISCB.ThousandsSeparator = True
+        '
+        'tPopDISCC
+        '
+        Me.tPopDISCC.DecimalPlaces = 2
+        Me.tPopDISCC.Location = New System.Drawing.Point(113, 309)
+        Me.tPopDISCC.Name = "tPopDISCC"
+        Me.tPopDISCC.Size = New System.Drawing.Size(190, 20)
+        Me.tPopDISCC.TabIndex = 13
+        Me.tPopDISCC.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tPopDISCC.ThousandsSeparator = True
+        '
+        'tPopDISCRP
+        '
+        Me.tPopDISCRP.DecimalPlaces = 2
+        Me.tPopDISCRP.Location = New System.Drawing.Point(113, 331)
+        Me.tPopDISCRP.Name = "tPopDISCRP"
+        Me.tPopDISCRP.Size = New System.Drawing.Size(190, 20)
+        Me.tPopDISCRP.TabIndex = 14
+        Me.tPopDISCRP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tPopDISCRP.ThousandsSeparator = True
+        '
+        'tPopJUMLAH
+        '
+        Me.tPopJUMLAH.DecimalPlaces = 2
+        Me.tPopJUMLAH.Enabled = False
+        Me.tPopJUMLAH.Location = New System.Drawing.Point(113, 354)
+        Me.tPopJUMLAH.Maximum = New Decimal(New Integer() {999999999, 0, 0, 0})
+        Me.tPopJUMLAH.Name = "tPopJUMLAH"
+        Me.tPopJUMLAH.Size = New System.Drawing.Size(275, 20)
+        Me.tPopJUMLAH.TabIndex = 15
+        Me.tPopJUMLAH.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.tPopJUMLAH.ThousandsSeparator = True
         '
         'ItFPopup
         '
@@ -378,31 +407,31 @@ Partial Class ItFPopup
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(450, 419)
         Me.ControlBox = False
+        Me.Controls.Add(Me.tPopJUMLAH)
+        Me.Controls.Add(Me.tPopDISCRP)
+        Me.Controls.Add(Me.tPopDISCC)
+        Me.Controls.Add(Me.tPopDISCB)
+        Me.Controls.Add(Me.tPopDISCA)
+        Me.Controls.Add(Me.tPopHARGA)
+        Me.Controls.Add(Me.tPopJLH3)
+        Me.Controls.Add(Me.tPopJLH2)
+        Me.Controls.Add(Me.tPopJLH1)
         Me.Controls.Add(Me.btnPopTUTUP)
         Me.Controls.Add(Me.btnPopTAMBAH)
-        Me.Controls.Add(Me.tPopJUMLAH)
         Me.Controls.Add(Me.Label10)
-        Me.Controls.Add(Me.tPopDISRP)
         Me.Controls.Add(Me.Label11)
-        Me.Controls.Add(Me.tPopDISCC)
         Me.Controls.Add(Me.Label12)
-        Me.Controls.Add(Me.tPopDISCB)
         Me.Controls.Add(Me.Label14)
-        Me.Controls.Add(Me.tPopDISCA)
         Me.Controls.Add(Me.Label15)
-        Me.Controls.Add(Me.tPopHARGA)
         Me.Controls.Add(Me.Label16)
         Me.Controls.Add(Me.tPopSTN3)
         Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.tPopJLH3)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.tPopSTN2)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.tPopJLH2)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.tPopSTN1)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.tPopJLH1)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.tPopSTOK)
         Me.Controls.Add(Me.Label3)
@@ -413,11 +442,21 @@ Partial Class ItFPopup
         Me.Controls.Add(Me.cbPopGudang)
         Me.Controls.Add(Me.Label13)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "ItFPopup"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "ItFPopup"
+        CType(Me.tPopJLH1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tPopJLH2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tPopJLH3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tPopHARGA, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tPopDISCA, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tPopDISCB, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tPopDISCC, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tPopDISCRP, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tPopJUMLAH, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -430,30 +469,30 @@ Partial Class ItFPopup
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents tPopSTOK As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents tPopJLH1 As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents tPopSTN1 As System.Windows.Forms.TextBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents tPopSTN2 As System.Windows.Forms.TextBox
     Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents tPopJLH2 As System.Windows.Forms.TextBox
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents tPopSTN3 As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents tPopJLH3 As System.Windows.Forms.TextBox
     Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents tPopJUMLAH As System.Windows.Forms.TextBox
     Friend WithEvents Label10 As System.Windows.Forms.Label
-    Friend WithEvents tPopDISRP As System.Windows.Forms.TextBox
     Friend WithEvents Label11 As System.Windows.Forms.Label
-    Friend WithEvents tPopDISCC As System.Windows.Forms.TextBox
     Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents tPopDISCB As System.Windows.Forms.TextBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents tPopDISCA As System.Windows.Forms.TextBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
-    Friend WithEvents tPopHARGA As System.Windows.Forms.TextBox
     Friend WithEvents Label16 As System.Windows.Forms.Label
     Friend WithEvents btnPopTUTUP As System.Windows.Forms.Button
     Friend WithEvents btnPopTAMBAH As System.Windows.Forms.Button
+    Friend WithEvents tPopJLH1 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tPopJLH2 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tPopJLH3 As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tPopHARGA As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tPopDISCA As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tPopDISCB As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tPopDISCC As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tPopDISCRP As System.Windows.Forms.NumericUpDown
+    Friend WithEvents tPopJUMLAH As System.Windows.Forms.NumericUpDown
 End Class

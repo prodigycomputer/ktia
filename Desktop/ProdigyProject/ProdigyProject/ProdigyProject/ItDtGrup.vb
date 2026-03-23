@@ -59,16 +59,27 @@ Public Class ItDtGrup
         SetupGridDGrup(dgitmGP)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmGP.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmGP.CurrentRow.Cells("kodegrup").Value.ToString()
+
+        Dim parentForm As FGrup = TryCast(Me.Owner, FGrup)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmGP_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmGP.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmGP.Rows(e.RowIndex).Cells("kodegrup").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FGrup = TryCast(Me.Owner, FGrup)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmGP_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmGP.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

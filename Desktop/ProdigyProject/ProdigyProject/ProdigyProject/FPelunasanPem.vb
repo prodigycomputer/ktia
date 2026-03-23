@@ -52,6 +52,7 @@ Public Class FPelunasanPem
 
     Private Sub FPelunasanPem_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetupGridPembayaran(dgBAYAR)
+        AngkaHelper.AktifkanEnterPindah(Me)
     End Sub
 
     Private Sub txtKDSUP_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txtKDSUP.KeyDown

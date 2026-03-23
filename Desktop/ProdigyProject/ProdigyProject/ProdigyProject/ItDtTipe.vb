@@ -59,16 +59,27 @@ Public Class ItDtTipe
         SetupGridDTipe(dgitmTIPE)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmTIPE.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmTIPE.CurrentRow.Cells("kodetipe").Value.ToString()
+
+        Dim parentForm As FTipe = TryCast(Me.Owner, FTipe)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmTIPE_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmTIPE.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmTIPE.Rows(e.RowIndex).Cells("kodetipe").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FTipe = TryCast(Me.Owner, FTipe)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmTIPE_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmTIPE.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

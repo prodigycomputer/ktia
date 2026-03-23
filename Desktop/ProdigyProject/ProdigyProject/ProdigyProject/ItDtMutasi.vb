@@ -91,16 +91,27 @@ Public Class ItDtMutasi
         SetupGridDMutasi(dgitmMUTASI)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmMUTASI.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmMUTASI.CurrentRow.Cells("nonota").Value.ToString()
+
+        Dim parentForm As FMutasi = TryCast(Me.Owner, FMutasi)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadNota(data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmMUTASI_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmMUTASI.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim nonota As String = dgitmMUTASI.Rows(e.RowIndex).Cells("nonota").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FMutasi = TryCast(Me.Owner, FMutasi)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadNota(nonota)
-            End If
-
-            Me.Close()
+    Private Sub dgitmMUTASI_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmMUTASI.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

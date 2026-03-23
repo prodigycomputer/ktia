@@ -28,5 +28,4 @@ Public Class FCetak
                             "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
 End Class

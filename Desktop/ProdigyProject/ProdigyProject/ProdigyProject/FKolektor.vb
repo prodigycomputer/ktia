@@ -12,6 +12,7 @@ Public Class FKolektor
 
     Private Sub FKolektor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
+        AngkaHelper.AktifkanEnterPindah(Me)
         BukaKoneksi()
         DisabledLoad()
 
@@ -354,8 +355,8 @@ Public Class FKolektor
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
         Dim f As New ItDtKolektor()
 
-        Dim kodekol As String = tSKDKOL.Text.Trim()
-        Dim namakol As String = tSNMKOL.Text.Trim()
+        Dim kodekol As String = ModPlaceholder.GetRealText(tSKDKOL)
+        Dim namakol As String = ModPlaceholder.GetRealText(tSNMKOL)
 
         ' Load data sesuai filter
         f.Owner = Me
@@ -367,10 +368,30 @@ Public Class FKolektor
         tSNMKOL.Clear()
 
         ModPlaceholder.SetPlaceholder(tSKDKOL, "KODE KOLEKTOR")
-        ModPlaceholder.SetPlaceholder(tSNMKOL, "NAMA KOLEKTO")
+        ModPlaceholder.SetPlaceholder(tSNMKOL, "NAMA KOLEKTOR")
 
         isUserTypingSearch = False
         tSKDKOL.Enabled = True
         tSNMKOL.Enabled = True
+    End Sub
+
+    Private Sub FKolektor_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
+
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
     End Sub
 End Class

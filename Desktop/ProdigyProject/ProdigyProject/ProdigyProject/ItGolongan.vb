@@ -1,8 +1,10 @@
 ﻿Imports System.Data.Odbc
 
 Public Class ItGolongan
+    Public Property Caller As String
 
     Public Sub LoadDataGolongan(ByVal keyword As String, ByVal mode As String)
+        Dim adaData As Boolean = False
 
         Dim sql As String = ""
         If mode = "KODE" AndAlso keyword = "*" Then
@@ -30,8 +32,25 @@ Public Class ItGolongan
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()
+                adaData = True
                 dgitmGOL.Rows.Add(Rd("kodegol"), Rd("namagol"))
             End While
+
+            If Not adaData Then
+                MessageBox.Show("Data tidak ditemukan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Dim parentForm As FStok = TryCast(Me.Owner, FStok)
+                If parentForm IsNot Nothing Then
+
+                    If Caller = "KODE" Then
+                        parentForm.txtKDGOL.Clear()
+                        Me.Close()
+                    ElseIf Caller = "NAMA" Then
+                        parentForm.txtNMGOL.Clear()
+                        Me.Close()
+                    End If
+
+                End If
+            End If
 
             Rd.Close()
             Conn.Close()
@@ -47,18 +66,28 @@ Public Class ItGolongan
         SetupGridDGolongan(dgitmGOL)
     End Sub
 
-    Private Sub dgitmGOL_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmGOL.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim kode As String = dgitmGOL.Rows(e.RowIndex).Cells("kodegol").Value.ToString()
-            Dim nama As String = dgitmGOL.Rows(e.RowIndex).Cells("namagol").Value.ToString()
+    Private Sub PilihData()
+        If dgitmGOL.CurrentRow Is Nothing Then Exit Sub
 
-            ' kirim ke ItFPopupPem
-            Dim parentForm As FStok = TryCast(Me.Owner, FStok)
-            If parentForm IsNot Nothing Then
-                parentForm.SetGolongan(kode, nama)
-            End If
+        Dim kode As String = dgitmGOL.CurrentRow.Cells("kodegol").Value.ToString()
+        Dim nama As String = dgitmGOL.CurrentRow.Cells("namagol").Value.ToString()
 
-            Me.Close()
+        Dim parentForm As FStok = TryCast(Me.Owner, FStok)
+        If parentForm IsNot Nothing Then
+            parentForm.SetGolongan(kode, nama)
+        End If
+
+        Me.Close()
+    End Sub
+
+    Private Sub dgitmGOL_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmGOL.CellClick
+        PilihData()
+    End Sub
+
+    Private Sub dgitmGOL_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmGOL.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

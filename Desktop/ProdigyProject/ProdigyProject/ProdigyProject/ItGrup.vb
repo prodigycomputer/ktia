@@ -1,8 +1,10 @@
 ﻿Imports System.Data.Odbc
 
 Public Class ItGrup
+    Public Property Caller As String
 
     Public Sub LoadDataGrup(ByVal keyword As String, ByVal mode As String)
+        Dim adaData As Boolean = False
 
         Dim sql As String = ""
         If mode = "KODE" AndAlso keyword = "*" Then
@@ -30,8 +32,25 @@ Public Class ItGrup
             Rd = Cmd.ExecuteReader()
 
             While Rd.Read()
+                adaData = True
                 dgitmGRUP.Rows.Add(Rd("kodegrup"), Rd("namagrup"))
             End While
+
+            If Not adaData Then
+                MessageBox.Show("Data tidak ditemukan.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Dim parentForm As FStok = TryCast(Me.Owner, FStok)
+                If parentForm IsNot Nothing Then
+
+                    If Caller = "KODE" Then
+                        parentForm.txtKDGRUP.Clear()
+                        Me.Close()
+                    ElseIf Caller = "NAMA" Then
+                        parentForm.txtNMGRUP.Clear()
+                        Me.Close()
+                    End If
+
+                End If
+            End If
 
             Rd.Close()
             Conn.Close()
@@ -47,18 +66,28 @@ Public Class ItGrup
         SetupGridDGrup(dgitmGRUP)
     End Sub
 
-    Private Sub dgitmGRUP_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmGRUP.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim kode As String = dgitmGRUP.Rows(e.RowIndex).Cells("kodegrup").Value.ToString()
-            Dim nama As String = dgitmGRUP.Rows(e.RowIndex).Cells("namagrup").Value.ToString()
+    Private Sub PilihData()
+        If dgitmGRUP.CurrentRow Is Nothing Then Exit Sub
 
-            ' kirim ke ItFPopupPem
-            Dim parentForm As FStok = TryCast(Me.Owner, FStok)
-            If parentForm IsNot Nothing Then
-                parentForm.SetGrup(kode, nama)
-            End If
+        Dim kode As String = dgitmGRUP.CurrentRow.Cells("kodegrup").Value.ToString()
+        Dim nama As String = dgitmGRUP.CurrentRow.Cells("namagrup").Value.ToString()
 
-            Me.Close()
+        Dim parentForm As FStok = TryCast(Me.Owner, FStok)
+        If parentForm IsNot Nothing Then
+            parentForm.SetGrup(kode, nama)
+        End If
+
+        Me.Close()
+    End Sub
+
+    Private Sub dgitmGRUP_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmGRUP.CellClick
+        PilihData()
+    End Sub
+
+    Private Sub dgitmGRUP_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmGRUP.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

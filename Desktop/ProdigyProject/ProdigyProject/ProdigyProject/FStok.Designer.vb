@@ -168,6 +168,7 @@ Partial Class FStok
         Me.txtHRGBELI.Name = "txtHRGBELI"
         Me.txtHRGBELI.Size = New System.Drawing.Size(143, 20)
         Me.txtHRGBELI.TabIndex = 13
+        Me.txtHRGBELI.Text = "0,00"
         Me.txtHRGBELI.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label9
@@ -187,6 +188,7 @@ Partial Class FStok
         Me.txtISI2.Name = "txtISI2"
         Me.txtISI2.Size = New System.Drawing.Size(84, 20)
         Me.txtISI2.TabIndex = 11
+        Me.txtISI2.Text = "0,00"
         Me.txtISI2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label10
@@ -270,6 +272,7 @@ Partial Class FStok
         Me.txtISI1.Name = "txtISI1"
         Me.txtISI1.Size = New System.Drawing.Size(84, 20)
         Me.txtISI1.TabIndex = 9
+        Me.txtISI1.Text = "0,00"
         Me.txtISI1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label6
@@ -449,6 +452,7 @@ Partial Class FStok
         Me.Controls.Add(Me.btnSIMPAN)
         Me.Controls.Add(Me.btnTAMBAH)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "FStok"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FStok"

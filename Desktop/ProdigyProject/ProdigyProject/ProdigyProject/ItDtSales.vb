@@ -63,16 +63,27 @@ Public Class ItDtSales
         SetupGridSales(dgitmSLSS)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmSLSS.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmSLSS.CurrentRow.Cells("kodesls").Value.ToString()
+
+        Dim parentForm As FSales = TryCast(Me.Owner, FSales)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmSLSS_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmSLSS.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmSLSS.Rows(e.RowIndex).Cells("kodesls").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FSales = TryCast(Me.Owner, FSales)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmSLSS_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmSLSS.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

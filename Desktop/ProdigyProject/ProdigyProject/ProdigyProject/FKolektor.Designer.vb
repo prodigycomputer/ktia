@@ -224,7 +224,7 @@ Partial Class FKolektor
         Me.tSNMKOL.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.tSNMKOL.Location = New System.Drawing.Point(146, 10)
         Me.tSNMKOL.Name = "tSNMKOL"
-        Me.tSNMKOL.Size = New System.Drawing.Size(312, 23)
+        Me.tSNMKOL.Size = New System.Drawing.Size(298, 23)
         Me.tSNMKOL.TabIndex = 1
         '
         'tSKDKOL
@@ -296,6 +296,7 @@ Partial Class FKolektor
         Me.Controls.Add(Me.btnSIMPAN)
         Me.Controls.Add(Me.btnTAMBAH)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.KeyPreview = True
         Me.Name = "FKolektor"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "FKolektor"

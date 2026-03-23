@@ -59,16 +59,27 @@ Public Class ItDtMerek
         SetupGridDMerek(dgitmMR)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmMR.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmMR.CurrentRow.Cells("kodemerk").Value.ToString()
+
+        Dim parentForm As FMerek = TryCast(Me.Owner, FMerek)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmMR_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmMR.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmMR.Rows(e.RowIndex).Cells("kodemerk").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FMerek = TryCast(Me.Owner, FMerek)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmMR_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmMR.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

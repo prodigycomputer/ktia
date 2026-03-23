@@ -37,6 +37,27 @@ Public Class ItSupplier
         SetupGridSupplier(dgitmSUP)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmSUP.CurrentRow Is Nothing Then Exit Sub
+
+        Dim kode As String = dgitmSUP.CurrentRow.Cells("kodesup").Value.ToString()
+        Dim nama As String = dgitmSUP.CurrentRow.Cells("namasup").Value.ToString()
+        Dim alamat As String = dgitmSUP.CurrentRow.Cells("alamat").Value.ToString()
+        Dim kota As String = dgitmSUP.CurrentRow.Cells("kota").Value.ToString()
+        Dim ktp As String = dgitmSUP.CurrentRow.Cells("ktp").Value.ToString()
+        Dim npwp As String = dgitmSUP.CurrentRow.Cells("npwp").Value.ToString()
+
+        Dim parentForm As FPembelian = TryCast(Me.Owner, FPembelian)
+        Dim parentForm2 As FPelunasanPem = TryCast(Me.Owner, FPelunasanPem)
+        If parentForm IsNot Nothing Then
+            parentForm.SetSupplier(kode, nama, alamat, kota, ktp, npwp)
+        ElseIf parentForm2 IsNot Nothing Then
+            parentForm2.SetSupplier(kode, nama)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmSUP_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmSUP.CellContentClick
         If e.RowIndex >= 0 Then
             Dim kode As String = dgitmSUP.Rows(e.RowIndex).Cells("kodesup").Value.ToString()
@@ -56,6 +77,13 @@ Public Class ItSupplier
             End If
 
             Me.Close()
+        End If
+    End Sub
+
+    Private Sub dgitmSUP_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmSUP.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

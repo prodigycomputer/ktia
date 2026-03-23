@@ -4,6 +4,7 @@ Public Class FLaporanMutasi
 
     Private Sub FLaporanMutasi_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.MaximizeBox = False
+        AngkaHelper.AktifkanEnterPindah(Me)
     End Sub
 
     Private Sub btnPRINT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPRINT.Click

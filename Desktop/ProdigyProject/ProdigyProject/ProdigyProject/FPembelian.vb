@@ -41,6 +41,7 @@ Public Class FPembelian
         tmuSLUNAS.SelectedValue = 0   ' default Belum Lunas
 
         SetButtonState(Me, True)
+        AngkaHelper.AktifkanEnterPindah(Me)
         SetupGridPembelian(grPEMBELIAN)
 
         ' Tambah context menu ke grid utama
@@ -74,17 +75,17 @@ Public Class FPembelian
         CType(dict("tpmALAMAT"), TextBox).Enabled = False
         CType(dict("GRID"), DataGridView).Enabled = False
 
-        CType(dict("tpmTOTAL"), TextBox).Enabled = False
-        CType(dict("tpmSUBTOTAL"), TextBox).Enabled = False
-        CType(dict("tpmNPPN"), TextBox).Enabled = False
-        CType(dict("tpmAPPN"), TextBox).Enabled = False
-        CType(dict("tpmLAIN"), TextBox).Enabled = False
-        CType(dict("tpmNDISK3"), TextBox).Enabled = False
-        CType(dict("tpmADISK3"), TextBox).Enabled = False
-        CType(dict("tpmNDISK2"), TextBox).Enabled = False
-        CType(dict("tpmADISK2"), TextBox).Enabled = False
-        CType(dict("tpmNDISK1"), TextBox).Enabled = False
-        CType(dict("tpmADISK1"), TextBox).Enabled = False
+        CType(dict("tpmTOTAL"), NumericUpDown).Enabled = False
+        CType(dict("tpmSUBTOTAL"), NumericUpDown).Enabled = False
+        CType(dict("tpmNPPN"), NumericUpDown).Enabled = False
+        CType(dict("tpmAPPN"), NumericUpDown).Enabled = False
+        CType(dict("tpmLAIN"), NumericUpDown).Enabled = False
+        CType(dict("tpmNDISK3"), NumericUpDown).Enabled = False
+        CType(dict("tpmADISK3"), NumericUpDown).Enabled = False
+        CType(dict("tpmNDISK2"), NumericUpDown).Enabled = False
+        CType(dict("tpmADISK2"), NumericUpDown).Enabled = False
+        CType(dict("tpmNDISK1"), NumericUpDown).Enabled = False
+        CType(dict("tpmADISK1"), NumericUpDown).Enabled = False
 
         tpmSNONOTA.Enabled = True
         dtpmTGL1.Enabled = True
@@ -110,17 +111,17 @@ Public Class FPembelian
         CType(dict("tpmALAMAT"), TextBox).Enabled = False
         CType(dict("GRID"), DataGridView).Enabled = True
 
-        CType(dict("tpmTOTAL"), TextBox).Enabled = False
-        CType(dict("tpmSUBTOTAL"), TextBox).Enabled = False
-        CType(dict("tpmNPPN"), TextBox).Enabled = False
-        CType(dict("tpmAPPN"), TextBox).Enabled = True
-        CType(dict("tpmLAIN"), TextBox).Enabled = True
-        CType(dict("tpmNDISK3"), TextBox).Enabled = False
-        CType(dict("tpmADISK3"), TextBox).Enabled = True
-        CType(dict("tpmNDISK2"), TextBox).Enabled = False
-        CType(dict("tpmADISK2"), TextBox).Enabled = True
-        CType(dict("tpmNDISK1"), TextBox).Enabled = False
-        CType(dict("tpmADISK1"), TextBox).Enabled = True
+        CType(dict("tpmTOTAL"), NumericUpDown).Enabled = False
+        CType(dict("tpmSUBTOTAL"), NumericUpDown).Enabled = False
+        CType(dict("tpmNPPN"), NumericUpDown).Enabled = False
+        CType(dict("tpmAPPN"), NumericUpDown).Enabled = True
+        CType(dict("tpmLAIN"), NumericUpDown).Enabled = True
+        CType(dict("tpmNDISK3"), NumericUpDown).Enabled = False
+        CType(dict("tpmADISK3"), NumericUpDown).Enabled = True
+        CType(dict("tpmNDISK2"), NumericUpDown).Enabled = False
+        CType(dict("tpmADISK2"), NumericUpDown).Enabled = True
+        CType(dict("tpmNDISK1"), NumericUpDown).Enabled = False
+        CType(dict("tpmADISK1"), NumericUpDown).Enabled = True
 
         tpmSNONOTA.Enabled = False
         dtpmTGL1.Enabled = False
@@ -153,13 +154,13 @@ Public Class FPembelian
 
             ' --- Isi data popup dari grid ---
             popup.tPopKDBARANG.Text = kodeBrg
-            popup.tPopJLH1.Text = Val(row.Cells("Jlh1").Value).ToString()
-            popup.tPopJLH2.Text = Val(row.Cells("Jlh2").Value).ToString()
-            popup.tPopJLH3.Text = Val(row.Cells("Jlh3").Value).ToString()
-            popup.tPopDISCA.Text = Val(row.Cells("Disca").Value).ToString()
-            popup.tPopDISCB.Text = Val(row.Cells("Discb").Value).ToString()
-            popup.tPopDISCC.Text = Val(row.Cells("Discc").Value).ToString()
-            popup.tPopDISRP.Text = Val(row.Cells("DiscRp").Value).ToString()
+            popup.tPopJLH1.Value = Convert.ToDecimal(row.Cells("Jlh1").Value)
+            popup.tPopJLH2.Value = Convert.ToDecimal(row.Cells("Jlh2").Value)
+            popup.tPopJLH3.Value = Convert.ToDecimal(row.Cells("Jlh3").Value)
+            popup.tPopDISCA.Value = Convert.ToDecimal(row.Cells("Disca").Value)
+            popup.tPopDISCB.Value = Convert.ToDecimal(row.Cells("Discb").Value)
+            popup.tPopDISCC.Value = Convert.ToDecimal(row.Cells("Discc").Value)
+            popup.tPopDISCRP.Value = Convert.ToDecimal(row.Cells("DiscRp").Value)
 
             ' --- Load info barang berdasarkan Kode & Gudang ---
             popup.TargetGrid = grid
@@ -170,14 +171,14 @@ Public Class FPembelian
             If popup.ShowDialog() = DialogResult.OK Then
                 row.Cells("KodeBrg").Value = popup.tPopKDBARANG.Text
                 row.Cells("KodeGudang").Value = If(popup.cbPopGudang.SelectedItem IsNot Nothing, popup.cbPopGudang.SelectedItem.ToString(), "")
-                row.Cells("Jlh1").Value = Val(popup.tPopJLH1.Text)
-                row.Cells("Jlh2").Value = Val(popup.tPopJLH2.Text)
-                row.Cells("Jlh3").Value = Val(popup.tPopJLH3.Text)
-                row.Cells("Disca").Value = Val(popup.tPopDISCA.Text)
-                row.Cells("Discb").Value = Val(popup.tPopDISCB.Text)
-                row.Cells("Discc").Value = Val(popup.tPopDISCC.Text)
-                row.Cells("DiscRp").Value = Val(popup.tPopDISRP.Text)
-                row.Cells("Jumlah").Value = Val(popup.tPopJUMLAH.Text)
+                row.Cells("Jlh1").Value = popup.tPopJLH1.Value
+                row.Cells("Jlh2").Value = popup.tPopJLH2.Value
+                row.Cells("Jlh3").Value = popup.tPopJLH3.Value
+                row.Cells("Disca").Value = popup.tPopDISCA.Value
+                row.Cells("Discb").Value = popup.tPopDISCB.Value
+                row.Cells("Discc").Value = popup.tPopDISCC.Value
+                row.Cells("DiscRp").Value = popup.tPopDISCRP.Value
+                row.Cells("Jumlah").Value = popup.tPopJUMLAH.Value
             End If
 
         Catch ex As Exception
@@ -236,16 +237,16 @@ Public Class FPembelian
                     CType(dict("tpmKDSUP"), TextBox).Text = Rd("kodesup").ToString()
                     CType(dict("tpmNMSUP"), TextBox).Text = Rd("namasup").ToString()
                     CType(dict("tpmALAMAT"), TextBox).Text = Rd("alamat").ToString()
-                    CType(dict("tpmTOTAL"), TextBox).Text = Rd("nilai").ToString()
-                    CType(dict("tpmADISK1"), TextBox).Text = Rd("disc1").ToString()
-                    CType(dict("tpmNDISK1"), TextBox).Text = Rd("hdisc1").ToString()
-                    CType(dict("tpmADISK2"), TextBox).Text = Rd("disc2").ToString()
-                    CType(dict("tpmNDISK2"), TextBox).Text = Rd("hdisc2").ToString()
-                    CType(dict("tpmADISK3"), TextBox).Text = Rd("disc3").ToString()
-                    CType(dict("tpmNDISK3"), TextBox).Text = Rd("hdisc3").ToString()
-                    CType(dict("tpmAPPN"), TextBox).Text = Rd("ppn").ToString()
-                    CType(dict("tpmNPPN"), TextBox).Text = Rd("hppn").ToString()
-                    CType(dict("tpmLAIN"), TextBox).Text = Rd("lainnya").ToString()
+                    CType(dict("tpmTOTAL"), NumericUpDown).Value = Rd("nilai")
+                    CType(dict("tpmADISK1"), NumericUpDown).Value = Rd("disc1")
+                    CType(dict("tpmNDISK1"), NumericUpDown).Value = Rd("hdisc1")
+                    CType(dict("tpmADISK2"), NumericUpDown).Value = Rd("disc2")
+                    CType(dict("tpmNDISK2"), NumericUpDown).Value = Rd("hdisc2")
+                    CType(dict("tpmADISK3"), NumericUpDown).Value = Rd("disc3")
+                    CType(dict("tpmNDISK3"), NumericUpDown).Value = Rd("hdisc3")
+                    CType(dict("tpmAPPN"), NumericUpDown).Value = Rd("ppn")
+                    CType(dict("tpmNPPN"), NumericUpDown).Value = Rd("hppn")
+                    CType(dict("tpmLAIN"), NumericUpDown).Value = Rd("lainnya")
                 End If
                 Rd.Close()
             End Using
@@ -325,6 +326,13 @@ Public Class FPembelian
         Return String.Empty
     End Function
 
+    Private Function GetCtrl(parent As Control, name As String) As Control
+        Dim found() As Control = parent.Controls.Find(name, True)
+        If found.Length > 0 Then
+            Return found(0)
+        End If
+        Return Nothing
+    End Function
     ' ================== REGISTER TAB ==================
     Private Sub RegisterTabControls(ByVal tab As TabPage, ByVal nomor As Integer)
         Dim dict As New Dictionary(Of String, Control)
@@ -336,21 +344,22 @@ Public Class FPembelian
         dict("tpmKDSUP") = tab.Controls.Find("tpmKDSUP", True)(0)
         dict("tpmNMSUP") = tab.Controls.Find("tpmNMSUP", True)(0)
         dict("tpmALAMAT") = tab.Controls.Find("tpmALAMAT", True)(0)
-        dict("tpmTOTAL") = tab.Controls.Find("tpmTOTAL", True)(0)
-        dict("tpmSUBTOTAL") = tab.Controls.Find("tpmSUBTOTAL", True)(0)
-        dict("tpmNPPN") = tab.Controls.Find("tpmNPPN", True)(0)
-        dict("tpmAPPN") = tab.Controls.Find("tpmAPPN", True)(0)
-        dict("tpmLAIN") = tab.Controls.Find("tpmLAIN", True)(0)
+        dict("tpmTOTAL") = GetCtrl(tab, "tpmTOTAL")
+        dict("tpmSUBTOTAL") = GetCtrl(tab, "tpmSUBTOTAL")
+        dict("tpmNPPN") = GetCtrl(tab, "tpmNPPN")
+        dict("tpmAPPN") = GetCtrl(tab, "tpmAPPN")
+        dict("tpmLAIN") = GetCtrl(tab, "tpmLAIN")
 
-        CType(dict("tpmAPPN"), TextBox).Text = "11"
+        If dict("tpmAPPN") IsNot Nothing Then
+            CType(dict("tpmAPPN"), NumericUpDown).Value = 11
+        End If
 
-        dict("tpmNDISK3") = tab.Controls.Find("tpmNDISK3", True)(0)
-        dict("tpmADISK3") = tab.Controls.Find("tpmADISK3", True)(0)
-        dict("tpmNDISK2") = tab.Controls.Find("tpmNDISK2", True)(0)
-        dict("tpmADISK2") = tab.Controls.Find("tpmADISK2", True)(0)
-        dict("tpmNDISK1") = tab.Controls.Find("tpmNDISK1", True)(0)
-        dict("tpmADISK1") = tab.Controls.Find("tpmADISK1", True)(0)
-
+        dict("tpmNDISK3") = GetCtrl(tab, "tpmNDISK3")
+        dict("tpmADISK3") = GetCtrl(tab, "tpmADISK3")
+        dict("tpmNDISK2") = GetCtrl(tab, "tpmNDISK2")
+        dict("tpmADISK2") = GetCtrl(tab, "tpmADISK2")
+        dict("tpmNDISK1") = GetCtrl(tab, "tpmNDISK1")
+        dict("tpmADISK1") = GetCtrl(tab, "tpmADISK1")
         ' Grid
         Dim grid As DataGridView = CType(tab.Controls.Find("grPEMBELIAN", True)(0), DataGridView)
         dict("GRID") = grid
@@ -379,25 +388,17 @@ Public Class FPembelian
         AddHandler CType(dict("tpmKDSUP"), TextBox).KeyDown, AddressOf tpmKDSUP_KeyDown
         AddHandler CType(dict("tpmNMSUP"), TextBox).KeyDown, AddressOf tpmNMSUP_KeyDown
 
-        Dim txtADISK1 As TextBox = CType(dict("tpmADISK1"), TextBox)
-        Dim txtADISK2 As TextBox = CType(dict("tpmADISK2"), TextBox)
-        Dim txtADISK3 As TextBox = CType(dict("tpmADISK3"), TextBox)
-        Dim txtAPPN As TextBox = CType(dict("tpmAPPN"), TextBox)
-        Dim txtLAIN As TextBox = CType(dict("tpmLAIN"), TextBox)
+        Dim txtADISK1 As NumericUpDown = CType(dict("tpmADISK1"), NumericUpDown)
+        Dim txtADISK2 As NumericUpDown = CType(dict("tpmADISK2"), NumericUpDown)
+        Dim txtADISK3 As NumericUpDown = CType(dict("tpmADISK3"), NumericUpDown)
+        Dim txtAPPN As NumericUpDown = CType(dict("tpmAPPN"), NumericUpDown)
+        Dim txtLAIN As NumericUpDown = CType(dict("tpmLAIN"), NumericUpDown)
 
-        Dim allTextBoxes() As TextBox = {txtADISK1, txtADISK2, txtADISK3, txtAPPN, txtLAIN}
+        Dim allTextBoxes() As NumericUpDown = {txtADISK1, txtADISK2, txtADISK3, txtAPPN, txtLAIN}
 
-        For Each tb As TextBox In allTextBoxes
-            ' Saat pindah field
-            AddHandler tb.Leave, Sub() HitungOtomatisTotal(nomor)
-
-            ' Saat Enter ditekan
-            AddHandler tb.KeyDown, Sub(sender As Object, e As KeyEventArgs)
-                                       If e.KeyCode = Keys.Enter Then
-                                           HitungOtomatisTotal(nomor)
-                                       End If
-                                   End Sub
-        Next
+        'For Each tb As NumericUpDown In allTextBoxes
+        'AddHandler tb.ValueChanged, Sub() HitungOtomatisTotal(nomor)
+        'Next
 
         ' Event tombol Add Item
         Dim btn As Button = CType(dict("btnADDITEM"), Button)
@@ -411,9 +412,10 @@ Public Class FPembelian
         Else
             TabStatus.Add(nomor, String.Empty)
         End If
+
         tab.Tag = String.Empty
     End Sub
-
+    
     ' ================== TAMBAH TAB ==================
     Private Sub bpmTabAdd_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles bpmTabAdd.Click
         If TabPagesList.Count = 0 Then Return
@@ -424,13 +426,20 @@ Public Class FPembelian
         Dim newTab As New TabPage(nama)
 
         For Each ctrl As Control In template.Controls
-            newTab.Controls.Add(CloneControl(ctrl))
-            DisabledLoad()
+            Try
+                newTab.Controls.Add(CloneControl(ctrl))
+                DisabledLoad()
+            Catch ex As Exception
+                MessageBox.Show("Error clone control: " & ctrl.Name & " - " & ctrl.GetType.ToString)
+            End Try
+            'newTab.Controls.Add(CloneControl(ctrl))
+            'DisabledLoad()
         Next
 
         TabControl1.TabPages.Add(newTab)
         TabPagesList.Add(newTab)
         RegisterTabControls(newTab, nomor)
+        AngkaHelper.AktifkanEnterPindah(Me)
 
         ' Ambil grid dari tab baru dan panggil SetupGridPembelian
         Dim dict = TabControls(nomor)
@@ -536,16 +545,16 @@ Public Class FPembelian
             Dim alamat As String = CType(dict("tpmALAMAT"), TextBox).Text.Trim()
             Dim grid As DataGridView = CType(dict("GRID"), DataGridView)
 
-            Dim adisk1 As Double = Val(CType(dict("tpmADISK1"), TextBox).Text.Trim())
-            Dim ndisk1 As Double = Val(CType(dict("tpmNDISK1"), TextBox).Text.Trim())
-            Dim adisk2 As Double = Val(CType(dict("tpmADISK2"), TextBox).Text.Trim())
-            Dim ndisk2 As Double = Val(CType(dict("tpmNDISK2"), TextBox).Text.Trim())
-            Dim adisk3 As Double = Val(CType(dict("tpmADISK3"), TextBox).Text.Trim())
-            Dim ndisk3 As Double = Val(CType(dict("tpmNDISK3"), TextBox).Text.Trim())
-            Dim lain As Double = Val(CType(dict("tpmLAIN"), TextBox).Text.Trim())
-            Dim appn As Double = Val(CType(dict("tpmAPPN"), TextBox).Text.Trim())
-            Dim nppn As Double = Val(CType(dict("tpmNPPN"), TextBox).Text.Trim())
-            Dim total As Double = Val(CType(dict("tpmTOTAL"), TextBox).Text.Trim())
+            Dim adisk1 As Double = (CType(dict("tpmADISK1"), NumericUpDown).Value)
+            Dim ndisk1 As Double = (CType(dict("tpmNDISK1"), NumericUpDown).Value)
+            Dim adisk2 As Double = (CType(dict("tpmADISK2"), NumericUpDown).Value)
+            Dim ndisk2 As Double = (CType(dict("tpmNDISK2"), NumericUpDown).Value)
+            Dim adisk3 As Double = (CType(dict("tpmADISK3"), NumericUpDown).Value)
+            Dim ndisk3 As Double = (CType(dict("tpmNDISK3"), NumericUpDown).Value)
+            Dim lain As Double = (CType(dict("tpmLAIN"), NumericUpDown).Value)
+            Dim appn As Double = (CType(dict("tpmAPPN"), NumericUpDown).Value)
+            Dim nppn As Double = (CType(dict("tpmNPPN"), NumericUpDown).Value)
+            Dim total As Double = (CType(dict("tpmTOTAL"), NumericUpDown).Value)
 
             ' --- Validasi ---
             If nonota = "" Then Throw New Exception("No Nota tidak boleh kosong!")
@@ -795,18 +804,11 @@ Public Class FPembelian
             CType(dict("tpmALAMAT"), TextBox).Clear()
             CType(dict("tpmKET"), TextBox).Clear()
             CType(dict("GRID"), DataGridView).Rows.Clear()
-            CType(dict("tpmSUBTOTAL"), TextBox).Clear()
-            CType(dict("tpmNDISK1"), TextBox).Clear()
-            CType(dict("tpmADISK1"), TextBox).Clear()
-            CType(dict("tpmNDISK2"), TextBox).Clear()
-            CType(dict("tpmADISK2"), TextBox).Clear()
-            CType(dict("tpmNDISK3"), TextBox).Clear()
-            CType(dict("tpmADISK3"), TextBox).Clear()
-            CType(dict("tpmLAIN"), TextBox).Clear()
-            CType(dict("tpmNPPN"), TextBox).Clear()
-            CType(dict("tpmAPPN"), TextBox).Clear()
-            CType(dict("tpmTOTAL"), TextBox).Clear()
+            Dim fields = {"tpmSUBTOTAL", "tpmNDISK1", "tpmADISK1", "tpmNDISK2", "tpmADISK2", "tpmNDISK3", "tpmADISK3", "tpmLAIN", "tpmNPPN", "tpmAPPN", "tpmTOTAL"}
 
+            For Each key In fields
+                CType(dict(key), NumericUpDown).Value = 0D
+            Next
 
         Catch ex As Exception
             Try
@@ -840,7 +842,7 @@ Public Class FPembelian
             End If
         Next
 
-        CType(dict("tpmSUBTOTAL"), TextBox).Text = subtotal.ToString()
+        CType(dict("tpmSUBTOTAL"), NumericUpDown).Value = subtotal
     End Sub
 
 
@@ -977,29 +979,20 @@ Public Class FPembelian
         If Not TabControls.ContainsKey(nomor) Then Exit Sub
         Dim dict = TabControls(nomor)
 
-        Dim subtotal As Decimal = Val(CType(dict("tpmSUBTOTAL"), TextBox).Text)
-        Dim adisk1 As Decimal = Val(CType(dict("tpmADISK1"), TextBox).Text)
-        Dim adisk2 As Decimal = Val(CType(dict("tpmADISK2"), TextBox).Text)
-        Dim adisk3 As Decimal = Val(CType(dict("tpmADISK3"), TextBox).Text)
-        Dim appn As Decimal = Val(CType(dict("tpmAPPN"), TextBox).Text)
-        Dim lain As Decimal = Val(CType(dict("tpmLAIN"), TextBox).Text)
+        Dim subtotal As Decimal = (CType(dict("tpmSUBTOTAL"), NumericUpDown).Value)
+        Dim adisk1 As Decimal = (CType(dict("tpmADISK1"), NumericUpDown).Value)
+        Dim adisk2 As Decimal = (CType(dict("tpmADISK2"), NumericUpDown).Value)
+        Dim adisk3 As Decimal = (CType(dict("tpmADISK3"), NumericUpDown).Value)
+        Dim appn As Decimal = (CType(dict("tpmAPPN"), NumericUpDown).Value)
+        Dim lain As Decimal = (CType(dict("tpmLAIN"), NumericUpDown).Value)
 
         Dim hasil = ModHitung.HitungSubtotalTotal(subtotal, adisk1, adisk2, adisk3, appn, lain)
 
-        CType(dict("tpmNDISK1"), TextBox).Text = hasil("hdisca").ToString()
-        CType(dict("tpmNDISK2"), TextBox).Text = hasil("hdiscb").ToString()
-        CType(dict("tpmNDISK3"), TextBox).Text = hasil("hdiscc").ToString()
-        CType(dict("tpmNPPN"), TextBox).Text = hasil("ppn").ToString()
-        CType(dict("tpmTOTAL"), TextBox).Text = hasil("total").ToString()
-    End Sub
-
-    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
-        Handles tpmSUBTOTAL.KeyPress, tpmTOTAL.KeyPress, tpmADISK1.KeyPress,
-                tpmADISK2.KeyPress, tpmADISK3.KeyPress, tpmNDISK1.KeyPress,
-                tpmNDISK2.KeyPress, tpmNDISK3.KeyPress, tpmLAIN.KeyPress,
-                tpmAPPN.KeyPress, tpmNPPN.KeyPress
-
-        AngkaHelper.HanyaAngka(e)
+        CType(dict("tpmNDISK1"), NumericUpDown).Value = hasil("hdisca")
+        CType(dict("tpmNDISK2"), NumericUpDown).Value = hasil("hdiscb")
+        CType(dict("tpmNDISK3"), NumericUpDown).Value = hasil("hdiscc")
+        CType(dict("tpmNPPN"), NumericUpDown).Value = hasil("ppn")
+        CType(dict("tpmTOTAL"), NumericUpDown).Value = hasil("total")
     End Sub
 
     Private Sub btnPRINT_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnPRINT.Click
@@ -1025,5 +1018,25 @@ Public Class FPembelian
         Catch ex As Exception
             MessageBox.Show("Gagal cetak nota: " & ex.Message, "Error")
         End Try
+    End Sub
+
+    Private Sub FPembelian_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
+
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
     End Sub
 End Class

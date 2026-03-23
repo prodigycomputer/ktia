@@ -37,6 +37,7 @@ Public Class FMutasi
 
     Private Sub FMutasi_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
+        AngkaHelper.AktifkanEnterPindah(Me)
         SetupGridMUTASI(grMUTASI)
 
         ' Tambah context menu ke grid utama
@@ -119,9 +120,9 @@ Public Class FMutasi
 
             ' --- Isi data popup dari grid ---
             popup.tPopKDBARANG.Text = kodeBrg
-            popup.tPopJLH1.Text = Val(row.Cells("Jlh1").Value).ToString()
-            popup.tPopJLH2.Text = Val(row.Cells("Jlh2").Value).ToString()
-            popup.tPopJLH3.Text = Val(row.Cells("Jlh3").Value).ToString()
+            popup.tPopJLH1.Value = Convert.ToDecimal(row.Cells("Jlh1").Value)
+            popup.tPopJLH2.Value = Convert.ToDecimal(row.Cells("Jlh2").Value)
+            popup.tPopJLH3.Value = Convert.ToDecimal(row.Cells("Jlh3").Value)
 
             ' --- Load info barang berdasarkan Kode & Gudang ---
             popup.TargetGrid = grid
@@ -131,9 +132,9 @@ Public Class FMutasi
             ' --- Tampilkan popup dan update data jika OK ---
             If popup.ShowDialog() = DialogResult.OK Then
                 row.Cells("KodeBrg").Value = popup.tPopKDBARANG.Text
-                row.Cells("Jlh1").Value = Val(popup.tPopJLH1.Text)
-                row.Cells("Jlh2").Value = Val(popup.tPopJLH2.Text)
-                row.Cells("Jlh3").Value = Val(popup.tPopJLH3.Text)
+                row.Cells("Jlh1").Value = popup.tPopJLH1.Value
+                row.Cells("Jlh2").Value = popup.tPopJLH2.Value
+                row.Cells("Jlh3").Value = popup.tPopJLH3.Value
             End If
 
         Catch ex As Exception
@@ -317,6 +318,7 @@ Public Class FMutasi
         TabControl1.TabPages.Add(newTab)
         TabPagesList.Add(newTab)
         RegisterTabControls(newTab, nomor)
+        AngkaHelper.AktifkanEnterPindah(Me)
 
         Dim dict = TabControls(nomor)
         If dict.ContainsKey("GRID") Then

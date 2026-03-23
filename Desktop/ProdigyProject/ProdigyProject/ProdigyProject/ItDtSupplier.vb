@@ -63,16 +63,27 @@ Public Class ItDtSupplier
         SetupGridSupplier(dgitmSUPP)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmSUPP.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmSUPP.CurrentRow.Cells("kodesup").Value.ToString()
+
+        Dim parentForm As FSupplier = TryCast(Me.Owner, FSupplier)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmSUPP_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmSUPP.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmSUPP.Rows(e.RowIndex).Cells("kodesup").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FSupplier = TryCast(Me.Owner, FSupplier)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmSUPP_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmSUPP.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

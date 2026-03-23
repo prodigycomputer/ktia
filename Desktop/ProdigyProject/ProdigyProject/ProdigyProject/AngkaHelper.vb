@@ -47,4 +47,57 @@
             e.Handled = True
         End If
     End Sub
+
+    Public Shared Sub HanyaAngka0Sampai100(ByVal tb As TextBox, ByVal e As KeyPressEventArgs)
+        ' Izinkan angka, backspace, koma, titik
+        If Not (Char.IsDigit(e.KeyChar) OrElse
+                e.KeyChar = ChrW(Keys.Back) OrElse
+                e.KeyChar = ","c OrElse
+                e.KeyChar = "."c) Then
+            e.Handled = True
+            Exit Sub
+        End If
+
+        ' Simulasi teks setelah diketik
+        Dim teksBaru As String =
+            tb.Text.Insert(tb.SelectionStart, e.KeyChar)
+
+        Dim nilai As Decimal
+        If Decimal.TryParse(teksBaru.Replace(",", "."), nilai) Then
+            If nilai > 100 Then
+                e.Handled = True
+            End If
+        End If
+    End Sub
+
+    Public Shared Sub AktifkanEnterPindah(ByVal parent As Control)
+        For Each ctrl As Control In parent.Controls
+
+            If TypeOf ctrl Is TextBox Then
+                AddHandler ctrl.KeyDown, AddressOf TextBoxEnterPindah
+
+            ElseIf TypeOf ctrl Is CheckBox Then
+                AddHandler ctrl.KeyDown, AddressOf TextBoxEnterPindah
+
+            ElseIf TypeOf ctrl Is DateTimePicker Then
+                AddHandler ctrl.KeyDown, AddressOf TextBoxEnterPindah
+            End If
+
+            ' Support Panel, GroupBox, dll
+            If ctrl.HasChildren Then
+                AktifkanEnterPindah(ctrl)
+            End If
+
+        Next
+    End Sub
+
+    Private Shared Sub TextBoxEnterPindah(ByVal sender As Object, ByVal e As KeyEventArgs)
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+
+            Dim tb As Control = DirectCast(sender, Control)
+            tb.FindForm().SelectNextControl(tb, True, True, True, True)
+        End If
+    End Sub
 End Class
+

@@ -322,8 +322,8 @@ Public Class FMerek
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
         Dim f As New ItDtMerek()
 
-        Dim kodeMR As String = tSKDMEREK.Text.Trim()
-        Dim namaMR As String = tSNMMEREK.Text.Trim()
+        Dim kodeMR As String = ModPlaceholder.GetRealText(tSKDMEREK)
+        Dim namaMR As String = ModPlaceholder.GetRealText(tSNMMEREK)
 
         ' Load data sesuai filter
         f.Owner = Me
@@ -340,5 +340,25 @@ Public Class FMerek
         isUserTypingSearch = False
         tSKDMEREK.Enabled = True
         tSNMMEREK.Enabled = True
+    End Sub
+
+    Private Sub FMerek_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
+
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
     End Sub
 End Class

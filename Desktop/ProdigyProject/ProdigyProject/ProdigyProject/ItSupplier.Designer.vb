@@ -34,7 +34,7 @@ Partial Class ItSupplier
         Me.dgitmSUP.Size = New System.Drawing.Size(724, 292)
         Me.dgitmSUP.TabIndex = 0
         '
-        'ItDtSupplier
+        'ItSupplier
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -43,7 +43,7 @@ Partial Class ItSupplier
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "ItDtSupplier"
+        Me.Name = "ItSupplier"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "ItDtSupplier"
         CType(Me.dgitmSUP, System.ComponentModel.ISupportInitialize).EndInit()

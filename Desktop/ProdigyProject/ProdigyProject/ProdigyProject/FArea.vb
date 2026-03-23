@@ -12,6 +12,7 @@ Public Class FArea
 
     Private Sub FArea_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
+        AngkaHelper.AktifkanEnterPindah(Me)
         BukaKoneksi()
         DisabledLoad()
 
@@ -322,8 +323,8 @@ Public Class FArea
     Private Sub btnCARI_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCARI.Click
         Dim f As New ItDtArea()
 
-        Dim kodearea As String = tSKDAREA.Text.Trim()
-        Dim namaarea As String = tSNMAREA.Text.Trim()
+        Dim kodearea As String = ModPlaceholder.GetRealText(tSKDAREA)
+        Dim namaarea As String = ModPlaceholder.GetRealText(tSNMAREA)
 
         ' Load data sesuai filter
         f.Owner = Me
@@ -340,5 +341,25 @@ Public Class FArea
         isUserTypingSearch = False
         tSKDAREA.Enabled = True
         tSNMAREA.Enabled = True
+    End Sub
+
+    Private Sub FArea_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
+
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
     End Sub
 End Class

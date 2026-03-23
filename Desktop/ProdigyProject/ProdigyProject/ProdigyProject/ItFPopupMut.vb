@@ -70,9 +70,9 @@ Public Class ItFPopupMut
     Private Sub ClearInput()
         tPopKDBARANG.Clear()
         tPopNMBARANG.Clear()
-        tPopJLH1.Clear()
-        tPopJLH2.Clear()
-        tPopJLH3.Clear()
+        tPopJLH1.Value = 0
+        tPopJLH2.Value = 0
+        tPopJLH3.Value = 0
         tPopSTN1.Clear()
         tPopSTN2.Clear()
         tPopSTN3.Clear()
@@ -86,12 +86,27 @@ Public Class ItFPopupMut
     Private Sub ItFPopupMut_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
+        AngkaHelper.AktifkanEnterPindah(Me)
 
         BukaKoneksi()
     End Sub
 
+    Private Function DataBelumLengkap() As Boolean
+        If tPopKDBARANG.Text.Trim() = "" Then Return True
+        If tPopNMBARANG.Text.Trim() = "" Then Return True
+        If tPopJLH1.Value = 0 OrElse tPopJLH1.Value <= 0 Then Return True
+
+        Return False
+    End Function
+
     Private Sub btnPopTAMBAH_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPopTAMBAH.Click
         Try
+            If DataBelumLengkap() Then
+                MessageBox.Show("Data belum diisi", "Peringatan",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Exit Sub
+            End If
+
             If TargetGrid Is Nothing Then
                 MessageBox.Show("Grid belum dihubungkan!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
@@ -101,11 +116,11 @@ Public Class ItFPopupMut
             Dim kode As String = tPopKDBARANG.Text.Trim()
             Dim nama As String = tPopNMBARANG.Text.Trim()
 
-            Dim jlh1 As String = tPopJLH1.Text.Trim()
+            Dim jlh1 As Decimal = tPopJLH1.Value
             Dim sat1 As String = tPopSTN1.Text.Trim()
-            Dim jlh2 As String = tPopJLH2.Text.Trim()
+            Dim jlh2 As Decimal = tPopJLH2.Value
             Dim sat2 As String = tPopSTN2.Text.Trim()
-            Dim jlh3 As String = tPopJLH3.Text.Trim()
+            Dim jlh3 As Decimal = tPopJLH3.Value
             Dim sat3 As String = tPopSTN3.Text.Trim()
 
             ' --- Masukkan ke grid ---
@@ -170,10 +185,23 @@ Public Class ItFPopupMut
         End If
     End Sub
 
-    ' === KeyPress hanya angka ===
-    Private Sub OnlyNumber_KeyPress(ByVal sender As Object, ByVal e As KeyPressEventArgs) _
-        Handles tPopJLH1.KeyPress, tPopJLH2.KeyPress, tPopJLH3.KeyPress
+    Private Sub ItFPopupMut_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If TypeOf Me.ActiveControl Is TextBox Then
 
-        AngkaHelper.HanyaAngka(e)
+            Select Case e.KeyCode
+                Case Keys.Right
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Left
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+
+                Case Keys.Down
+                    Me.SelectNextControl(Me.ActiveControl, True, True, True, True)
+
+                Case Keys.Up
+                    Me.SelectNextControl(Me.ActiveControl, False, True, True, True)
+            End Select
+
+        End If
     End Sub
 End Class

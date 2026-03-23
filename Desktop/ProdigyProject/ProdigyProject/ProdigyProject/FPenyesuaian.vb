@@ -35,6 +35,7 @@ Public Class FPenyesuaian
 
     Private Sub FPenyesuaian_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         SetButtonState(Me, True)
+        AngkaHelper.AktifkanEnterPindah(Me)
         SetupGridPenyesuaian(grPENYESUAIAN)
 
         ' Tambah context menu ke grid utama
@@ -112,11 +113,11 @@ Public Class FPenyesuaian
 
             ' --- Isi data popup dari grid ---
             popup.tPopKDBARANG.Text = kodeBrg
-            popup.tPopJLH1.Text = Val(row.Cells("Jlh1").Value).ToString()
-            popup.tPopJLH2.Text = Val(row.Cells("Jlh2").Value).ToString()
-            popup.tPopJLH3.Text = Val(row.Cells("Jlh3").Value).ToString()
-            popup.tPopQTY.Text = Val(row.Cells("Qty").Value).ToString()
-            popup.tPopHARGA.Text = Val(row.Cells("Harga").Value).ToString()
+            popup.tPopJLH1.Value = Convert.ToDecimal(row.Cells("Jlh1").Value)
+            popup.tPopJLH2.Value = Convert.ToDecimal(row.Cells("Jlh2").Value)
+            popup.tPopJLH3.Value = Convert.ToDecimal(row.Cells("Jlh3").Value)
+            popup.tPopQTY.Value = Convert.ToDecimal(row.Cells("Qty").Value)
+            popup.tPopHARGA.Value = Convert.ToDecimal(row.Cells("Harga").Value)
 
             ' --- Load info barang berdasarkan Kode & Gudang ---
             popup.TargetGrid = grid
@@ -126,11 +127,11 @@ Public Class FPenyesuaian
             ' --- Tampilkan popup dan update data jika OK ---
             If popup.ShowDialog() = DialogResult.OK Then
                 row.Cells("KodeBrg").Value = popup.tPopKDBARANG.Text
-                row.Cells("Jlh1").Value = Val(popup.tPopJLH1.Text)
-                row.Cells("Jlh2").Value = Val(popup.tPopJLH2.Text)
-                row.Cells("Jlh3").Value = Val(popup.tPopJLH3.Text)
-                row.Cells("Qty").Value = Val(popup.tPopQTY.Text)
-                row.Cells("Harga").Value = Val(popup.tPopHARGA.Text)
+                row.Cells("Jlh1").Value = popup.tPopJLH1.Value
+                row.Cells("Jlh2").Value = popup.tPopJLH2.Value
+                row.Cells("Jlh3").Value = popup.tPopJLH3.Value
+                row.Cells("Qty").Value = popup.tPopQTY.Value
+                row.Cells("Harga").Value = popup.tPopHARGA.Value
             End If
 
         Catch ex As Exception
@@ -312,6 +313,7 @@ Public Class FPenyesuaian
         TabControl1.TabPages.Add(newTab)
         TabPagesList.Add(newTab)
         RegisterTabControls(newTab, nomor)
+        AngkaHelper.AktifkanEnterPindah(Me)
 
         Dim dict = TabControls(nomor)
         If dict.ContainsKey("GRID") Then

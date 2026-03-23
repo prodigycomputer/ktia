@@ -9,12 +9,12 @@ Public Class ItDtStok
         Dim whereList As New List(Of String)
 
         ' --- Filter berdasarkan kodeuser
-        If kodebrg <> "" Then
+        If kodebrg <> "" AndAlso kodebrg <> "*" Then
             whereList.Add("kodebrg LIKE ?")
         End If
 
         ' --- Filter berdasarkan username
-        If namabrg <> "" Then
+        If namabrg <> "" AndAlso namabrg <> "*" Then
             whereList.Add("namabrg LIKE ?")
         End If
 
@@ -86,16 +86,27 @@ Public Class ItDtStok
         SetupGridStok(dgitmSTOK)
     End Sub
 
-    Private Sub dgitmSTOK_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmSTOK.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmSTOK.Rows(e.RowIndex).Cells("kodebrg").Value.ToString()
+    Private Sub PilihData()
+        If dgitmSTOK.CurrentRow Is Nothing Then Exit Sub
 
-            Dim parentForm As FStok = TryCast(Me.Owner, FStok)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
+        Dim data As String = dgitmSTOK.CurrentRow.Cells("kodebrg").Value.ToString()
 
-            Me.Close()
+        Dim parentForm As FStok = TryCast(Me.Owner, FStok)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
+    Private Sub dgitmSTOK_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmSTOK.CellClick
+        PilihData()
+    End Sub
+
+    Private Sub dgitmSTOK_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmSTOK.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

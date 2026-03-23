@@ -63,16 +63,27 @@ Public Class ItDtKolektor
         SetupGridKolektor(dgitmKOL)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmKOL.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmKOL.CurrentRow.Cells("kodekol").Value.ToString()
+
+        Dim parentForm As FKolektor = TryCast(Me.Owner, FKolektor)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmKOL_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmKOL.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmKOL.Rows(e.RowIndex).Cells("kodekol").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FKolektor = TryCast(Me.Owner, FKolektor)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmKOL_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmKOL.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class

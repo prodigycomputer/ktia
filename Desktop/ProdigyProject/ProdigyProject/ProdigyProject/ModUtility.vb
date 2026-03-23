@@ -55,6 +55,18 @@
 
             ' Pilihan awal (jika ada)
             cboCopy.SelectedIndex = -1
+        ElseIf TypeOf copy Is NumericUpDown Then
+
+             Dim src As NumericUpDown = CType(original, NumericUpDown)
+            Dim dst As NumericUpDown = CType(copy, NumericUpDown)
+
+            dst.DecimalPlaces = src.DecimalPlaces
+            dst.Maximum = src.Maximum
+            dst.Minimum = src.Minimum
+            dst.Increment = src.Increment
+            dst.ThousandsSeparator = src.ThousandsSeparator
+            dst.TextAlign = src.TextAlign
+            dst.Value = src.Value
         End If
 
         ' Clone anak-anak kontrol

@@ -59,16 +59,27 @@ Public Class ItDtUser
         SetupGridDUser(dgitmUSER)
     End Sub
 
+    Private Sub PilihData()
+        If dgitmUSER.CurrentRow Is Nothing Then Exit Sub
+
+        Dim data As String = dgitmUSER.CurrentRow.Cells("kodeuser").Value.ToString()
+
+        Dim parentForm As FSetAkun = TryCast(Me.Owner, FSetAkun)
+        If parentForm IsNot Nothing Then
+            parentForm.LoadData(Data)
+        End If
+
+        Me.Close()
+    End Sub
+
     Private Sub dgitmUSER_CellContentClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgitmUSER.CellContentClick
-        If e.RowIndex >= 0 Then
-            Dim data As String = dgitmUSER.Rows(e.RowIndex).Cells("kodeuser").Value.ToString()
+        PilihData()
+    End Sub
 
-            Dim parentForm As FSetAkun = TryCast(Me.Owner, FSetAkun)
-            If parentForm IsNot Nothing Then
-                parentForm.LoadData(data)
-            End If
-
-            Me.Close()
+    Private Sub dgitmUSER_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles dgitmUSER.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
+            PilihData()
         End If
     End Sub
 End Class
